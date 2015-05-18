@@ -39,6 +39,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -122,7 +123,18 @@ public class GsonTurtorial extends ActionBarActivity {
 
                 Gson gson = new GsonBuilder().create();
                 RequestResultObject<User> userRequestResultObject = new RequestResultObject<User>();
-                RequestResultObject respond = gson.fromJson(s, userRequestResultObject.getClass());
+
+                Type type = new TypeToken<RequestResultObject<User>>(){}.getType();
+
+               //  RequestResultObject respond = gson.fromJson(s, userRequestResultObject.getClass());
+                RequestResultObject<User> respond = gson.fromJson(s, type);
+                respond.data.toArray();
+
+                Log.i("To gson", gson.toJson(respond.data));
+
+                Log.i("buc", "vai");
+
+
                 imageAdapter.setData(respond.data);
                 listView.setAdapter(imageAdapter);
             }
