@@ -89,6 +89,15 @@ public class ArticleFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        button = (Button)view.findViewById(R.id.showLoadmore);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoadMore.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

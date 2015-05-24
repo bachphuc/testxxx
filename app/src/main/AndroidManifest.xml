@@ -33,6 +33,10 @@
             android:name=".GsonTurtorial"
             android:label="@string/title_activity_gson_turtorial" >
         </activity>
+        <activity
+            android:name=".LoadMore"
+            android:label="@string/title_activity_load_more" >
+        </activity>
     </application>
 
 </manifest>

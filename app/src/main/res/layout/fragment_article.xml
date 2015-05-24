@@ -21,5 +21,13 @@ tools:context="com.learn.turtorial1.DisplayMessage">
     android:layout_below="@+id/bt_show_cyclerview"
     android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/showLoadmore"
+        android:layout_below="@+id/buttongson"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
 

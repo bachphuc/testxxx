@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\09520_000\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\library-2.4.0-1839545b8b8db9ed18f47d1b36c288fd2589dfe1.jar" />
+    </item>
+    <item
         jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\libs\volley.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -63,6 +70,13 @@
         revision="22.0.1"
         sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-e7c5d3594776787f1bff219e1dac16c92d41419d.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.malinskiy\superrecyclerview\1.1.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4649d32a5916687ff5d8e430aacb9a4e4eb10724">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-812914615c65df8495976973966e8b2e35b01e96.jar" />
     </item>
 
 </items>
