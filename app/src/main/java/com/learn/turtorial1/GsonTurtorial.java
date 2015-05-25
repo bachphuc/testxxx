@@ -47,7 +47,7 @@ import java.util.List;
 public class GsonTurtorial extends ActionBarActivity {
     DSwipeRefreshLayout swipeRefreshLayout;
     ListView listView;
-    ImageAdapter imageAdapter;
+    ImageAdapter imageAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class GsonTurtorial extends ActionBarActivity {
         listView = (ListView) findViewById(android.R.id.list);
 
         imageAdapter = new ImageAdapter(getApplicationContext());
+        listView.setAdapter(imageAdapter);
 
         swipeRefreshLayout = (DSwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN);
@@ -75,8 +76,7 @@ public class GsonTurtorial extends ActionBarActivity {
             }
         });
 
-        getData();
-
+        swipeRefreshLayout.startLoad();
     }
 
     public void getData() {
@@ -99,7 +99,8 @@ public class GsonTurtorial extends ActionBarActivity {
                 respond.data.toArray();
 
                 imageAdapter.prependData(respond.data);
-                listView.setAdapter(imageAdapter);
+                imageAdapter.notifyDataSetChanged();
+
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, new Response.ErrorListener() {
@@ -113,7 +114,14 @@ public class GsonTurtorial extends ActionBarActivity {
         reqestQueue.add(stringRequest);
     }
 
+    private int MAX_LIMIT = 10;
+    private int CURRENT_REQUEST = 0;
     public void loadMoreData() {
+        CURRENT_REQUEST++;
+        if(CURRENT_REQUEST > MAX_LIMIT){
+            swipeRefreshLayout.loadMoreLimit();
+            return;
+        }
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
         String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=user.getItems";
 
@@ -132,13 +140,13 @@ public class GsonTurtorial extends ActionBarActivity {
                 respond.data.toArray();
 
                 imageAdapter.appendData(respond.data);
-                listView.setAdapter(imageAdapter);
+                imageAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Respond", "Network error");
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.stopLoadMore();
             }
         });
 

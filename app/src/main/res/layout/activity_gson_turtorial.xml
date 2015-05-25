@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="100px"
+            android:paddingBottom="140px"
             />
 
     </com.learn.turtorial1.customview.DSwipeRefreshLayout>

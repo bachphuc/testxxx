@@ -58,6 +58,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -374,7 +375,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
         addView(mLoadMoreCircleView);
 
         mLoadMoreProgress.setAlpha(MAX_ALPHA);
-        mLoadMoreProgress.start();
+
     }
 
     /**
@@ -585,6 +586,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
     private boolean bIsLoadMoreProcessing = false;
     private boolean canLoadMore = true;
     private LoadMoreListener loadMoreListener;
+    private int bottomLoadMoreHeight = 140;
 
     public static interface LoadMoreListener {
         public void loadMore();
@@ -609,12 +611,20 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
     public void showLoadMoreProcess() {
         Log.i("View More", "SHOW PROCESS");
+        mLoadMoreProgress.start();
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
+        mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
     }
 
     public void hideLoadMoreProcess() {
         Log.i("View More", "HIDE PROCESS");
+        mLoadMoreProgress.stop();
         mLoadMoreCircleView.setVisibility(View.GONE);
+        mTarget.setPadding(0, 0, 0, 0);
+    }
+
+    public void startLoad() {
+        onLoadMore();
     }
 
     private void onLoadMore() {
@@ -666,7 +676,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
                     }
 
                     ListView listView1 = (ListView) mTarget;
-                    if (listView1.getAdapter() == null){
+                    if (listView1.getAdapter() == null) {
                         stopLoadMore();
                         return;
                     }
@@ -679,8 +689,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
                     int l = visibleItemCount + firstVisibleItem;
                     if (l >= totalItemCount) {
                         onLoadMore();
-                    }
-                    else{
+                    } else {
                         stopLoadMore();
                         return;
                     }
@@ -741,8 +750,22 @@ public class DSwipeRefreshLayout extends ViewGroup {
         int circleLoadMoreWidth = mLoadMoreCircleView.getMeasuredWidth();
         int circleLoadMoreHeight = mLoadMoreCircleView.getMeasuredHeight();
 
-        mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
-                (width / 2 + circleLoadMoreWidth / 2), height - 10);
+        int childCount = 0;
+        if (mTarget instanceof ListView) {
+            ListView listView = (ListView) mTarget;
+            childCount = listView.getCount();
+        } else if (mTarget instanceof RecyclerView) {
+            RecyclerView recyclerView = (RecyclerView) mTarget;
+            childCount = recyclerView.getAdapter().getItemCount();
+        }
+
+        if (childCount == 0) {
+            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), (height / 2 - circleLoadMoreHeight / 2),
+                    (width / 2 + circleLoadMoreWidth / 2), (height / 2 + circleLoadMoreHeight / 2));
+        } else {
+            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
+                    (width / 2 + circleLoadMoreWidth / 2), height - 10);
+        }
 
         backDrop.layout(0, 0, width, height);
     }
