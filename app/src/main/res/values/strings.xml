@@ -13,4 +13,5 @@
     <string name="title_activity_gson_turtorial">GsonTurtorial</string>
     <string name="menu_refresh">Refresh Layout</string>
     <string name="title_activity_load_more">LoadMore</string>
+    <string name="feed_image">Feed Image</string>
 </resources>

@@ -36,7 +36,7 @@ public class RecyclerViewTest extends ActionBarActivity {
             contactInfo.email = "test" +i + "@gmail.com";
             contactInfo.feedTitle = "chan vai te " + i;
             contactInfo.image = "http://thewowstyle.com/wp-content/uploads/2015/03/Beautiful-girl-wallpaper.jpg";
-            contactInfo.type = i +1;
+            contactInfo.type = 3;
             list.add(contactInfo);
         }
         recyclerView.setAdapter(new ContactAdapter(list));

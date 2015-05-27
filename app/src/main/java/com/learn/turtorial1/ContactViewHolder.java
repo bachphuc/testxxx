@@ -16,8 +16,11 @@ public class ContactViewHolder extends RecyclerView.ViewHolder{
     protected TextView vFeedTitle;
     protected ImageView vImage;
 
+    protected View rootView;
+
     public ContactViewHolder(View view){
         super(view);
+        rootView = view;
         vName = (TextView) view.findViewById(R.id.txtName);
         vSurname = (TextView) view.findViewById(R.id.txtSurname);
         vEmail = (TextView) view.findViewById(R.id.txtEmail);
@@ -25,5 +28,10 @@ public class ContactViewHolder extends RecyclerView.ViewHolder{
         vFeedTitle = (TextView) view.findViewById(R.id.feed_title);
         vImage = (ImageView)view.findViewById(R.id.image);
 
+    }
+
+    public View findView(int viewId){
+        View view = rootView.findViewById(viewId);
+        return view;
     }
 }

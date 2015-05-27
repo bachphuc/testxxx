@@ -37,7 +37,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
-                .displayer(new RoundedBitmapDisplayer(20)).build();
+                .displayer(new RoundedBitmapDisplayer(64)).build();
 
         animateImageListener = new AnimateImageListener();
 
@@ -105,6 +105,22 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
             contactViewHolder.vEmail.setText(contactInfo.email);
             contactViewHolder.vTitle.setText(contactInfo.name + " " + contactInfo.surname);
             ImageLoader.getInstance().displayImage(contactInfo.image,contactViewHolder.vImage,displayImageOptions, animateImageListener);
+        }
+        else if(contactInfo.type == LayoutFeed.META1_LAYOUT){
+            ImageView imageView = (ImageView) contactViewHolder.findView(R.id.imageViewAvatar);
+            ImageLoader.getInstance().displayImage(contactInfo.image,imageView, displayImageOptions);
+
+            imageView = (ImageView) contactViewHolder.findView(R.id.main_image);
+            DisplayImageOptions displayImageOp = new DisplayImageOptions.Builder()
+                    .showImageOnLoading(R.drawable.ic_stub)
+                    .showImageOnFail(R.drawable.ic_error)
+                    .showImageForEmptyUri(R.drawable.ic_empty)
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .considerExifParams(true)
+                    .displayer(new RoundedBitmapDisplayer(0)).build();
+
+            ImageLoader.getInstance().displayImage(contactInfo.image,imageView, displayImageOp);
         }
     }
 
