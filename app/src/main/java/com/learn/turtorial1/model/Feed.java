@@ -65,5 +65,8 @@ public class Feed extends DmobileModelBase{
     @SerializedName("content")
     public String content ;
     
+    @SerializedName("itemData")
+    public DAbstractItemObject itemData ;
+    
 
 }

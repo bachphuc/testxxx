@@ -131,13 +131,11 @@ public class GsonTurtorial extends ActionBarActivity {
                 swipeRefreshLayout.stopLoadMore();
                 Log.i("Request", s);
                 Gson gson = new GsonBuilder().create();
-                RequestResultObject<User> userRequestResultObject = new RequestResultObject<User>();
 
                 Type type = new TypeToken<RequestResultObject<User>>() {
                 }.getType();
 
                 RequestResultObject<User> respond = gson.fromJson(s, type);
-                respond.data.toArray();
 
                 imageAdapter.appendData(respond.data);
                 imageAdapter.notifyDataSetChanged();
