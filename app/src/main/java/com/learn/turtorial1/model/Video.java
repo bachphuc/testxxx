@@ -104,8 +104,5 @@ public class Video extends DmobileModelBase{
     @SerializedName("image")
     public String image ;
     
-    @SerializedName("description")
-    public String description ;
-    
 
 }

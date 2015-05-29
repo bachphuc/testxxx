@@ -104,9 +104,6 @@ public class Photo extends DmobileModelBase{
     @SerializedName("user")
     public User user ;
     
-    @SerializedName("images")
-    public String images ;
-    
     public User getUser(){
         return user;
     }

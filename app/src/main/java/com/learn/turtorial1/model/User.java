@@ -107,8 +107,5 @@ public class User extends DmobileModelBase{
     @SerializedName("feed_sort")
     public Boolean feedSort = false;
     
-    @SerializedName("images")
-    public ImageObject images ;
-    
 
 }

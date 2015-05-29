@@ -2,12 +2,13 @@ package com.learn.turtorial1;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.learn.turtorial1.model.Feed;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -15,7 +16,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,13 +23,13 @@ import java.util.List;
 /**
  * Created by 09520_000 on 5/11/2015.
  */
-public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
-    private List<ContactInfo> contactInfoList;
+public class ContactAdapter extends RecyclerView.Adapter<FeedViewHolder> {
+    private List<Feed> feeds;
     private DisplayImageOptions displayImageOptions;
     private AnimateImageListener animateImageListener;
 
-    public ContactAdapter(List<ContactInfo> contactInfos){
-        this.contactInfoList = contactInfos;
+    public ContactAdapter(List<Feed> feeedList) {
+        this.feeds = feeedList;
         displayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_stub)
                 .showImageOnFail(R.drawable.ic_error)
@@ -42,75 +42,32 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
         animateImageListener = new AnimateImageListener();
 
     }
+
     @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public FeedViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView;
-        if(viewType == LayoutFeed.FEED_LAYOUT){
-            Log.i("ContactAdapter","line-25:i=" + viewType);
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.feed_layout, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META1_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_basic_buttons_card, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META2_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_basic_image_buttons_card_layout, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META3_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_basic_list_card_layout, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META4_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_big_image_card_layout, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META5_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_image_with_buttons_card, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META6_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_small_image_card, viewGroup, false);
-        }
-        else if(viewType == LayoutFeed.META7_LAYOUT){
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.material_welcome_card_layout, viewGroup, false);
-        }
-        else{
-            Log.i("ContactAdapter","line-30:i=" + viewType);
-            itemView = LayoutInflater.from(viewGroup.getContext()).
-                    inflate(R.layout.card_layout, viewGroup, false);
-        }
+        itemView = LayoutInflater.from(viewGroup.getContext()).
+                inflate(R.layout.material_basic_buttons_card, viewGroup, false);
 
-        return new ContactViewHolder(itemView);
+        return new FeedViewHolder(itemView);
     }
 
     @Override
-    public int getItemViewType(int position){
-        ContactInfo contactInfo = contactInfoList.get(position);
-        return contactInfo.type;
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
-    public void onBindViewHolder(ContactViewHolder contactViewHolder, int position) {
-        ContactInfo contactInfo = contactInfoList.get(position);
-        if(contactInfo.type == LayoutFeed.FEED_LAYOUT){
-            contactViewHolder.vFeedTitle.setText(contactInfo.feedTitle);
+    public void onBindViewHolder(FeedViewHolder feedViewHolder, int position) {
+        Feed feed = feeds.get(position);
+        ImageView imageView;
+        if (feed.user.images != null) {
+            imageView = (ImageView) feedViewHolder.findView(R.id.imageViewAvatar);
+            ImageLoader.getInstance().displayImage(feed.user.images.full, imageView, displayImageOptions);
         }
-        else if(contactInfo.type == LayoutFeed.EVENT_LAYOUT){
-            contactViewHolder.vName.setText(contactInfo.name);
-            contactViewHolder.vSurname.setText(contactInfo.surname);
-            contactViewHolder.vEmail.setText(contactInfo.email);
-            contactViewHolder.vTitle.setText(contactInfo.name + " " + contactInfo.surname);
-            ImageLoader.getInstance().displayImage(contactInfo.image,contactViewHolder.vImage,displayImageOptions, animateImageListener);
-        }
-        else if(contactInfo.type == LayoutFeed.META1_LAYOUT){
-            ImageView imageView = (ImageView) contactViewHolder.findView(R.id.imageViewAvatar);
-            ImageLoader.getInstance().displayImage(contactInfo.image,imageView, displayImageOptions);
 
-            imageView = (ImageView) contactViewHolder.findView(R.id.main_image);
+        if (feed.item.images != null) {
+            imageView = (ImageView) feedViewHolder.findView(R.id.main_image);
             DisplayImageOptions displayImageOp = new DisplayImageOptions.Builder()
                     .showImageOnLoading(R.drawable.ic_stub)
                     .showImageOnFail(R.drawable.ic_error)
@@ -120,16 +77,21 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
                     .considerExifParams(true)
                     .displayer(new RoundedBitmapDisplayer(0)).build();
 
-            ImageLoader.getInstance().displayImage(contactInfo.image,imageView, displayImageOp);
+            ImageLoader.getInstance().displayImage(feed.item.images.full, imageView, displayImageOp);
         }
+
+        TextView textView = (TextView) feedViewHolder.findView(R.id.tvTitle);
+        textView.setText(feed.user.getTitle());
+        textView = (TextView) feedViewHolder.findView(R.id.tvDescription);
+        textView.setText(feed.content);
     }
 
     @Override
     public int getItemCount() {
-        return contactInfoList.size();
+        return feeds.size();
     }
 
-    private static class AnimateImageListener implements ImageLoadingListener{
+    private static class AnimateImageListener implements ImageLoadingListener {
         static final List<String> displayImages = Collections.synchronizedList(new LinkedList<String>());
 
         @Override
@@ -144,10 +106,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
 
         @Override
         public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            if(loadedImage != null){
-                ImageView imageView = (ImageView)view;
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
                 boolean firstDisplay = !displayImages.contains(imageUri);
-                if(firstDisplay){
+                if (firstDisplay) {
                     displayImages.add(imageUri);
                     FadeInBitmapDisplayer.animate(imageView, 500);
                 }

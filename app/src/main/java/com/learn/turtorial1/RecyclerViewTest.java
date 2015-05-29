@@ -5,10 +5,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.learn.turtorial1.model.Feed;
+import com.learn.turtorial1.model.RequestResultObject;
+import com.learn.turtorial1.model.User;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,18 +32,20 @@ import java.util.ListIterator;
 
 
 public class RecyclerViewTest extends ActionBarActivity {
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view_test);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.cardList);
+        recyclerView = (RecyclerView)findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        List<ContactInfo> list = new ArrayList<ContactInfo>();
+
+        /*List<ContactInfo> list = new ArrayList<ContactInfo>();
         for(int i = 0; i< 10000; i++){
             ContactInfo contactInfo = new ContactInfo();
             contactInfo.name = "test " + i;
@@ -38,8 +55,41 @@ public class RecyclerViewTest extends ActionBarActivity {
             contactInfo.image = "http://thewowstyle.com/wp-content/uploads/2015/03/Beautiful-girl-wallpaper.jpg";
             contactInfo.type = 3;
             list.add(contactInfo);
-        }
-        recyclerView.setAdapter(new ContactAdapter(list));
+        }*/
+
+        // recyclerView.setAdapter(new ContactAdapter(list));
+
+        getData();
+    }
+
+    public void getData() {
+        RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.i("Request", s);
+
+                Gson gson = new GsonBuilder().create();
+
+                Type type = new TypeToken<RequestResultObject<Feed>>() {
+                }.getType();
+
+                RequestResultObject<Feed> respond = gson.fromJson(s, type);
+                Log.i("Request", "Complete");
+                if(respond != null) {
+                    recyclerView.setAdapter(new ContactAdapter(respond.data));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("Respond", "Network error");
+            }
+        });
+
+        reqestQueue.add(stringRequest);
     }
 
     @Override

@@ -59,9 +59,6 @@ public class Blog extends DmobileModelBase{
     @SerializedName("user")
     public User user ;
     
-    @SerializedName("description")
-    public String description ;
-    
     public User getUser(){
         return user;
     }
