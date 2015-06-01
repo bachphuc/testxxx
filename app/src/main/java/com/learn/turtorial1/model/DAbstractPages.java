@@ -26,9 +26,6 @@ public class DAbstractPages extends DmobileModelBase{
     @SerializedName("user_id")
     public int userId ;
     
-    @SerializedName("title")
-    public String title ;
-    
     @SerializedName("reg_method")
     public Boolean regMethod = false;
     
@@ -40,9 +37,6 @@ public class DAbstractPages extends DmobileModelBase{
     
     @SerializedName("image_path")
     public String imagePath ;
-    
-    @SerializedName("image_server_id")
-    public Boolean imageServerId = false;
     
     @SerializedName("total_like")
     public int totalLike = 0;

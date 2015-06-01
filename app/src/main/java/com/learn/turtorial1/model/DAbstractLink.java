@@ -32,12 +32,6 @@ public class DAbstractLink extends DmobileModelBase{
     @SerializedName("image")
     public String image ;
     
-    @SerializedName("title")
-    public String title ;
-    
-    @SerializedName("description")
-    public String description ;
-    
     @SerializedName("status_info")
     public String statusInfo ;
     

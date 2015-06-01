@@ -21,49 +21,55 @@ public class DAbstractItemObject {
 		case "User":
 			type = new TypeToken<User>() {
 			}.getType();
-			break;
+			User objUser = gson.fromJson(jsonData, type);
+			return objUser;
 		case "Feed":
 			type = new TypeToken<Feed>() {
 			}.getType();
-			break;
+			Feed objFeed = gson.fromJson(jsonData, type);
+			return objFeed;
 		case "Photo":
 			type = new TypeToken<Photo>() {
 			}.getType();
-			break;
+			Photo objPhoto = gson.fromJson(jsonData, type);
+			return objPhoto;
 		case "Pages":
 			type = new TypeToken<Pages>() {
 			}.getType();
-			break;
+			Pages objPages = gson.fromJson(jsonData, type);
+			return objPages;
 		case "PagesCategory":
 			type = new TypeToken<PagesCategory>() {
 			}.getType();
-			break;
+			PagesCategory objPagesCategory = gson.fromJson(jsonData, type);
+			return objPagesCategory;
 		case "Blog":
 			type = new TypeToken<Blog>() {
 			}.getType();
-			break;
+			Blog objBlog = gson.fromJson(jsonData, type);
+			return objBlog;
 		case "UserStatus":
 			type = new TypeToken<UserStatus>() {
 			}.getType();
-			break;
+			UserStatus objUserStatus = gson.fromJson(jsonData, type);
+			return objUserStatus;
 		case "Link":
 			type = new TypeToken<Link>() {
 			}.getType();
-			break;
+			Link objLink = gson.fromJson(jsonData, type);
+			return objLink;
 		case "MusicSong":
 			type = new TypeToken<MusicSong>() {
 			}.getType();
-			break;
+			MusicSong objMusicSong = gson.fromJson(jsonData, type);
+			return objMusicSong;
 		case "Video":
 			type = new TypeToken<Video>() {
 			}.getType();
-			break;
+			Video objVideo = gson.fromJson(jsonData, type);
+			return objVideo;
             default:
                 return new DmobileModelBase();
         }
-
-        Blog obj = gson.fromJson(jsonData, type);
-
-        return obj;
     }
 }

@@ -41,9 +41,6 @@ public class DAbstractVideo extends DmobileModelBase{
     @SerializedName("privacy_comment")
     public Boolean privacyComment = false;
     
-    @SerializedName("title")
-    public String title ;
-    
     @SerializedName("user_id")
     public int userId = 0;
     
@@ -52,9 +49,6 @@ public class DAbstractVideo extends DmobileModelBase{
     
     @SerializedName("destination")
     public String destination ;
-    
-    @SerializedName("server_id")
-    public Boolean serverId = false;
     
     @SerializedName("file_ext")
     public String fileExt ;
@@ -70,9 +64,6 @@ public class DAbstractVideo extends DmobileModelBase{
     
     @SerializedName("image_path")
     public String imagePath ;
-    
-    @SerializedName("image_server_id")
-    public Boolean imageServerId = false;
     
     @SerializedName("total_comment")
     public int totalComment = 0;

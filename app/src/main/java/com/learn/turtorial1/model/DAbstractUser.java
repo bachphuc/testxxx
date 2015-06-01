@@ -14,9 +14,6 @@ public class DAbstractUser extends DmobileModelBase{
     @SerializedName("profile_page_id")
     public int profilePageId = 0;
     
-    @SerializedName("server_id")
-    public Boolean serverId = false;
-    
     @SerializedName("user_group_id")
     public int userGroupId ;
     

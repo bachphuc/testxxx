@@ -32,9 +32,6 @@ public class DAbstractPhoto extends DmobileModelBase{
     @SerializedName("privacy_comment")
     public Boolean privacyComment = false;
     
-    @SerializedName("title")
-    public String title ;
-    
     @SerializedName("user_id")
     public int userId ;
     
@@ -43,9 +40,6 @@ public class DAbstractPhoto extends DmobileModelBase{
     
     @SerializedName("destination")
     public String destination ;
-    
-    @SerializedName("server_id")
-    public Boolean serverId ;
     
     @SerializedName("mature")
     public Boolean mature = false;

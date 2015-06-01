@@ -35,17 +35,8 @@ public class DAbstractMusicSong extends DmobileModelBase{
     @SerializedName("user_id")
     public int userId ;
     
-    @SerializedName("title")
-    public String title ;
-    
-    @SerializedName("description")
-    public String description ;
-    
     @SerializedName("song_path")
     public String songPath ;
-    
-    @SerializedName("server_id")
-    public Boolean serverId = false;
     
     @SerializedName("explicit")
     public Boolean explicit ;

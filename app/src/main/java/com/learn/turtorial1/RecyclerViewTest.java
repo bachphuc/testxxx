@@ -1,6 +1,5 @@
 package com.learn.turtorial1;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,14 +19,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.turtorial1.model.Feed;
 import com.learn.turtorial1.model.RequestResultObject;
-import com.learn.turtorial1.model.User;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 
 public class RecyclerViewTest extends ActionBarActivity {
@@ -57,7 +49,7 @@ public class RecyclerViewTest extends ActionBarActivity {
             list.add(contactInfo);
         }*/
 
-        // recyclerView.setAdapter(new ContactAdapter(list));
+        // recyclerView.setAdapter(new FeedAdapter(list));
 
         getData();
     }
@@ -79,7 +71,7 @@ public class RecyclerViewTest extends ActionBarActivity {
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
                 Log.i("Request", "Complete");
                 if(respond != null) {
-                    recyclerView.setAdapter(new ContactAdapter(respond.data));
+                    recyclerView.setAdapter(new FeedAdapter(respond.data));
                 }
             }
         }, new Response.ErrorListener() {

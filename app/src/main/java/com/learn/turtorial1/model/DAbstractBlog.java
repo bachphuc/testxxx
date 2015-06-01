@@ -14,9 +14,6 @@ public class DAbstractBlog extends DmobileModelBase{
     @SerializedName("user_id")
     public int userId ;
     
-    @SerializedName("title")
-    public String title ;
-    
     @SerializedName("time_stamp")
     public int timeStamp ;
     
