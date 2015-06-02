@@ -99,7 +99,7 @@ public class RecyclerViewTest extends ActionBarActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Log.i("Request", s);
+                Log.i("RequestRecyclerTest", s);
 
                 Gson gson = new GsonBuilder().create();
 
