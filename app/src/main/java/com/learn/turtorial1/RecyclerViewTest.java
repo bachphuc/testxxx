@@ -17,14 +17,18 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.learn.turtorial1.customview.DSwipeRefreshLayout;
 import com.learn.turtorial1.model.Feed;
 import com.learn.turtorial1.model.RequestResultObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 
 public class RecyclerViewTest extends ActionBarActivity {
     RecyclerView recyclerView;
+    DSwipeRefreshLayout dSwipeRefreshLayout;
+    FeedAdapter feedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +40,25 @@ public class RecyclerViewTest extends ActionBarActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        feedAdapter = new FeedAdapter(new ArrayList<Feed>());
+        recyclerView.setAdapter(feedAdapter);
 
-        /*List<ContactInfo> list = new ArrayList<ContactInfo>();
-        for(int i = 0; i< 10000; i++){
-            ContactInfo contactInfo = new ContactInfo();
-            contactInfo.name = "test " + i;
-            contactInfo.surname = "surname " + i;
-            contactInfo.email = "test" +i + "@gmail.com";
-            contactInfo.feedTitle = "chan vai te " + i;
-            contactInfo.image = "http://thewowstyle.com/wp-content/uploads/2015/03/Beautiful-girl-wallpaper.jpg";
-            contactInfo.type = 3;
-            list.add(contactInfo);
-        }*/
+        dSwipeRefreshLayout = (DSwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
 
-        // recyclerView.setAdapter(new FeedAdapter(list));
+        dSwipeRefreshLayout.setOnLoadMoreListener(new DSwipeRefreshLayout.LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                loadMoreData();
+            }
+        });
 
-        getData();
+        dSwipeRefreshLayout.startLoad();
     }
 
     public void getData() {
@@ -71,7 +78,39 @@ public class RecyclerViewTest extends ActionBarActivity {
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
                 Log.i("Request", "Complete");
                 if(respond != null) {
-                    recyclerView.setAdapter(new FeedAdapter(respond.data));
+                    feedAdapter.prependData(respond.data);
+                    feedAdapter.notifyDataSetChanged();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("Respond", "Network error");
+            }
+        });
+
+        reqestQueue.add(stringRequest);
+    }
+
+    public void loadMoreData() {
+        RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.i("Request", s);
+
+                Gson gson = new GsonBuilder().create();
+
+                Type type = new TypeToken<RequestResultObject<Feed>>() {
+                }.getType();
+
+                RequestResultObject<Feed> respond = gson.fromJson(s, type);
+                Log.i("Request", "Complete");
+                if(respond != null) {
+                    feedAdapter.appendData(respond.data);
+                    feedAdapter.notifyDataSetChanged();
                 }
             }
         }, new Response.ErrorListener() {

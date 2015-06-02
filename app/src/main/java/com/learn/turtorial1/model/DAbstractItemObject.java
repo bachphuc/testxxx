@@ -1,5 +1,7 @@
 package com.learn.turtorial1.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -11,12 +13,13 @@ import java.lang.reflect.Type;
  */
 
 public class DAbstractItemObject {
-    protected String itemType;
-    protected String jsonData;
+    protected String itemType = "";
+    protected String jsonData = "";
 
     public DmobileModelBase getItem() {
         Gson gson = new GsonBuilder().create();
         Type type;
+		Log.i("ItemType", itemType);
         switch (itemType) {
 		case "User":
 			type = new TypeToken<User>() {

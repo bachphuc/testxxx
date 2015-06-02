@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.turtorial1.model.Feed;
+import com.learn.turtorial1.model.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -63,6 +64,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
     public void onBindViewHolder(FeedViewHolder feedViewHolder, int position) {
         Feed feed = feeds.get(position);
         feed.processFeedViewHolder(feedViewHolder);
+    }
+
+    public void prependData(List<Feed> data) {
+        feeds.addAll(0, data);
+    }
+
+    public void appendData(List<Feed> data) {
+        feeds.addAll(data);
     }
 
     @Override
