@@ -3,6 +3,7 @@ package com.learn.turtorial1.model;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.learn.turtorial1.FeedAdapter;
 import com.learn.turtorial1.FeedViewHolder;
@@ -13,8 +14,10 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class Photo extends DAbstractPhoto {
-    DisplayImageOptions displayImageOp;
-    FeedAdapter.AnimateImageListener animateFirstListener;
+
+    transient DisplayImageOptions displayImageOp;
+
+    transient FeedAdapter.AnimateImageListener animateFirstListener;
 
     public Photo() {
         feedLayout = R.layout.feed_photo_layout;

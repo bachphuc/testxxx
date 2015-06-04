@@ -68,6 +68,7 @@ public class RecyclerViewTest extends ActionBarActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                dSwipeRefreshLayout.setRefreshing(false);
                 Log.i("Request", s);
 
                 Gson gson = new GsonBuilder().create();
@@ -100,7 +101,7 @@ public class RecyclerViewTest extends ActionBarActivity {
             @Override
             public void onResponse(String s) {
                 Log.i("RequestRecyclerTest", s);
-
+                dSwipeRefreshLayout.stopLoadMore();
                 Gson gson = new GsonBuilder().create();
 
                 Type type = new TypeToken<RequestResultObject<Feed>>() {
