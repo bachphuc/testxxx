@@ -49,6 +49,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         View itemView;
         int position = viewType;
         Feed feed = feeds.get(position);
+
         itemView = LayoutInflater.from(viewGroup.getContext()).
                 inflate(feed.getFeedLayout(), viewGroup, false);
 

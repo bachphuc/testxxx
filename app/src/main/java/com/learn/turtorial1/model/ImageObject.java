@@ -7,5 +7,6 @@ public class ImageObject {
     public String avatar;
     public String normal;
     public String medium;
+    public String large;
     public String full;
 }

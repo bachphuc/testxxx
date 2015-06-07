@@ -26,8 +26,9 @@ public class Photo extends DAbstractPhoto {
         ImageView imageView;
         if (images != null) {
             imageView = (ImageView) feedViewHolder.findView(R.id.main_image);
-
-            Picasso.with(imageView.getContext()).load(images.full).into(imageView);
+            if (imageView != null) {
+                Picasso.with(imageView.getContext()).load(images.large).into(imageView);
+            }
         }
     }
 }

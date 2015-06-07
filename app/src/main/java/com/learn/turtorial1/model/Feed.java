@@ -10,6 +10,9 @@ import com.learn.turtorial1.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.squareup.picasso.Picasso;
+
+import net.grobas.view.PolygonImageView;
 
 public class Feed extends DAbstractFeed {
     private boolean bItemReady = false;
@@ -45,18 +48,13 @@ public class Feed extends DAbstractFeed {
         textView.setText(content);
 
         ImageView imageView;
-        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageOnFail(R.drawable.ic_error)
-                .showImageForEmptyUri(R.drawable.ic_empty)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .displayer(new RoundedBitmapDisplayer(64)).build();
-
         if (user.images != null) {
             imageView = (ImageView) feedViewHolder.findView(R.id.imageViewAvatar);
-            ImageLoader.getInstance().displayImage(user.images.full, imageView, displayImageOptions);
+            if (imageView != null) {
+                Picasso.with(imageView.getContext()).load(user.images.avatar).into(imageView);
+                PolygonImageView polygonImageView = (PolygonImageView)imageView;
+                polygonImageView.setVertices(0);
+            }
         }
 
         DmobileModelBase dmobileModelBase = getItem();
