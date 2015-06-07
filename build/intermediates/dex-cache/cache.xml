@@ -23,6 +23,13 @@
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-a56ec91b8017b75dbaad11e5efe0b990b4a5d189.jar" />
     </item>
     <item
+        jar="C:\Users\09520_000\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-9eb536d457e39f781715edb468371c3c74d96047.jar" />
+    </item>
+    <item
         jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\libs\gson-2.3.1.jar"
         jumboMode="false"
         revision="22.0.1"

@@ -12,24 +12,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 public class Photo extends DAbstractPhoto {
 
-    transient DisplayImageOptions displayImageOp;
-
-    transient FeedAdapter.AnimateImageListener animateFirstListener;
-
     public Photo() {
         feedLayout = R.layout.feed_photo_layout;
-        displayImageOp = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_stub)
-                .showImageOnFail(R.drawable.ic_error)
-                .showImageForEmptyUri(R.drawable.ic_empty)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .displayer(new RoundedBitmapDisplayer(0)).build();
-        animateFirstListener = new FeedAdapter.AnimateImageListener();
     }
 
     @Override
@@ -39,7 +27,7 @@ public class Photo extends DAbstractPhoto {
         if (images != null) {
             imageView = (ImageView) feedViewHolder.findView(R.id.main_image);
 
-            ImageLoader.getInstance().displayImage(images.full, imageView, displayImageOp, animateFirstListener);
+            Picasso.with(imageView.getContext()).load(images.full).into(imageView);
         }
     }
 }
