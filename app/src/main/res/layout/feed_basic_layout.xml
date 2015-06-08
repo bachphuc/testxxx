@@ -52,7 +52,7 @@
                     android:id="@+id/tvSubHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
-                    android:text="Sub Header" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>

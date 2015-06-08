@@ -51,7 +51,7 @@
                     android:id="@+id/tvSubHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
-                    android:text="Sub Header" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>
@@ -65,7 +65,9 @@
                 android:id="@+id/main_image"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:contentDescription="@string/feed_image" />
+                android:contentDescription="@string/feed_image"
+                android:scaleType="centerCrop"
+                />
         </LinearLayout>
 
         <!-- Footer Bar -->
