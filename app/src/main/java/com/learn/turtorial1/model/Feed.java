@@ -51,7 +51,7 @@ public class Feed extends DAbstractFeed {
         if (user.images != null) {
             imageView = (ImageView) feedViewHolder.findView(R.id.imageViewAvatar);
             if (imageView != null) {
-                Picasso.with(imageView.getContext()).load(user.images.avatar).into(imageView);
+                Picasso.with(imageView.getContext()).load(user.images.avatar.url).into(imageView);
                 PolygonImageView polygonImageView = (PolygonImageView)imageView;
                 polygonImageView.setVertices(0);
             }

@@ -261,7 +261,7 @@ public class GsonTurtorial extends ActionBarActivity {
             User user = users.get(position);
             holder.text.setText(user.fullName);
 
-            String url = users.get(position).images.full;
+            String url = users.get(position).images.full.url;
             ImageLoader.getInstance().displayImage(url, holder.image, options, animateFirstListener);
 
             return view;

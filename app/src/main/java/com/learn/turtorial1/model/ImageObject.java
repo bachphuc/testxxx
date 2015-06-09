@@ -4,9 +4,11 @@ package com.learn.turtorial1.model;
  * Created by 09520_000 on 5/17/2015.
  */
 public class ImageObject {
-    public String avatar;
-    public String normal;
-    public String medium;
-    public String large;
-    public String full;
+    public ImageItem avatar = null;
+    public ImageItem normal = null;
+    public ImageItem medium = null;
+    public ImageItem big = null;
+    public ImageItem large = null;
+    public ImageItem extralarge = null;
+    public ImageItem full = null;
 }

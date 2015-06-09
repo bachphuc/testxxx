@@ -597,14 +597,12 @@ public class DSwipeRefreshLayout extends ViewGroup {
     }
 
     public void stopLoadMore() {
-        Log.i("Load more", "Stop Load More");
         bIsLoadMoreProcessing = false;
         hideLoadMoreProcess();
     }
 
     public void loadMoreLimit() {
         ensureTarget();
-        Log.i("Load more", "Limit Load More");
         canLoadMore = true;
         bIsLoadMoreProcessing = false;
         hideLoadMoreProcess();
@@ -612,7 +610,6 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
     public void showLoadMoreProcess() {
         ensureTarget();
-        Log.i("View More", "SHOW PROCESS");
         mLoadMoreProgress.start();
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
         mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
@@ -620,7 +617,6 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
     public void hideLoadMoreProcess() {
         ensureTarget();
-        Log.i("View More", "HIDE PROCESS");
         mLoadMoreProgress.stop();
         mLoadMoreCircleView.setVisibility(View.GONE);
         mTarget.setPadding(0, 0, 0, 0);
@@ -632,7 +628,6 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
     private void onLoadMore() {
         bIsLoadMoreProcessing = true;
-        Log.i("Load more", "Last Item Wow !");
         if (loadMoreListener != null) {
             showLoadMoreProcess();
             loadMoreListener.loadMore();
@@ -704,7 +699,6 @@ public class DSwipeRefreshLayout extends ViewGroup {
     private void ensureTarget() {
         // Don't bother getting the parent height if the parent hasn't been laid
         // out yet.
-        Log.i("DswipeRefreshLayout","ensureTarget");
         if (mTarget == null) {
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);

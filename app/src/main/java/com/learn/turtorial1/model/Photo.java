@@ -1,21 +1,14 @@
 package com.learn.turtorial1.model;
 
 import android.util.Log;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.learn.turtorial1.FeedAdapter;
 import com.learn.turtorial1.FeedViewHolder;
 import com.learn.turtorial1.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 public class Photo extends DAbstractPhoto {
-
     public Photo() {
         feedLayout = R.layout.feed_photo_layout;
     }
@@ -23,11 +16,22 @@ public class Photo extends DAbstractPhoto {
     @Override
     public void processFeedViewHolder(FeedViewHolder feedViewHolder) {
         super.processFeedViewHolder(feedViewHolder);
-        ImageView imageView;
+        final ImageView imageView;
         if (images != null) {
             imageView = (ImageView) feedViewHolder.findView(R.id.main_image);
+
+            ViewTreeObserver vto = imageView.getViewTreeObserver();
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                public boolean onPreDraw() {
+                    imageView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    int newHeight = imageView.getMeasuredWidth() * images.large.height / images.large.width;
+                    imageView.getLayoutParams().height = newHeight;
+                    return true;
+                }
+            });
+
             if (imageView != null) {
-                Picasso.with(imageView.getContext()).load(images.large).into(imageView);
+                Picasso.with(imageView.getContext()).load(images.large.url).into(imageView);
             }
         }
     }
