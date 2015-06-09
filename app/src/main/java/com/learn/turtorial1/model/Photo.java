@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.learn.turtorial1.FeedViewHolder;
 import com.learn.turtorial1.R;
+import com.learn.turtorial1.customview.DFeedImageView;
 import com.squareup.picasso.Picasso;
 
 public class Photo extends DAbstractPhoto {
@@ -16,19 +17,13 @@ public class Photo extends DAbstractPhoto {
     @Override
     public void processFeedViewHolder(FeedViewHolder feedViewHolder) {
         super.processFeedViewHolder(feedViewHolder);
-        final ImageView imageView;
+        final DFeedImageView imageView;
         if (images != null) {
-            imageView = (ImageView) feedViewHolder.findView(R.id.main_image);
+            imageView = (DFeedImageView) feedViewHolder.findView(R.id.main_image);
 
-            ViewTreeObserver vto = imageView.getViewTreeObserver();
-            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                public boolean onPreDraw() {
-                    imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int newHeight = imageView.getMeasuredWidth() * images.large.height / images.large.width;
-                    imageView.getLayoutParams().height = newHeight;
-                    return true;
-                }
-            });
+            float ratio = (float)images.large.height / (float)images.large.width;
+            Log.i("Photo ratio", "" + ratio);
+            imageView.setScale(ratio);
 
             if (imageView != null) {
                 Picasso.with(imageView.getContext()).load(images.large.url).into(imageView);

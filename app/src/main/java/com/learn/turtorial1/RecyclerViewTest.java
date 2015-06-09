@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -87,6 +88,9 @@ public class RecyclerViewTest extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Respond", "Network error");
+                dSwipeRefreshLayout.setRefreshing(false);
+                Toast toast = Toast.makeText(getApplicationContext(),"Network error!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
@@ -118,6 +122,9 @@ public class RecyclerViewTest extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Respond", "Network error");
+                dSwipeRefreshLayout.stopLoadMore();
+                Toast toast = Toast.makeText(getApplicationContext(),"Network error!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
