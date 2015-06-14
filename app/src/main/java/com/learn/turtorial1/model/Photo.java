@@ -9,6 +9,8 @@ import com.learn.turtorial1.R;
 import com.learn.turtorial1.customview.DFeedImageView;
 import com.squareup.picasso.Picasso;
 
+import net.grobas.view.PolygonImageView;
+
 public class Photo extends DAbstractPhoto {
     public Photo() {
         feedLayout = R.layout.feed_photo_layout;
@@ -29,5 +31,12 @@ public class Photo extends DAbstractPhoto {
                 Picasso.with(imageView.getContext()).load(images.large.url).into(imageView);
             }
         }
+
+        PolygonImageView polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_comment);
+        polygonImageView.setVertices(0);
+        polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_like);
+        polygonImageView.setVertices(0);
+        polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_share);
+        polygonImageView.setVertices(0);
     }
 }
