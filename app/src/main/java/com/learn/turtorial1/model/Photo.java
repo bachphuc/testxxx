@@ -32,11 +32,5 @@ public class Photo extends DAbstractPhoto {
             }
         }
 
-        PolygonImageView polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_comment);
-        polygonImageView.setVertices(0);
-        polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_like);
-        polygonImageView.setVertices(0);
-        polygonImageView = (PolygonImageView)feedViewHolder.findView(R.id.bt_feed_share);
-        polygonImageView.setVertices(0);
     }
 }

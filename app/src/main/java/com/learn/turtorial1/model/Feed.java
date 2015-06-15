@@ -1,7 +1,9 @@
 package com.learn.turtorial1.model;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
@@ -46,6 +48,11 @@ public class Feed extends DAbstractFeed {
         textView.setText(user.getTitle());
         textView = (TextView) feedViewHolder.findView(R.id.tvDescription);
         textView.setText(content);
+
+        LinearLayout linearLayout = (LinearLayout)feedViewHolder.findView(R.id.feed_content);
+        if(content.length() == 0){
+            linearLayout.setVisibility(View.GONE);
+        }
 
         ImageView imageView;
         if (user.images != null) {
