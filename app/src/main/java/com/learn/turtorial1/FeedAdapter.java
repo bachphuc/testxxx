@@ -75,6 +75,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         feeds.addAll(data);
     }
 
+    public int getMaxId() {
+        if(feeds.size() == 0){
+            return 0;
+        }
+        Feed feed = feeds.get(0);
+        return feed.feedId;
+    }
+
     @Override
     public int getItemCount() {
         return feeds.size();

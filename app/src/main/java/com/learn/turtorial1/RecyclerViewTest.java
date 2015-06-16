@@ -30,13 +30,15 @@ public class RecyclerViewTest extends ActionBarActivity {
     RecyclerView recyclerView;
     DSwipeRefreshLayout dSwipeRefreshLayout;
     FeedAdapter feedAdapter;
+    int iPage = 0;
+    int iMaxFeedId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view_test);
 
-        recyclerView = (RecyclerView)findViewById(R.id.cardList);
+        recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -44,27 +46,31 @@ public class RecyclerViewTest extends ActionBarActivity {
         feedAdapter = new FeedAdapter(new ArrayList<Feed>());
         recyclerView.setAdapter(feedAdapter);
 
-        dSwipeRefreshLayout = (DSwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        dSwipeRefreshLayout = (DSwipeRefreshLayout) findViewById(R.id.swiperefresh);
         dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                refreshFeed();
             }
         });
 
         dSwipeRefreshLayout.setOnLoadMoreListener(new DSwipeRefreshLayout.LoadMoreListener() {
             @Override
             public void loadMore() {
-                loadMoreData();
+                loadMoreFeed();
             }
         });
 
         dSwipeRefreshLayout.startLoad();
     }
 
-    public void getData() {
+    public void updateMaxFeed() {
+        iMaxFeedId = feedAdapter.getMaxId();
+    }
+
+    public void refreshFeed() {
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1";
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1&args[sAction]=loadnew&args[iMaxFeedId]=" + iMaxFeedId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -79,9 +85,10 @@ public class RecyclerViewTest extends ActionBarActivity {
 
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
                 Log.i("Request", "Complete");
-                if(respond != null) {
+                if (respond != null) {
                     feedAdapter.prependData(respond.data);
                     feedAdapter.notifyDataSetChanged();
+                    updateMaxFeed();
                 }
             }
         }, new Response.ErrorListener() {
@@ -89,7 +96,7 @@ public class RecyclerViewTest extends ActionBarActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Respond", "Network error");
                 dSwipeRefreshLayout.setRefreshing(false);
-                Toast toast = Toast.makeText(getApplicationContext(),"Network error!", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Network error!", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -97,14 +104,14 @@ public class RecyclerViewTest extends ActionBarActivity {
         reqestQueue.add(stringRequest);
     }
 
-    public void loadMoreData() {
+    public void loadMoreFeed() {
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1";
-
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1&args[iPage]=" + iPage;
+        Log.i("Send request", url);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Log.i("RequestRecyclerTest", s);
+                Log.i("Request data", s);
                 dSwipeRefreshLayout.stopLoadMore();
                 Gson gson = new GsonBuilder().create();
 
@@ -113,9 +120,15 @@ public class RecyclerViewTest extends ActionBarActivity {
 
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
                 Log.i("Request", "Complete");
-                if(respond != null) {
-                    feedAdapter.appendData(respond.data);
-                    feedAdapter.notifyDataSetChanged();
+                if (respond != null) {
+                    iPage++;
+                    if (respond.data.size() > 0) {
+                        feedAdapter.appendData(respond.data);
+                        feedAdapter.notifyDataSetChanged();
+                        updateMaxFeed();
+                    } else {
+                        dSwipeRefreshLayout.loadMoreLimit();
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -123,7 +136,7 @@ public class RecyclerViewTest extends ActionBarActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 Log.i("Respond", "Network error");
                 dSwipeRefreshLayout.stopLoadMore();
-                Toast toast = Toast.makeText(getApplicationContext(),"Network error!", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Network error!", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

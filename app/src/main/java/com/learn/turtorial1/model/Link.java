@@ -7,7 +7,7 @@ import com.learn.turtorial1.FeedViewHolder;
 import com.learn.turtorial1.R;
 import com.squareup.picasso.Picasso;
 
-public class Link extends DAbstractLink{
+public class Link extends DAbstractLink {
     public Link() {
         feedLayout = R.layout.feed_link_layout;
     }
@@ -23,11 +23,15 @@ public class Link extends DAbstractLink{
             }
         }
 
-        TextView textView = (TextView)feedViewHolder.findView(R.id.link_title);
-        textView.setText(getTitle());
+        TextView textView = (TextView) feedViewHolder.findView(R.id.link_title);
+        if (textView != null) {
+            textView.setText(getTitle());
+        }
 
-        textView = (TextView)feedViewHolder.findView(R.id.link_description);
-        textView.setText(getDescription());
+        textView = (TextView) feedViewHolder.findView(R.id.link_description);
+        if (textView != null) {
+            textView.setText(getDescription());
+        }
     }
 
 }
