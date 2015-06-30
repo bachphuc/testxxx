@@ -70,7 +70,7 @@ public class RecyclerViewTest extends ActionBarActivity {
 
     public void refreshFeed() {
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1&args[sAction]=loadnew&args[iMaxFeedId]=" + iMaxFeedId;
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&android=1&action=loadnew&max_feed_id=" + iMaxFeedId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -106,7 +106,7 @@ public class RecyclerViewTest extends ActionBarActivity {
 
     public void loadMoreFeed() {
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&args[android]=1&args[iPage]=" + iPage;
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&android=1&page=" + iPage;
         Log.i("Send request", url);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

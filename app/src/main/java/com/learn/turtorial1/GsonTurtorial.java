@@ -82,7 +82,7 @@ public class GsonTurtorial extends ActionBarActivity {
     public void getData() {
         swipeRefreshLayout.setRefreshing(true);
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=user.getItems";
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=user.gets";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -123,7 +123,7 @@ public class GsonTurtorial extends ActionBarActivity {
             return;
         }
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=user.getItems";
+        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=user.gets";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
