@@ -24,7 +24,7 @@ public class DAbstractLink extends DmobileModelBase{
     public int parentUserId = 0;
     
     @SerializedName("is_custom")
-    public Boolean isCustom = false;
+    public int isCustom = 0;
     
     @SerializedName("link")
     public String link ;
@@ -36,16 +36,16 @@ public class DAbstractLink extends DmobileModelBase{
     public String statusInfo ;
     
     @SerializedName("privacy")
-    public Boolean privacy ;
+    public int privacy ;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment ;
+    public int privacyComment ;
     
     @SerializedName("time_stamp")
     public int timeStamp ;
     
     @SerializedName("has_embed")
-    public Boolean hasEmbed = false;
+    public int hasEmbed = 0;
     
     @SerializedName("total_comment")
     public int totalComment = 0;

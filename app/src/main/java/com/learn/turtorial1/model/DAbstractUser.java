@@ -18,10 +18,10 @@ public class DAbstractUser extends DmobileModelBase{
     public int userGroupId ;
     
     @SerializedName("status_id")
-    public Boolean statusId = false;
+    public int statusId = 0;
     
     @SerializedName("view_id")
-    public Boolean viewId = false;
+    public int viewId = 0;
     
     @SerializedName("user_name")
     public String userName ;
@@ -39,7 +39,7 @@ public class DAbstractUser extends DmobileModelBase{
     public String email ;
     
     @SerializedName("gender")
-    public Boolean gender = false;
+    public int gender = 0;
     
     @SerializedName("birthday")
     public String birthday ;
@@ -60,7 +60,7 @@ public class DAbstractUser extends DmobileModelBase{
     public String timeZone ;
     
     @SerializedName("dst_check")
-    public Boolean dstCheck = false;
+    public int dstCheck = 0;
     
     @SerializedName("joined")
     public int joined ;
@@ -75,25 +75,25 @@ public class DAbstractUser extends DmobileModelBase{
     public String userImage ;
     
     @SerializedName("hide_tip")
-    public Boolean hideTip = false;
+    public int hideTip = 0;
     
     @SerializedName("status")
     public String status ;
     
     @SerializedName("footer_bar")
-    public Boolean footerBar = false;
+    public int footerBar = 0;
     
     @SerializedName("invite_user_id")
     public int inviteUserId = 0;
     
     @SerializedName("im_beep")
-    public Boolean imBeep = false;
+    public int imBeep = 0;
     
     @SerializedName("im_hide")
-    public Boolean imHide = false;
+    public int imHide = 0;
     
     @SerializedName("is_invisible")
-    public Boolean isInvisible = false;
+    public int isInvisible = 0;
     
     @SerializedName("total_spam")
     public int totalSpam = 0;
@@ -102,7 +102,7 @@ public class DAbstractUser extends DmobileModelBase{
     public String lastIpAddress ;
     
     @SerializedName("feed_sort")
-    public Boolean feedSort = false;
+    public int feedSort = 0;
     
 
 }

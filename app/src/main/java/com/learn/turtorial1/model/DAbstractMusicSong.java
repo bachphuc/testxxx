@@ -12,19 +12,19 @@ public class DAbstractMusicSong extends DmobileModelBase{
     public int songId ;
     
     @SerializedName("view_id")
-    public Boolean viewId = false;
+    public int viewId = 0;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("is_featured")
-    public Boolean isFeatured = false;
+    public int isFeatured = 0;
     
     @SerializedName("is_sponsor")
-    public Boolean isSponsor = false;
+    public int isSponsor = 0;
     
     @SerializedName("album_id")
     public int albumId ;
@@ -39,13 +39,13 @@ public class DAbstractMusicSong extends DmobileModelBase{
     public String songPath ;
     
     @SerializedName("explicit")
-    public Boolean explicit ;
+    public int explicit ;
     
     @SerializedName("duration")
     public String duration ;
     
     @SerializedName("ordering")
-    public Boolean ordering = false;
+    public int ordering = 0;
     
     @SerializedName("total_play")
     public int totalPlay = 0;

@@ -13,13 +13,16 @@ import java.lang.reflect.Type;
  */
 
 public class DAbstractItemObject {
-    protected String itemType = "";
-    protected String jsonData = "";
+    protected String itemType;
+    protected String jsonData;
 
     public DmobileModelBase getItem() {
+		if(itemType == null || jsonData == null){
+			return null;
+		}
         Gson gson = new GsonBuilder().create();
         Type type;
-		Log.i("ItemType", itemType);
+
         switch (itemType) {
 		case "User":
 			type = new TypeToken<User>() {
@@ -71,6 +74,11 @@ public class DAbstractItemObject {
 			}.getType();
 			Video objVideo = gson.fromJson(jsonData, type);
 			return objVideo;
+		case "Comment":
+			type = new TypeToken<Comment>() {
+			}.getType();
+			Comment objComment = gson.fromJson(jsonData, type);
+			return objComment;
             default:
                 return new DmobileModelBase();
         }

@@ -15,7 +15,7 @@ public class DAbstractPages extends DmobileModelBase{
     public int appId = 0;
     
     @SerializedName("view_id")
-    public Boolean viewId = false;
+    public int viewId = 0;
     
     @SerializedName("type_id")
     public int typeId ;
@@ -27,7 +27,7 @@ public class DAbstractPages extends DmobileModelBase{
     public int userId ;
     
     @SerializedName("reg_method")
-    public Boolean regMethod = false;
+    public int regMethod = 0;
     
     @SerializedName("landing_page")
     public String landingPage ;
@@ -48,7 +48,7 @@ public class DAbstractPages extends DmobileModelBase{
     public int totalComment = 0;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("designer_style_id")
     public int designerStyleId = 0;
@@ -69,7 +69,7 @@ public class DAbstractPages extends DmobileModelBase{
     public String locationName ;
     
     @SerializedName("use_timeline")
-    public Boolean useTimeline = false;
+    public int useTimeline = 0;
     
     @SerializedName("text")
     public String text ;

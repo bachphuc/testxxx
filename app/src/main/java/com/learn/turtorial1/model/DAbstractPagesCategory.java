@@ -18,10 +18,10 @@ public class DAbstractPagesCategory extends DmobileModelBase{
     public String name ;
     
     @SerializedName("page_type")
-    public Boolean pageType = false;
+    public int pageType = 0;
     
     @SerializedName("is_active")
-    public Boolean isActive = true;
+    public int isActive = 1;
     
     @SerializedName("ordering")
     public int ordering = 0;

@@ -15,10 +15,10 @@ public class DAbstractUserStatus extends DmobileModelBase{
     public int userId ;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("content")
     public String content ;

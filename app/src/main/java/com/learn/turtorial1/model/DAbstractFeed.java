@@ -15,10 +15,10 @@ public class DAbstractFeed extends DmobileModelBase{
     public int appId = 0;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("type_id")
     public String typeId ;
@@ -48,7 +48,7 @@ public class DAbstractFeed extends DmobileModelBase{
     public int timeUpdate = 0;
     
     @SerializedName("is_delete")
-    public Boolean isDelete = false;
+    public int isDelete = 0;
     
     @SerializedName("expire_time")
     public int expireTime = 0;

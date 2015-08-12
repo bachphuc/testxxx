@@ -1,17 +1,12 @@
 package com.learn.turtorial1.model;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.annotations.SerializedName;
 import com.learn.turtorial1.FeedViewHolder;
 import com.learn.turtorial1.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.squareup.picasso.Picasso;
 
 import net.grobas.view.PolygonImageView;
@@ -19,7 +14,7 @@ import net.grobas.view.PolygonImageView;
 public class Feed extends DAbstractFeed {
     private boolean bItemReady = false;
 
-    public DmobileModelBase getItem() {
+    public DmobileModelBase getAttachment() {
         if (item != null && bItemReady == true) {
             return item;
         }
@@ -33,7 +28,7 @@ public class Feed extends DAbstractFeed {
 
     @Override
     public int getFeedLayout() {
-        DmobileModelBase dmobileModelBase = getItem();
+        DmobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
             return dmobileModelBase.getFeedLayout();
         }
@@ -64,7 +59,7 @@ public class Feed extends DAbstractFeed {
             }
         }
 
-        DmobileModelBase dmobileModelBase = getItem();
+        DmobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
             dmobileModelBase.processFeedViewHolder(feedViewHolder);
         }

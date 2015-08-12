@@ -21,16 +21,16 @@ public class DAbstractBlog extends DmobileModelBase{
     public int timeUpdate = 0;
     
     @SerializedName("is_approved")
-    public Boolean isApproved ;
+    public int isApproved ;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("post_status")
-    public Boolean postStatus ;
+    public int postStatus ;
     
     @SerializedName("total_comment")
     public int totalComment = 0;

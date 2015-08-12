@@ -15,7 +15,7 @@ public class DAbstractPhoto extends DmobileModelBase{
     public int albumId = 0;
     
     @SerializedName("view_id")
-    public Boolean viewId = false;
+    public int viewId = 0;
     
     @SerializedName("module_id")
     public String moduleId ;
@@ -24,13 +24,13 @@ public class DAbstractPhoto extends DmobileModelBase{
     public int groupId = 0;
     
     @SerializedName("type_id")
-    public Boolean typeId = false;
+    public int typeId = 0;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("user_id")
     public int userId ;
@@ -42,13 +42,13 @@ public class DAbstractPhoto extends DmobileModelBase{
     public String destination ;
     
     @SerializedName("mature")
-    public Boolean mature = false;
+    public int mature = 0;
     
     @SerializedName("allow_comment")
-    public Boolean allowComment = false;
+    public int allowComment = 0;
     
     @SerializedName("allow_rate")
-    public Boolean allowRate = false;
+    public int allowRate = 0;
     
     @SerializedName("time_stamp")
     public int timeStamp ;
@@ -78,22 +78,22 @@ public class DAbstractPhoto extends DmobileModelBase{
     public int totalDislike = 0;
     
     @SerializedName("is_featured")
-    public Boolean isFeatured = false;
+    public int isFeatured = 0;
     
     @SerializedName("is_cover")
-    public Boolean isCover = false;
+    public int isCover = 0;
     
     @SerializedName("allow_download")
-    public Boolean allowDownload = false;
+    public int allowDownload = 0;
     
     @SerializedName("is_sponsor")
-    public Boolean isSponsor = false;
+    public int isSponsor = 0;
     
     @SerializedName("ordering")
     public int ordering = 0;
     
     @SerializedName("is_profile_photo")
-    public Boolean isProfilePhoto = false;
+    public int isProfilePhoto = 0;
     
     @SerializedName("user")
     public User user ;

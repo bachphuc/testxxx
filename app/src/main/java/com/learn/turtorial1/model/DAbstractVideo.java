@@ -12,22 +12,22 @@ public class DAbstractVideo extends DmobileModelBase{
     public int videoId ;
     
     @SerializedName("in_process")
-    public Boolean inProcess = false;
+    public int inProcess = 0;
     
     @SerializedName("is_stream")
-    public Boolean isStream = false;
+    public int isStream = 0;
     
     @SerializedName("is_featured")
-    public Boolean isFeatured = false;
+    public int isFeatured = 0;
     
     @SerializedName("is_spotlight")
-    public Boolean isSpotlight = false;
+    public int isSpotlight = 0;
     
     @SerializedName("is_sponsor")
-    public Boolean isSponsor = false;
+    public int isSponsor = 0;
     
     @SerializedName("view_id")
-    public Boolean viewId = false;
+    public int viewId = 0;
     
     @SerializedName("module_id")
     public String moduleId ;
@@ -36,10 +36,10 @@ public class DAbstractVideo extends DmobileModelBase{
     public int itemId = 0;
     
     @SerializedName("privacy")
-    public Boolean privacy = false;
+    public int privacy = 0;
     
     @SerializedName("privacy_comment")
-    public Boolean privacyComment = false;
+    public int privacyComment = 0;
     
     @SerializedName("user_id")
     public int userId = 0;
@@ -87,7 +87,7 @@ public class DAbstractVideo extends DmobileModelBase{
     public int totalView = 0;
     
     @SerializedName("is_viewed")
-    public Boolean isViewed = false;
+    public int isViewed = 0;
     
     @SerializedName("custom_v_id")
     public int customVId = 0;
