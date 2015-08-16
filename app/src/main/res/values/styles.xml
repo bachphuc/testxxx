@@ -4,6 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+    </style>
 	
 	<style name="MainLayout">
         <item name="android:orientation">vertical</item>
@@ -20,7 +27,6 @@
     <style name="LeftButtonBaseStyle">
         <item name="android:textColor">@color/black_button</item>
         <item name="android:textStyle">bold</item>
-        <!--<item name="android:textAllCaps">true</item>-->
         <item name="android:textSize">@dimen/button_size</item>
         <item name="android:maxLines">1</item>
     </style>
@@ -28,7 +34,6 @@
     <style name="RightButtonBaseStyle" parent="@style/LeftButtonBaseStyle">
         <item name="android:textColor">@color/orange_button</item>
         <item name="android:textStyle">bold</item>
-        <!--<item name="android:textAllCaps">true</item>-->
         <item name="android:textSize">@dimen/button_size</item>
         <item name="android:maxLines">1</item>
     </style>
@@ -51,7 +56,6 @@
 
         <item name="android:textColor">#fff</item>
         <item name="android:textSize">@dimen/bigger_title_size</item>
-        <!--<item name="android:fontFamily">sans-serif-light</item>-->
 
         <item name="android:gravity">bottom|left</item>
         <item name="android:paddingLeft">@dimen/big_padding</item>

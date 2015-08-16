@@ -14,4 +14,6 @@
     <string name="menu_refresh">Refresh Layout</string>
     <string name="title_activity_load_more">LoadMore</string>
     <string name="feed_image">Feed Image</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="app_title">DMOBI</string>
 </resources>

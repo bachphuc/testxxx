@@ -1,5 +1,6 @@
 package com.learn.turtorial1;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +54,14 @@ public class MainActivity extends ActionBarActivity  implements ArticleFragment.
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.left_drawer, leftMenuFragment).commit();
+
+//        ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Login....");
+//        progressDialog.setMessage("Wait some minute...");
+//        progressDialog.show();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
