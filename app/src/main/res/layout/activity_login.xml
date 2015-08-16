@@ -11,8 +11,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="20dp"
         android:background="@drawable/shadow"
+        android:elevation="4dp"
+        android:translationZ="4dp"
         android:layout_gravity="center">
 
         <RelativeLayout
