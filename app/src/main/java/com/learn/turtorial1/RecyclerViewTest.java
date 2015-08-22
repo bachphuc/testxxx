@@ -27,6 +27,7 @@ import com.learn.turtorial1.service.SFeed;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class RecyclerViewTest extends ActionBarActivity {
@@ -108,51 +109,13 @@ public class RecyclerViewTest extends ActionBarActivity {
     }
 
     public void loadMoreFeed() {
-        /*RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&android=1&page=" + iPage;
-        Log.i("Send DRequest", url);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Log.i("DRequest data", s);
-                dSwipeRefreshLayout.stopLoadMore();
-                Gson gson = new GsonBuilder().create();
-
-                Type type = new TypeToken<RequestResultObject<Feed>>() {
-                }.getType();
-
-                RequestResultObject<Feed> respond = gson.fromJson(s, type);
-                Log.i("DRequest", "Complete");
-                if (respond != null) {
-                    iPage++;
-                    if (respond.data.size() > 0) {
-                        feedAdapter.appendData(respond.data);
-                        feedAdapter.notifyDataSetChanged();
-                        updateMaxFeed();
-                    } else {
-                        dSwipeRefreshLayout.loadMoreLimit();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.i("Respond", "Network error");
-                dSwipeRefreshLayout.stopLoadMore();
-                Toast toast = Toast.makeText(getApplicationContext(), "Network error!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
-        reqestQueue.add(stringRequest);*/
-
-        SFeed feedService = (SFeed) DMobi.getService("SFeed'");
+        SFeed feedService = (SFeed) DMobi.getService("SFeed");
         feedService.getFeeds(new Dresponse.Complete() {
             @Override
             public void onComplete(Object o) {
                 dSwipeRefreshLayout.stopLoadMore();
                 if(o != null){
-                    ArrayList<Feed> feeds = (ArrayList<Feed>) o;
+                    List<Feed> feeds = (ArrayList<Feed>) o;
                     iPage++;
                     if (feeds.size() > 0) {
                         feedAdapter.appendData(feeds);

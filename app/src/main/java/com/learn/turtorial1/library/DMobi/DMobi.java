@@ -29,10 +29,10 @@ public class DMobi {
         if(sBase != null){
             return sBase;
         }
-
+        String sClass = "com.learn.turtorial1.service." + str;
         Class c= null;
         try {
-            c = Class.forName(str);
+            c = Class.forName(sClass);
             try {
                 sBase = (SBase) c.newInstance();
                 bases.put(str, sBase);
