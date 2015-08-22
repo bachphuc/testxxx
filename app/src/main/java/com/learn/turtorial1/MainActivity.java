@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -59,6 +60,9 @@ public class MainActivity extends ActionBarActivity  implements ArticleFragment.
 //        progressDialog.setTitle("Login....");
 //        progressDialog.setMessage("Wait some minute...");
 //        progressDialog.show();
+
+        // set application context config
+        DConfig.setContext(getApplicationContext());
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -24,7 +24,7 @@ public class DAbstractItemObject {
         Type type;
 
         switch (itemType) {
-		case "User":
+		case "SUser":
 			type = new TypeToken<User>() {
 			}.getType();
 			User objUser = gson.fromJson(jsonData, type);

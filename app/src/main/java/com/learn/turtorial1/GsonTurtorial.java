@@ -87,7 +87,7 @@ public class GsonTurtorial extends ActionBarActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Log.i("Request", s);
+                Log.i("DRequest", s);
 
                 Gson gson = new GsonBuilder().create();
                 RequestResultObject<User> userRequestResultObject = new RequestResultObject<User>();
@@ -129,7 +129,7 @@ public class GsonTurtorial extends ActionBarActivity {
             @Override
             public void onResponse(String s) {
                 swipeRefreshLayout.stopLoadMore();
-                Log.i("Request", s);
+                Log.i("DRequest", s);
                 Gson gson = new GsonBuilder().create();
 
                 Type type = new TypeToken<RequestResultObject<User>>() {

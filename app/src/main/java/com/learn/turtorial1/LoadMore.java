@@ -92,7 +92,7 @@ public class LoadMore extends ActionBarActivity {
             @Override
             public void onResponse(String s) {
                 dSwipeRefreshLayout.setRefreshing(false);
-                Log.i("Request", s);
+                Log.i("DRequest", s);
 
                 Gson gson = new GsonBuilder().create();
 
@@ -100,7 +100,7 @@ public class LoadMore extends ActionBarActivity {
                 }.getType();
 
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
-                Log.i("Request", "Complete");
+                Log.i("DRequest", "Complete");
                 if(respond != null) {
                     feedAdapter.prependData(respond.data);
                     feedAdapter.notifyDataSetChanged();
@@ -131,7 +131,7 @@ public class LoadMore extends ActionBarActivity {
                 }.getType();
 
                 RequestResultObject<Feed> respond = gson.fromJson(s, type);
-                Log.i("Request", "Complete");
+                Log.i("DRequest", "Complete");
                 if(respond != null) {
                     feedAdapter.appendData(respond.data);
                     feedAdapter.notifyDataSetChanged();
