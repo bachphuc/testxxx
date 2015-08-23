@@ -36,6 +36,9 @@ public class RecyclerViewTest extends ActionBarActivity {
     FeedAdapter feedAdapter;
     int iPage = 0;
     int iMaxFeedId = 0;
+    SFeed sFeed = null;
+
+    Dresponse.Complete completeResponse = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,29 @@ public class RecyclerViewTest extends ActionBarActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        feedAdapter = new FeedAdapter(new ArrayList<Feed>());
+
+        sFeed = (SFeed) DMobi.getService(SFeed.class);
+
+        feedAdapter = new FeedAdapter(sFeed.getData());
         recyclerView.setAdapter(feedAdapter);
+
+        completeResponse = new Dresponse.Complete() {
+            @Override
+            public void onComplete(Object o) {
+                dSwipeRefreshLayout.setRefreshing(false);
+                dSwipeRefreshLayout.stopLoadMore();
+                if (o != null) {
+                    List<Feed> feeds = (ArrayList<Feed>) o;
+                    iPage++;
+                    if (feeds.size() > 0) {
+                        feedAdapter.notifyDataSetChanged();
+                        updateMaxFeed();
+                    } else {
+                        dSwipeRefreshLayout.loadMoreLimit();
+                    }
+                }
+            }
+        };
 
         dSwipeRefreshLayout = (DSwipeRefreshLayout) findViewById(R.id.swiperefresh);
         dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
@@ -73,60 +97,13 @@ public class RecyclerViewTest extends ActionBarActivity {
     }
 
     public void refreshFeed() {
-        RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://dmobi.pe.hu/module/dmobile/api.php?token=b3cff55d83b4367ade5413&api=feed.gets&android=1&action=loadnew&max_feed_id=" + iMaxFeedId;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                dSwipeRefreshLayout.setRefreshing(false);
-                Log.i("DRequest", s);
-
-                Gson gson = new GsonBuilder().create();
-
-                Type type = new TypeToken<RequestResultObject<Feed>>() {
-                }.getType();
-
-                RequestResultObject<Feed> respond = gson.fromJson(s, type);
-                Log.i("DRequest", "Complete");
-                if (respond != null) {
-                    feedAdapter.prependData(respond.data);
-                    feedAdapter.notifyDataSetChanged();
-                    updateMaxFeed();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.i("Respond", "Network error");
-                dSwipeRefreshLayout.setRefreshing(false);
-                Toast toast = Toast.makeText(getApplicationContext(), "Network error!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
-        reqestQueue.add(stringRequest);
+        SFeed feedService = (SFeed) DMobi.getService("SFeed");
+        feedService.loadNewFeeds(this.completeResponse);
     }
 
     public void loadMoreFeed() {
         SFeed feedService = (SFeed) DMobi.getService("SFeed");
-        feedService.getFeeds(new Dresponse.Complete() {
-            @Override
-            public void onComplete(Object o) {
-                dSwipeRefreshLayout.stopLoadMore();
-                if(o != null){
-                    List<Feed> feeds = (ArrayList<Feed>) o;
-                    iPage++;
-                    if (feeds.size() > 0) {
-                        feedAdapter.appendData(feeds);
-                        feedAdapter.notifyDataSetChanged();
-                        updateMaxFeed();
-                    } else {
-                        dSwipeRefreshLayout.loadMoreLimit();
-                    }
-                }
-            }
-        });
+        feedService.loadMoreFeeds(this.completeResponse);
     }
 
     @Override

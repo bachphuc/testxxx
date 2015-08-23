@@ -41,7 +41,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
                 .displayer(new RoundedBitmapDisplayer(64)).build();
 
         animateImageListener = new AnimateImageListener();
-
     }
 
     @Override

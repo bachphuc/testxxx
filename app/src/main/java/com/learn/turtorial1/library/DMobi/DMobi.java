@@ -1,8 +1,10 @@
 package com.learn.turtorial1.library.dmobi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.learn.turtorial1.library.dmobi.request.DRequest;
+import com.learn.turtorial1.model.DmobileModelBase;
 import com.learn.turtorial1.service.SBase;
 
 import java.util.ArrayList;
@@ -24,18 +26,19 @@ public class DMobi {
 
     private static Hashtable<String,SBase> bases;
 
-    public static SBase getService(String str){
-        SBase sBase = bases.get(str);
+    public static SBase getService(String service, String key){
+        String serviceKey = service + "_" + key;
+        SBase sBase = bases.get(serviceKey);
         if(sBase != null){
             return sBase;
         }
-        String sClass = "com.learn.turtorial1.service." + str;
+        String sClass = "com.learn.turtorial1.service." + service;
         Class c= null;
         try {
             c = Class.forName(sClass);
             try {
                 sBase = (SBase) c.newInstance();
-                bases.put(str, sBase);
+                bases.put(serviceKey, sBase);
                 return sBase;
             } catch (InstantiationException e) {
                 return null;
@@ -45,6 +48,18 @@ public class DMobi {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    public static SBase getService(String service){
+        return DMobi.getService(service, "");
+    }
+
+    public static SBase getService(Class aClass) {
+        return DMobi.getService(aClass.getSimpleName());
+    }
+
+    public static SBase getService(Class aClass, String key) {
+        return DMobi.getService(aClass.getSimpleName(), key);
     }
 
     public static DRequest getRequest(){

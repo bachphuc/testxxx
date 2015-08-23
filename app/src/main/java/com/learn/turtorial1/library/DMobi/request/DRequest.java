@@ -1,6 +1,7 @@
 package com.learn.turtorial1.library.dmobi.request;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Cache;
 import com.android.volley.RequestQueue;
@@ -44,12 +45,13 @@ public class DRequest {
         if(requestParams.size() == 0){
             return "";
         }
-        String str = DConfig.getApiUrl() + "?api= " + this.api + "&token=" + DConfig.getToken() + "&";
+        String str = DConfig.getApiUrl() + "?api=" + this.api + "&token=" + DConfig.getToken() + "&";
         for(int i = 0; i < requestParams.size(); i++){
             RequestParam rq = requestParams.get(i);
             str+= rq.key + "=" + rq.value.toString() + "&";
         }
         str = Utils.trimAll(str, ',');
+        Log.i("String URL Request", str);
         return str;
     }
 
