@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity  implements ArticleFragment.
         ImageLoader.getInstance().init(config.build());
 
         ArticleFragment articleFragment = new ArticleFragment();
+
         articleFragment.setArguments(getIntent().getExtras());
 
         LeftMenuFragment leftMenuFragment = new LeftMenuFragment();

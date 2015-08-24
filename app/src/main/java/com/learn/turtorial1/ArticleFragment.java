@@ -1,5 +1,6 @@
 package com.learn.turtorial1;
 
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,12 +8,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -23,7 +28,7 @@ import android.widget.Button;
  * Use the {@link ArticleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ArticleFragment extends Fragment {
+public class ArticleFragment extends Fragment implements android.support.v7.app.ActionBar.TabListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,6 +37,9 @@ public class ArticleFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ViewPager viewPager;
+    AppViewPagerAdapter appViewPagerAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -71,7 +79,9 @@ public class ArticleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_article, container, false);
-        Button button = (Button) view.findViewById(R.id.bt_show_cyclerview);
+
+
+        /*Button button = (Button) view.findViewById(R.id.bt_show_cyclerview);
 
         button.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,7 +116,43 @@ public class ArticleFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
             }
+        });*/
+
+        appViewPagerAdapter = new AppViewPagerAdapter(getFragmentManager());
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        viewPager.setAdapter(appViewPagerAdapter);
+
+        // final ActionBar actionBar = getActivity().getActionBar();
+        final ActionBar actionBar=((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
+
+        // Specify that the Home/Up button should not be enabled, since there is no hierarchical
+        // parent.
+        actionBar.setHomeButtonEnabled(false);
+
+        for(int i = 0; i < appViewPagerAdapter.getCount(); i ++){
+            actionBar.addTab(actionBar.newTab().setText(appViewPagerAdapter.getPageTitle(i))
+                    .setTabListener(this));
+        }
+
         return view;
     }
 
@@ -134,6 +180,21 @@ public class ArticleFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -147,6 +208,38 @@ public class ArticleFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    public static class AppViewPagerAdapter extends FragmentPagerAdapter {
+        public AppViewPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            final int pos = position;
+            Fragment fragment = new Fragment() {
+                @Override
+                public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                         Bundle savedInstanceState) {
+                    View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
+                    Bundle args = getArguments();
+                    ((TextView) rootView.findViewById(R.id.viewpage_title)).setText("View page:" + pos);
+                    return rootView;
+                }
+            };
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Section " + (position + 1);
+        }
     }
 
 }
