@@ -4,33 +4,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.learn.turtorial1.customview.DSwipeRefreshLayout;
 import com.learn.turtorial1.library.dmobi.DMobi;
 import com.learn.turtorial1.library.dmobi.request.Dresponse;
 import com.learn.turtorial1.model.Feed;
-import com.learn.turtorial1.model.RequestResultObject;
 import com.learn.turtorial1.service.SFeed;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecyclerViewTest extends ActionBarActivity {
+public class NewfeedActitity extends ActionBarActivity {
     RecyclerView recyclerView;
     DSwipeRefreshLayout dSwipeRefreshLayout;
     FeedAdapter feedAdapter;
@@ -43,7 +30,7 @@ public class RecyclerViewTest extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycler_view_test);
+        setContentView(R.layout.activity_newfeed);
 
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);

@@ -1,21 +1,16 @@
 package com.learn.turtorial1;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
+import com.learn.turtorial1.ArticleFragment.OnFragmentInteractionListener;
+import com.learn.turtorial1.fragment.NewfeedFragment;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,7 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 
-public class MainActivity extends ActionBarActivity  implements ArticleFragment.OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity  implements OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener, NewfeedFragment.OnFragmentInteractionListener{
     private DrawerLayout drawerLayout;
 
     @Override

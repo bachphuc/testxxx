@@ -2,11 +2,9 @@ package com.learn.turtorial1;
 
 import android.support.v7.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -14,10 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+
+import com.learn.turtorial1.fragment.NewfeedFragment;
 
 
 /**
@@ -86,7 +84,7 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RecyclerViewTest.class);
+                Intent intent = new Intent(getActivity(), NewfeedActitity.class);
                 startActivity(intent);
             }
         });
@@ -218,16 +216,23 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
         @Override
         public Fragment getItem(int position) {
             final int pos = position;
-            Fragment fragment = new Fragment() {
-                @Override
-                public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                         Bundle savedInstanceState) {
-                    View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
-                    Bundle args = getArguments();
-                    ((TextView) rootView.findViewById(R.id.viewpage_title)).setText("View page:" + pos);
-                    return rootView;
-                }
-            };
+            Fragment fragment;
+            if(position == 0){
+                fragment = new NewfeedFragment();
+            }
+            else{
+                fragment = new Fragment() {
+                    @Override
+                    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                             Bundle savedInstanceState) {
+                        View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
+                        Bundle args = getArguments();
+                        ((TextView) rootView.findViewById(R.id.viewpage_title)).setText("View page:" + pos);
+                        return rootView;
+                    }
+                };
+            }
+
             return fragment;
         }
 

@@ -26,7 +26,7 @@
             android:label="@string/title_activity_display_message" >
         </activity>
         <activity
-            android:name=".RecyclerViewTest"
+            android:name=".NewfeedActitity"
             android:label="@string/title_activity_recycler_view_test" >
         </activity>
         <activity
