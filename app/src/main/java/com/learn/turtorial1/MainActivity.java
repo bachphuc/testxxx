@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,9 @@ public class MainActivity extends ActionBarActivity  implements OnFragmentIntera
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getSupportActionBar().hide();
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
+//        setSupportActionBar(toolbar);
 
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext());
         config.threadPriority(Thread.NORM_PRIORITY - 2);
@@ -46,6 +50,9 @@ public class MainActivity extends ActionBarActivity  implements OnFragmentIntera
         leftMenuFragment.setArguments(getIntent().getExtras());
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        // Set full height app
+        drawerLayout.setFitsSystemWindows(true);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, articleFragment).commit();
 
