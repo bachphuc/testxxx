@@ -9,18 +9,18 @@
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\library-2.4.0-1839545b8b8db9ed18f47d1b36c288fd2589dfe1.jar" />
     </item>
     <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.2.1\classes.jar"
+        jar="C:\Users\09520_000\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-lang3\3.3.2\90a3822c38ec8c996e84c16a3477ef632cbc87a3\commons-lang3-3.3.2.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-83369781163beacf48546d03f8d405a9233f3bfd.jar" />
+        sha1="90a3822c38ec8c996e84c16a3477ef632cbc87a3">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\commons-lang3-3.3.2-4b52bf0574d0e3e68911cb14f8ca32e4f6314470.jar" />
     </item>
     <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\libs\volley.jar"
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.0\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="787028fe4fba6c31745e22bb998cafb08db05a5a">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\volley-17594d819052a5738c04e872b270d5b7fb6d0b57.jar" />
+        sha1="40e7757d9b06db670062ddb3cf5b30c129b2fd8c">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-7bfef88ce799813f01c17cc99b8ec69b8db038c5.jar" />
     </item>
     <item
         jar="C:\Users\09520_000\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
@@ -30,18 +30,60 @@
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-9eb536d457e39f781715edb468371c3c74d96047.jar" />
     </item>
     <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\Turtorial1\polygonimageview\unspecified\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="67e38cc6c11192e14d87e0e799e40549be10c83c">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-b08f6e05f0d0ce664a2db1fbfe19734af73b04a1.jar" />
-    </item>
-    <item
         jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-b4d552bd180bbd91f5b29cf8230972dc5e7985f9.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-820574ddd686ea0da1532887ee9fd09d1818e7db.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-fd415b81c103ae84fbe462174d0642233a23a8a3.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\libs\internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.0-8970528249762fddab86ef88b98770218fca1fea.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\libs\volley.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="787028fe4fba6c31745e22bb998cafb08db05a5a">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\volley-17594d819052a5738c04e872b270d5b7fb6d0b57.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\Turtorial1\polygonimageview\unspecified\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="794c90f6121f497cc759638a3e9c9a36da0616ea">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-b08f6e05f0d0ce664a2db1fbfe19734af73b04a1.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ccbc26be2c465c622a48310e8092241b01abe80">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-fadbb183ebd2e03bcfb8d65c7447e9ad1ae0df1f.jar" />
+    </item>
+    <item
+        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\palette-v7\22.2.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="060b30a619b8d3ba053e1d7dc08b3fdf0dd81530">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-f195f8fa988f8d5ff24f8ed3d460f5e5ab66cbbf.jar" />
     </item>
     <item
         jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\libs\gson-2.3.1.jar"
@@ -51,32 +93,11 @@
         <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\gson-2.3.1-8db6e8da2138c6456f133f9fe6be88b81cb6a7d1.jar" />
     </item>
     <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.1\classes.jar"
+        jar="G:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.0\support-annotations-23.0.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3abb4b88f5a8a0584a9b01d3170d7165f12f8588">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-49a598f1042847c5093bcefcdf3c8612f107de37.jar" />
-    </item>
-    <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\classes-71e3a190502029d20fb385ba76d9d6014cb82edd.jar" />
-    </item>
-    <item
-        jar="G:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-b56006890b150d58d214d773d8e6c862f76ef086.jar" />
-    </item>
-    <item
-        jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\libs\internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-9163a1e6c64e61f24b47b0430df4ce3cb3ad79e8.jar" />
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.0-4f8e4497a8b37bf5b68654abb0d004f95ad1c39e.jar" />
     </item>
     <item
         jar="C:\Users\09520_000\AndroidStudioProjects\Turtorial1\app\build\intermediates\exploded-aar\com.malinskiy\superrecyclerview\1.1.0\classes.jar"
