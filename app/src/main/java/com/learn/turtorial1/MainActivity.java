@@ -2,6 +2,7 @@ package com.learn.turtorial1;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.learn.turtorial1.ArticleFragment.OnFragmentInteractionListener;
+import com.learn.turtorial1.MainFragment.OnFragmentInteractionListener;
 import com.learn.turtorial1.fragment.NewfeedFragment;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -22,13 +23,20 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 public class MainActivity extends ActionBarActivity  implements OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener, NewfeedFragment.OnFragmentInteractionListener{
     private DrawerLayout drawerLayout;
 
+    TabLayout tabLayout;
+
+    public TabLayout getTabLayout(){
+        return tabLayout;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getSupportActionBar().hide();
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
-//        setSupportActionBar(toolbar);
+        // getSupportActionBar().hide();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
+        setSupportActionBar(toolbar);
+
+        tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
 
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext());
         config.threadPriority(Thread.NORM_PRIORITY - 2);
@@ -42,9 +50,9 @@ public class MainActivity extends ActionBarActivity  implements OnFragmentIntera
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
 
-        ArticleFragment articleFragment = new ArticleFragment();
+        MainFragment mainFragment = new MainFragment();
 
-        articleFragment.setArguments(getIntent().getExtras());
+        mainFragment.setArguments(getIntent().getExtras());
 
         LeftMenuFragment leftMenuFragment = new LeftMenuFragment();
         leftMenuFragment.setArguments(getIntent().getExtras());
@@ -54,7 +62,7 @@ public class MainActivity extends ActionBarActivity  implements OnFragmentIntera
         drawerLayout.setFitsSystemWindows(true);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, articleFragment).commit();
+                .add(R.id.fragment_container, mainFragment).commit();
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.left_drawer, leftMenuFragment).commit();

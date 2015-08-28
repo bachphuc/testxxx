@@ -1,5 +1,6 @@
 package com.learn.turtorial1;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.net.Uri;
@@ -21,12 +22,12 @@ import com.learn.turtorial1.fragment.NewfeedFragment;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ArticleFragment.OnFragmentInteractionListener} interface
+ * {@link MainFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ArticleFragment#newInstance} factory method to
+ * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ArticleFragment extends Fragment implements android.support.v7.app.ActionBar.TabListener {
+public class MainFragment extends Fragment implements android.support.v7.app.ActionBar.TabListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,11 +48,11 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ArticleFragment.
+     * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ArticleFragment newInstance(String param1, String param2) {
-        ArticleFragment fragment = new ArticleFragment();
+    public static MainFragment newInstance(String param1, String param2) {
+        MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,7 +60,7 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
         return fragment;
     }
 
-    public ArticleFragment() {
+    public MainFragment() {
         // Required empty public constructor
     }
 
@@ -121,7 +122,7 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
         viewPager.setAdapter(appViewPagerAdapter);
 
         // final ActionBar actionBar = getActivity().getActionBar();
-        final ActionBar actionBar=((ActionBarActivity) getActivity()).getSupportActionBar();
+        /*final ActionBar actionBar=((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -149,8 +150,17 @@ public class ArticleFragment extends Fragment implements android.support.v7.app.
         for(int i = 0; i < appViewPagerAdapter.getCount(); i ++){
             actionBar.addTab(actionBar.newTab().setText(appViewPagerAdapter.getPageTitle(i))
                     .setTabListener(this));
-        }
+        }*/
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        TabLayout tabLayout = mainActivity.getTabLayout();
+        TabLayout.Tab tab;
+        for(int i = 0; i< appViewPagerAdapter.getCount() ; i++){
+            tab = tabLayout.newTab();
+            tab.setIcon(R.drawable.ic_favorite_black_24dp);
+            tab.setText(appViewPagerAdapter.getPageTitle(i));
+            tabLayout.addTab(tab);
+        }
         return view;
     }
 
