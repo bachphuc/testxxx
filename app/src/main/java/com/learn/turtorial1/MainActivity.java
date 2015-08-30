@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         initViewPager();
         // init tab layout
         initTabbarLayout();
+
+        showLoginActivity();
     }
 
     private void showLoginActivity() {
