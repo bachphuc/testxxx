@@ -1,22 +1,22 @@
 package com.learn.turtorial1;
 
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.learn.turtorial1.fragment.NewfeedFragment;
+import com.learn.turtorial1.library.dmobi.helper.ImageHelper;
 
 
 /**
@@ -27,7 +27,7 @@ import com.learn.turtorial1.fragment.NewfeedFragment;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment implements android.support.v7.app.ActionBar.TabListener {
+public class MainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +39,7 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
 
     ViewPager viewPager;
     AppViewPagerAdapter appViewPagerAdapter;
+    TabLayout tabLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -77,64 +78,25 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_article, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-
-        /*Button button = (Button) view.findViewById(R.id.bt_show_cyclerview);
-
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewfeedActitity.class);
-                startActivity(intent);
-            }
-        });
-
-        button = (Button)view.findViewById(R.id.buttongson);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GsonTurtorial.class);
-                startActivity(intent);
-            }
-        });
-
-        button = (Button)view.findViewById(R.id.showLoadmore);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoadMore.class);
-                startActivity(intent);
-            }
-        });
-
-        button = (Button)view.findViewById(R.id.bt_login);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });*/
+        MainActivity mainActivity = (MainActivity) getActivity();
+        tabLayout = mainActivity.getTabLayout();
 
         appViewPagerAdapter = new AppViewPagerAdapter(getFragmentManager());
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(appViewPagerAdapter);
 
-        // final ActionBar actionBar = getActivity().getActionBar();
-        /*final ActionBar actionBar=((ActionBarActivity) getActivity()).getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                tabLayout.getTabAt(position).select();
             }
 
             @Override
@@ -143,25 +105,50 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
             }
         });
 
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical
-        // parent.
-        actionBar.setHomeButtonEnabled(false);
+        initTab();
 
-        for(int i = 0; i < appViewPagerAdapter.getCount(); i ++){
-            actionBar.addTab(actionBar.newTab().setText(appViewPagerAdapter.getPageTitle(i))
-                    .setTabListener(this));
-        }*/
-
-        MainActivity mainActivity = (MainActivity) getActivity();
-        TabLayout tabLayout = mainActivity.getTabLayout();
-        TabLayout.Tab tab;
-        for(int i = 0; i< appViewPagerAdapter.getCount() ; i++){
-            tab = tabLayout.newTab();
-            tab.setIcon(R.drawable.ic_favorite_black_24dp);
-            tab.setText(appViewPagerAdapter.getPageTitle(i));
-            tabLayout.addTab(tab);
-        }
         return view;
+    }
+
+    public void initTab() {
+        TabLayout.Tab tab;
+
+        Drawable mDrawable = ImageHelper.getTintedDrawable(getContext(), R.drawable.ic_web_black_24dp, Color.WHITE);
+        tab = tabLayout.newTab();
+        tab.setIcon(mDrawable);
+        tabLayout.addTab(tab);
+
+        mDrawable = ImageHelper.getTintedDrawable(getContext(), R.drawable.ic_supervisor_account_black_24dp, Color.WHITE);
+        tab = tabLayout.newTab();
+        tab.setIcon(mDrawable);
+        tabLayout.addTab(tab);
+
+        mDrawable = ImageHelper.getTintedDrawable(getContext(), R.drawable.ic_chat_bubble_outline_black_24dp, Color.WHITE);
+        tab = tabLayout.newTab();
+        tab.setIcon(mDrawable);
+        tabLayout.addTab(tab);
+
+        mDrawable = ImageHelper.getTintedDrawable(getContext(), R.drawable.ic_notifications_none_black_24dp, Color.WHITE);
+        tab = tabLayout.newTab();
+        tab.setIcon(mDrawable);
+        tabLayout.addTab(tab);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -188,21 +175,6 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
         mListener = null;
     }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -227,10 +199,9 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
         public Fragment getItem(int position) {
             final int pos = position;
             Fragment fragment;
-            if(position == 0){
+            if (position == 0) {
                 fragment = new NewfeedFragment();
-            }
-            else{
+            } else {
                 fragment = new Fragment() {
                     @Override
                     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -248,7 +219,7 @@ public class MainFragment extends Fragment implements android.support.v7.app.Act
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

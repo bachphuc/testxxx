@@ -65,4 +65,9 @@
         <item name="android:layout_marginBottom">4dp</item>
     </style>
 
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/primary_tab_border_color</item>
+        <item name="tabIndicatorHeight">@dimen/primary_tab_height</item>
+    </style>
+
 </resources>

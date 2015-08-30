@@ -12,4 +12,7 @@
     <color name="primary_color">#43acd9</color>
     <color name="feed_icon_action_color">#666666</color>
     <color name="background_color">#ffffff</color>
+    <color name="primary_icon_color">#ffffff</color>
+    <color name="primary_background_color">#ffffff</color>
+    <color name="primary_tab_border_color">#ffffff</color>
 </resources>
