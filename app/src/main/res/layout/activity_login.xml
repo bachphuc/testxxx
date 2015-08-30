@@ -87,7 +87,7 @@
                         android:tint="@color/primary_transparent_icon_color" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/tb_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -120,7 +120,7 @@
                         android:tint="@color/primary_transparent_icon_color" />
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/tb_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -147,7 +147,7 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/bt_login"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_gravity="center"

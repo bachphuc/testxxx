@@ -13,14 +13,12 @@ import android.view.ViewGroup;
 import com.learn.turtorial1.FeedAdapter;
 import com.learn.turtorial1.R;
 import com.learn.turtorial1.customview.DSwipeRefreshLayout;
+import com.learn.turtorial1.library.dmobi.request.Dresponse;
 import com.learn.turtorial1.model.Feed;
 import com.learn.turtorial1.service.SFeed;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.learn.turtorial1.library.dmobi.DMobi;
-import com.learn.turtorial1.library.dmobi.request.Dresponse;
 
 /**
  * A simple {@link Fragment} subclass.

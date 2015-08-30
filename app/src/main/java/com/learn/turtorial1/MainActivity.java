@@ -3,6 +3,7 @@ package com.learn.turtorial1;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import com.learn.turtorial1.MainFragment.OnFragmentInteractionListener;
 import com.learn.turtorial1.adapter.AppViewPagerAdapter;
 import com.learn.turtorial1.fragment.NewfeedFragment;
+import com.learn.turtorial1.library.dmobi.DMobi;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.learn.turtorial1.library.dmobi.helper.ImageHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -70,8 +72,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     private void showLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        if(!DMobi.isUser()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void initNavigationMenu() {
@@ -163,6 +167,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // do nothing, just override to prevent error when rotate device
     }
 
     @Override

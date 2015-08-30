@@ -19,8 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.turtorial1.customview.DSwipeRefreshLayout;
 import com.learn.turtorial1.model.Feed;
-import com.learn.turtorial1.model.RequestResultObject;
-import com.malinskiy.superrecyclerview.SuperRecyclerView;
+import com.learn.turtorial1.model.RequestListObjectResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -96,10 +95,10 @@ public class LoadMore extends ActionBarActivity {
 
                 Gson gson = new GsonBuilder().create();
 
-                Type type = new TypeToken<RequestResultObject<Feed>>() {
+                Type type = new TypeToken<RequestListObjectResponse<Feed>>() {
                 }.getType();
 
-                RequestResultObject<Feed> respond = gson.fromJson(s, type);
+                RequestListObjectResponse<Feed> respond = gson.fromJson(s, type);
                 Log.i("DRequest", "Complete");
                 if(respond != null) {
                     feedAdapter.prependData(respond.data);
@@ -127,10 +126,10 @@ public class LoadMore extends ActionBarActivity {
                 dSwipeRefreshLayout.stopLoadMore();
                 Gson gson = new GsonBuilder().create();
 
-                Type type = new TypeToken<RequestResultObject<Feed>>() {
+                Type type = new TypeToken<RequestListObjectResponse<Feed>>() {
                 }.getType();
 
-                RequestResultObject<Feed> respond = gson.fromJson(s, type);
+                RequestListObjectResponse<Feed> respond = gson.fromJson(s, type);
                 Log.i("DRequest", "Complete");
                 if(respond != null) {
                     feedAdapter.appendData(respond.data);

@@ -11,7 +11,7 @@ import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.learn.turtorial1.library.dmobi.request.DRequest;
 import com.learn.turtorial1.library.dmobi.request.Dresponse;
 import com.learn.turtorial1.model.Feed;
-import com.learn.turtorial1.model.RequestResultObject;
+import com.learn.turtorial1.model.RequestListObjectResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,10 +64,10 @@ public class SFeed extends SBase {
             @Override
             public void onResponse(String respondString) {
                 Gson gson = new GsonBuilder().create();
-                Type type = new TypeToken<RequestResultObject<Feed>>() {
+                Type type = new TypeToken<RequestListObjectResponse<Feed>>() {
                 }.getType();
 
-                RequestResultObject<Feed> respond = gson.fromJson(respondString, type);
+                RequestListObjectResponse<Feed> respond = gson.fromJson(respondString, type);
 
                 if (respond != null && complete != null) {
                     if(action == LOADMORE_ACTION){

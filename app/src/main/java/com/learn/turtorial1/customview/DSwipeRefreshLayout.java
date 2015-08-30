@@ -64,6 +64,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.learn.turtorial1.R;
+import com.learn.turtorial1.library.dmobi.DMobi;
+import com.learn.turtorial1.model.DmobileModelBase;
 
 /**
  * The SwipeRefreshLayout should be used whenever the user can refresh the
@@ -623,7 +625,9 @@ public class DSwipeRefreshLayout extends ViewGroup {
     }
 
     public void startLoad() {
-        onLoadMore();
+        if(DMobi.isUser()){
+            onLoadMore();
+        }
     }
 
     private void onLoadMore() {

@@ -5,13 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+import com.learn.turtorial1.library.dmobi.DMobi;
+import com.learn.turtorial1.library.dmobi.global.DConfig;
+import com.learn.turtorial1.library.dmobi.request.Dresponse;
+import com.learn.turtorial1.service.SUser;
+
+public class LoginActivity extends Activity implements Button.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Button button = (Button) findViewById(R.id.bt_login);
+        button.setOnClickListener(this);
     }
 
     @Override
@@ -34,5 +46,35 @@ public class LoginActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_login:
+                onLogin();
+                break;
+        }
+    }
+
+    private void onLogin(){
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        EditText emailInput = (EditText)findViewById(R.id.tb_email);
+        EditText passwordInput = (EditText)findViewById(R.id.tb_password);
+        sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new Dresponse.Complete() {
+            @Override
+            public void onComplete(Object o) {
+                boolean bLogin = (boolean)o;
+                if(bLogin){
+                    Toast toast = Toast.makeText(DConfig.getContext(), "Login successfully.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    finish();
+                }
+                else{
+                    Toast toast = Toast.makeText(DConfig.getContext(), "Login fail. Please check your email and password again.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
     }
 }

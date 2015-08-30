@@ -1,8 +1,11 @@
 package com.learn.turtorial1.library.dmobi;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.learn.turtorial1.R;
+import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.learn.turtorial1.library.dmobi.request.DRequest;
 import com.learn.turtorial1.model.DmobileModelBase;
 import com.learn.turtorial1.service.SBase;
@@ -32,7 +35,7 @@ public class DMobi {
         if(sBase != null){
             return sBase;
         }
-        String sClass = "com.learn.turtorial1.service." + service;
+        String sClass = DConfig.BUNDLE_ID + ".service." + service;
         Class c= null;
         try {
             c = Class.forName(sClass);
@@ -62,11 +65,38 @@ public class DMobi {
         return DMobi.getService(aClass.getSimpleName(), key);
     }
 
+    public static SBase getInstance(String service){
+        String sClass = DConfig.BUNDLE_ID + ".service." + service;
+        Class c= null;
+        SBase sBase;
+        try {
+            c = Class.forName(sClass);
+            try {
+                sBase = (SBase) c.newInstance();
+                return sBase;
+            } catch (InstantiationException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            }
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
     public static DRequest getRequest(){
         return new DRequest();
     }
 
     public static DRequest getRequest(Context ct){
         return new DRequest(ct);
+    }
+
+    public static boolean isUser(){
+       String token = DConfig.getToken();
+        if(token != null){
+            return true;
+        }
+        return false;
     }
 }

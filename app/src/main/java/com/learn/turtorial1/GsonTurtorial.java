@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.turtorial1.customview.DSwipeRefreshLayout;
-import com.learn.turtorial1.model.RequestResultObject;
+import com.learn.turtorial1.model.RequestListObjectResponse;
 import com.learn.turtorial1.model.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -90,12 +90,12 @@ public class GsonTurtorial extends ActionBarActivity {
                 Log.i("DRequest", s);
 
                 Gson gson = new GsonBuilder().create();
-                RequestResultObject<User> userRequestResultObject = new RequestResultObject<User>();
+                RequestListObjectResponse<User> userRequestResultObject = new RequestListObjectResponse<User>();
 
-                Type type = new TypeToken<RequestResultObject<User>>() {
+                Type type = new TypeToken<RequestListObjectResponse<User>>() {
                 }.getType();
 
-                RequestResultObject<User> respond = gson.fromJson(s, type);
+                RequestListObjectResponse<User> respond = gson.fromJson(s, type);
                 respond.data.toArray();
 
                 imageAdapter.prependData(respond.data);
@@ -132,10 +132,10 @@ public class GsonTurtorial extends ActionBarActivity {
                 Log.i("DRequest", s);
                 Gson gson = new GsonBuilder().create();
 
-                Type type = new TypeToken<RequestResultObject<User>>() {
+                Type type = new TypeToken<RequestListObjectResponse<User>>() {
                 }.getType();
 
-                RequestResultObject<User> respond = gson.fromJson(s, type);
+                RequestListObjectResponse<User> respond = gson.fromJson(s, type);
 
                 imageAdapter.appendData(respond.data);
                 imageAdapter.notifyDataSetChanged();
