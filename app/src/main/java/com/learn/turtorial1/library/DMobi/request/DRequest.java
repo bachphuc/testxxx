@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.learn.turtorial1.library.dmobi.DMobi;
 import com.learn.turtorial1.library.dmobi.Utils.Utils;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
 
@@ -36,7 +37,7 @@ public class DRequest {
     private Dresponse.Listener listener = null;
     private Dresponse.Complete complete = null;
 
-    public void setParam(String key, Object value){
+    public void addParam(String key, Object value){
         RequestParam re = new RequestParam(key, value);
         requestParams.add(re);
     }
@@ -51,7 +52,7 @@ public class DRequest {
             str+= rq.key + "=" + rq.value.toString() + "&";
         }
         str = Utils.trimAll(str, ',');
-        Log.i("String URL Request", str);
+        DMobi.log("Url Request", str);
         return str;
     }
 
@@ -85,6 +86,7 @@ public class DRequest {
         StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                DMobi.log("Request data", s);
                 if(ls != null){
                     ls.onResponse(s);
                 }

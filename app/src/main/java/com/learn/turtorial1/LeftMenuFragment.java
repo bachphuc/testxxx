@@ -2,23 +2,18 @@ package com.learn.turtorial1;
 
 import android.app.Activity;
 import android.os.Bundle;
-// import android.app.Fragment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
-
-import com.learn.turtorial1.dummy.DummyContent;
+import com.learn.turtorial1.library.dmobi.DMobi;
+import com.learn.turtorial1.library.dmobi.event.Event;
+import com.learn.turtorial1.model.User;
+import com.learn.turtorial1.service.SUser;
 
 /**
  * A fragment representing a list of Items.
@@ -29,7 +24,7 @@ import com.learn.turtorial1.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class LeftMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,18 +35,10 @@ public class LeftMenuFragment extends Fragment implements AbsListView.OnItemClic
     private String mParam1;
     private String mParam2;
 
+    private View view;
+    private NavigationView navigationView;
+
     private OnLeftFragmentInteractionListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static LeftMenuFragment newInstance(String param1, String param2) {
@@ -78,27 +65,47 @@ public class LeftMenuFragment extends Fragment implements AbsListView.OnItemClic
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        DummyContent.addItem(new DummyContent.DummyItem("chan", "vat va"));
-
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                R.layout.list_item, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.menu_main, container, false);
+        view = inflater.inflate(R.layout.menu_main, container, false);
 
-        // Set the adapter
-        /*mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.logout:
+                        SUser sUser = (SUser) DMobi.getService(SUser.class);
+                        sUser.logout();
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        mainActivity.showLoginActivity();
+                        break;
+                }
+                return false;
+            }
+        });
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);*/
+        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, new Event.Action() {
+            @Override
+            public void fireAction(Object o) {
+                updateProfile(o);
+            }
+        });
 
         return view;
+    }
+
+    public void updateProfile(Object o){
+        if(o instanceof User){
+            User user = (User) o;
+            TextView lbView = (TextView)view.findViewById(R.id.lb_email);
+            lbView.setText(user.email);
+            lbView = (TextView)view.findViewById(R.id.lb_fullname);
+            lbView.setText(user.fullName);
+        }
     }
 
     @Override
@@ -116,28 +123,6 @@ public class LeftMenuFragment extends Fragment implements AbsListView.OnItemClic
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onLeftFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
-    }
-
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
     }
 
     /**

@@ -1,18 +1,18 @@
 package com.learn.turtorial1;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.learn.turtorial1.library.dmobi.DMobi;
-import com.learn.turtorial1.library.dmobi.global.DConfig;
+import com.learn.turtorial1.library.dmobi.event.Event;
 import com.learn.turtorial1.library.dmobi.request.Dresponse;
+import com.learn.turtorial1.model.User;
 import com.learn.turtorial1.service.SUser;
 
 public class LoginActivity extends Activity implements Button.OnClickListener {
@@ -61,18 +61,20 @@ public class LoginActivity extends Activity implements Button.OnClickListener {
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         EditText emailInput = (EditText)findViewById(R.id.tb_email);
         EditText passwordInput = (EditText)findViewById(R.id.tb_password);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Login....");
+        progressDialog.setMessage("Wait some minute...");
+        progressDialog.show();
+
         sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new Dresponse.Complete() {
             @Override
             public void onComplete(Object o) {
-                boolean bLogin = (boolean)o;
-                if(bLogin){
-                    Toast toast = Toast.makeText(DConfig.getContext(), "Login successfully.", Toast.LENGTH_SHORT);
-                    toast.show();
+                progressDialog.hide();
+                if(o != null){
+                    DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
+                    DMobi.showToast("Login successfully.");
                     finish();
-                }
-                else{
-                    Toast toast = Toast.makeText(DConfig.getContext(), "Login fail. Please check your email and password again.", Toast.LENGTH_SHORT);
-                    toast.show();
                 }
             }
         });

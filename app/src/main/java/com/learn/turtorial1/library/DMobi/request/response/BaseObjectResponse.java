@@ -1,5 +1,7 @@
 package com.learn.turtorial1.library.dmobi.request.response;
 
+import com.learn.turtorial1.library.dmobi.Utils.Utils;
+
 import java.util.ArrayList;
 
 /**
@@ -12,5 +14,36 @@ public class BaseObjectResponse<T> {
     public ArrayList<String> errors;
 
     public BaseObjectResponse(){
+    }
+
+    public String getErrors(){
+        String sError = "";
+        if(errors != null){
+            for(int i = 0; i< errors.size() ; i++){
+                sError = sError + " " + errors.get(i) + ",";
+            }
+        }
+        if(sError != ""){
+            sError = Utils.trimAll(sError, ',');
+        }
+        return  sError;
+    }
+
+    public String getMessage(){
+        return message;
+    }
+
+    public boolean isSuccessfully(){
+        if (status != 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFail(){
+        if(status == 0){
+            return true;
+        }
+        return false;
     }
 }

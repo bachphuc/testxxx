@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         showLoginActivity();
     }
 
-    private void showLoginActivity() {
+    public void showLoginActivity() {
         if(!DMobi.isUser()){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

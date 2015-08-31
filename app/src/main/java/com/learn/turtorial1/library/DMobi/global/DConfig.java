@@ -18,6 +18,7 @@ public class DConfig {
     public static final String TOKEN_KEY = "TOKEN_KEY";
     public static final String BUNDLE_ID = "com.learn.turtorial1";
     public static final String preference_file_key = "com.learn.turtorial1.PREFERENCE_FILE_KEY";
+    public static final int DBUG_MODE = 1;
 
     public static void setContext(Context ctx){
         context = ctx;
@@ -53,6 +54,7 @@ public class DConfig {
     }
 
     public static void clearToken(){
+        token = null;
         removeSetting(DConfig.TOKEN_KEY);
     }
 

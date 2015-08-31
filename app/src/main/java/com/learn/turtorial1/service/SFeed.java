@@ -1,17 +1,14 @@
 package com.learn.turtorial1.service;
 
-import android.widget.Toast;
-
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.turtorial1.library.dmobi.DMobi;
-import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.learn.turtorial1.library.dmobi.request.DRequest;
 import com.learn.turtorial1.library.dmobi.request.Dresponse;
+import com.learn.turtorial1.library.dmobi.request.response.ListObjectResponse;
 import com.learn.turtorial1.model.Feed;
-import com.learn.turtorial1.model.RequestListObjectResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class SFeed extends SBase {
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
 
-    public SFeed(){
+    public SFeed() {
         feeds = new ArrayList<Feed>();
     }
 
@@ -35,12 +32,12 @@ public class SFeed extends SBase {
         this.page = page;
     }
 
-    public List<Feed> getData(){
+    public List<Feed> getData() {
         return this.feeds;
     }
 
     public void updateMaxFeedId() {
-        if(feeds.size() == 0){
+        if (feeds.size() == 0) {
             maxFeedId = 0;
         }
         Feed feed = feeds.get(0);
@@ -50,13 +47,12 @@ public class SFeed extends SBase {
     public void getFeeds(final Dresponse.Complete complete, final String action) {
         DRequest dRequest = DMobi.getRequest();
         dRequest.setApi("feed.gets");
-        dRequest.setParam("android", 1);
-        dRequest.setParam("action", action);
-        if(action == LOADMORE_ACTION){
-            dRequest.setParam("page", this.page);
-        }
-        else{
-            dRequest.setParam("max_feed_id", this.maxFeedId);
+        dRequest.addParam("android", 1);
+        dRequest.addParam("action", action);
+        if (action == LOADMORE_ACTION) {
+            dRequest.addParam("page", this.page);
+        } else {
+            dRequest.addParam("max_feed_id", this.maxFeedId);
         }
 
         final SFeed that = this;
@@ -64,21 +60,29 @@ public class SFeed extends SBase {
             @Override
             public void onResponse(String respondString) {
                 Gson gson = new GsonBuilder().create();
-                Type type = new TypeToken<RequestListObjectResponse<Feed>>() {
+                Type type = new TypeToken<ListObjectResponse<Feed>>() {
                 }.getType();
 
-                RequestListObjectResponse<Feed> respond = gson.fromJson(respondString, type);
-
-                if (respond != null && complete != null) {
-                    if(action == LOADMORE_ACTION){
-                        feeds.addAll(0, respond.data);
+                ListObjectResponse<Feed> response = gson.fromJson(respondString, type);
+                if (response != null) {
+                    if (response.isSuccessfully()) {
+                        if (action == LOADMORE_ACTION) {
+                            feeds.addAll(0, response.data);
+                        } else {
+                            feeds.addAll(response.data);
+                            that.page++;
+                        }
+                        that.updateMaxFeedId();
+                        if (complete != null) {
+                            complete.onComplete(response.data);
+                        }
                     }
                     else{
-                        feeds.addAll(respond.data);
-                        that.page++;
+                        DMobi.showToast(response.getErrors());
+                        if (complete != null) {
+                            complete.onComplete(null);
+                        }
                     }
-                    that.updateMaxFeedId();
-                    complete.onComplete(respond.data);
                 }
             }
         }, new Dresponse.ErrorListener() {
@@ -86,8 +90,7 @@ public class SFeed extends SBase {
             public void onErrorResponse(VolleyError var1) {
                 if (complete != null) {
                     complete.onComplete(null);
-                    Toast toast = Toast.makeText(DConfig.getContext(), "Network error!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    DMobi.showToast("Network error!");
                 }
             }
         });

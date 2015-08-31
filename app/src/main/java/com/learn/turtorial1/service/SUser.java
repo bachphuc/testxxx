@@ -1,7 +1,5 @@
 package com.learn.turtorial1.service;
 
-import android.widget.Toast;
-
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,11 +8,7 @@ import com.learn.turtorial1.library.dmobi.DMobi;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
 import com.learn.turtorial1.library.dmobi.request.DRequest;
 import com.learn.turtorial1.library.dmobi.request.Dresponse;
-import com.learn.turtorial1.library.dmobi.request.response.BaseObjectResponse;
-import com.learn.turtorial1.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.turtorial1.library.dmobi.request.response.SingleObjectResponse;
-import com.learn.turtorial1.model.Feed;
-import com.learn.turtorial1.model.RequestListObjectResponse;
 import com.learn.turtorial1.model.User;
 
 import java.lang.reflect.Type;
@@ -38,11 +32,16 @@ public class SUser extends SBase {
         user = null;
     }
 
+    public void logout(){
+        user = null;
+        DConfig.clearToken();
+    }
+
     public void login(String email, String password, final Dresponse.Complete complete) {
         DRequest dRequest = DMobi.getRequest();
         dRequest.setApi("user.login");
-        dRequest.setParam("login", email);
-        dRequest.setParam("password", password);
+        dRequest.addParam("login", email);
+        dRequest.addParam("password", password);
 
         final SUser that = this;
         dRequest.get(new Dresponse.Listener() {
@@ -53,21 +52,22 @@ public class SUser extends SBase {
                 }.getType();
 
                 SingleObjectResponse<LoginObjectResponseData> response = gson.fromJson(respondString, type);
-                boolean bLogin = false;
-                if(response.status == 1){
-                    bLogin = true;
+                if(response.isSuccessfully()){
                     DConfig.setToken(response.data.token);
                     user = response.data.user;
+                    complete.onComplete(response.data.user);
                 }
-                complete.onComplete(bLogin);
+                else{
+                    DMobi.showToast(response.getErrors());
+                    complete.onComplete(null);
+                }
             }
         }, new Dresponse.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError var1) {
                 if (complete != null) {
                     complete.onComplete(null);
-                    Toast toast = Toast.makeText(DConfig.getContext(), "Network error!", Toast.LENGTH_SHORT);
-                    toast.show();
+                    DMobi.showToast("Network error!");
                 }
             }
         });
