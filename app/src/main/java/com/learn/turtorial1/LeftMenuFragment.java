@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.turtorial1.library.dmobi.DMobi;
@@ -105,6 +106,9 @@ public class LeftMenuFragment extends Fragment {
             lbView.setText(user.email);
             lbView = (TextView)view.findViewById(R.id.lb_fullname);
             lbView.setText(user.fullName);
+
+            ImageView imageView = (ImageView)view.findViewById(R.id.im_avatar);
+            com.learn.turtorial1.library.dmobi.helper.ImageHelper.display(imageView, user.getImages().medium.url);
         }
     }
 

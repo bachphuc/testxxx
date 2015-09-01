@@ -7,9 +7,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 
 import com.learn.turtorial1.R;
 import com.learn.turtorial1.library.dmobi.global.DConfig;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by 09520_000 on 8/29/2015.
@@ -43,5 +45,9 @@ public class ImageHelper {
         int color = ContextCompat.getColor(DConfig.getContext(), R.color.primary_icon_color);
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         return drawable;
+    }
+
+    public static void display(ImageView imageView, String imageUrl){
+        Picasso.with(imageView.getContext()).load(imageUrl).into(imageView);
     }
 }
