@@ -1,6 +1,7 @@
 package com.learn.mobile.model;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.learn.mobile.FeedViewHolder;
 import com.learn.mobile.R;
@@ -35,6 +36,10 @@ public class Photo extends DAbstractPhoto {
     public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
         super.processViewHolder(itemBaseViewHolder);
         ImageView imageView = (ImageView)itemBaseViewHolder.findView(R.id.img_photo);
-        ImageHelper.display(imageView, images.normal.url);
+        if(imageView != null){
+            ImageHelper.display(imageView, images.big.url);
+        }
+        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
+        textView.setText(getTitle());
     }
 }

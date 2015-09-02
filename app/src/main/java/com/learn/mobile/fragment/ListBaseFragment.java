@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,6 +58,8 @@ public class ListBaseFragment extends Fragment {
     private boolean bStartLoad = false;
     private int fragmentIndex;
 
+    private boolean bGirdLayout = false;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -95,6 +98,10 @@ public class ListBaseFragment extends Fragment {
         return layout;
     }
 
+    public void setbGirdLayout(boolean bGirdLayout){
+        this.bGirdLayout = bGirdLayout;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +130,14 @@ public class ListBaseFragment extends Fragment {
 
     private void initializeView(){
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        if(bGirdLayout){
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
+        else{
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
 
         service = DMobi.getService(serviceClass);
 
