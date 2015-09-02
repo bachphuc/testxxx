@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/gradienbackground"
-    tools:context="com.learn.turtorial1.LoginActivity">
+    tools:context="com.learn.mobile.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"

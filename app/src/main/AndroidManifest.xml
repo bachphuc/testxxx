@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.learn.turtorial1" >
+    package="com.learn.mobile" >
 
     <!-- Include following permission if you load images from Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.learn.mobile.MainActivity"
             android:windowSoftInputMode="adjustPan|adjustNothing"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name" >
@@ -28,23 +28,23 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".DisplayMessage"
+            android:name="com.learn.mobile.DisplayMessage"
             android:label="@string/title_activity_display_message" >
         </activity>
         <activity
-            android:name=".NewfeedActitity"
+            android:name="com.learn.mobile.NewfeedActitity"
             android:label="@string/title_activity_recycler_view_test" >
         </activity>
         <activity
-            android:name=".GsonTurtorial"
+            android:name="com.learn.mobile.GsonTurtorial"
             android:label="@string/title_activity_gson_turtorial" >
         </activity>
         <activity
-            android:name=".LoadMore"
+            android:name="com.learn.mobile.LoadMore"
             android:label="@string/title_activity_load_more" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.learn.mobile.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/title_activity_login" >
         </activity>

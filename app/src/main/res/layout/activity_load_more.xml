@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.learn.turtorial1.NewfeedActitity">
+    tools:context="com.learn.mobile.NewfeedActitity">
 
-    <com.learn.turtorial1.customview.DSwipeRefreshLayout
+    <com.learn.mobile.customview.DSwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -14,5 +14,5 @@
             android:id="@+id/cardList"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.learn.turtorial1.customview.DSwipeRefreshLayout>
+    </com.learn.mobile.customview.DSwipeRefreshLayout>
 </RelativeLayout>

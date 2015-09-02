@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.learn.turtorial1.customview.DFeedImageView
+            <com.learn.mobile.customview.DFeedImageView
                 android:id="@+id/main_image"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
