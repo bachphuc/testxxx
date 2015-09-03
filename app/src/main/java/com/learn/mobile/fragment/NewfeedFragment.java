@@ -137,7 +137,7 @@ public class NewfeedFragment extends Fragment {
                     if (feeds.size() > 0) {
                         feedAdapter.notifyDataSetChanged();
                     } else {
-                        dSwipeRefreshLayout.loadMoreLimit();
+                        dSwipeRefreshLayout.loadMoreFinish();
                     }
                 }
             }

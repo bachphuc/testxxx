@@ -139,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         tab.setIcon(mDrawable);
         tabLayout.addTab(tab);
 
+        mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_insert_photo_white_24dp);
+        tab = tabLayout.newTab();
+        tab.setIcon(mDrawable);
+        tabLayout.addTab(tab);
+
         mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_supervisor_account_black_24dp);
         tab = tabLayout.newTab();
         tab.setIcon(mDrawable);

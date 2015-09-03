@@ -17,6 +17,7 @@ import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DmobileModelBase;
 import com.learn.mobile.service.SBase;
 
@@ -150,11 +151,12 @@ public class ListBaseFragment extends Fragment {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {
-                    List<DmobileModelBase> items = (ArrayList<DmobileModelBase>) o;
-                    if (items.size() > 0) {
+                    ListObjectResponse<DmobileModelBase> response= (ListObjectResponse<DmobileModelBase>) o;
+                    if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
-                    } else {
-                        dSwipeRefreshLayout.loadMoreLimit();
+                    }
+                    if(response.isSuccessfully() && !response.hasData()) {
+                        dSwipeRefreshLayout.loadMoreFinish();
                     }
                 }
             }

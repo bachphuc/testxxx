@@ -119,7 +119,7 @@ public class GsonTurtorial extends ActionBarActivity {
     public void loadMoreData() {
         CURRENT_REQUEST++;
         if(CURRENT_REQUEST > MAX_LIMIT){
-            swipeRefreshLayout.loadMoreLimit();
+            swipeRefreshLayout.loadMoreFinish();
             return;
         }
         RequestQueue reqestQueue = Volley.newRequestQueue(getApplicationContext());

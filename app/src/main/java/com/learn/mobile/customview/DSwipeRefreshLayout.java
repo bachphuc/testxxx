@@ -582,9 +582,9 @@ public class DSwipeRefreshLayout extends ViewGroup {
         hideLoadMoreProcess();
     }
 
-    public void loadMoreLimit() {
+    public void loadMoreFinish() {
         ensureTarget();
-        canLoadMore = true;
+        canLoadMore = false;
         bIsLoadMoreProcessing = false;
         hideLoadMoreProcess();
     }
@@ -620,14 +620,17 @@ public class DSwipeRefreshLayout extends ViewGroup {
     private void initTarget() {
         if (mTarget instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mTarget;
-            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
+                    if(dy < 0){
+                        return;
+                    }
                     if (bIsLoadMoreProcessing == true) {
                         return;
                     }
-                    if (canLoadMore == false) {
+                    if (!canLoadMore ) {
                         return;
                     }
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -652,7 +655,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
                     if (bIsLoadMoreProcessing == true) {
                         return;
                     }
-                    if (canLoadMore == false) {
+                    if (!canLoadMore) {
                         return;
                     }
 

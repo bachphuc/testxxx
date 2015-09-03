@@ -55,7 +55,7 @@ public class NewfeedActitity extends ActionBarActivity {
                         feedAdapter.notifyDataSetChanged();
                         updateMaxFeed();
                     } else {
-                        dSwipeRefreshLayout.loadMoreLimit();
+                        dSwipeRefreshLayout.loadMoreFinish();
                     }
                 }
             }

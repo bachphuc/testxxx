@@ -39,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primary_color"
-                android:fillViewport="false" />
+                android:fillViewport="false"
+                app:layout_scrollFlags="scroll|enterAlways" />
 
             <View
                 android:id="@+id/appbar_bottom"
@@ -54,7 +55,7 @@
 
     <FrameLayout
         android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#111"

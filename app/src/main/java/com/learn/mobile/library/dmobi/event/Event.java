@@ -10,6 +10,7 @@ public class Event {
     public static final String EVENT_UPDATE_PROFILE = "EVENT_UPDATE_PROFILE";
     public static final String EVENT_LOADMORE_FEED = "EVENT_LOADMORE_FEED";
     public static final String EVENT_LIST_BASE_FRAGMENT_LOADED = "EVENT_LIST_BASE_FRAGMENT_LOADED";
+    public static final String EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED = "EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED";
 
     private ArrayList<Action> actions = new ArrayList<Action>();
     private String eventType;

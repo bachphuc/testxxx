@@ -22,6 +22,8 @@ public class SBase {
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
 
+    private boolean getDataByPage = false;
+
     protected Class itemClass;
 
     public void setData(List<DmobileModelBase> list) {
@@ -43,13 +45,19 @@ public class SBase {
         minId = item.getId();
     }
 
+    public void setGetDataByPage(boolean getDataByPage){
+        this.getDataByPage = getDataByPage;
+    }
+
     public void gets(final Dresponse.Complete complete, final String action) {
         DRequest dRequest = DMobi.getRequest();
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
         if (action == LOADMORE_ACTION) {
-            dRequest.addParam("page", this.page);
+            if(getDataByPage){
+                dRequest.addParam("page", this.page);
+            }
         }
         dRequest.addParam("max_id", this.maxId);
         dRequest.addParam("min_id", this.minId);
@@ -62,26 +70,25 @@ public class SBase {
                 if (response != null) {
                     if (response.isSuccessfully()) {
                         if(response.hasData()){
-                            if (action == LOADMORE_ACTION) {
+                            if (action == LOADNEW_ACTION) {
                                 data.addAll(0, response.data);
                             } else {
                                 data.addAll(response.data);
                                 that.page++;
                             }
                             that.updateMaxAndMinId();
-                            if (complete != null) {
-                                complete.onComplete(response.data);
-                            }
-                        }
-                        else{
-                            complete.onComplete(null);
                         }
                     }
                     else{
                         DMobi.showToast(response.getErrors());
-                        if (complete != null) {
-                            complete.onComplete(null);
-                        }
+                    }
+                    if (complete != null) {
+                        complete.onComplete(response);
+                    }
+                }
+                else {
+                    if (complete != null) {
+                        complete.onComplete(null);
                     }
                 }
             }
