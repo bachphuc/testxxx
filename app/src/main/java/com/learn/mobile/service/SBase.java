@@ -58,18 +58,23 @@ public class SBase {
         dRequest.get(new Dresponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                ListObjectResponse<DmobileModelBase> response = (ListObjectResponse<DmobileModelBase>) DbHelper.parseListObjectResponse(respondString, itemClass);
+                ListObjectResponse<DmobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {
-                        if (action == LOADMORE_ACTION) {
-                            data.addAll(0, response.data);
-                        } else {
-                            data.addAll(response.data);
-                            that.page++;
+                        if(response.hasData()){
+                            if (action == LOADMORE_ACTION) {
+                                data.addAll(0, response.data);
+                            } else {
+                                data.addAll(response.data);
+                                that.page++;
+                            }
+                            that.updateMaxAndMinId();
+                            if (complete != null) {
+                                complete.onComplete(response.data);
+                            }
                         }
-                        that.updateMaxAndMinId();
-                        if (complete != null) {
-                            complete.onComplete(response.data);
+                        else{
+                            complete.onComplete(null);
                         }
                     }
                     else{
@@ -92,10 +97,10 @@ public class SBase {
     }
 
     public void getNews(final Dresponse.Complete complete){
-        this.gets(complete, LOADMORE_ACTION);
+        this.gets(complete, LOADNEW_ACTION);
     }
 
     public void getMores(final Dresponse.Complete complete) {
-        this.gets(complete, LOADNEW_ACTION);
+        this.gets(complete, LOADMORE_ACTION);
     }
 }

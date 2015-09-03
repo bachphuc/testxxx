@@ -46,4 +46,11 @@ public class BaseObjectResponse<T> {
         }
         return false;
     }
+
+    public boolean hasData(){
+        if(complete == 0){
+            return false;
+        }
+        return true;
+    }
 }
