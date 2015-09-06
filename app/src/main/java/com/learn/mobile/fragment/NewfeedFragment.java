@@ -85,12 +85,12 @@ public class NewfeedFragment extends Fragment {
     }
 
     public void refreshFeed() {
-        SFeed feedService = (SFeed) com.learn.mobile.library.dmobi.DMobi.getService("SFeed");
+        SFeed feedService = (SFeed) DMobi.getService("SFeed");
         feedService.loadNewFeeds(this.completeResponse);
     }
 
     public void loadMoreFeed() {
-        SFeed feedService = (SFeed) com.learn.mobile.library.dmobi.DMobi.getService("SFeed");
+        SFeed feedService = (SFeed) DMobi.getService("SFeed");
         feedService.loadMoreFeeds(this.completeResponse);
     }
 
@@ -121,7 +121,7 @@ public class NewfeedFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        sFeed = (SFeed) com.learn.mobile.library.dmobi.DMobi.getService(SFeed.class);
+        sFeed = (SFeed) DMobi.getService(SFeed.class);
 
         feedAdapter = new FeedAdapter(sFeed.getFeedData());
         recyclerView.setAdapter(feedAdapter);

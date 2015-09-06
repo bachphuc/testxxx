@@ -12,41 +12,45 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
-            android:name="com.learn.mobile.MainActivity"
-            android:windowSoftInputMode="adjustPan|adjustNothing"
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|adjustNothing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="android.app.searchable"
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.learn.mobile.DisplayMessage"
+            android:name=".DisplayMessage"
             android:label="@string/title_activity_display_message" >
         </activity>
         <activity
-            android:name="com.learn.mobile.NewfeedActitity"
+            android:name=".NewfeedActitity"
             android:label="@string/title_activity_recycler_view_test" >
         </activity>
         <activity
-            android:name="com.learn.mobile.GsonTurtorial"
+            android:name=".GsonTurtorial"
             android:label="@string/title_activity_gson_turtorial" >
         </activity>
         <activity
-            android:name="com.learn.mobile.LoadMore"
+            android:name=".LoadMore"
             android:label="@string/title_activity_load_more" >
         </activity>
         <activity
-            android:name="com.learn.mobile.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:label="@string/title_activity_login" >
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".activity.UserProfileActivity"
+            android:label="@string/title_activity_user_profile" >
         </activity>
     </application>
 
