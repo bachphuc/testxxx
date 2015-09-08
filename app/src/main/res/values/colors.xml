@@ -9,10 +9,11 @@
     <color name="transparent">#dddddd</color>
     <color name="color_text">#666666</color>
     <color name="light_color">#ffffff</color>
-    <color name="primary_color">#43acd9</color>
-    <color name="primary_lighter_color">#FF4EC2F4</color>
     <color name="feed_icon_action_color">#666666</color>
     <color name="background_color">#ffffff</color>
+
+    <color name="primary_color">#ed1014</color>
+    <color name="primary_lighter_color">#f63a3d</color>
     <color name="primary_icon_color">#ffffff</color>
     <color name="primary_background_color">#ffffff</color>
     <color name="primary_tab_border_color">#ffffff</color>

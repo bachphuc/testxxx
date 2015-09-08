@@ -65,22 +65,26 @@ public class SFeed extends SBase {
                 ListObjectResponse<Feed> response = gson.fromJson(respondString, type);
                 if (response != null) {
                     if (response.isSuccessfully()) {
-                        if (action == LOADMORE_ACTION) {
-                            feeds.addAll(0, response.data);
-                        } else {
-                            feeds.addAll(response.data);
-                            that.page++;
-                        }
-                        that.updateMaxFeedId();
-                        if (complete != null) {
-                            complete.onComplete(response.data);
+                        if(response.hasData()){
+                            if (action == LOADNEW_ACTION) {
+                                feeds.addAll(0, response.data);
+                            } else {
+                                feeds.addAll(response.data);
+                                that.page++;
+                            }
+                            that.updateMaxFeedId();
                         }
                     }
                     else{
                         DMobi.showToast(response.getErrors());
-                        if (complete != null) {
-                            complete.onComplete(null);
-                        }
+                    }
+                    if (complete != null) {
+                        complete.onComplete(response);
+                    }
+                }
+                else {
+                    if (complete != null) {
+                        complete.onComplete(null);
                     }
                 }
             }

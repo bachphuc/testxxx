@@ -17,11 +17,9 @@ import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.Dresponse;
-import com.learn.mobile.model.Feed;
+import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
+import com.learn.mobile.model.DmobileModelBase;
 import com.learn.mobile.service.SFeed;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,11 +46,11 @@ public class NewfeedFragment extends Fragment {
     FeedAdapter feedAdapter;
     int iPage = 0;
     int iMaxFeedId = 0;
-    SFeed sFeed = null;
+    SFeed sFeed;
 
     View rootView;
 
-    Dresponse.Complete completeResponse = null;
+    Dresponse.Complete completeResponse;
 
     /**
      * Use this factory method to create a new instance of
@@ -115,7 +113,11 @@ public class NewfeedFragment extends Fragment {
         return view;
     }
 
-    private void initRecycleView(){
+    public void setEnableRefresh(boolean b){
+        dSwipeRefreshLayout.setEnabled(b);
+    }
+
+    private void initRecycleView() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -133,11 +135,11 @@ public class NewfeedFragment extends Fragment {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {
-                    List<Feed> feeds = (ArrayList<Feed>) o;
-                    iPage++;
-                    if (feeds.size() > 0) {
+                    ListObjectResponse<DmobileModelBase> response = (ListObjectResponse<DmobileModelBase>) o;
+                    if (response.isSuccessfully() && response.hasData()) {
                         feedAdapter.notifyDataSetChanged();
-                    } else {
+                    }
+                    if (response.isSuccessfully() && !response.hasData()) {
                         dSwipeRefreshLayout.loadMoreFinish();
                     }
                 }

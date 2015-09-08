@@ -25,7 +25,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         final int pos = position;
         Fragment fragment;
-        switch (position){
+        switch (position) {
             case 0:
                 fragment = new NewfeedFragment();
                 break;
