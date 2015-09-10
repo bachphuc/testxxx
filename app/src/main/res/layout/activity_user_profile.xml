@@ -14,7 +14,7 @@
 
     </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.AppBarLayout
+    <com.learn.mobile.customview.ControllableAppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="256dp"
@@ -29,7 +29,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
                 android:id="@+id/img_avatar"
@@ -48,18 +48,18 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
+    </com.learn.mobile.customview.ControllableAppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bt_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@drawable/ic_add_white_24dp"
         android:tint="#ffffff"
-        app:layout_anchor="@id/appBarLayout"
         app:backgroundTint="@color/primary_color"
+        app:layout_anchor="@id/appBarLayout"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -31,10 +32,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.learn.mobile.FeedAdapter;
 import com.learn.mobile.R;
+import com.learn.mobile.customview.ControllableAppBarLayout;
 import com.learn.mobile.fragment.NewfeedFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -74,6 +77,15 @@ public class UserProfileActivity extends AppCompatActivity implements NewfeedFra
         ImageHelper.display(imageView, avatar);
 
         initViewPager();
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.bt_post);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ControllableAppBarLayout controllableAppBarLayout = (ControllableAppBarLayout)appBarLayout;
+                controllableAppBarLayout.collapseToolbar(true);
+            }
+        });
     }
 
     // initialize view pager
