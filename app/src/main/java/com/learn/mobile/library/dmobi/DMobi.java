@@ -18,11 +18,13 @@ public class DMobi {
     private Context context = null;
 
     private static Hashtable<String, SBase> bases;
-    private static Hashtable<String, Event> eventHashtable;
+    private static Hashtable<String, Event> eventHashTable;
+    private static Hashtable<String, Object> globalDatas;
 
     static {
         bases = new Hashtable<String, SBase>();
-        eventHashtable = new Hashtable<String, Event>();
+        eventHashTable = new Hashtable<String, Event>();
+        globalDatas = new Hashtable<String, Object>();
     }
 
     public static void getLib(String lib) {
@@ -121,49 +123,61 @@ public class DMobi {
 
     // register a global event
     public static Event registerEvent(String key){
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         if(event != null){
             return event;
         }
         event = new Event();
-        eventHashtable.put(key, event);
+        eventHashTable.put(key, event);
         return event;
     }
 
     public static Event registerEvent(String key, Event.Action action) {
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         if(event != null){
             return event;
         }
         event = new Event(action, key);
-        eventHashtable.put(key, event);
+        eventHashTable.put(key, event);
         return event;
     }
 
     public boolean isRegisterEvent(String key){
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         return (event != null ? true : false);
     }
 
     public static Event getEvent(String key){
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         return event;
     }
 
     public static boolean destroyEvent(String key){
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         if(event == null){
             return false;
         }
         event = null;
-        eventHashtable.remove(key);
+        eventHashTable.remove(key);
         return true;
     }
 
     public static void fireEvent(String key, Object o){
-        Event event = eventHashtable.get(key);
+        Event event = eventHashTable.get(key);
         if(event != null){
             event.fireAction(o);
         }
+    }
+
+    public static void pushData(String key, Object o){
+        globalDatas.put(key, o);
+    }
+
+    public static Object getData(String key){
+        return globalDatas.get(key);
+    }
+
+    public static void clearData(){
+        globalDatas.clear();
     }
 }

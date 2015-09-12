@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.learn.mobile.fragment.NewfeedFragment;
+import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
 
@@ -200,7 +200,7 @@ public class MainFragment extends Fragment {
             final int pos = position;
             Fragment fragment;
             if (position == 0) {
-                fragment = new NewfeedFragment();
+                fragment = new NewFeedsFragment();
             } else {
                 fragment = new Fragment() {
                     @Override

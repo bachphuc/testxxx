@@ -26,56 +26,47 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.learn.mobile.FeedAdapter;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.ControllableAppBarLayout;
-import com.learn.mobile.fragment.NewfeedFragment;
+import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.request.Dresponse;
-import com.learn.mobile.model.Feed;
-import com.learn.mobile.service.SFeed;
+import com.learn.mobile.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
+public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener,  AppBarLayout.OnOffsetChangedListener {
 
-public class UserProfileActivity extends AppCompatActivity implements NewfeedFragment.OnFragmentInteractionListener,  AppBarLayout.OnOffsetChangedListener {
-
-    public static final String PROFILE_TITLE = "PROFILE_TITLE";
-    public static final String PROFILE_AVATAR = "PROFILE_AVATAR";
-    private NewfeedFragment profileFeedFragment;
-    AppBarLayout appBarLayout;
+    public static final String USER_PROFILE = "USER_PROFILE";
+    private NewFeedsFragment profileFeedFragment;
+    private AppBarLayout appBarLayout;
+    private User user;
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         Intent intent = getIntent();
-        final String title = intent.getStringExtra(PROFILE_TITLE);
-        final String avatar = intent.getStringExtra(PROFILE_AVATAR);
+        user = (User) DMobi.getData(USER_PROFILE);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle(user.getTitle());
+        getSupportActionBar().setTitle(user.getTitle());
+        toolbar.bringToFront();
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(this);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(title);
-
-        ImageView imageView = (ImageView) findViewById(R.id.img_avatar);
-        ImageHelper.display(imageView, avatar);
-
+        collapsingToolbar.setTitle(user.getTitle());
         initViewPager();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.bt_post);
@@ -86,6 +77,8 @@ public class UserProfileActivity extends AppCompatActivity implements NewfeedFra
                 controllableAppBarLayout.collapseToolbar(true);
             }
         });
+
+        updateView();
     }
 
     // initialize view pager
@@ -93,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity implements NewfeedFra
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()){
             @Override
             public Fragment getItem(int position) {
-                profileFeedFragment = new NewfeedFragment();
+                profileFeedFragment = new NewFeedsFragment();
                 return profileFeedFragment;
             }
 
@@ -104,38 +97,6 @@ public class UserProfileActivity extends AppCompatActivity implements NewfeedFra
         };
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(fragmentPagerAdapter);
-    }
-
-    RecyclerView recyclerView;
-    FeedAdapter feedAdapter;
-    SFeed sFeed;
-    Dresponse.Complete completeResponse;
-    private void initRecycleView(){
-        recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        sFeed = (SFeed) DMobi.getService(SFeed.class);
-
-        feedAdapter = new FeedAdapter(sFeed.getFeedData());
-        recyclerView.setAdapter(feedAdapter);
-
-        completeResponse = new com.learn.mobile.library.dmobi.request.Dresponse.Complete() {
-            @Override
-            public void onComplete(Object o) {
-                if (o != null) {
-                    List<Feed> feeds = (ArrayList<Feed>) o;
-                    if (feeds.size() > 0) {
-                        Log.i("User profile", "Bind data to recycler view");
-                        feedAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        };
-
-        sFeed.loadMoreFeeds(this.completeResponse);
     }
 
     @Override
@@ -169,6 +130,29 @@ public class UserProfileActivity extends AppCompatActivity implements NewfeedFra
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         if(profileFeedFragment != null){
             profileFeedFragment.setEnableRefresh(i == 0);
+        }
+    }
+
+    public void setUser(User user){
+        this.user = user;
+        updateView();
+    }
+
+    public void updateView(){
+        if(user == null){
+            return;
+        }
+        TextView textView = (TextView) findViewById(R.id.tb_title);
+        textView.setText(user.getTitle());
+
+        if(user.coverPhoto != null){
+            ImageView imageView = (ImageView) findViewById(R.id.img_cover);
+            ImageHelper.display(imageView, user.coverPhoto.full.url);
+        }
+
+        ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
+        if(user.images != null){
+            ImageHelper.display(imgAvatar, user.images.medium.url);
         }
     }
 }

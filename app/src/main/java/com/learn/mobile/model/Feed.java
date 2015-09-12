@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.learn.mobile.FeedViewHolder;
 import com.learn.mobile.R;
 import com.learn.mobile.activity.UserProfileActivity;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.squareup.picasso.Picasso;
 
@@ -46,11 +47,13 @@ public class Feed extends DAbstractFeed {
         TextView textView = (TextView) feedViewHolder.findView(R.id.tvTitle);
         textView.setText(user.getTitle());
         textView = (TextView) feedViewHolder.findView(R.id.tvDescription);
-        textView.setText(content);
+        if (content != null) {
+            textView.setText(content);
 
-        LinearLayout linearLayout = (LinearLayout) feedViewHolder.findView(R.id.feed_content);
-        if (content.length() == 0) {
-            linearLayout.setVisibility(View.GONE);
+            LinearLayout linearLayout = (LinearLayout) feedViewHolder.findView(R.id.feed_content);
+            if (content.length() == 0) {
+                linearLayout.setVisibility(View.GONE);
+            }
         }
 
         ImageView imageView;
@@ -66,8 +69,7 @@ public class Feed extends DAbstractFeed {
                     public void onClick(View v) {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, UserProfileActivity.class);
-                        intent.putExtra(UserProfileActivity.PROFILE_TITLE, currentUser.getTitle());
-                        intent.putExtra(UserProfileActivity.PROFILE_AVATAR, currentUser.images.medium.url);
+                        DMobi.pushData(UserProfileActivity.USER_PROFILE, currentUser);
 
                         context.startActivity(intent);
                     }

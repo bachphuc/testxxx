@@ -104,5 +104,11 @@ public class DAbstractUser extends DmobileModelBase{
     @SerializedName("feed_sort")
     public int feedSort = 0;
     
+    @SerializedName("cover_photo_id")
+    public String coverPhotoId ;
+    
+    @SerializedName("cover_photo")
+    public ImageObject coverPhoto ;
+    
 
 }

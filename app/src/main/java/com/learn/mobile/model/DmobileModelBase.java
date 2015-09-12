@@ -22,18 +22,18 @@ public class DmobileModelBase {
     }
 
     public String getTitle() {
-        return title;
+        return (title != null ? title : "");
     }
 
     public String getDescription() {
-        return description;
+        return (description != null ? description : "");
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getItemType(){
+    public String getItemType() {
         return item_type;
     }
 
@@ -45,7 +45,7 @@ public class DmobileModelBase {
         return feedLayout;
     }
 
-    public void setLayout(int layout){
+    public void setLayout(int layout) {
         this.layout = layout;
     }
 
@@ -53,9 +53,9 @@ public class DmobileModelBase {
         return layout;
     }
 
-    public void processFeedViewHolder(FeedViewHolder feedViewHolder){
+    public void processFeedViewHolder(FeedViewHolder feedViewHolder) {
     }
 
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder){
+    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
     }
 }

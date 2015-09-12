@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.learn.mobile.fragment.NewfeedFragment">
+    tools:context="com.learn.mobile.fragment.NewFeedsFragment">
 
     <!-- TODO: SwipeRefreshLayout update feed -->
     <com.learn.mobile.customview.DSwipeRefreshLayout

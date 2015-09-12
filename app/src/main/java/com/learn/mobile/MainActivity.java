@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import com.learn.mobile.MainFragment.OnFragmentInteractionListener;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
-import com.learn.mobile.fragment.NewfeedFragment;
+import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
@@ -32,7 +32,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener, NewfeedFragment.OnFragmentInteractionListener ,DFragmentListener.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener ,DFragmentListener.OnFragmentInteractionListener{
     private DrawerLayout drawerLayout;
 
     TabLayout tabLayout;

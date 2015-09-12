@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
-import com.learn.mobile.fragment.NewfeedFragment;
+import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 
 /**
@@ -27,7 +27,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment;
         switch (position) {
             case 0:
-                fragment = new NewfeedFragment();
+                fragment = new NewFeedsFragment();
                 break;
             case 1:
                 PhotoFragment frag = new PhotoFragment();
