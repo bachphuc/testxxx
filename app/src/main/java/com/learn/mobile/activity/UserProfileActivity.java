@@ -17,6 +17,7 @@ package com.learn.mobile.activity;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -66,7 +67,7 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(user.getTitle());
+
         initViewPager();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.bt_post);
@@ -146,6 +147,7 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         textView.setText(user.getTitle());
 
         if(user.coverPhoto != null){
+            DMobi.log("cover", user.coverPhoto.full.url);
             ImageView imageView = (ImageView) findViewById(R.id.img_cover);
             ImageHelper.display(imageView, user.coverPhoto.full.url);
         }
