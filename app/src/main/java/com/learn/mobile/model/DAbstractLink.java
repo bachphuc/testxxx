@@ -2,7 +2,7 @@ package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DAbstractLink extends DmobileModelBase{
+public class DAbstractLink extends DMobileModelBase {
     
     
     public String _primaryKey = "link_id";

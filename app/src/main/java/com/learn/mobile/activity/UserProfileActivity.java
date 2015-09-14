@@ -17,7 +17,6 @@ package com.learn.mobile.activity;
  */
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -41,7 +40,7 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
-public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener,  AppBarLayout.OnOffsetChangedListener {
+public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
 
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
@@ -70,11 +69,11 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
 
         initViewPager();
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.bt_post);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.bt_post);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ControllableAppBarLayout controllableAppBarLayout = (ControllableAppBarLayout)appBarLayout;
+                ControllableAppBarLayout controllableAppBarLayout = (ControllableAppBarLayout) appBarLayout;
                 controllableAppBarLayout.collapseToolbar(true);
             }
         });
@@ -84,10 +83,10 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
 
     // initialize view pager
     private void initViewPager() {
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()){
+        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                profileFeedFragment = new NewFeedsFragment();
+                profileFeedFragment = new NewFeedsFragment(user);
                 return profileFeedFragment;
             }
 
@@ -129,31 +128,31 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        if(profileFeedFragment != null){
+        if (profileFeedFragment != null) {
             profileFeedFragment.setEnableRefresh(i == 0);
         }
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
         updateView();
     }
 
-    public void updateView(){
-        if(user == null){
+    public void updateView() {
+        if (user == null) {
             return;
         }
         TextView textView = (TextView) findViewById(R.id.tb_title);
         textView.setText(user.getTitle());
 
-        if(user.coverPhoto != null){
+        if (user.coverPhoto != null) {
             DMobi.log("cover", user.coverPhoto.full.url);
             ImageView imageView = (ImageView) findViewById(R.id.img_cover);
             ImageHelper.display(imageView, user.coverPhoto.full.url);
         }
 
         ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
-        if(user.images != null){
+        if (user.images != null) {
             ImageHelper.display(imgAvatar, user.images.medium.url);
         }
     }

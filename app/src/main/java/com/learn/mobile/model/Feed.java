@@ -7,19 +7,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.learn.mobile.FeedViewHolder;
 import com.learn.mobile.R;
+import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.squareup.picasso.Picasso;
 
 import net.grobas.view.PolygonImageView;
 
 public class Feed extends DAbstractFeed {
     private boolean bItemReady = false;
 
-    public DmobileModelBase getAttachment() {
+    public DMobileModelBase getAttachment() {
         if (item != null && bItemReady == true) {
             return item;
         }
@@ -33,7 +32,7 @@ public class Feed extends DAbstractFeed {
 
     @Override
     public int getFeedLayout() {
-        DmobileModelBase dmobileModelBase = getAttachment();
+        DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
             return dmobileModelBase.getFeedLayout();
         }
@@ -41,16 +40,16 @@ public class Feed extends DAbstractFeed {
     }
 
     @Override
-    public void processFeedViewHolder(FeedViewHolder feedViewHolder) {
-        super.processFeedViewHolder(feedViewHolder);
+    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
+        super.processFeedViewHolder(itemBaseViewHolder);
 
-        TextView textView = (TextView) feedViewHolder.findView(R.id.tvTitle);
+        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
         textView.setText(user.getTitle());
-        textView = (TextView) feedViewHolder.findView(R.id.tvDescription);
+        textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
         if (content != null) {
             textView.setText(content);
 
-            LinearLayout linearLayout = (LinearLayout) feedViewHolder.findView(R.id.feed_content);
+            LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
             if (content.length() == 0) {
                 linearLayout.setVisibility(View.GONE);
             }
@@ -59,7 +58,7 @@ public class Feed extends DAbstractFeed {
         ImageView imageView;
         final User currentUser = user;
         if (user.images != null) {
-            imageView = (ImageView) feedViewHolder.findView(R.id.imageViewAvatar);
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.images.avatar.url);
                 PolygonImageView polygonImageView = (PolygonImageView) imageView;
@@ -77,9 +76,9 @@ public class Feed extends DAbstractFeed {
             }
         }
 
-        DmobileModelBase dmobileModelBase = getAttachment();
+        DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
-            dmobileModelBase.processFeedViewHolder(feedViewHolder);
+            dmobileModelBase.processFeedViewHolder(itemBaseViewHolder);
         }
     }
 }

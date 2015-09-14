@@ -15,7 +15,7 @@ public class DAbstractItemObject {
     public String itemType;
     public String jsonData;
 
-    public DmobileModelBase getItem() {
+    public DMobileModelBase getItem() {
         Gson gson = new GsonBuilder().create();
         Type type;
         switch (itemType) {
@@ -75,7 +75,7 @@ public class DAbstractItemObject {
 			Comment objComment = gson.fromJson(jsonData, type);
 			return objComment;
             default:
-                return new DmobileModelBase();
+                return new DMobileModelBase();
         }
     }
     

@@ -2,7 +2,7 @@ package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DAbstractFeed extends DmobileModelBase{
+public class DAbstractFeed extends DMobileModelBase {
     
     
     public String _primaryKey = "feed_id";
@@ -60,7 +60,7 @@ public class DAbstractFeed extends DmobileModelBase{
     public User user ;
     
     @SerializedName("item")
-    public DmobileModelBase item ;
+    public DMobileModelBase item ;
     
     @SerializedName("content")
     public String content ;

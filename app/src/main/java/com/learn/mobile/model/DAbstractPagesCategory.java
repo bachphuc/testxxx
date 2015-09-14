@@ -2,7 +2,7 @@ package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DAbstractPagesCategory extends DmobileModelBase{
+public class DAbstractPagesCategory extends DMobileModelBase {
     
     
     public String _primaryKey = "category_id";

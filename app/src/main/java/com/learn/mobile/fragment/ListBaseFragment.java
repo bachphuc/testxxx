@@ -18,11 +18,8 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.Dresponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
-import com.learn.mobile.model.DmobileModelBase;
+import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.service.SBase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -151,7 +148,7 @@ public class ListBaseFragment extends Fragment {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {
-                    ListObjectResponse<DmobileModelBase> response= (ListObjectResponse<DmobileModelBase>) o;
+                    ListObjectResponse<DMobileModelBase> response= (ListObjectResponse<DMobileModelBase>) o;
                     if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
                     }

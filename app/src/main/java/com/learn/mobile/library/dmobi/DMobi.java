@@ -7,7 +7,9 @@ import android.widget.Toast;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.request.DRequest;
+import com.learn.mobile.model.User;
 import com.learn.mobile.service.SBase;
+import com.learn.mobile.service.SUser;
 
 import java.util.Hashtable;
 
@@ -69,6 +71,25 @@ public class DMobi {
 
     public static SBase getInstance(String service) {
         String sClass = DConfig.BUNDLE_ID + ".service." + service;
+        Class c = null;
+        SBase sBase;
+        try {
+            c = Class.forName(sClass);
+            try {
+                sBase = (SBase) c.newInstance();
+                return sBase;
+            } catch (InstantiationException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            }
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    public static SBase getInstance(Class service) {
+        String sClass = DConfig.BUNDLE_ID + ".service." + service.getSimpleName();
         Class c = null;
         SBase sBase;
         try {
@@ -179,5 +200,10 @@ public class DMobi {
 
     public static void clearData(){
         globalDatas.clear();
+    }
+
+    public static User getUser(){
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        return sUser.getUser();
     }
 }

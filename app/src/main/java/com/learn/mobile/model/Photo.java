@@ -3,7 +3,6 @@ package com.learn.mobile.model;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.learn.mobile.FeedViewHolder;
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.customview.DFeedImageView;
@@ -16,11 +15,11 @@ public class Photo extends DAbstractPhoto {
     }
 
     @Override
-    public void processFeedViewHolder(FeedViewHolder feedViewHolder) {
-        super.processFeedViewHolder(feedViewHolder);
+    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
+        super.processFeedViewHolder(itemBaseViewHolder);
         final DFeedImageView imageView;
         if (images != null) {
-            imageView = (DFeedImageView) feedViewHolder.findView(R.id.main_image);
+            imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
 
             float ratio = (float)images.large.height / (float)images.large.width;
             imageView.setScale(ratio);

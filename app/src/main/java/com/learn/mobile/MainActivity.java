@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.learn.mobile.MainFragment.OnFragmentInteractionListener;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.fragment.NewFeedsFragment;
@@ -26,13 +25,9 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener ,DFragmentListener.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener ,DFragmentListener.OnFragmentInteractionListener{
     private DrawerLayout drawerLayout;
 
     TabLayout tabLayout;
@@ -61,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // setting global image universe loader
-        initImageLoader();
         // init left navigation menu
         initNavigationMenu();
         // initialize view pager
@@ -114,20 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
             }
         });
-    }
-
-    // Initialize ImageLoader config global
-    private void initImageLoader() {
-        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext());
-        config.threadPriority(Thread.NORM_PRIORITY - 2);
-        config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
-        config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        config.imageDecoder(new NutraBaseImageDecoder(true));
-        config.writeDebugLogs();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config.build());
     }
 
     public void initTabbarLayout() {

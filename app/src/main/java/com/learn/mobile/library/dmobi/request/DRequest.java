@@ -40,6 +40,14 @@ public class DRequest {
         requestParams.add(re);
     }
 
+    public void addParams(List<RequestParam> params){
+        requestParams.addAll(params);
+    }
+
+    public static RequestParam createRequestParam(String key, Object value){
+        return new RequestParam(key, value);
+    }
+
     public String getRequestUrl(){
         addParam("android", 1);
         if(requestParams.size() == 0){
@@ -118,7 +126,7 @@ public class DRequest {
 
     }
 
-    class RequestParam{
+    public static class RequestParam{
         public RequestParam(){
 
         }

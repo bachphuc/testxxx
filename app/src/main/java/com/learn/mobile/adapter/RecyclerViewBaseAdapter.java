@@ -6,19 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
-import com.learn.mobile.model.DmobileModelBase;
-import com.learn.mobile.model.Feed;
+import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.List;
 
 /**
  * Created by 09520_000 on 9/2/2015.
  */
-
 public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHolder> {
-    private List<DmobileModelBase> data;
+    protected List<DMobileModelBase> data;
 
-    public RecyclerViewBaseAdapter(List<DmobileModelBase> data) {
+    public RecyclerViewBaseAdapter(List<DMobileModelBase> data) {
         this.data = data;
     }
 
@@ -26,7 +24,7 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
     public ItemBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView;
         int position = viewType;
-        DmobileModelBase item = data.get(position);
+        DMobileModelBase item = data.get(position);
 
         itemView = LayoutInflater.from(viewGroup.getContext()).
                 inflate(item.getLayout(), viewGroup, false);
@@ -41,24 +39,8 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
 
     @Override
     public void onBindViewHolder(ItemBaseViewHolder ItemBaseViewHolder, int position) {
-        DmobileModelBase item = data.get(position);
+        DMobileModelBase item = data.get(position);
         item.processViewHolder(ItemBaseViewHolder);
-    }
-
-    public void prependData(List<DmobileModelBase> item) {
-        data.addAll(0, item);
-    }
-
-    public void appendData(List<Feed> data) {
-        data.addAll(data);
-    }
-
-    public int getMaxId() {
-        if (data.size() == 0) {
-            return 0;
-        }
-        DmobileModelBase item = data.get(0);
-        return item.getId();
     }
 
     @Override

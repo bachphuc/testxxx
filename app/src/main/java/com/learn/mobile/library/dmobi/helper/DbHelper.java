@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DAbstractItemObject;
-import com.learn.mobile.model.DmobileModelBase;
+import com.learn.mobile.model.DMobileModelBase;
 
 import java.lang.reflect.Type;
 
@@ -24,21 +24,21 @@ public class DbHelper {
         return dAbstractItemObject.getType();
     }
 
-    public static DmobileModelBase parseObject(String jsonData, Class sClass) {
+    public static DMobileModelBase parseObject(String jsonData, Class sClass) {
         DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
         dAbstractItemObject.itemType = sClass.getSimpleName();
         dAbstractItemObject.jsonData = jsonData;
         return dAbstractItemObject.getItem();
     }
 
-    public static ListObjectResponse<DmobileModelBase> parseListObjectResponse(String jsonData, Class sClass) {
+    public static ListObjectResponse<DMobileModelBase> parseListObjectResponse(String jsonData, Class sClass) {
         DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
         dAbstractItemObject.itemType = sClass.getSimpleName();
 
         Gson gson = new GsonBuilder().create();
         Type type = dAbstractItemObject.getListType();
 
-        ListObjectResponse<DmobileModelBase> response = (ListObjectResponse<DmobileModelBase>) gson.fromJson(jsonData, type);
+        ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
         return response;
     }
 }

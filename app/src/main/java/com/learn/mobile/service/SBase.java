@@ -6,7 +6,7 @@ import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.Dresponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
-import com.learn.mobile.model.DmobileModelBase;
+import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,10 @@ public class SBase {
     public int page = 0;
     public int maxId = 0;
     public int minId = 0;
-    protected List<DmobileModelBase> data = new ArrayList<DmobileModelBase>();
+
+    protected List<DMobileModelBase> data = new ArrayList<DMobileModelBase>();
+    protected List<DRequest.RequestParam> getRequestParams = new ArrayList<DRequest.RequestParam>();
+
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
 
@@ -26,12 +29,24 @@ public class SBase {
 
     protected Class itemClass;
 
-    public void setData(List<DmobileModelBase> list) {
+    public void setData(List<DMobileModelBase> list) {
         data = list;
     }
 
-    public List<DmobileModelBase> getData() {
+    public void setItemClass(Class c){
+        itemClass = c;
+    }
+
+    public List<DMobileModelBase> getData() {
         return data;
+    }
+
+    public void setGetRequestParams(DRequest.RequestParam params){
+        getRequestParams.add(params);
+    }
+
+    public void clearGetRequestParams(){
+        getRequestParams.clear();
     }
 
     public void updateMaxAndMinId() {
@@ -39,13 +54,13 @@ public class SBase {
             maxId = 0;
             minId = 0;
         }
-        DmobileModelBase item = data.get(0);
+        DMobileModelBase item = data.get(0);
         maxId = item.getId();
         item = data.get(data.size() - 1);
         minId = item.getId();
     }
 
-    public void setGetDataByPage(boolean getDataByPage){
+    public void setGetDataByPage(boolean getDataByPage) {
         this.getDataByPage = getDataByPage;
     }
 
@@ -54,8 +69,11 @@ public class SBase {
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
+        if(getRequestParams.size() > 0){
+            dRequest.addParams(getRequestParams);
+        }
         if (action == LOADMORE_ACTION) {
-            if(getDataByPage){
+            if (getDataByPage) {
                 dRequest.addParam("page", this.page);
             }
         }
@@ -66,10 +84,10 @@ public class SBase {
         dRequest.get(new Dresponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                ListObjectResponse<DmobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
+                ListObjectResponse<DMobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {
-                        if(response.hasData()){
+                        if (response.hasData()) {
                             if (action == LOADNEW_ACTION) {
                                 data.addAll(0, response.data);
                             } else {
@@ -78,15 +96,13 @@ public class SBase {
                             }
                             that.updateMaxAndMinId();
                         }
-                    }
-                    else{
+                    } else {
                         DMobi.showToast(response.getErrors());
                     }
                     if (complete != null) {
                         complete.onComplete(response);
                     }
-                }
-                else {
+                } else {
                     if (complete != null) {
                         complete.onComplete(null);
                     }
@@ -103,7 +119,7 @@ public class SBase {
         });
     }
 
-    public void getNews(final Dresponse.Complete complete){
+    public void getNews(final Dresponse.Complete complete) {
         this.gets(complete, LOADNEW_ACTION);
     }
 
