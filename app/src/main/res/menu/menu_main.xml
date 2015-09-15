@@ -21,9 +21,9 @@
             android:title="@string/downloaded" />
 
         <item
-            android:id="@+id/drawer_more"
+            android:id="@+id/bt_capture_image"
             android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="@string/more" />
+            android:title="Capture Image" />
 
         <item
             android:id="@+id/drawer_settings"

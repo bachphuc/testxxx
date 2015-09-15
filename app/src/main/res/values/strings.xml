@@ -26,4 +26,5 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="description_card_default">Description</string>
     <string name="add_friend">Add Friend</string>
+    <string name="title_activity_upload">UploadActivity</string>
 </resources>

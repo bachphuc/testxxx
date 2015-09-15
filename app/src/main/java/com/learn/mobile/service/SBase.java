@@ -65,7 +65,7 @@ public class SBase {
     }
 
     public void gets(final Dresponse.Complete complete, final String action) {
-        DRequest dRequest = DMobi.getRequest();
+        DRequest dRequest = DMobi.createRequest();
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);

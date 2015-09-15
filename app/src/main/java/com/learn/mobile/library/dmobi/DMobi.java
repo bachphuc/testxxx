@@ -107,11 +107,11 @@ public class DMobi {
         }
     }
 
-    public static DRequest getRequest() {
+    public static DRequest createRequest() {
         return new DRequest();
     }
 
-    public static DRequest getRequest(Context ct) {
+    public static DRequest createRequest(Context ct) {
         return new DRequest(ct);
     }
 

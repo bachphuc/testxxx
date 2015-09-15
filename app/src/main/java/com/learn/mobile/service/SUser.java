@@ -59,7 +59,7 @@ public class SUser extends SBase {
     }
 
     public void login(String email, String password, final Dresponse.Complete complete) {
-        DRequest dRequest = DMobi.getRequest();
+        DRequest dRequest = DMobi.createRequest();
         dRequest.setApi("user.login");
         dRequest.addParam("login", email);
         dRequest.addParam("password", password);

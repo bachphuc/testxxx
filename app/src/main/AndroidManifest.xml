@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.learn.mobile">
+    package="com.learn.mobile" >
 
-    <!-- Include following permission if you load images from Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Include following permission if you want to cache images on SD card -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan|adjustNothing">
+            android:windowSoftInputMode="adjustPan|adjustNothing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,29 +27,23 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".DisplayMessage"
-            android:label="@string/title_activity_display_message"></activity>
-        <activity
-            android:name=".NewfeedActitity"
-            android:label="@string/title_activity_recycler_view_test"></activity>
-        <activity
-            android:name=".GsonTurtorial"
-            android:label="@string/title_activity_gson_turtorial"></activity>
-        <activity
-            android:name=".LoadMore"
-            android:label="@string/title_activity_load_more"></activity>
-        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activity.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.DesignDemo">
+            android:theme="@style/Theme.DesignDemo" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />>
+                android:value=".MainActivity" />
+>
+        </activity>
+        <activity
+            android:name=".activity.UploadActivity"
+            android:label="@string/title_activity_upload"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
