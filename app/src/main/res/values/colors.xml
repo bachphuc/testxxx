@@ -18,4 +18,6 @@
     <color name="primary_background_color">#ffffff</color>
     <color name="primary_tab_border_color">#ffffff</color>
     <color name="primary_transparent_icon_color">#ddffffff</color>
+    <color name="primary_transparent_background">#60333333</color>
+    <color name="primary_text_color">#666666</color>
 </resources>

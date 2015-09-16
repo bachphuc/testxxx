@@ -34,7 +34,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="148dp"
+            app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!-- TODO animate image in here -->
@@ -81,15 +81,18 @@
                 android:layout_marginTop="248dp"
                 android:background="#ffffff"
                 android:orientation="vertical"
-                android:padding="24dp"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="24dp">
 
                 <TextView
                     android:id="@+id/tb_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nguyenn Loc"
-                    android:textColor="#333333"
+                    android:textColor="#00000000"
                     android:textSize="32dp" />
 
             </LinearLayout>

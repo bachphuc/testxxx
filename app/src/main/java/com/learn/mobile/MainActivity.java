@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -18,12 +19,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Config;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.activity.UploadActivity;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
@@ -68,14 +70,27 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // init left navigation menu
+        // TODO init left navigation menu
         initNavigationMenu();
-        // initialize view pager
+        // TODO initialize view pager
         initViewPager();
-        // init tab layout
+        // TODO init tab layout
         initTabbarLayout();
 
         showLoginActivity();
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.bt_show_post_activity);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPostActivity();
+            }
+        });
+    }
+
+    public void showPostActivity(){
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
     }
 
     public void showLoginActivity() {
@@ -97,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
                 .add(R.id.left_drawer, leftMenuFragment).commit();
     }
 
-    // initialize view pager
+    // TODO initialize view pager
     private void initViewPager() {
         appViewPagerAdapter = new AppViewPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);

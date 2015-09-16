@@ -17,6 +17,7 @@ package com.learn.mobile.activity;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -66,7 +67,8 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-
+        collapsingToolbar.setTitle(user.getTitle());
+        collapsingToolbar.setExpandedTitleColor(Color.BLACK);
         initViewPager();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.bt_post);

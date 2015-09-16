@@ -51,6 +51,16 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/bt_show_post_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/primary_color"
+            app:layout_behavior="com.learn.mobile.customview.ScrollingFABBehavior"
+            android:src="@drawable/ic_add_white_24dp" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout

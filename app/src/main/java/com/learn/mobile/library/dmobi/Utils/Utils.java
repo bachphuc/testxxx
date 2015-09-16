@@ -1,5 +1,10 @@
 package com.learn.mobile.library.dmobi.Utils;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+
+import com.learn.mobile.R;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -73,5 +78,14 @@ public class Utils {
         String normalizedText = trimFront(text, character);
 
         return trimEnd(normalizedText, character);
+    }
+
+    public static int getToolbarHeight(Context context) {
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
+                new int[]{R.attr.actionBarSize});
+        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+
+        return toolbarHeight;
     }
 }
