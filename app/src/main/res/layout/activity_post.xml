@@ -37,6 +37,7 @@
                 android:gravity="right">
 
                 <ImageView
+                    android:id="@+id/bt_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_send_white_24dp"
@@ -61,12 +62,39 @@
                 android:gravity="top"
                 android:hint="Write something..."
                 android:inputType="textMultiLine"
-                android:minHeight="100dp"
+                android:minHeight="72dp"
                 android:textAlignment="gravity"
                 android:textAppearance="?android:attr/textAppearance" />
         </LinearLayout>
-
     </LinearLayout>
+
+    <!-- TOTO Image capture preview -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:gravity="bottom"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_red"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/bt_remove_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_remove_circle_outline_white_24dp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -83,18 +111,34 @@
             android:background="#cccccc">
 
             <ImageButton
+                android:id="@+id/bt_capture_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#00000000"
                 android:src="@drawable/ic_image_white_24dp"
                 android:tint="@color/primary_text_color" />
 
             <ImageButton
+                android:id="@+id/bt_share_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:background="#00000000"
                 android:src="@drawable/ic_link_white_24dp"
                 android:tint="@color/primary_text_color" />
 
         </android.support.v7.widget.Toolbar>
     </RelativeLayout>
+
+    <!-- TODO Process bar upload -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:progress="30"
+        android:progressTint="#0066FF"
+        android:visibility="gone" />
 
 </RelativeLayout>

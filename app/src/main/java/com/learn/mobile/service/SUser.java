@@ -8,11 +8,12 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
-import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.User;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -58,14 +59,14 @@ public class SUser extends SBase {
         DConfig.clearUserData();
     }
 
-    public void login(String email, String password, final Dresponse.Complete complete) {
+    public void login(String email, String password, final DResponse.Complete complete) {
         DRequest dRequest = DMobi.createRequest();
         dRequest.setApi("user.login");
         dRequest.addParam("login", email);
         dRequest.addParam("password", password);
 
         final SUser that = this;
-        dRequest.get(new Dresponse.Listener() {
+        dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
                 Gson gson = new GsonBuilder().create();
@@ -78,17 +79,17 @@ public class SUser extends SBase {
 
                     user = response.data.user;
                     DConfig.saveUserData(getUserJsonData());
-                    complete.onComplete(response.data.user);
+                    complete.onComplete(true, response.data.user);
                 } else {
                     DMobi.showToast(response.getErrors());
-                    complete.onComplete(null);
+                    complete.onComplete(false, null);
                 }
             }
-        }, new Dresponse.ErrorListener() {
+        }, new DResponse.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError var1) {
+            public void onErrorResponse(Object var1) {
                 if (complete != null) {
-                    complete.onComplete(null);
+                    complete.onComplete(false, null);
                     DMobi.showToast("Network error!");
                 }
             }

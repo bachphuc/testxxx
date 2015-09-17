@@ -14,7 +14,7 @@ import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
-import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
@@ -39,7 +39,7 @@ public class NewFeedsFragment extends Fragment {
 
     View rootView;
 
-    Dresponse.Complete completeResponse;
+    DResponse.Complete completeResponse;
     User user;
 
     /**
@@ -62,7 +62,7 @@ public class NewFeedsFragment extends Fragment {
         // TODO Required empty public constructor
     }
 
-    public NewFeedsFragment(User user){
+    public NewFeedsFragment(User user) {
         // TODO pass user to feed in profile
         this.user = user;
     }
@@ -115,22 +115,21 @@ public class NewFeedsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // TODO set user for service Feed
-        if(user != null && user.userId == DMobi.getUser().userId){
+        if (user != null && user.userId == DMobi.getUser().userId) {
             sFeed = (SFeed) DMobi.getService(SFeed.class, "PROFILE-" + user.userId);
-        }
-        else {
+        } else {
             sFeed = (SFeed) DMobi.getInstance(SFeed.class);
         }
-        if(user != null){
+        if (user != null) {
             sFeed.setProfileUser(user.userId);
         }
 
         feedAdapter = new FeedAdapter(sFeed.getData());
         recyclerView.setAdapter(feedAdapter);
 
-        completeResponse = new Dresponse.Complete() {
+        completeResponse = new DResponse.Complete() {
             @Override
-            public void onComplete(Object o) {
+            public void onComplete(Boolean status, Object o) {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {

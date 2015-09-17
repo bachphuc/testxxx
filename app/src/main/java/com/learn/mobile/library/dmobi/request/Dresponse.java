@@ -5,9 +5,11 @@ import com.android.volley.VolleyError;
 /**
  * Created by 09520_000 on 8/22/2015.
  */
-public class Dresponse {
+public class DResponse {
+    public static final int NO_FILE_UPLOAD = 1;
+    public static final int REQUEST_FAIL = 0;
     public interface ErrorListener {
-        void onErrorResponse(VolleyError var1);
+        void onErrorResponse(Object var1);
     }
 
     public interface Listener {
@@ -15,6 +17,14 @@ public class Dresponse {
     }
 
     public interface Complete{
-        void onComplete(Object o);
+        void onComplete(Boolean status, Object o);
+    }
+
+    public interface UpdateProcess{
+        void onUpdateProcess(int percent);
+    }
+
+    public interface PreExecute{
+        void onPreExecute();
     }
 }

@@ -4,12 +4,13 @@ import com.android.volley.VolleyError;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
-import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -33,7 +34,7 @@ public class SBase {
         data = list;
     }
 
-    public void setItemClass(Class c){
+    public void setItemClass(Class c) {
         itemClass = c;
     }
 
@@ -41,11 +42,11 @@ public class SBase {
         return data;
     }
 
-    public void setGetRequestParams(DRequest.RequestParam params){
+    public void setGetRequestParams(DRequest.RequestParam params) {
         getRequestParams.add(params);
     }
 
-    public void clearGetRequestParams(){
+    public void clearGetRequestParams() {
         getRequestParams.clear();
     }
 
@@ -64,12 +65,12 @@ public class SBase {
         this.getDataByPage = getDataByPage;
     }
 
-    public void gets(final Dresponse.Complete complete, final String action) {
+    public void gets(final DResponse.Complete complete, final String action) {
         DRequest dRequest = DMobi.createRequest();
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
-        if(getRequestParams.size() > 0){
+        if (getRequestParams.size() > 0) {
             dRequest.addParams(getRequestParams);
         }
         if (action == LOADMORE_ACTION) {
@@ -81,7 +82,7 @@ public class SBase {
         dRequest.addParam("min_id", this.minId);
 
         final SBase that = this;
-        dRequest.get(new Dresponse.Listener() {
+        dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
                 ListObjectResponse<DMobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
@@ -100,30 +101,30 @@ public class SBase {
                         DMobi.showToast(response.getErrors());
                     }
                     if (complete != null) {
-                        complete.onComplete(response);
+                        complete.onComplete(true, response);
                     }
                 } else {
                     if (complete != null) {
-                        complete.onComplete(null);
+                        complete.onComplete(false, null);
                     }
                 }
             }
-        }, new Dresponse.ErrorListener() {
+        }, new DResponse.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError var1) {
+            public void onErrorResponse(Object var1) {
                 if (complete != null) {
-                    complete.onComplete(null);
+                    complete.onComplete(false, null);
                     DMobi.showToast("Network error!");
                 }
             }
         });
     }
 
-    public void getNews(final Dresponse.Complete complete) {
+    public void getNews(final DResponse.Complete complete) {
         this.gets(complete, LOADNEW_ACTION);
     }
 
-    public void getMores(final Dresponse.Complete complete) {
+    public void getMores(final DResponse.Complete complete) {
         this.gets(complete, LOADMORE_ACTION);
     }
 }

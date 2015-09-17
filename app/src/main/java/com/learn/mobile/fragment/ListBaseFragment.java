@@ -16,7 +16,7 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
-import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.service.SBase;
@@ -50,7 +50,7 @@ public class ListBaseFragment extends Fragment {
 
     private SBase service;
     Class serviceClass;
-    Dresponse.Complete completeResponse;
+    DResponse.Complete completeResponse;
 
     private RecyclerViewBaseAdapter adapter;
     private boolean bStartLoad = false;
@@ -84,7 +84,7 @@ public class ListBaseFragment extends Fragment {
         this.serviceClass = serviceClass;
     }
 
-    public void setFragmentIndex(int index){
+    public void setFragmentIndex(int index) {
         fragmentIndex = index;
     }
 
@@ -96,7 +96,7 @@ public class ListBaseFragment extends Fragment {
         return layout;
     }
 
-    public void setbGirdLayout(boolean bGirdLayout){
+    public void setbGirdLayout(boolean bGirdLayout) {
         this.bGirdLayout = bGirdLayout;
     }
 
@@ -126,12 +126,11 @@ public class ListBaseFragment extends Fragment {
         return view;
     }
 
-    private void initializeView(){
+    private void initializeView() {
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
-        if(bGirdLayout){
+        if (bGirdLayout) {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        }
-        else{
+        } else {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
@@ -142,17 +141,17 @@ public class ListBaseFragment extends Fragment {
         adapter = new RecyclerViewBaseAdapter(service.getData());
         recyclerView.setAdapter(adapter);
 
-        completeResponse = new Dresponse.Complete() {
+        completeResponse = new DResponse.Complete() {
             @Override
-            public void onComplete(Object o) {
+            public void onComplete(Boolean statis, Object o) {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {
-                    ListObjectResponse<DMobileModelBase> response= (ListObjectResponse<DMobileModelBase>) o;
+                    ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
                     if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
                     }
-                    if(response.isSuccessfully() && !response.hasData()) {
+                    if (response.isSuccessfully() && !response.hasData()) {
                         dSwipeRefreshLayout.loadMoreFinish();
                     }
                 }
@@ -175,7 +174,7 @@ public class ListBaseFragment extends Fragment {
         });
     }
 
-    public void initializeEvent(){
+    public void initializeEvent() {
         DMobi.registerEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex, new Event.Action() {
             @Override
             public void fireAction(String eventType, Object o) {
@@ -184,19 +183,19 @@ public class ListBaseFragment extends Fragment {
         });
     }
 
-    public void startLoad(){
-        if(bStartLoad){
+    public void startLoad() {
+        if (bStartLoad) {
             return;
         }
         bStartLoad = true;
         dSwipeRefreshLayout.startLoad();
     }
 
-    public void onRefreshData(){
+    public void onRefreshData() {
         service.getNews(this.completeResponse);
     }
 
-    public void onLoadMoreData(){
+    public void onLoadMoreData() {
         service.getMores(this.completeResponse);
     }
 

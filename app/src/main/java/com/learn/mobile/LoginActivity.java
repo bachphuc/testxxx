@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
-import com.learn.mobile.library.dmobi.request.Dresponse;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
 
 public class LoginActivity extends Activity implements Button.OnClickListener {
@@ -49,28 +49,28 @@ public class LoginActivity extends Activity implements Button.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_login:
                 onLogin();
                 break;
         }
     }
 
-    private void onLogin(){
+    private void onLogin() {
         SUser sUser = (SUser) DMobi.getService(SUser.class);
-        EditText emailInput = (EditText)findViewById(R.id.tb_email);
-        EditText passwordInput = (EditText)findViewById(R.id.tb_password);
+        EditText emailInput = (EditText) findViewById(R.id.tb_email);
+        EditText passwordInput = (EditText) findViewById(R.id.tb_password);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Login....");
         progressDialog.setMessage("Wait some minute...");
         progressDialog.show();
 
-        sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new Dresponse.Complete() {
+        sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new DResponse.Complete() {
             @Override
-            public void onComplete(Object o) {
+            public void onComplete(Boolean status, Object o) {
                 progressDialog.hide();
-                if(o != null){
+                if (o != null) {
                     DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
                     DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
                     DMobi.showToast("Login successfully.");
