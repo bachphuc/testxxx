@@ -54,7 +54,7 @@
             android:padding="16dp">
 
             <EditText
-                android:id="@+id/textView"
+                android:id="@+id/tb_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"

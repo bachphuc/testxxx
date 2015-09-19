@@ -1,6 +1,5 @@
 package com.learn.mobile.library.dmobi.request;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
@@ -15,7 +14,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 09520_000 on 9/17/2015.
@@ -24,7 +23,7 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
     HttpClient httpclient;
     long totalSize = 0;
     DMultiPartEntity entity;
-    Uri fileUri;
+    String filePath;
     String responseString;
 
     private DResponse.ErrorListener errorListener = null;
@@ -52,12 +51,11 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         this.complete = complete;
     }
 
-    public void setParams(List<DRequest.RequestParam> params) {
+    public void setParams(Map<String, String> params) {
         if (params != null) {
             try {
-                for (int i = 0; i < params.size(); i++) {
-                    DRequest.RequestParam requestParam = params.get(i);
-                    entity.addPart(requestParam.key, new StringBody(requestParam.value.toString()));
+                for(Map.Entry<String, String> entry : params.entrySet()){
+                    entity.addPart(entry.getKey(), new StringBody(entry.getValue()));
                 }
             } catch (IOException e) {
                 responseString = e.toString();
@@ -65,8 +63,8 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         }
     }
 
-    public void setFileUri(Uri fileUri) {
-        this.fileUri = fileUri;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
@@ -105,7 +103,7 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         HttpPost httppost = new HttpPost(url);
 
         try {
-            File sourceFile = new File(fileUri.getPath());
+            File sourceFile = new File(filePath);
 
             entity.addPart("image", new FileBody(sourceFile));
 

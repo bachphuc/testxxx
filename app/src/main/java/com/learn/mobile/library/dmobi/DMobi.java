@@ -1,6 +1,9 @@
 package com.learn.mobile.library.dmobi;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -115,7 +118,7 @@ public class DMobi {
         return new DRequest(ct);
     }
 
-    // check if user has already login
+    // TODO check if user has already login
     public static boolean isUser() {
         String token = DConfig.getToken();
         if (token != null) {
@@ -129,20 +132,45 @@ public class DMobi {
         toast.show();
     }
 
-    // show toast with message and time
+    // TODO show toast with message and time
     public static void showToast(String message, int time) {
         Toast toast = Toast.makeText(DConfig.getContext(), message, time);
         toast.show();
     }
 
-    // display log to debug when EBUG_MODE enable
+    // TODO Show login
+    public static ProgressDialog showLoading(Context context, String title, String description){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(description);
+        return progressDialog;
+    }
+
+    // TODO show alert
+    public static void alert(Context context, String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message).setTitle(title)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public static void alert(Context context, String message){
+        alert(context, "Alert", message);
+    }
+
+    // TODO display log to debug when EBUG_MODE enable
     public static void log(String key, Object o) {
         if (DConfig.DBUG_MODE != 0) {
             Log.i(key, o.toString());
         }
     }
 
-    // register a global event
+    // TODO register a global event
     public static Event registerEvent(String key){
         Event event = eventHashTable.get(key);
         if(event != null){

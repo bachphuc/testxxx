@@ -2,8 +2,12 @@ package com.learn.mobile.library.dmobi.Utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.global.DConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,10 +18,8 @@ public class Utils {
     /**
      * Trim specified charcater from front of string
      *
-     * @param text
-     *          Text
-     * @param character
-     *          Character to remove
+     * @param text      Text
+     * @param character Character to remove
      * @return Trimmed text
      */
     public static String trimFront(String text, char character) {
@@ -40,10 +42,8 @@ public class Utils {
     /**
      * Trim specified charcater from end of string
      *
-     * @param text
-     *          Text
-     * @param character
-     *          Character to remove
+     * @param text      Text
+     * @param character Character to remove
      * @return Trimmed text
      */
     public static String trimEnd(String text, char character) {
@@ -68,10 +68,8 @@ public class Utils {
     /**
      * Trim specified charcater from both ends of a String
      *
-     * @param text
-     *          Text
-     * @param character
-     *          Character to remove
+     * @param text      Text
+     * @param character Character to remove
      * @return Trimmed text
      */
     public static String trimAll(String text, char character) {
@@ -87,5 +85,21 @@ public class Utils {
         styledAttributes.recycle();
 
         return toolbarHeight;
+    }
+
+    public static String getRealPathFromURI(Context context, Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor != null){
+            if(cursor.moveToFirst()){;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                res = cursor.getString(column_index);
+                return res;
+            }
+            cursor.close();
+        }
+
+        return contentUri.getPath();
     }
 }

@@ -1,7 +1,7 @@
 package com.learn.mobile.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,16 +18,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.Utils.Utils;
+import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -51,6 +55,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     ImageView btRemoveImage;
     boolean bPosting = false;
+    EditText tbDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,25 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         // TODO Init view
         initView();
+
+        Intent receivedIntent = getIntent();
+
+        String receivedAction = receivedIntent.getAction();
+
+        String receivedType = receivedIntent.getType();
+        String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+
+        if (receivedType != null) {
+            if (receivedType.startsWith("text/")) {
+
+            } else if (receivedType.startsWith("image/")) {
+                fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
+                if (fileUri != null) {
+                    DMobi.log(TAG, fileUri.getPath());
+                    previewImage();
+                }
+            }
+        }
     }
 
     private void initView() {
@@ -76,6 +100,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         ImageView imageView = (ImageView) findViewById(R.id.bt_post);
         imageView.setOnClickListener(this);
+
+        tbDescription = (EditText) findViewById(R.id.tb_description);
+    }
+
+    public boolean needUpload() {
+        return bHasImage;
     }
 
     // TODO Process view event click
@@ -101,38 +131,67 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     public void uploadToServer() {
         DRequest dRequest = DMobi.createRequest();
-        dRequest.setApi("photo.upload");
-        dRequest.setFileUri(fileUri);
+        dRequest.setApi("feed.add");
+
+        String description = tbDescription.getText().toString();
+        dRequest.addPost("content", description);
+
+        final Context that = this;
+        final ProgressDialog progressDialog = DMobi.showLoading(that, "", "Posting...");
         dRequest.setPreExecute(new DResponse.PreExecute() {
             @Override
             public void onPreExecute() {
                 bPosting = true;
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setProgress(0);
+                progressDialog.show();
+                if (needUpload()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(0);
+                }
             }
         });
-        dRequest.setUpdateProcess(new DResponse.UpdateProcess() {
-            @Override
-            public void onUpdateProcess(int percent) {
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setProgress(percent);
-            }
-        });
+
         dRequest.setComplete(new DResponse.Complete() {
             @Override
             public void onComplete(Boolean status, Object o) {
                 String response = (String) o;
                 progressBar.setVisibility(View.GONE);
+                progressDialog.hide();
                 bPosting = false;
+                DMobi.log(TAG, response);
                 if (status) {
-                    showAlert(response);
+                    BasicObjectResponse responseObject = DbHelper.parseResponse(response);
+                    if (responseObject.isSuccessfully()) {
+                        DMobi.showToast("Post successfully.");
+                        DMobi.fireEvent(Event.EVENT_REFRESH_FEED, null);
+                        finish();
+                    } else {
+                        DMobi.alert(that, responseObject.getErrors());
+                    }
                 } else {
-
-                    showAlert(response);
+                    DMobi.alert(that, "Response from Servers", response);
                 }
             }
         });
-        dRequest.upload();
+
+        if (needUpload()) {
+            if (fileUri == null) {
+                DMobi.showToast("No file to upload.");
+                return;
+            }
+            dRequest.addParam("module", "photo");
+            String filePath = Utils.getRealPathFromURI(this, fileUri);
+            dRequest.setFilePath(filePath);
+            dRequest.setUpdateProcess(new DResponse.UpdateProcess() {
+                @Override
+                public void onUpdateProcess(int percent) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(percent);
+                }
+            });
+            dRequest.upload();
+        } else {
+            dRequest.post();
+        }
     }
 
     @Override
@@ -175,7 +234,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         // TODO Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("Upload", "Oops! Failed create " + IMAGE_DIRECTORY_NAME + " directory");
+                DMobi.log(TAG, "Oops! Failed create " + IMAGE_DIRECTORY_NAME + " directory");
                 return null;
             }
         }
@@ -228,7 +287,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
-        final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
+
+        String path = Utils.getRealPathFromURI(this, fileUri);
+        final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
         imgPreview.setImageBitmap(bitmap);
         btRemoveImage.setVisibility(View.VISIBLE);
@@ -248,42 +309,21 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 previewImage();
             } else if (resultCode == RESULT_CANCELED) {
                 // TODO Process when user cancelled Image capture
-                Toast.makeText(getApplicationContext(),
-                        "User cancelled image capture", Toast.LENGTH_SHORT)
-                        .show();
+                DMobi.showToast("User cancelled image capture.");
 
             } else {
                 // TODO Process when user failed to capture image
-                Toast.makeText(getApplicationContext(),
-                        "Sorry! Failed to capture image", Toast.LENGTH_SHORT)
-                        .show();
+                DMobi.showToast("Sorry! Failed to capture image.");
             }
         } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(getApplicationContext(),
-                        "User cancelled video recording", Toast.LENGTH_SHORT)
-                        .show();
+                DMobi.showToast("User cancelled video recording.");
 
             } else {
-                Toast.makeText(getApplicationContext(),
-                        "Sorry! Failed to record video", Toast.LENGTH_SHORT)
-                        .show();
+                DMobi.showToast("Sorry! Failed to record video.");
             }
         }
-    }
-
-    private void showAlert(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message).setTitle("Response from Servers")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 }

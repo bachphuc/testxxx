@@ -88,7 +88,8 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                profileFeedFragment = new NewFeedsFragment(user);
+                profileFeedFragment = new NewFeedsFragment();
+                profileFeedFragment.setUser(user);
                 return profileFeedFragment;
             }
 

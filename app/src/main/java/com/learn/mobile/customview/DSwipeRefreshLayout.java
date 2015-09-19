@@ -564,10 +564,14 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
     // CUSTOM LOAD MORE
     // True if we are still waiting for the last set of data to load.
-    private boolean bIsLoadMoreProcessing = false;
+    private boolean bLoadMoreProcessing = false;
     private boolean canLoadMore = true;
     private LoadMoreListener loadMoreListener;
     private int bottomLoadMoreHeight = 140;
+
+    public boolean isLoadMoreProcessing(){
+        return  bLoadMoreProcessing;
+    }
 
     public static interface LoadMoreListener {
         public void loadMore();
@@ -578,14 +582,14 @@ public class DSwipeRefreshLayout extends ViewGroup {
     }
 
     public void stopLoadMore() {
-        bIsLoadMoreProcessing = false;
+        bLoadMoreProcessing = false;
         hideLoadMoreProcess();
     }
 
     public void loadMoreFinish() {
         ensureTarget();
         canLoadMore = false;
-        bIsLoadMoreProcessing = false;
+        bLoadMoreProcessing = false;
         hideLoadMoreProcess();
     }
 
@@ -610,7 +614,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
     }
 
     private void onLoadMore() {
-        bIsLoadMoreProcessing = true;
+        bLoadMoreProcessing = true;
         if (loadMoreListener != null) {
             showLoadMoreProcess();
             loadMoreListener.loadMore();
@@ -627,7 +631,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
                     if(dy < 0){
                         return;
                     }
-                    if (bIsLoadMoreProcessing == true) {
+                    if (bLoadMoreProcessing == true) {
                         return;
                     }
                     if (!canLoadMore ) {
@@ -652,7 +656,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (bIsLoadMoreProcessing == true) {
+                    if (bLoadMoreProcessing == true) {
                         return;
                     }
                     if (!canLoadMore) {

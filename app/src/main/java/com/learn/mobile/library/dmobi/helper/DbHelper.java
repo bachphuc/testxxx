@@ -2,9 +2,13 @@ package com.learn.mobile.library.dmobi.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
+import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DAbstractItemObject;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.User;
 
 import java.lang.reflect.Type;
 
@@ -40,5 +44,13 @@ public class DbHelper {
 
         ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
         return response;
+    }
+
+    public static BasicObjectResponse parseResponse(String jsonData) {
+        Gson gson = new GsonBuilder().create();
+        Type type = new TypeToken<BasicObjectResponse>() {
+        }.getType();
+        BasicObjectResponse baseObjectResponse = (BasicObjectResponse) gson.fromJson(jsonData, type);
+        return baseObjectResponse;
     }
 }

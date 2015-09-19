@@ -62,8 +62,7 @@ public class NewFeedsFragment extends Fragment {
         // TODO Required empty public constructor
     }
 
-    public NewFeedsFragment(User user) {
-        // TODO pass user to feed in profile
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -76,6 +75,9 @@ public class NewFeedsFragment extends Fragment {
     }
 
     public void refreshFeed() {
+        if (!dSwipeRefreshLayout.isRefreshing()) {
+            dSwipeRefreshLayout.setRefreshing(true);
+        }
         sFeed.getNews(this.completeResponse);
     }
 
@@ -98,6 +100,13 @@ public class NewFeedsFragment extends Fragment {
             @Override
             public void fireAction(String eventType, Object o) {
                 dSwipeRefreshLayout.startLoad();
+            }
+        });
+        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, new Event.Action() {
+
+            @Override
+            public void fireAction(String eventType, Object o) {
+                refreshFeed();
             }
         });
         return view;

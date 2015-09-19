@@ -9,6 +9,7 @@ public class Event {
     // define some event in app
     public static final String EVENT_UPDATE_PROFILE = "EVENT_UPDATE_PROFILE";
     public static final String EVENT_LOADMORE_FEED = "EVENT_LOADMORE_FEED";
+    public static final String EVENT_REFRESH_FEED = "EVENT_REFRESH_FEED";
     public static final String EVENT_LIST_BASE_FRAGMENT_LOADED = "EVENT_LIST_BASE_FRAGMENT_LOADED";
     public static final String EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED = "EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED";
 

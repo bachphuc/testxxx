@@ -13,8 +13,6 @@ import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
-import net.grobas.view.PolygonImageView;
-
 public class Feed extends DAbstractFeed {
     private boolean bItemReady = false;
 
@@ -61,8 +59,6 @@ public class Feed extends DAbstractFeed {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.images.avatar.url);
-                PolygonImageView polygonImageView = (PolygonImageView) imageView;
-                polygonImageView.setVertices(0);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

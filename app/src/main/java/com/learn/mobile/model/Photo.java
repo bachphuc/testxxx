@@ -20,11 +20,9 @@ public class Photo extends DAbstractPhoto {
         final DFeedImageView imageView;
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
-
-            float ratio = (float)images.large.height / (float)images.large.width;
-            imageView.setScale(ratio);
-
             if (imageView != null) {
+                float ratio = (float)images.large.height / (float)images.large.width;
+                imageView.setScale(ratio);
                 ImageHelper.display(imageView, images.large.url);
             }
         }

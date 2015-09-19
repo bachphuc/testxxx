@@ -77,9 +77,11 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
         });
     }
 
+    // TODO Show post activity
     public void showPostActivity() {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.animator.slide_in, R.animator.slide_out);
     }
 
     public void showLoginActivity() {
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
         }
     }
 
+    // TODO Init Navigation Menu
     private void initNavigationMenu() {
         LeftMenuFragment leftMenuFragment = new LeftMenuFragment();
         leftMenuFragment.setArguments(getIntent().getExtras());
