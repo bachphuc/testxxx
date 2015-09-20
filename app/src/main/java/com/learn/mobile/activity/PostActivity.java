@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -32,11 +34,17 @@ import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
+import com.learn.mobile.model.Link;
+import com.learn.mobile.service.SLink;
+
+import org.apache.commons.validator.routines.UrlValidator;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = PostActivity.class.getSimpleName();
@@ -56,6 +64,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     ImageView btRemoveImage;
     boolean bPosting = false;
     EditText tbDescription;
+    boolean bLink = false;
+    String module;
+
+    SLink sLink;
+    Link link;
+    DRequest dRequest;
+    String strLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +81,22 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // TODO Init request
+        initRequest();
+
         // TODO Init view
         initView();
 
+        // TODO try to get data from another application
+        tryGetShareData();
+    }
+
+    private void initRequest() {
+        dRequest = DMobi.createRequest();
+        dRequest.setApi("feed.add");
+    }
+
+    private void tryGetShareData() {
         Intent receivedIntent = getIntent();
 
         String receivedAction = receivedIntent.getAction();
@@ -78,10 +106,28 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         if (receivedType != null) {
             if (receivedType.startsWith("text/")) {
+                DMobi.log(TAG, receivedText);
+                UrlValidator urlValidator = new UrlValidator();
+
+                if (urlValidator.isValid(receivedText)) {
+                    bLink = true;
+                    module = "link";
+                    strLink = receivedText;
+                    sLink = (SLink) DMobi.getService(SLink.class);
+                    sLink.preview(receivedText, new DResponse.Complete() {
+                        @Override
+                        public void onComplete(Boolean status, Object o) {
+                            if (status) {
+                                previewLinkComplete(o);
+                            }
+                        }
+                    });
+                }
 
             } else if (receivedType.startsWith("image/")) {
                 fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
                 if (fileUri != null) {
+                    module = "photo";
                     DMobi.log(TAG, fileUri.getPath());
                     previewImage();
                 }
@@ -89,9 +135,31 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void previewLinkComplete(Object o) {
+        ImageView imageView;
+        TextView textView;
+        link = (Link) o;
+        if (link.images != null) {
+            if (link.images.full != null) {
+                imageView = (ImageView) findViewById(R.id.link_image_preview);
+                ImageHelper.display(imageView, link.images.full.url);
+            }
+        }
+        textView = (TextView) findViewById(R.id.link_title);
+        textView.setText(link.getTitle());
+
+        if (link.siteUrl != null) {
+            textView = (TextView) findViewById(R.id.link_url);
+            textView.setText(link.siteUrl);
+        }
+
+        textView = (TextView) findViewById(R.id.link_description);
+        textView.setText(link.getDescription());
+    }
+
     private void initView() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        imgPreview = (ImageView) findViewById(R.id.imgPreview);
+        imgPreview = (ImageView) findViewById(R.id.photo_image_preview);
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.bt_capture_image);
         imageButton.setOnClickListener(this);
@@ -102,6 +170,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         imageView.setOnClickListener(this);
 
         tbDescription = (EditText) findViewById(R.id.tb_description);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
+        progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
     }
 
     public boolean needUpload() {
@@ -130,14 +200,25 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void uploadToServer() {
-        DRequest dRequest = DMobi.createRequest();
-        dRequest.setApi("feed.add");
-
         String description = tbDescription.getText().toString();
         dRequest.addPost("content", description);
+        if (module != null) {
+            dRequest.addParam("module", module);
+        }
 
         final Context that = this;
         final ProgressDialog progressDialog = DMobi.showLoading(that, "", "Posting...");
+
+        // TODO Share link
+        if(module != null && module == "link"){
+            if(link != null){
+                dRequest.addPost("title", link.getTitle());
+                dRequest.addParam("description", link.getDescription());
+                dRequest.addPost("image", link.images.full.url);
+                dRequest.addPost("url", strLink);
+            }
+        }
+
         dRequest.setPreExecute(new DResponse.PreExecute() {
             @Override
             public void onPreExecute() {
@@ -178,7 +259,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 DMobi.showToast("No file to upload.");
                 return;
             }
-            dRequest.addParam("module", "photo");
+
             String filePath = Utils.getRealPathFromURI(this, fileUri);
             dRequest.setFilePath(filePath);
             dRequest.setUpdateProcess(new DResponse.UpdateProcess() {

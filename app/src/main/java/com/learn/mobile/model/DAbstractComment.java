@@ -2,7 +2,7 @@ package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DAbstractComment extends DMobileModelBase {
+public class DAbstractComment extends DMobileModelBase{
     
     
     public String _primaryKey = "comment_id";

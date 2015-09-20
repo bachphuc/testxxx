@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
+import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.DAbstractItemObject;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
@@ -52,5 +53,16 @@ public class DbHelper {
         }.getType();
         BasicObjectResponse baseObjectResponse = (BasicObjectResponse) gson.fromJson(jsonData, type);
         return baseObjectResponse;
+    }
+
+    public static SingleObjectResponse<DMobileModelBase> parseSingleObjectResponse(String jsonData, Class sClass) {
+        DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
+        dAbstractItemObject.itemType = sClass.getSimpleName();
+
+        Gson gson = new GsonBuilder().create();
+        Type type = dAbstractItemObject.getSingleType();
+
+        SingleObjectResponse<DMobileModelBase> response = (SingleObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
+        return response;
     }
 }

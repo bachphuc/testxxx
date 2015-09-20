@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
+import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 
 import java.lang.reflect.Type;
 
@@ -18,9 +19,6 @@ public class DAbstractItemObject {
     public DMobileModelBase getItem() {
         Gson gson = new GsonBuilder().create();
         Type type;
-        if(itemType == null){
-            return null;
-        }
         switch (itemType) {
 		case "User":
 			type = new TypeToken<User>() {
@@ -179,6 +177,58 @@ public class DAbstractItemObject {
             return type;
         case "Comment":
             type = new TypeToken<ListObjectResponse<Comment>>() {
+            }.getType();
+            return type;
+            default:
+                return null;
+        }
+    }
+    
+    public Type getSingleType(){
+        Type type;
+        switch (itemType) {
+        case "User":
+            type = new TypeToken<SingleObjectResponse<User>>() {
+            }.getType();
+            return type;
+        case "Feed":
+            type = new TypeToken<SingleObjectResponse<Feed>>() {
+            }.getType();
+            return type;
+        case "Photo":
+            type = new TypeToken<SingleObjectResponse<Photo>>() {
+            }.getType();
+            return type;
+        case "Pages":
+            type = new TypeToken<SingleObjectResponse<Pages>>() {
+            }.getType();
+            return type;
+        case "PagesCategory":
+            type = new TypeToken<SingleObjectResponse<PagesCategory>>() {
+            }.getType();
+            return type;
+        case "Blog":
+            type = new TypeToken<SingleObjectResponse<Blog>>() {
+            }.getType();
+            return type;
+        case "UserStatus":
+            type = new TypeToken<SingleObjectResponse<UserStatus>>() {
+            }.getType();
+            return type;
+        case "Link":
+            type = new TypeToken<SingleObjectResponse<Link>>() {
+            }.getType();
+            return type;
+        case "MusicSong":
+            type = new TypeToken<SingleObjectResponse<MusicSong>>() {
+            }.getType();
+            return type;
+        case "Video":
+            type = new TypeToken<SingleObjectResponse<Video>>() {
+            }.getType();
+            return type;
+        case "Comment":
+            type = new TypeToken<SingleObjectResponse<Comment>>() {
             }.getType();
             return type;
             default:
