@@ -8,10 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,10 +22,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.Utils.Utils;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -46,7 +49,7 @@ import java.util.Locale;
 
 import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 
-public class PostActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostActivity extends AppCompatActivity implements View.OnClickListener, PromptTextDialog.NoticeDialogListener {
     private static final String TAG = PostActivity.class.getSimpleName();
     private ProgressBar progressBar;
     private ImageView imgPreview;
@@ -71,6 +74,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     Link link;
     DRequest dRequest;
     String strLink;
+    PromptTextDialog newFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,26 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         tryGetShareData();
     }
 
+    private void initView() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        imgPreview = (ImageView) findViewById(R.id.photo_image_preview);
+
+        ImageButton imageButton = (ImageButton) findViewById(R.id.bt_capture_image);
+        imageButton.setOnClickListener(this);
+        btRemoveImage = (ImageView) findViewById(R.id.bt_remove_attachment);
+        btRemoveImage.setOnClickListener(this);
+
+        ImageView imageView = (ImageView) findViewById(R.id.bt_post);
+        imageView.setOnClickListener(this);
+
+        imageButton = (ImageButton) findViewById(R.id.bt_share_link);
+        imageButton.setOnClickListener(this);
+
+        tbDescription = (EditText) findViewById(R.id.tb_description);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
+        progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
+    }
+
     private void initRequest() {
         dRequest = DMobi.createRequest();
         dRequest.setApi("feed.add");
@@ -101,41 +125,66 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         String receivedAction = receivedIntent.getAction();
 
-        String receivedType = receivedIntent.getType();
-        String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
-
-        if (receivedType != null) {
-            if (receivedType.startsWith("text/")) {
-                DMobi.log(TAG, receivedText);
-                UrlValidator urlValidator = new UrlValidator();
-
-                if (urlValidator.isValid(receivedText)) {
-                    bLink = true;
-                    module = "link";
-                    strLink = receivedText;
-                    sLink = (SLink) DMobi.getService(SLink.class);
-                    sLink.preview(receivedText, new DResponse.Complete() {
-                        @Override
-                        public void onComplete(Boolean status, Object o) {
-                            if (status) {
-                                previewLinkComplete(o);
-                            }
-                        }
-                    });
-                }
-
-            } else if (receivedType.startsWith("image/")) {
-                fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
-                if (fileUri != null) {
-                    module = "photo";
-                    DMobi.log(TAG, fileUri.getPath());
-                    previewImage();
+        if (receivedAction != null && receivedAction == Intent.ACTION_SEND) {
+            String receivedType = receivedIntent.getType();
+            String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+            if (receivedType != null) {
+                if (receivedType.startsWith("text/")) {
+                    DMobi.log(TAG, receivedText);
+                    getLinkPreview(receivedText);
+                } else if (receivedType.startsWith("image/")) {
+                    fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (fileUri != null) {
+                        module = "photo";
+                        DMobi.log(TAG, fileUri.getPath());
+                        previewImage();
+                    }
                 }
             }
         }
     }
 
+    private void getLinkPreview(String url) {
+        UrlValidator urlValidator = new UrlValidator();
+
+        if (urlValidator.isValid(url)) {
+            bLink = true;
+            module = "link";
+            strLink = url;
+            sLink = (SLink) DMobi.getService(SLink.class);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_photo_attachment);
+            relativeLayout.setVisibility(View.GONE);
+            relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+            relativeLayout.setVisibility(View.VISIBLE);
+
+            sLink.preview(url, new DResponse.Complete() {
+                @Override
+                public void onComplete(Boolean status, Object o) {
+                    if (status) {
+                        previewLinkComplete(o);
+                    } else {
+                        getLinkPreviewFail();
+                    }
+                }
+            });
+        } else {
+            DMobi.showToast("Link is invalid format. Please add another link.");
+        }
+    }
+
+    private void getLinkPreviewFail() {
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+        relativeLayout.setVisibility(View.GONE);
+    }
+
     private void previewLinkComplete(Object o) {
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.panel_link_attachment_content);
+        linearLayout.setVisibility(View.VISIBLE);
+
+
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
+        progressBar.setVisibility(View.GONE);
+
         ImageView imageView;
         TextView textView;
         link = (Link) o;
@@ -157,23 +206,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         textView.setText(link.getDescription());
     }
 
-    private void initView() {
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        imgPreview = (ImageView) findViewById(R.id.photo_image_preview);
-
-        ImageButton imageButton = (ImageButton) findViewById(R.id.bt_capture_image);
-        imageButton.setOnClickListener(this);
-        btRemoveImage = (ImageView) findViewById(R.id.bt_remove_image);
-        btRemoveImage.setOnClickListener(this);
-
-        ImageView imageView = (ImageView) findViewById(R.id.bt_post);
-        imageView.setOnClickListener(this);
-
-        tbDescription = (EditText) findViewById(R.id.tb_description);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
-        progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
-    }
-
     public boolean needUpload() {
         return bHasImage;
     }
@@ -188,7 +220,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_capture_image:
                 captureImage();
                 break;
-            case R.id.bt_remove_image:
+            case R.id.bt_remove_attachment:
                 Log.i(TAG, "Remove image...");
                 removeImage();
                 break;
@@ -196,7 +228,18 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "Upload image...");
                 uploadToServer();
                 break;
+            case R.id.bt_share_link:
+                showLinkDialog();
+                break;
         }
+    }
+
+    private void showLinkDialog() {
+        Log.i(TAG, "chan vai");
+        newFragment = new PromptTextDialog();
+        newFragment.setTitle(DMobi.translate("Add your link"));
+        newFragment.setHintText(DMobi.translate("Input your link to share..."));
+        newFragment.show(getSupportFragmentManager(), "promTextDialog");
     }
 
     public void uploadToServer() {
@@ -210,10 +253,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         final ProgressDialog progressDialog = DMobi.showLoading(that, "", "Posting...");
 
         // TODO Share link
-        if(module != null && module == "link"){
-            if(link != null){
+        if (module != null && module == "link") {
+            if (link != null) {
                 dRequest.addPost("title", link.getTitle());
-                dRequest.addParam("description", link.getDescription());
+                dRequest.addPost("description", link.getDescription());
                 dRequest.addPost("image", link.images.full.url);
                 dRequest.addPost("url", strLink);
             }
@@ -374,12 +417,23 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         imgPreview.setImageBitmap(bitmap);
         btRemoveImage.setVisibility(View.VISIBLE);
+
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+        relativeLayout.setVisibility(View.GONE);
+        relativeLayout = (RelativeLayout) findViewById(R.id.panel_photo_attachment);
+        relativeLayout.setVisibility(View.VISIBLE);
     }
 
     private void removeImage() {
         bHasImage = false;
+        module = null;
         imgPreview.setVisibility(View.GONE);
         btRemoveImage.setVisibility(View.GONE);
+
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+        relativeLayout.setVisibility(View.GONE);
+        relativeLayout = (RelativeLayout) findViewById(R.id.panel_photo_attachment);
+        relativeLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -406,5 +460,15 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 DMobi.showToast("Sorry! Failed to record video.");
             }
         }
+    }
+
+    @Override
+    public void onDialogSuccessClick(DialogFragment dialog, String value) {
+        getLinkPreview(value);
+    }
+
+    @Override
+    public void onDialogCancelClick(DialogFragment dialog) {
+
     }
 }

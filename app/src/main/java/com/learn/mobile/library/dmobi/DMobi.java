@@ -128,12 +128,14 @@ public class DMobi {
     }
 
     public static void showToast(String message) {
+        message = DMobi.translate(message);
         Toast toast = Toast.makeText(DConfig.getContext(), message, Toast.LENGTH_SHORT);
         toast.show();
     }
 
     // TODO show toast with message and time
     public static void showToast(String message, int time) {
+        message = DMobi.translate(message);
         Toast toast = Toast.makeText(DConfig.getContext(), message, time);
         toast.show();
     }
@@ -160,7 +162,8 @@ public class DMobi {
     }
 
     public static void alert(Context context, String message){
-        alert(context, "Alert", message);
+        message = DMobi.translate(message);
+        alert(context, DMobi.translate("Alert"), message);
     }
 
     // TODO display log to debug when EBUG_MODE enable
@@ -233,5 +236,9 @@ public class DMobi {
     public static User getUser(){
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         return sUser.getUser();
+    }
+
+    public static String translate(String s){
+        return s;
     }
 }

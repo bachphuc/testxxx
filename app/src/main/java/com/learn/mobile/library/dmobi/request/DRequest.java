@@ -135,7 +135,7 @@ public class DRequest {
                     er.onErrorResponse(volleyError);
                 }
                 if (cm != null) {
-                    cm.onComplete(false, volleyError);
+                    cm.onComplete(false, volleyError.getMessage().toString());
                 }
             }
         }) {
