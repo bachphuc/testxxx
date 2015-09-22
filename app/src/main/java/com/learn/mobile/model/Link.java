@@ -13,8 +13,8 @@ public class Link extends DAbstractLink {
     }
 
     @Override
-    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
-        super.processFeedViewHolder(itemBaseViewHolder);
+    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+        super.processFeedViewHolder(itemBaseViewHolder, position);
         ImageView imageView;
         if (image != null) {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.main_image);

@@ -52,7 +52,7 @@ public class DMobileModelBase {
         return layout;
     }
 
-    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
+    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
     }
 
     public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder) {

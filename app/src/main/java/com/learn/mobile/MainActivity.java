@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -30,15 +31,20 @@ import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
 
-public class MainActivity extends AppCompatActivity implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
     private DrawerLayout drawerLayout;
 
     TabLayout tabLayout;
     ViewPager viewPager;
     AppViewPagerAdapter appViewPagerAdapter;
+    private AppBarLayout appBarLayout;
 
     public TabLayout getTabLayout() {
         return tabLayout;
+    }
+
+    public AppBarLayout getAppBarLayout() {
+        return appBarLayout;
     }
 
     @Override
@@ -59,12 +65,15 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(this);
+
         // TODO init left navigation menu
         initNavigationMenu();
         // TODO initialize view pager
         initViewPager();
         // TODO init tab layout
-        initTabbarLayout();
+        initTabBarLayout();
 
         showLoginActivity();
 
@@ -128,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
         });
     }
 
-    public void initTabbarLayout() {
+    public void initTabBarLayout() {
         tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
         TabLayout.Tab tab;
 
@@ -232,5 +241,10 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        DMobi.fireEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, i == 0);
     }
 }

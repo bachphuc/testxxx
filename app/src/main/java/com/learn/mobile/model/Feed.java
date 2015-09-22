@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,10 +14,11 @@ import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.activity.UserProfileActivity;
+import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
-public class Feed extends DAbstractFeed {
+public class Feed extends DAbstractFeed{
     private boolean bItemReady = false;
 
     public DMobileModelBase getAttachment() {
@@ -41,8 +43,9 @@ public class Feed extends DAbstractFeed {
     }
 
     @Override
-    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
-        super.processFeedViewHolder(itemBaseViewHolder);
+    public void processFeedViewHolder(final ItemBaseViewHolder itemBaseViewHolder, final int position) {
+        super.processFeedViewHolder(itemBaseViewHolder, position);
+        final FeedAdapter adapter = (FeedAdapter)itemBaseViewHolder.getAdapter();
 
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
         textView.setText(user.getTitle());
@@ -55,7 +58,7 @@ public class Feed extends DAbstractFeed {
                 linearLayout.setVisibility(View.GONE);
             }
         }
-
+        final Feed that = this;
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_feed_dropdown_menu);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,17 @@ public class Feed extends DAbstractFeed {
                 PopupMenu popup = new PopupMenu(v.getContext(), v);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.feed_action_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.mn_delete_feed:
+                                adapter.delete(position);
+                                break;
+                        }
+                        return false;
+                    }
+                });
                 popup.show();
             }
         });
@@ -87,7 +101,7 @@ public class Feed extends DAbstractFeed {
 
         DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
-            dmobileModelBase.processFeedViewHolder(itemBaseViewHolder);
+            dmobileModelBase.processFeedViewHolder(itemBaseViewHolder, position);
         }
     }
 }

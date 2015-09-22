@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/drawer_favourite"
-        android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="@string/favourite" />
+        android:id="@+id/mn_delete_feed"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="@string/delete_feed" />
 
     <item
         android:id="@+id/drawer_downloaded"

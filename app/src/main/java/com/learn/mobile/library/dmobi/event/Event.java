@@ -12,6 +12,7 @@ public class Event {
     public static final String EVENT_REFRESH_FEED = "EVENT_REFRESH_FEED";
     public static final String EVENT_LIST_BASE_FRAGMENT_LOADED = "EVENT_LIST_BASE_FRAGMENT_LOADED";
     public static final String EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED = "EVENT_LIST_BASE_FRAGMENT_LOAD_COMPLETED";
+    public static final String EVENT_LOCK_REFRESH_RECYCLER_VIEW = "EVENT_LOCK_REFRESH_RECYCLER_VIEW";
 
     private ArrayList<Action> actions = new ArrayList<Action>();
     private String eventType;

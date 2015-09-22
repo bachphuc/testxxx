@@ -26,12 +26,19 @@ public class FeedAdapter extends RecyclerViewBaseAdapter {
         itemView = LayoutInflater.from(viewGroup.getContext()).
                 inflate(item.getFeedLayout(), viewGroup, false);
 
-        return new ItemBaseViewHolder(itemView);
+        ItemBaseViewHolder itemBaseViewHolder = new ItemBaseViewHolder(itemView);
+        itemBaseViewHolder.attachAdapter(this);
+        return itemBaseViewHolder;
+    }
+
+    public void delete(int position){
+        data.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
     public void onBindViewHolder(ItemBaseViewHolder ItemBaseViewHolder, int position) {
         DMobileModelBase item = data.get(position);
-        item.processFeedViewHolder(ItemBaseViewHolder);
+        item.processFeedViewHolder(ItemBaseViewHolder, position);
     }
 }

@@ -14,6 +14,6 @@ import com.learn.mobile.service.SPhoto;
 public class PhotoFragment extends ListBaseFragment {
     public PhotoFragment(){
         setServiceClass(SPhoto.class);
-        setbGirdLayout(true);
+        setGirdLayout(true);
     }
 }

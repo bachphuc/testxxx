@@ -26,10 +26,9 @@ import com.learn.mobile.service.SFeed;
  * Activities that contain this fragment must implement the
  * {@link NewFeedsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewFeedsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFeedsFragment extends Fragment {
+public class NewFeedsFragment extends Fragment implements Event.Action {
     private OnFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
@@ -42,22 +41,6 @@ public class NewFeedsFragment extends Fragment {
     DResponse.Complete completeResponse;
     User user;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewFeedsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NewFeedsFragment newInstance(String param1, String param2) {
-        NewFeedsFragment fragment = new NewFeedsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     public NewFeedsFragment() {
         // TODO Required empty public constructor
     }
@@ -69,9 +52,6 @@ public class NewFeedsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     public void refreshFeed() {
@@ -96,22 +76,37 @@ public class NewFeedsFragment extends Fragment {
         initRecycleView();
 
         // TODO Initialize event
-        DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, new Event.Action() {
-            @Override
-            public void fireAction(String eventType, Object o) {
-                dSwipeRefreshLayout.startLoad();
-            }
-        });
-        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, new Event.Action() {
+        initEvents();
 
-            @Override
-            public void fireAction(String eventType, Object o) {
-                refreshFeed();
-            }
-        });
         return view;
     }
 
+    private void initEvents() {
+        // TODO Initialize events
+        DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, this);
+        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this);
+
+        DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
+    }
+
+    @Override
+    public void fireAction(String eventType, Object o) {
+        // TODO Process events
+        switch (eventType) {
+            case Event.EVENT_LOADMORE_FEED:
+                dSwipeRefreshLayout.startLoad();
+                break;
+            case Event.EVENT_REFRESH_FEED:
+                refreshFeed();
+                break;
+            case Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
+                boolean canRefresh = (boolean) o;
+                setEnableRefresh(canRefresh);
+                break;
+        }
+    }
+
+    // TODO Enable or disable swipeRefreshLayout
     public void setEnableRefresh(boolean b) {
         dSwipeRefreshLayout.setEnabled(b);
     }

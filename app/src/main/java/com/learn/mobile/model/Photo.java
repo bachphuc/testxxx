@@ -15,8 +15,8 @@ public class Photo extends DAbstractPhoto {
     }
 
     @Override
-    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
-        super.processFeedViewHolder(itemBaseViewHolder);
+    public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+        super.processFeedViewHolder(itemBaseViewHolder, position);
         final DFeedImageView imageView;
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
