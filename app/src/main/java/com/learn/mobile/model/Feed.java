@@ -2,6 +2,8 @@ package com.learn.mobile.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -53,7 +56,17 @@ public class Feed extends DAbstractFeed {
             }
         }
 
-        ImageView imageView;
+        ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_feed_dropdown_menu);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.feed_action_menu, popup.getMenu());
+                popup.show();
+            }
+        });
+
         final User currentUser = user;
         if (user.images != null) {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
