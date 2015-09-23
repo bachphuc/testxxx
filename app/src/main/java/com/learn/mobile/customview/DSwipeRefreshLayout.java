@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.learn.mobile.activity.DActivityBase;
 import com.learn.mobile.library.dmobi.DMobi;
 
 /**
@@ -67,7 +69,7 @@ import com.learn.mobile.library.dmobi.DMobi;
  * refresh of the content wherever this gesture is used.
  * </p>
  */
-public class DSwipeRefreshLayout extends ViewGroup {
+public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOffsetChangedListener {
     // Maps to ProgressBar.Large style
     public static final int LARGE = DMaterialProgressDrawable.LARGE;
     // Maps to ProgressBar default style
@@ -335,7 +337,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
         mCircleView.setVisibility(View.GONE);
         addView(mCircleView);
 
-        // Create backdrop
+        // TODO Create backdrop
         backDrop = new ImageView(getContext());
 
         backDrop.setVisibility(View.GONE);
@@ -343,7 +345,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
         backDrop.setBackgroundColor(Color.WHITE);
         addView(backDrop);
 
-        // Custom Swipe Refresh Layout
+        // TODO Custom Swipe Refresh Layout
         mLoadMoreCircleView = new DCircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER / 2);
         mLoadMoreProgress = new DMaterialProgressDrawable(getContext(), mLoadMoreCircleView);
         mLoadMoreProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
@@ -562,15 +564,21 @@ public class DSwipeRefreshLayout extends ViewGroup {
         return mRefreshing;
     }
 
-    // CUSTOM LOAD MORE
+    // TODO CUSTOM LOAD MORE
     // True if we are still waiting for the last set of data to load.
     private boolean bLoadMoreProcessing = false;
     private boolean canLoadMore = true;
     private LoadMoreListener loadMoreListener;
     private int bottomLoadMoreHeight = 140;
+    private boolean bInitLoadMoreLayoutChange = false;
 
-    public boolean isLoadMoreProcessing(){
-        return  bLoadMoreProcessing;
+    public boolean isLoadMoreProcessing() {
+        return bLoadMoreProcessing;
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        onAppBarOffsetChange();
     }
 
     public static interface LoadMoreListener {
@@ -608,7 +616,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
     }
 
     public void startLoad() {
-        if(DMobi.isUser()){
+        if (DMobi.isUser()) {
             onLoadMore();
         }
     }
@@ -621,6 +629,81 @@ public class DSwipeRefreshLayout extends ViewGroup {
         }
     }
 
+    private void onAppBarOffsetChange() {
+        if (!bLoadMoreProcessing) {
+            return;
+        }
+        int childCount = getListItemCount();
+        if (childCount > 0) {
+            return;
+        }
+        updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
+    }
+
+    // TODO get child count of child view
+    public int getListItemCount() {
+        int childCount = 0;
+        if (mTarget instanceof ListView) {
+            ListView listView = (ListView) mTarget;
+            childCount = listView.getCount();
+        } else if (mTarget instanceof RecyclerView) {
+            RecyclerView recyclerView = (RecyclerView) mTarget;
+            childCount = recyclerView.getAdapter().getItemCount();
+        }
+        return childCount;
+    }
+
+    private boolean canRefreshWithAppBarLayout() {
+        Context context = getContext();
+        if (context == null) {
+            return true;
+        }
+        if (context instanceof DActivityBase) {
+            DActivityBase dActivityBase = (DActivityBase) context;
+            int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
+            return (offsetAppBarLayout == 0);
+        }
+        else {
+            return true;
+        }
+    }
+
+    // TODO Display Custom Swipe Refresh Layout
+    protected void updateLoadMorePosition(int width, int height) {
+        int circleLoadMoreWidth = mLoadMoreCircleView.getMeasuredWidth();
+        int circleLoadMoreHeight = mLoadMoreCircleView.getMeasuredHeight();
+
+        int childCount = getListItemCount();
+
+        if (childCount == 0) {
+            Context context = getContext();
+            int tempOffset = 0;
+            if (context != null) {
+                if (context instanceof DActivityBase) {
+                    DActivityBase dActivityBase = (DActivityBase) context;
+                    if (!bInitLoadMoreLayoutChange) {
+                        bInitLoadMoreLayoutChange = true;
+                        AppBarLayout appBarLayout = dActivityBase.getAppBarLayout();
+                        if (appBarLayout != null) {
+                            appBarLayout.addOnOffsetChangedListener(this);
+                        }
+                    }
+
+                    int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
+                    int appBarLayoutHeight = dActivityBase.getAppBarHeight();
+                    tempOffset = appBarLayoutHeight + offsetAppBarLayout;
+                }
+            }
+            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), (height / 2 - circleLoadMoreHeight / 2 - tempOffset / 2),
+                    (width / 2 + circleLoadMoreWidth / 2), (height / 2 + circleLoadMoreHeight / 2 - tempOffset / 2));
+        } else {
+            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
+                    (width / 2 + circleLoadMoreWidth / 2), height - 10);
+        }
+
+        backDrop.layout(0, 0, width, height);
+    }
+
     private void initTarget() {
         if (mTarget instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mTarget;
@@ -628,13 +711,13 @@ public class DSwipeRefreshLayout extends ViewGroup {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    if(dy < 0){
+                    if (dy < 0) {
                         return;
                     }
                     if (bLoadMoreProcessing == true) {
                         return;
                     }
-                    if (!canLoadMore ) {
+                    if (!canLoadMore) {
                         return;
                     }
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -734,28 +817,8 @@ public class DSwipeRefreshLayout extends ViewGroup {
         mCircleView.layout((width / 2 - circleWidth / 2), mCurrentTargetOffsetTop,
                 (width / 2 + circleWidth / 2), mCurrentTargetOffsetTop + circleHeight);
 
-        // Custom Swipe Refresh Layout
-        int circleLoadMoreWidth = mLoadMoreCircleView.getMeasuredWidth();
-        int circleLoadMoreHeight = mLoadMoreCircleView.getMeasuredHeight();
-
-        int childCount = 0;
-        if (mTarget instanceof ListView) {
-            ListView listView = (ListView) mTarget;
-            childCount = listView.getCount();
-        } else if (mTarget instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) mTarget;
-            childCount = recyclerView.getAdapter().getItemCount();
-        }
-
-        if (childCount == 0) {
-            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), (height / 2 - circleLoadMoreHeight / 2),
-                    (width / 2 + circleLoadMoreWidth / 2), (height / 2 + circleLoadMoreHeight / 2));
-        } else {
-            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
-                    (width / 2 + circleLoadMoreWidth / 2), height - 10);
-        }
-
-        backDrop.layout(0, 0, width, height);
+        // TODO Display Custom Swipe Refresh Layout
+        updateLoadMorePosition(width, height);
     }
 
     @Override
@@ -831,7 +894,7 @@ public class DSwipeRefreshLayout extends ViewGroup {
             mReturningToStart = false;
         }
 
-        if (!isEnabled() || mReturningToStart || canChildScrollUp() || mRefreshing) {
+        if (!isEnabled() || mReturningToStart || canChildScrollUp() || mRefreshing || !canRefreshWithAppBarLayout()) {
             // Fail fast if we're not in a state where a swipe is possible
             return false;
         }

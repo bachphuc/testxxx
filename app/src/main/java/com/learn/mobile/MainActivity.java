@@ -14,13 +14,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.learn.mobile.activity.DActivityBase;
 import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
@@ -30,21 +30,18 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
+public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener {
 
-public class MainActivity extends AppCompatActivity implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     private DrawerLayout drawerLayout;
 
     TabLayout tabLayout;
     ViewPager viewPager;
     AppViewPagerAdapter appViewPagerAdapter;
-    private AppBarLayout appBarLayout;
 
     public TabLayout getTabLayout() {
         return tabLayout;
-    }
-
-    public AppBarLayout getAppBarLayout() {
-        return appBarLayout;
     }
 
     @Override
@@ -244,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements LeftMenuFragment.
     }
 
     @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        DMobi.fireEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, i == 0);
+    protected void onAppBarLayoutOffsetChange(AppBarLayout appBarLayout, int i) {
+        super.onAppBarLayoutOffsetChange(appBarLayout, i);
     }
 }

@@ -26,7 +26,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,11 +40,10 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
-public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
 
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
-    private AppBarLayout appBarLayout;
     private User user;
     private Toolbar toolbar;
 
@@ -83,7 +81,7 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         updateView();
     }
 
-    // initialize view pager
+    // TODO initialize view pager
     private void initViewPager() {
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -116,7 +114,7 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

@@ -148,7 +148,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action {
             }
         };
 
-        dSwipeRefreshLayout = (DSwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+        dSwipeRefreshLayout = (DSwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

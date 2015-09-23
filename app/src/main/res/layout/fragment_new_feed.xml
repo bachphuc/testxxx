@@ -7,7 +7,7 @@
 
     <!-- TODO: SwipeRefreshLayout update feed -->
     <com.learn.mobile.customview.DSwipeRefreshLayout
-        android:id="@+id/swiperefresh"
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
