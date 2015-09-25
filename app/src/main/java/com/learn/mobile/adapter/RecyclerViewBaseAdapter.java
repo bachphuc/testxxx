@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
 public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHolder> {
     protected List<DMobileModelBase> data;
 
+    protected String layoutSuffix = LayoutHelper.LIST_LAYOUT;
+
     public RecyclerViewBaseAdapter(List<DMobileModelBase> data) {
         this.data = data;
     }
@@ -23,18 +26,17 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
     @Override
     public ItemBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView;
-        int position = viewType;
-        DMobileModelBase item = data.get(position);
-
+        int layout = LayoutHelper.getLayout(viewType);
         itemView = LayoutInflater.from(viewGroup.getContext()).
-                inflate(item.getLayout(), viewGroup, false);
+                inflate(layout, viewGroup, false);
 
         return new ItemBaseViewHolder(itemView);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position;
+        DMobileModelBase item = data.get(position);
+        return item.getLayoutType(layoutSuffix);
     }
 
     @Override

@@ -7,11 +7,12 @@ import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 public class Photo extends DAbstractPhoto {
     public Photo() {
-        feedLayout = R.layout.feed_photo_layout;
-        layout = R.layout.photo_item_layout;
+        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout);
+        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
     }
 
     @Override

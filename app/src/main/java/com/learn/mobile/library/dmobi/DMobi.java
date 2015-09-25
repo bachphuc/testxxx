@@ -25,6 +25,7 @@ public class DMobi {
     private static Hashtable<String, SBase> bases;
     private static Hashtable<String, Event> eventHashTable;
     private static Hashtable<String, Object> globalDatas;
+    private static int identityId = 0;
 
     static {
         bases = new Hashtable<String, SBase>();
@@ -34,6 +35,11 @@ public class DMobi {
 
     public static void getLib(String lib) {
 
+    }
+
+    public static int getIdentityId(){
+        identityId++;
+        return identityId;
     }
 
     public static SBase getService(String service, String key) {

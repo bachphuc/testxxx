@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
-import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
-public class Feed extends DAbstractFeed{
+public class Feed extends DAbstractFeed {
+    private static final String TAG = Feed.class.getSimpleName();
     private boolean bItemReady = false;
 
     public DMobileModelBase getAttachment() {
@@ -33,20 +34,20 @@ public class Feed extends DAbstractFeed{
         return item;
     }
 
-    @Override
-    public int getFeedLayout() {
+    public int getFeedLayoutType() {
         DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
-            return dmobileModelBase.getFeedLayout();
+            return (int) dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
         }
         return R.layout.feed_basic_layout;
     }
 
     @Override
-    public void processFeedViewHolder(final ItemBaseViewHolder itemBaseViewHolder, final int position) {
+    public void processFeedViewHolder(final ItemBaseViewHolder itemBaseViewHolder, int position) {
         super.processFeedViewHolder(itemBaseViewHolder, position);
-        final FeedAdapter adapter = (FeedAdapter)itemBaseViewHolder.getAdapter();
+        final FeedAdapter adapter = (FeedAdapter) itemBaseViewHolder.getAdapter();
 
+        DMobileModelBase dmobileModelBase = getAttachment();
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
         textView.setText(user.getTitle());
         textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
@@ -63,15 +64,15 @@ public class Feed extends DAbstractFeed{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                final PopupMenu popup = new PopupMenu(v.getContext(), v);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.feed_action_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.mn_delete_feed:
-                                adapter.delete(position);
+                                adapter.delete(itemBaseViewHolder.getAdapterPosition());
                                 break;
                         }
                         return false;
@@ -99,7 +100,6 @@ public class Feed extends DAbstractFeed{
             }
         }
 
-        DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
             dmobileModelBase.processFeedViewHolder(itemBaseViewHolder, position);
         }

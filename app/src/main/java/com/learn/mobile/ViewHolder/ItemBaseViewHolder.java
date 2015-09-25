@@ -12,6 +12,15 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 public class ItemBaseViewHolder extends RecyclerView.ViewHolder{
     protected View rootView;
     RecyclerViewBaseAdapter adapter;
+    private int id;
+
+    public void setId(int i){
+        id = i;
+    }
+
+    public int getId(){
+        return id;
+    }
 
     public ItemBaseViewHolder(View view){
         super(view);

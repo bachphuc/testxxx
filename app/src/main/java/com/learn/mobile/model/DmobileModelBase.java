@@ -1,7 +1,12 @@
 package com.learn.mobile.model;
 
+import android.text.Layout;
+
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+
+import java.util.HashMap;
 
 /**
  * Created by 09520_000 on 5/17/2015.
@@ -13,11 +18,25 @@ public class DMobileModelBase {
     public String item_type;
     public ImageObject images;
 
-    public int feedLayout = 0;
-    public int layout = 0;
+    public HashMap<String, Object>  layouts = new HashMap<String, Object>();
 
     public DMobileModelBase() {
-        feedLayout = R.layout.feed_basic_layout;
+        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_basic_layout);
+    }
+
+    public void registerLayout(String suffix, int layout) {
+        int id = LayoutHelper.registerLayout(this.getClass(), suffix, layout);
+        if(layouts.containsKey(id + "")){
+            return;
+        }
+        layouts.put(suffix, id);
+    }
+
+    public int getLayoutType(String suffix){
+        if(layouts.containsKey(suffix)){
+            return (int) layouts.get(suffix);
+        }
+        throw new IllegalArgumentException("Layout " + suffix + " not register yet.");
     }
 
     public String getTitle() {
@@ -33,23 +52,11 @@ public class DMobileModelBase {
     }
 
     public String getItemType() {
-        return item_type;
+        return (item_type != null ? item_type : "");
     }
 
     public ImageObject getImages() {
         return images;
-    }
-
-    public int getFeedLayout() {
-        return feedLayout;
-    }
-
-    public void setLayout(int layout) {
-        this.layout = layout;
-    }
-
-    public int getLayout() {
-        return layout;
     }
 
     public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {

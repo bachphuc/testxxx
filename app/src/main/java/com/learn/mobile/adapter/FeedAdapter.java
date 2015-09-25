@@ -5,7 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.Feed;
 
 import java.util.List;
 
@@ -15,20 +17,25 @@ import java.util.List;
 public class FeedAdapter extends RecyclerViewBaseAdapter {
     public FeedAdapter(List<DMobileModelBase> data) {
         super(data);
+        layoutSuffix = LayoutHelper.LIST_LAYOUT;
     }
 
     @Override
     public ItemBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView;
-        int position = viewType;
-        DMobileModelBase item = data.get(position);
-
+        int layout = LayoutHelper.getLayout(viewType);
         itemView = LayoutInflater.from(viewGroup.getContext()).
-                inflate(item.getFeedLayout(), viewGroup, false);
+                inflate(layout, viewGroup, false);
 
         ItemBaseViewHolder itemBaseViewHolder = new ItemBaseViewHolder(itemView);
         itemBaseViewHolder.attachAdapter(this);
         return itemBaseViewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Feed item = (Feed) data.get(position);
+        return item.getFeedLayoutType();
     }
 
     public void delete(int position){
@@ -37,8 +44,8 @@ public class FeedAdapter extends RecyclerViewBaseAdapter {
     }
 
     @Override
-    public void onBindViewHolder(ItemBaseViewHolder ItemBaseViewHolder, int position) {
+    public void onBindViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
         DMobileModelBase item = data.get(position);
-        item.processFeedViewHolder(ItemBaseViewHolder, position);
+        item.processFeedViewHolder(itemBaseViewHolder, position);
     }
 }

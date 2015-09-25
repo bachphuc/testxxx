@@ -1,15 +1,17 @@
 package com.learn.mobile.model;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.squareup.picasso.Picasso;
 
 public class Link extends DAbstractLink {
     public Link() {
-        feedLayout = R.layout.feed_link_layout;
+        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_link_layout);
     }
 
     @Override
