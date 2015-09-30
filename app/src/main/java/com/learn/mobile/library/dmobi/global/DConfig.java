@@ -19,6 +19,9 @@ public class DConfig {
     public static final int DBUG_MODE = 1;
 
     public static void setContext(Context ctx){
+        if(context != null){
+            return;
+        }
         context = ctx;
     }
 

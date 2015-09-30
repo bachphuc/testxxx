@@ -1,5 +1,6 @@
 package com.learn.mobile.library.dmobi.helper;
 
+import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
 
 import java.util.HashMap;
@@ -13,6 +14,11 @@ public class LayoutHelper {
 
     public final static String FEED_LAYOUT = "FEED_LAYOUT";
     public final static String LIST_LAYOUT = "LIST_LAYOUT";
+    public final static int FEED_DEFAULT_LAYOUT = -1;
+
+    static {
+        layoutTypes.put(-1 + "", R.layout.feed_basic_layout);
+    }
 
     public static int registerLayout(Class c, String suffix, int layout){
         if(!layoutMaps.containsKey(c.getSimpleName() + suffix)){

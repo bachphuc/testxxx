@@ -32,6 +32,7 @@ import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.Utils.Utils;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
@@ -84,6 +85,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // TODO set global application context config
+        DConfig.setContext(getApplicationContext());
 
         // TODO Init request
         initRequest();

@@ -22,6 +22,10 @@ public class SUser extends SBase {
 
     User user;
 
+    public SUser(){
+        itemClass = User.class;
+    }
+
     public void setUser(User oUser) {
         user = oUser;
     }

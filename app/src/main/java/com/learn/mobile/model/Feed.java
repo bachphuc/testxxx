@@ -3,6 +3,7 @@ package com.learn.mobile.model;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
+import android.text.Layout;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,7 @@ public class Feed extends DAbstractFeed {
         if (dmobileModelBase != null) {
             return (int) dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
         }
-        return R.layout.feed_basic_layout;
+        return LayoutHelper.FEED_DEFAULT_LAYOUT;
     }
 
     @Override

@@ -116,7 +116,7 @@ public class DRequest {
         final DResponse.ErrorListener er = this.errorListener;
         final DResponse.Complete cm = this.complete;
         Context ct = (this.context != null ? this.context : DConfig.getContext());
-        RequestQueue reqestQueue = Volley.newRequestQueue(ct);
+        RequestQueue requestQueue = Volley.newRequestQueue(ct);
         String url = this.getRequestUrl();
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
@@ -160,7 +160,7 @@ public class DRequest {
         if(preExecute != null){
             preExecute.onPreExecute();
         }
-        reqestQueue.add(stringRequest);
+        requestQueue.add(stringRequest);
         this.resetParam();
     }
 
@@ -206,5 +206,9 @@ public class DRequest {
     public void upload(String filePath) {
         this.setFilePath(filePath);
         this.upload();
+    }
+
+    public void setContext(Context c){
+        this.context = c;
     }
 }

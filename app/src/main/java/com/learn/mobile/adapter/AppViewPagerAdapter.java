@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
+import com.learn.mobile.fragment.UserFragment;
 
 /**
  * Created by 09520_000 on 8/30/2015.
@@ -33,6 +34,10 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                 PhotoFragment frag = new PhotoFragment();
                 frag.setFragmentIndex(position);
                 return frag;
+            case 2:
+                UserFragment userFragment = new UserFragment();
+                userFragment.setFragmentIndex(position);
+                return userFragment;
             default:
                 fragment = new Fragment() {
                     @Override

@@ -16,40 +16,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="16dp"
-            android:paddingTop="0dp">
+            android:orientation="vertical">
+
             <!--- TODO Left Link thumbnail -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <com.learn.mobile.customview.DFeedImageView
                     android:id="@+id/main_image"
-                    android:layout_width="120dp"
-                    android:layout_height="90dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/feed_image"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_red" />
             </LinearLayout>
 
             <!-- TODO Right content info -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingRight="16dp"
-                android:layout_marginLeft="16dp">
+                android:padding="16dp"
+                android:paddingBottom="0dp">
 
                 <TextView
                     android:id="@+id/link_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="https://google.com.vn"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/link_description"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Cong cu tiem kiem so mot the gioi, kho tri thuc nhan loai" />
             </LinearLayout>
 
         </LinearLayout>
