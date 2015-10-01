@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.Utils.Utils;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
@@ -239,7 +239,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showLinkDialog() {
-        Log.i(TAG, "chan vai");
         newFragment = new PromptTextDialog();
         newFragment.setTitle(DMobi.translate("Add your link"));
         newFragment.setHintText(DMobi.translate("Input your link to share..."));
@@ -261,7 +260,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             if (link != null) {
                 dRequest.addPost("title", link.getTitle());
                 dRequest.addPost("description", link.getDescription());
-                dRequest.addPost("image", link.images.full.url);
+                dRequest.addPost("image", DUtils.getString(link.images.full.url));
                 dRequest.addPost("url", strLink);
             }
         }
@@ -307,7 +306,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            String filePath = Utils.getRealPathFromURI(this, fileUri);
+            String filePath = DUtils.getRealPathFromURI(this, fileUri);
             dRequest.setFilePath(filePath);
             dRequest.setUpdateProcess(new DResponse.UpdateProcess() {
                 @Override
@@ -416,7 +415,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
-        String path = Utils.getRealPathFromURI(this, fileUri);
+        String path = DUtils.getRealPathFromURI(this, fileUri);
         final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
         imgPreview.setImageBitmap(bitmap);

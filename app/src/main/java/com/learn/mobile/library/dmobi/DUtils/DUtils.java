@@ -1,4 +1,4 @@
-package com.learn.mobile.library.dmobi.Utils;
+package com.learn.mobile.library.dmobi.DUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,14 +7,13 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.learn.mobile.R;
-import com.learn.mobile.library.dmobi.global.DConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by 09520_000 on 8/22/2015.
  */
-public class Utils {
+public class DUtils {
     /**
      * Trim specified charcater from front of string
      *
@@ -101,5 +100,12 @@ public class Utils {
         }
 
         return contentUri.getPath();
+    }
+
+    public static String getString(String str){
+        if(str != null){
+            return str;
+        }
+        return "";
     }
 }

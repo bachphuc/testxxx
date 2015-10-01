@@ -1,6 +1,6 @@
 package com.learn.mobile.library.dmobi.request.response;
 
-import com.learn.mobile.library.dmobi.Utils.Utils;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class BaseObjectResponse<T> {
             }
         }
         if(sError != ""){
-            sError = Utils.trimAll(sError, ',');
+            sError = DUtils.trimAll(sError, ',');
         }
         return  sError;
     }

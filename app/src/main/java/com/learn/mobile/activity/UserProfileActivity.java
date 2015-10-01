@@ -66,7 +66,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(user.getTitle());
-        collapsingToolbar.setExpandedTitleColor(Color.BLACK);
+        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
         initViewPager();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.bt_post);
@@ -143,8 +143,6 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         if (user == null) {
             return;
         }
-        TextView textView = (TextView) findViewById(R.id.tb_title);
-        textView.setText(user.getTitle());
 
         if (user.coverPhoto != null) {
             DMobi.log("cover", user.coverPhoto.full.url);

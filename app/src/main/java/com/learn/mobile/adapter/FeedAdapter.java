@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Feed;
+import com.learn.mobile.service.SFeed;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
  * Created by 09520_000 on 9/14/2015.
  */
 public class FeedAdapter extends RecyclerViewBaseAdapter {
+    private static final String TAG = FeedAdapter.class.getSimpleName();
+
     public FeedAdapter(List<DMobileModelBase> data) {
         super(data);
         layoutSuffix = LayoutHelper.LIST_LAYOUT;
@@ -38,7 +42,14 @@ public class FeedAdapter extends RecyclerViewBaseAdapter {
         return item.getFeedLayoutType();
     }
 
-    public void delete(int position){
+    public void delete(int position) {
+        DMobileModelBase item = data.get(position);
+        if (item == null) {
+            DMobi.log(TAG, DMobi.translate("Can not delete this feed because it's null."));
+            return;
+        }
+        SFeed sFeed = (SFeed) DMobi.getService(SFeed.class);
+        sFeed.delete(item.getId());
         data.remove(position);
         notifyItemRemoved(position);
     }

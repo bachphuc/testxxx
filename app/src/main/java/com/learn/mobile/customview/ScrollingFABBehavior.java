@@ -11,14 +11,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.learn.mobile.library.dmobi.Utils.Utils;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 
 public class ScrollingFABBehavior extends FloatingActionButton.Behavior {
     private int toolbarHeight;
 
     public ScrollingFABBehavior(Context context, AttributeSet attrs) {
         super();
-        this.toolbarHeight = Utils.getToolbarHeight(context);
+        this.toolbarHeight = DUtils.getToolbarHeight(context);
     }
 
     @Override

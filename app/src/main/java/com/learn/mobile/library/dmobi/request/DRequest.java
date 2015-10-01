@@ -10,7 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.Utils.Utils;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 import java.util.ArrayList;
@@ -57,6 +57,7 @@ public class DRequest {
     }
 
     public void addPost(String key, String value) {
+        value = DUtils.getString(value);
         postData.put(key, value);
     }
 
@@ -78,7 +79,7 @@ public class DRequest {
             RequestParam rq = requestParams.get(i);
             str += rq.key + "=" + rq.value.toString() + "&";
         }
-        str = Utils.trimAll(str, ',');
+        str = DUtils.trimAll(str, ',');
         DMobi.log("Url Request", str);
         return str;
     }
