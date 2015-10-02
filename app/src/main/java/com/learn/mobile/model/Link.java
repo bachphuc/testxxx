@@ -1,11 +1,11 @@
 package com.learn.mobile.model;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +18,7 @@ public class Link extends DAbstractLink {
     public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
         super.processFeedViewHolder(itemBaseViewHolder, position);
         ImageView imageView;
-        if (image != null) {
+        if (!DUtils.isEmpty(image)) {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.main_image);
             if (imageView != null) {
                 Picasso.with(imageView.getContext()).load(image).into(imageView);
