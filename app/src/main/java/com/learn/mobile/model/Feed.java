@@ -2,8 +2,10 @@ package com.learn.mobile.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Layout;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +18,12 @@ import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.library.dmobi.request.DResponse;
 
-public class Feed extends DAbstractFeed {
+public class Feed extends DAbstractFeed implements View.OnClickListener {
     private static final String TAG = Feed.class.getSimpleName();
     private boolean bItemReady = false;
 
@@ -46,21 +50,22 @@ public class Feed extends DAbstractFeed {
     @Override
     public void processFeedViewHolder(final ItemBaseViewHolder itemBaseViewHolder, int position) {
         super.processFeedViewHolder(itemBaseViewHolder, position);
+
         final FeedAdapter adapter = (FeedAdapter) itemBaseViewHolder.getAdapter();
 
-        DMobileModelBase dmobileModelBase = getAttachment();
+        DMobileModelBase item = getAttachment();
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
         textView.setText(user.getTitle());
         textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
-        if (content != null) {
-            textView.setText(content);
 
+        if(DUtils.isEmpty(content)){
             LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
-            if (content.length() == 0) {
-                linearLayout.setVisibility(View.GONE);
-            }
+            linearLayout.setVisibility(View.GONE);
         }
-        final Feed that = this;
+        else {
+            textView.setText(content);
+        }
+
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_feed_dropdown_menu);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,26 +88,84 @@ public class Feed extends DAbstractFeed {
             }
         });
 
-        final User currentUser = user;
         if (user.images != null) {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.images.avatar.url);
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, UserProfileActivity.class);
-                        DMobi.pushData(UserProfileActivity.USER_PROFILE, currentUser);
-
-                        context.startActivity(intent);
-                    }
-                });
+                imageView.setOnClickListener(this);
             }
         }
 
-        if (dmobileModelBase != null) {
-            dmobileModelBase.processFeedViewHolder(itemBaseViewHolder, position);
+        // TODO Check if liked
+        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_like);
+        imageView.setOnClickListener(this);
+        updateLikeView(imageView);
+
+        if (item != null) {
+            item.processFeedViewHolder(itemBaseViewHolder, position);
+        }
+    }
+
+    @Override
+    public boolean isLike(){
+        DMobileModelBase item = getAttachment();
+        if(item == null){
+            return false;
+        }
+        return item.isLike();
+    }
+
+    @Override
+    public void setIsLike(boolean b){
+        super.setIsLike(b);
+        DMobileModelBase item = getAttachment();
+        if(item == null){
+            return;
+        }
+        item.setIsLike(b);
+    }
+
+    public void updateLikeView(View v) {
+        ImageView imageView = (ImageView) v;
+        if (imageView != null) {
+            if (isLike()) {
+                imageView.setSelected(true);
+                imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.primary_icon_color), PorterDuff.Mode.SRC_IN);
+            } else {
+                imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.feed_icon_action_color), PorterDuff.Mode.MULTIPLY);
+                imageView.setSelected(false);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(final View v) {
+        switch (v.getId()) {
+            case R.id.bt_like:
+                DMobileModelBase item = getAttachment();
+                item.like(new DResponse.Complete() {
+                    @Override
+                    public void onComplete(Boolean status, Object o) {
+                        if (status) {
+                            // TODO Update data and view when success
+                        } else {
+                            // TODO revert data and update view
+                        }
+                    }
+                });
+
+                // TODO Update view after click
+                setIsLike(!item.isLike());
+                totalLike++;
+                updateLikeView(v);
+                break;
+            case R.id.imageViewAvatar:
+                Context context = v.getContext();
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
+
+                context.startActivity(intent);
+                break;
         }
     }
 }

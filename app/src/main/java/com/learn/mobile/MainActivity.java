@@ -87,7 +87,8 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     public void showPostActivity() {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.animator.slide_in, R.animator.slide_out);
+        // Start a activity with animate
+        // overridePendingTransition(R.animator.slide_in, R.animator.slide_out);
     }
 
     public void showLoginActivity() {
@@ -188,7 +189,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_top, menu);
         for (int i = 0; i < menu.size(); i++) {
             MenuItem menuItem = menu.getItem(i);
             Drawable drawable = menuItem.getIcon();

@@ -16,43 +16,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-            <!--- TODO Left Link thumbnail -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:background="@drawable/shadow"
+                android:orientation="vertical">
 
-                <com.learn.mobile.customview.DFeedImageView
-                    android:id="@+id/main_image"
+                <!--- TODO Left Link thumbnail -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.learn.mobile.customview.DFeedImageView
+                        android:id="@+id/main_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/feed_image"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/background_red" />
+                </LinearLayout>
+
+                <!-- TODO Right content info -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/feed_image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/background_red" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp">
 
-            <!-- TODO Right content info -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:paddingBottom="0dp">
+                    <TextView
+                        android:id="@+id/link_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://google.com.vn"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-                <TextView
-                    android:id="@+id/link_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="https://google.com.vn"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/link_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cong cu tiem kiem so mot the gioi, kho tri thuc nhan loai" />
+                    <TextView
+                        android:id="@+id/link_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/sample" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

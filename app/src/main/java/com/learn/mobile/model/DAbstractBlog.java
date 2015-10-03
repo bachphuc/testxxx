@@ -41,9 +41,6 @@ public class DAbstractBlog extends DMobileModelBase{
     @SerializedName("total_view")
     public int totalView = 0;
     
-    @SerializedName("total_like")
-    public int totalLike = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

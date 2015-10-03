@@ -53,9 +53,6 @@ public class DAbstractMusicSong extends DMobileModelBase{
     @SerializedName("total_comment")
     public int totalComment = 0;
     
-    @SerializedName("total_like")
-    public int totalLike = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

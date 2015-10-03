@@ -179,6 +179,11 @@ public class DRequest {
         this.get();
     }
 
+    public void get(DResponse.Complete complete) {
+        this.complete = complete;
+        this.get();
+    }
+
     public static class RequestParam {
         public RequestParam() {
 

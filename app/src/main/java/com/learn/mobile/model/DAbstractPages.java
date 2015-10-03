@@ -38,9 +38,6 @@ public class DAbstractPages extends DMobileModelBase{
     @SerializedName("image_path")
     public String imagePath ;
     
-    @SerializedName("total_like")
-    public int totalLike = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

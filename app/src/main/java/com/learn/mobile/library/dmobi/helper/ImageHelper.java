@@ -48,4 +48,16 @@ public class ImageHelper {
     public static void display(ImageView imageView, String imageUrl){
         Picasso.with(imageView.getContext()).load(imageUrl).into(imageView);
     }
+
+    public static void setTint(ImageView imageView, int color){
+        if(imageView == null){
+            return;
+        }
+        Drawable drawable = imageView.getDrawable();
+        if(drawable == null){
+            return;
+        }
+        drawable = getIconDrawable(drawable, color);
+        imageView.setImageDrawable(drawable);
+    }
 }

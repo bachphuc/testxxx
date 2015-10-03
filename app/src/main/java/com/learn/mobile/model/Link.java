@@ -1,5 +1,6 @@
 package com.learn.mobile.model;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +33,13 @@ public class Link extends DAbstractLink {
 
         textView = (TextView) itemBaseViewHolder.findView(R.id.link_description);
         if (textView != null) {
-            textView.setText(getDescription());
+            String des = getDescription();
+            if(DUtils.isEmpty(des)){
+                textView.setVisibility(View.GONE);
+            }
+            else{
+                textView.setText(getDescription());
+            }
         }
     }
 

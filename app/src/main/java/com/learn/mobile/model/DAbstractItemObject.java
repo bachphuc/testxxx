@@ -19,9 +19,6 @@ public class DAbstractItemObject {
     public DMobileModelBase getItem() {
         Gson gson = new GsonBuilder().create();
         Type type;
-        if(itemType == null){
-            return null;
-        }
         switch (itemType) {
 		case "User":
 			type = new TypeToken<User>() {

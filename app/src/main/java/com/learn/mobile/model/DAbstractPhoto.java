@@ -71,9 +71,6 @@ public class DAbstractPhoto extends DMobileModelBase{
     @SerializedName("total_battle")
     public int totalBattle = 0;
     
-    @SerializedName("total_like")
-    public int totalLike = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

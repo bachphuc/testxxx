@@ -20,6 +20,7 @@ import java.util.Hashtable;
  * Created by 09520_000 on 8/22/2015.
  */
 public class DMobi {
+    private static final String TAG = DMobi.class.getSimpleName();
     private Context context = null;
 
     private static Hashtable<String, SBase> bases;
@@ -139,6 +140,15 @@ public class DMobi {
         toast.show();
     }
 
+    public static void showToast(String message, boolean isError) {
+        if(isError && DConfig.DEBUG_MODE == 1){
+            showToast(message);
+        }
+        else{
+            DMobi.log(TAG, message);
+        }
+    }
+
     // TODO show toast with message and time
     public static void showToast(String message, int time) {
         message = DMobi.translate(message);
@@ -174,7 +184,7 @@ public class DMobi {
 
     // TODO display log to debug when EBUG_MODE enable
     public static void log(String key, Object o) {
-        if (DConfig.DBUG_MODE != 0) {
+        if (DConfig.DEBUG_MODE != 0) {
             Log.i(key, o.toString());
         }
     }

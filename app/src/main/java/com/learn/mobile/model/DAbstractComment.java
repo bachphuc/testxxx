@@ -56,14 +56,8 @@ public class DAbstractComment extends DMobileModelBase{
     @SerializedName("child_total")
     public int childTotal = 0;
     
-    @SerializedName("total_like")
-    public int totalLike = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
-    
-    @SerializedName("is_like")
-    public String isLike ;
     
     @SerializedName("text")
     public String text ;

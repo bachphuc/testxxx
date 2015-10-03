@@ -28,4 +28,5 @@
     <string name="add_friend">Add Friend</string>
     <string name="title_activity_upload">UploadActivity</string>
     <string name="delete_feed">Delete Feed</string>
+    <string name="sample">In order to serve relevant ads, Google collects data about you and creates a profile. You can control and review the information Google has on you here</string>
 </resources>

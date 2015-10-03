@@ -56,11 +56,18 @@ public class DbHelper {
     }
 
     public static SingleObjectResponse<DMobileModelBase> parseSingleObjectResponse(String jsonData, Class sClass) {
-        DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
-        dAbstractItemObject.itemType = sClass.getSimpleName();
-
         Gson gson = new GsonBuilder().create();
-        Type type = dAbstractItemObject.getSingleType();
+        Type type;
+
+        if(sClass == DMobileModelBase.class){
+            type = new TypeToken<SingleObjectResponse<DMobileModelBase>>() {
+            }.getType();
+        }
+        else{
+            DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
+            dAbstractItemObject.itemType = sClass.getSimpleName();
+            type = dAbstractItemObject.getSingleType();
+        }
 
         SingleObjectResponse<DMobileModelBase> response = (SingleObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
         return response;

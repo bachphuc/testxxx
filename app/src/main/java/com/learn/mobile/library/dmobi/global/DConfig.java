@@ -16,7 +16,7 @@ public class DConfig {
     public static final String USER_DATA = "USER_DATA";
     public static final String BUNDLE_ID = "com.learn.mobile";
     public static final String preference_file_key = "com.learn.mobile.PREFERENCE_FILE_KEY";
-    public static final int DBUG_MODE = 1;
+    public static final int DEBUG_MODE = 1;
 
     public static void setContext(Context ctx){
         if(context != null){
