@@ -26,9 +26,6 @@ public class DAbstractUserStatus extends DMobileModelBase{
     @SerializedName("time_stamp")
     public int timeStamp ;
     
-    @SerializedName("total_comment")
-    public int totalComment = 0;
-    
     @SerializedName("location_latlng")
     public String locationLatlng ;
     

@@ -66,7 +66,7 @@ public class DAbstractComment extends DMobileModelBase{
     public String time ;
     
     @SerializedName("user")
-    public String user ;
+    public User user ;
     
 
 }

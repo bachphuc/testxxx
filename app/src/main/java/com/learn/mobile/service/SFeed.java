@@ -4,7 +4,6 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
-import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.model.Feed;
 
@@ -18,8 +17,8 @@ public class SFeed extends SBase {
     }
 
     public void setProfileUser(int userId){
-        clearGetRequestParams();
-        setGetRequestParams(DRequest.createRequestParam("user_id", userId));
+        clearRequestParams();
+        setRequestParams(DRequest.createRequestParam("user_id", userId));
     }
 
     public void delete(int feed_id){

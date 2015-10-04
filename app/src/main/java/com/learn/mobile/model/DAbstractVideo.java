@@ -65,9 +65,6 @@ public class DAbstractVideo extends DMobileModelBase{
     @SerializedName("image_path")
     public String imagePath ;
     
-    @SerializedName("total_comment")
-    public int totalComment = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

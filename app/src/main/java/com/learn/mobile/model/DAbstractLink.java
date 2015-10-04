@@ -47,9 +47,6 @@ public class DAbstractLink extends DMobileModelBase{
     @SerializedName("has_embed")
     public int hasEmbed = 0;
     
-    @SerializedName("total_comment")
-    public int totalComment = 0;
-    
     @SerializedName("total_dislike")
     public int totalDislike = 0;
     

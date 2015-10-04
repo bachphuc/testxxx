@@ -56,9 +56,6 @@ public class DAbstractPhoto extends DMobileModelBase{
     @SerializedName("total_view")
     public int totalView = 0;
     
-    @SerializedName("total_comment")
-    public int totalComment = 0;
-    
     @SerializedName("total_download")
     public int totalDownload = 0;
     

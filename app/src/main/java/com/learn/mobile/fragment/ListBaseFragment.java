@@ -16,10 +16,14 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.service.SBase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,25 +33,42 @@ import com.learn.mobile.service.SBase;
  * create an instance of this fragment.
  */
 public class ListBaseFragment extends Fragment implements Event.Action {
-    private DFragmentListener.OnFragmentInteractionListener mListener;
-    private int layout = 0;
-    private View view;
+    protected DFragmentListener.OnFragmentInteractionListener mListener;
+    protected int layout = 0;
+    protected View view;
 
-    private RecyclerView recyclerView;
-    private DSwipeRefreshLayout dSwipeRefreshLayout;
+    protected RecyclerView recyclerView;
+    protected DSwipeRefreshLayout dSwipeRefreshLayout;
 
-    private SBase service;
-    Class serviceClass;
-    DResponse.Complete completeResponse;
+    protected SBase service;
+    protected Class serviceClass;
+    protected DResponse.Complete completeResponse;
 
-    private RecyclerViewBaseAdapter adapter;
-    private boolean bStartLoad = false;
-    private int fragmentIndex;
+    protected RecyclerViewBaseAdapter adapter;
+    protected boolean bFirstLoaded = false;
+    protected int fragmentIndex;
 
-    private boolean bGirdLayout = false;
+    protected boolean bGirdLayout = false;
+
+    protected boolean bAutoLoadData = false;
+    protected boolean bRefreshList = false;
+
+    protected HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
     public ListBaseFragment() {
 
+    }
+
+    public void setAutoLoadData(boolean b) {
+        bAutoLoadData = b;
+    }
+
+    public void setRefreshList(boolean b) {
+        bRefreshList = b;
+    }
+
+    public void setParam(String key, Object o) {
+        requestParams.put(key, o);
     }
 
     public void setServiceClass(Class serviceClass) {
@@ -94,6 +115,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         initializeEvent();
 
+        if (bAutoLoadData) {
+            startLoad();
+        }
         return view;
     }
 
@@ -107,7 +131,20 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             recyclerView.setLayoutManager(linearLayoutManager);
         }
 
-        service = DMobi.getService(serviceClass);
+        if (service == null) {
+            if (bRefreshList) {
+                service = DMobi.getInstance(serviceClass);
+            } else {
+                service = DMobi.getService(serviceClass);
+            }
+        }
+
+        if (requestParams != null && requestParams.size() > 0) {
+            service.clearRequestParams();
+            for (Map.Entry<String, Object> entry : requestParams.entrySet()) {
+                service.setRequestParams(new DRequest.RequestParam(entry.getKey(), entry.getValue()));
+            }
+        }
 
         adapter = new RecyclerViewBaseAdapter(service.getData());
         recyclerView.setAdapter(adapter);
@@ -168,10 +205,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     }
 
     public void startLoad() {
-        if (bStartLoad) {
+        if (bFirstLoaded) {
             return;
         }
-        bStartLoad = true;
+        bFirstLoaded = true;
         dSwipeRefreshLayout.startLoad();
     }
 

@@ -1,5 +1,7 @@
 package com.learn.mobile.model;
 
+import android.util.Log;
+
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -29,6 +31,13 @@ public class DMobileModelBase {
 
     @SerializedName("is_like")
     public boolean isLike;
+
+    @SerializedName("total_comment")
+    public int totalComment;
+
+    public int getTotalComment(){
+        return totalComment;
+    }
 
     public HashMap<String, Object> layouts = new HashMap<String, Object>();
 
@@ -81,7 +90,7 @@ public class DMobileModelBase {
         return isLike;
     }
 
-    public void setIsLike(boolean b){
+    public void setIsLike(boolean b) {
         isLike = b;
     }
 
@@ -111,8 +120,15 @@ public class DMobileModelBase {
 
         if (isLike) {
             sLike.removeLike(itemType, id, complete);
+            totalLike--;
         } else {
             sLike.like(itemType, id, complete);
+            totalLike++;
         }
+        isLike = !isLike;
+    }
+
+    public void setTotalLike(int totalLike) {
+        this.totalLike = totalLike;
     }
 }

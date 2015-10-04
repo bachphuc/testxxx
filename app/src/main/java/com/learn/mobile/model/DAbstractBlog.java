@@ -32,9 +32,6 @@ public class DAbstractBlog extends DMobileModelBase{
     @SerializedName("post_status")
     public int postStatus ;
     
-    @SerializedName("total_comment")
-    public int totalComment = 0;
-    
     @SerializedName("total_attachment")
     public int totalAttachment = 0;
     

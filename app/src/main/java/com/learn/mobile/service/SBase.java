@@ -1,6 +1,5 @@
 package com.learn.mobile.service;
 
-import com.android.volley.VolleyError;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
@@ -10,7 +9,6 @@ import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -21,12 +19,12 @@ public class SBase {
     public int minId = 0;
 
     protected List<DMobileModelBase> data = new ArrayList<DMobileModelBase>();
-    protected List<DRequest.RequestParam> getRequestParams = new ArrayList<DRequest.RequestParam>();
+    protected List<DRequest.RequestParam> requestParams = new ArrayList<DRequest.RequestParam>();
 
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
 
-    private boolean getDataByPage = false;
+    protected boolean getDataByPage = false;
 
     protected Class itemClass;
 
@@ -42,12 +40,12 @@ public class SBase {
         return data;
     }
 
-    public void setGetRequestParams(DRequest.RequestParam params) {
-        getRequestParams.add(params);
+    public void setRequestParams(DRequest.RequestParam params) {
+        requestParams.add(params);
     }
 
-    public void clearGetRequestParams() {
-        getRequestParams.clear();
+    public void clearRequestParams() {
+        requestParams.clear();
     }
 
     public void updateMaxAndMinId() {
@@ -70,8 +68,8 @@ public class SBase {
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
-        if (getRequestParams.size() > 0) {
-            dRequest.addParams(getRequestParams);
+        if (requestParams.size() > 0) {
+            dRequest.addParams(requestParams);
         }
         if (action == LOADMORE_ACTION) {
             if (getDataByPage) {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.activity.FeedDetailActivity;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -47,6 +48,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         return LayoutHelper.FEED_DEFAULT_LAYOUT;
     }
 
+    // TODO Process card view in feed recycler view
     @Override
     public void processFeedViewHolder(final ItemBaseViewHolder itemBaseViewHolder, int position) {
         super.processFeedViewHolder(itemBaseViewHolder, position);
@@ -58,11 +60,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         textView.setText(user.getTitle());
         textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
 
-        if(DUtils.isEmpty(content)){
+        if (DUtils.isEmpty(content)) {
             LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
             linearLayout.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             textView.setText(content);
         }
 
@@ -104,30 +105,73 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         if (item != null) {
             item.processFeedViewHolder(itemBaseViewHolder, position);
         }
+
+        // TODO process comment button
+        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
+        if (imageView != null) {
+            imageView.setOnClickListener(this);
+        }
+        textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
+        if(textView != null){
+            textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
+        }
     }
 
     @Override
-    public boolean isLike(){
+    public int getTotalComment(){
         DMobileModelBase item = getAttachment();
-        if(item == null){
+        if (item == null) {
+            return 0;
+        }
+        return item.getTotalComment();
+    }
+
+    @Override
+    public boolean isLike() {
+        DMobileModelBase item = getAttachment();
+        if (item == null) {
             return false;
         }
         return item.isLike();
     }
 
     @Override
-    public void setIsLike(boolean b){
+    public int getTotalLike() {
+        DMobileModelBase item = getAttachment();
+        if (item == null) {
+            return 0;
+        }
+        return item.getTotalLike();
+    }
+
+    @Override
+    public void setIsLike(boolean b) {
         super.setIsLike(b);
         DMobileModelBase item = getAttachment();
-        if(item == null){
+        if (item == null) {
             return;
         }
         item.setIsLike(b);
     }
 
+    @Override
+    public void setTotalLike(int totalLike) {
+        super.setTotalLike(totalLike);
+        DMobileModelBase item = getAttachment();
+        if (item == null) {
+            return;
+        }
+        item.setTotalLike(totalLike);
+    }
+
     public void updateLikeView(View v) {
         ImageView imageView = (ImageView) v;
         if (imageView != null) {
+            View parent = (View) v.getParent();
+            TextView textView = (TextView) parent.findViewById(R.id.tv_total_like);
+            if (textView != null) {
+                textView.setText(getTotalLike() + " " + DMobi.translate(getTotalLike() > 1 ? "likes" : "like"));
+            }
             if (isLike()) {
                 imageView.setSelected(true);
                 imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.primary_icon_color), PorterDuff.Mode.SRC_IN);
@@ -140,6 +184,8 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
     @Override
     public void onClick(final View v) {
+        Intent intent;
+        Context context;
         switch (v.getId()) {
             case R.id.bt_like:
                 DMobileModelBase item = getAttachment();
@@ -155,16 +201,22 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 });
 
                 // TODO Update view after click
-                setIsLike(!item.isLike());
-                totalLike++;
                 updateLikeView(v);
+
                 break;
             case R.id.imageViewAvatar:
-                Context context = v.getContext();
-                Intent intent = new Intent(context, UserProfileActivity.class);
+                context = v.getContext();
+                intent = new Intent(context, UserProfileActivity.class);
                 DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
 
                 context.startActivity(intent);
+                break;
+            case R.id.bt_comment:
+                context = v.getContext();
+                intent = new Intent(context, FeedDetailActivity.class);
+                DMobi.pushData(FeedDetailActivity.FEED_DETAIL, this);
+                context.startActivity(intent);
+
                 break;
         }
     }
