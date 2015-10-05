@@ -243,4 +243,26 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         super.onDetach();
         mListener = null;
     }
+
+    public void append(DMobileModelBase item) {
+        service.append(item);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void prepend(DMobileModelBase item) {
+        service.prepend(item);
+        adapter.notifyDataSetChanged();
+    }
+
+    public SBase getService() {
+        return service;
+    }
+
+    public RecyclerViewBaseAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -28,6 +28,19 @@ public class SBase {
 
     protected Class itemClass;
 
+    public void append(DMobileModelBase item){
+        data.add(item);
+    }
+
+    public void prepend(DMobileModelBase item){
+        if(data.size() == 0){
+            data.add(item);
+        }
+        else{
+            data.add(0, item);
+        }
+    }
+
     public void setData(List<DMobileModelBase> list) {
         data = list;
     }
