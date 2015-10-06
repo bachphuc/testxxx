@@ -14,7 +14,7 @@ import com.learn.mobile.model.DMobileModelBase;
 public class SComment extends SBase {
     public SComment() {
         itemClass = Comment.class;
-        getDataByPage = true;
+        getDataByPage = false;
     }
 
     public void comment(DMobileModelBase item, String content, final DResponse.Complete complete) {
