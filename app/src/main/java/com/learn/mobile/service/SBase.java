@@ -30,6 +30,7 @@ public class SBase {
 
     public void append(DMobileModelBase item){
         data.add(item);
+        updateMaxAndMinId();
     }
 
     public void prepend(DMobileModelBase item){
@@ -39,6 +40,7 @@ public class SBase {
         else{
             data.add(0, item);
         }
+        updateMaxAndMinId();
     }
 
     public void setData(List<DMobileModelBase> list) {

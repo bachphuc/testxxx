@@ -5,16 +5,20 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.learn.mobile.LeftMenuFragment;
 import com.learn.mobile.R;
+import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.fragment.CommentFragment;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.DMobileModelBase;
@@ -53,6 +57,15 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         button.setOnClickListener(this);
 
         commentEditText = (EditText) findViewById(R.id.tb_comment);
+
+        LinearLayout feedContent = (LinearLayout) findViewById(R.id.ll_feed_content);
+        int layout = LayoutHelper.getLayout(feed.getFeedLayoutType());
+        View feedDetailView = LayoutInflater.from(this).
+                inflate(layout, feedContent, false);
+        feedContent.addView(feedDetailView);
+
+        ItemBaseViewHolder itemBaseViewHolder = new ItemBaseViewHolder(feedDetailView);
+        feed.processFeedViewHolder(itemBaseViewHolder, 0);
     }
 
     private SComment getCommentService() {
