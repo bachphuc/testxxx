@@ -25,7 +25,7 @@ import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Feed;
 import com.learn.mobile.service.SComment;
 
-public class FeedDetailActivity extends DActivityBase implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener {
+public class FeedDetailActivity extends AppCompatActivity implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener {
     public static final String FEED_DETAIL = "FEED_DETAIL";
     EditText commentEditText;
     Feed feed;
@@ -38,8 +38,8 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
 
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
-        appBarLayout.addOnOffsetChangedListener(this);
+        // appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        // appBarLayout.addOnOffsetChangedListener(this);
 
         feed = (Feed) DMobi.getData(FEED_DETAIL);
         item = feed.getAttachment();
