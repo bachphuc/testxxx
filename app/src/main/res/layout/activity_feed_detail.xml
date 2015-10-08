@@ -3,39 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.learn.mobile.activity.FeedDetailActivity">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ScrollView
+        <FrameLayout
+            android:id="@+id/feed_detail_comment_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
+
+        <com.learn.mobile.customview.henrytao.SmoothAppBarLayout
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_feed_content"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:orientation="vertical"></LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_feed_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="100dp"
-                    android:orientation="vertical"></LinearLayout>
 
-                <FrameLayout
-                    android:id="@+id/feed_detail_comment_fragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp" />
-            </LinearLayout>
-        </ScrollView>
+        </com.learn.mobile.customview.henrytao.SmoothAppBarLayout>
 
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
