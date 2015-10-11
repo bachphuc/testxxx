@@ -42,7 +42,7 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
     @Override
     public void onBindViewHolder(ItemBaseViewHolder ItemBaseViewHolder, int position) {
         DMobileModelBase item = data.get(position);
-        item.processViewHolder(ItemBaseViewHolder);
+        item.processViewHolder(ItemBaseViewHolder, position);
     }
 
     @Override

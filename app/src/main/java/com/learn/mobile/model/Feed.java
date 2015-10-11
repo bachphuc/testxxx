@@ -28,6 +28,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     private static final String TAG = Feed.class.getSimpleName();
     private boolean bItemReady = false;
 
+    public Feed(){
+
+    }
+
     public DMobileModelBase getAttachment() {
         if (item != null && bItemReady == true) {
             return item;
@@ -46,6 +50,11 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             return (int) dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
         }
         return LayoutHelper.FEED_DEFAULT_LAYOUT;
+    }
+
+    @Override
+    public int getLayoutType(String suffix){
+        return getFeedLayoutType();
     }
 
     // TODO Process card view in feed recycler view
@@ -219,5 +228,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    @Override
+    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+        processFeedViewHolder(itemBaseViewHolder, position);
     }
 }

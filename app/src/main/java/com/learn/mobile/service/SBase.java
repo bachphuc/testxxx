@@ -28,9 +28,21 @@ public class SBase {
 
     protected Class itemClass;
 
+    protected int itemHeaderCount = 0;
+
     public void append(DMobileModelBase item){
         data.add(item);
         updateMaxAndMinId();
+    }
+
+    public void appends(List<DMobileModelBase> items){
+        data.addAll(items);
+        updateMaxAndMinId();
+    }
+
+    public void addHeader(DMobileModelBase item){
+        data.add(0, item);
+        itemHeaderCount++;
     }
 
     public void prepend(DMobileModelBase item){
@@ -38,7 +50,27 @@ public class SBase {
             data.add(item);
         }
         else{
-            data.add(0, item);
+            if(data.size() >= itemHeaderCount){
+                data.add(itemHeaderCount, item);
+            }
+            else{
+                data.add(item);
+            }
+        }
+        updateMaxAndMinId();
+    }
+
+    public void prepends(List<DMobileModelBase> items){
+        if(data.size() == 0){
+            data.addAll(items);
+        }
+        else{
+            if(data.size() >= itemHeaderCount){
+                data.addAll(itemHeaderCount, items);
+            }
+            else{
+                data.addAll(items);
+            }
         }
         updateMaxAndMinId();
     }
@@ -64,11 +96,13 @@ public class SBase {
     }
 
     public void updateMaxAndMinId() {
-        if (data.size() == 0) {
+        if (data.size() == 0 || data.size() <= itemHeaderCount) {
             maxId = 0;
             minId = 0;
+            return;
         }
-        DMobileModelBase item = data.get(0);
+        DMobileModelBase item;
+        item = data.get(itemHeaderCount);
         maxId = item.getId();
         item = data.get(data.size() - 1);
         minId = item.getId();
@@ -103,12 +137,11 @@ public class SBase {
                     if (response.isSuccessfully()) {
                         if (response.hasData()) {
                             if (action == LOADNEW_ACTION) {
-                                data.addAll(0, response.data);
+                                prepends(response.data);
                             } else {
-                                data.addAll(response.data);
+                                appends(response.data);
                                 that.page++;
                             }
-                            that.updateMaxAndMinId();
                         }
                     } else {
                         DMobi.showToast(response.getErrors());

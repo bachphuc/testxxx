@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.learn.mobile" >
+    package="com.learn.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,12 +11,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan|adjustNothing" >
+            android:windowSoftInputMode="adjustPan|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,20 +35,19 @@
             android:name=".activity.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.DesignDemo" >
+            android:theme="@style/Theme.DesignDemo">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
->
+            >
         </activity>
         <activity
             android:name=".activity.UploadActivity"
             android:label="@string/title_activity_upload"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.PostActivity"
-            android:theme="@style/Translucent" >
+            android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -58,7 +57,12 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FeedDetailActivity" >
+        <activity
+            android:name=".activity.FeedDetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

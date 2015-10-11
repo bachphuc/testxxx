@@ -10,6 +10,9 @@ import com.learn.mobile.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by 09520_000 on 8/22/2015.
  */
@@ -117,5 +120,13 @@ public class DUtils {
             return true;
         }
         return false;
+    }
+
+    public static String urlEncode(String url)  {
+        try {
+            return URLEncoder.encode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return url;
+        }
     }
 }

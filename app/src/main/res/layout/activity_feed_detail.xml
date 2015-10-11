@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.learn.mobile.activity.FeedDetailActivity">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -16,24 +17,32 @@
         <FrameLayout
             android:id="@+id/feed_detail_comment_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <com.learn.mobile.customview.henrytao.SmoothAppBarLayout
-            app:layout_scrollFlags="scroll|enterAlways"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <LinearLayout
-                android:id="@+id/ll_feed_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_tool_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="100dp"
-                android:orientation="vertical"></LinearLayout>
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primary_color"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+            <View
+                android:id="@+id/appbar_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/transparent"
+                android:visibility="invisible" />
 
-        </com.learn.mobile.customview.henrytao.SmoothAppBarLayout>
-
+        </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout

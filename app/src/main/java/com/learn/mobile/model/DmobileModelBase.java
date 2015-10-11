@@ -83,7 +83,7 @@ public class DMobileModelBase {
     public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
     }
 
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
+    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
     }
 
     public boolean isLike() {

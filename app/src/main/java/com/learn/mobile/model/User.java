@@ -24,8 +24,8 @@ public class User extends DAbstractUser {
     }
 
     @Override
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder) {
-        super.processViewHolder(itemBaseViewHolder);
+    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+        super.processViewHolder(itemBaseViewHolder, position);
         ImageView imageView = (ImageView)itemBaseViewHolder.findView(R.id.img_photo);
         if(imageView != null){
             ImageHelper.display(imageView, images.normal.url);

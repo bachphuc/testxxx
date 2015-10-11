@@ -55,7 +55,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(toolbar);
 
-        final ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(ImageHelper.getIconDrawable(R.drawable.ic_menu_black_24dp));

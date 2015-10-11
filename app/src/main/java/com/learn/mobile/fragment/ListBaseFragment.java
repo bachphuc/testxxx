@@ -75,6 +75,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         this.serviceClass = serviceClass;
     }
 
+    public void setService(SBase service){
+        this.service = service;
+    }
+
     public void setFragmentIndex(int index) {
         fragmentIndex = index;
     }

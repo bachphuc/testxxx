@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
@@ -12,6 +13,7 @@ import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.Link;
 
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 
 /**
  * Created by 09520_000 on 9/20/2015.
@@ -24,6 +26,7 @@ public class SLink extends SBase {
     public void preview(String url, final DResponse.Complete complete) {
         DRequest dRequest = DMobi.createRequest();
         dRequest.setApi("link.preview");
+        url = DUtils.urlEncode(url);
         dRequest.addParam("link_url", url);
 
         dRequest.get(new DResponse.Listener() {

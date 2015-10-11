@@ -34,8 +34,7 @@
             android:clipChildren="false"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleGravity="bottom|center_horizontal"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!-- TODO animate image in here -->
@@ -54,34 +53,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="match_parent"
                     android:layout_alignBottom="@+id/img_cover"
                     android:layout_alignParentStart="true"
                     android:layout_gravity="bottom|left"
-                    android:background="#00000000"
                     android:gravity="bottom|left"></LinearLayout>
 
                 <!-- TODO profile info panel -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
-                    android:layout_alignBottom="@+id/img_cover"
-                    android:layout_alignParentStart="true"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom|left"
                     android:paddingLeft="24dp"
                     android:paddingTop="8dp"
                     android:paddingRight="24dp"
-                    android:paddingBottom="24dp">
+                    android:paddingBottom="24dp"
+                    android:gravity="center">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_avatar"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:layout_alignBottom="@+id/img_cover"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="bottom|left"
-                        android:layout_marginLeft="24dp"
+                        android:layout_gravity="center_horizontal"
                         android:gravity="bottom|left"
                         android:src="@drawable/no_avatar"
 />
