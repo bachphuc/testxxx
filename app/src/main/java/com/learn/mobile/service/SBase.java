@@ -132,6 +132,7 @@ public class SBase {
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
+                DMobi.log("REQUEST", respondString);
                 ListObjectResponse<DMobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {

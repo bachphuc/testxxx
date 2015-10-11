@@ -70,7 +70,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         // TODO initialize view pager
         initViewPager();
         // TODO init tab layout
-        initTabBarLayout();
+        initTabBarLayoutWithTitle();
 
         showLoginActivity();
 
@@ -131,6 +131,34 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+    }
+
+    public void initTabBarLayoutWithTitle() {
+        tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        TabLayout.Tab tab;
+
+        String[] tabs =  {"Home", "Photo", "Member", "Message", "Notification"};
+        for(int i = 0; i < tabs.length; i++){
+            tab = tabLayout.newTab();
+            tab.setText(DMobi.translate(tabs[i]));
+            tabLayout.addTab(tab);
+        }
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
     }

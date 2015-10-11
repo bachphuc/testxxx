@@ -52,6 +52,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     protected boolean bAutoLoadData = false;
     protected boolean bRefreshList = false;
+    protected LinearLayoutManager linearLayoutManager;
 
     protected HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
@@ -130,7 +131,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         if (bGirdLayout) {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         } else {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(linearLayoutManager);
         }

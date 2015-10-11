@@ -315,8 +315,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     progressBar.setProgress(percent);
                 }
             });
+            DMobi.log(TAG, "Post a photo...");
             dRequest.upload();
         } else {
+            DMobi.log(TAG, "Post new feed...");
             dRequest.post();
         }
     }
@@ -409,6 +411,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void previewImage() {
+        module = "photo";
         bHasImage = true;
         imgPreview.setVisibility(View.VISIBLE);
 
