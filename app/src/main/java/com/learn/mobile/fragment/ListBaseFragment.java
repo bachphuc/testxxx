@@ -1,15 +1,19 @@
 package com.learn.mobile.fragment;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
@@ -76,7 +80,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         this.serviceClass = serviceClass;
     }
 
-    public void setService(SBase service){
+    public void setService(SBase service) {
         this.service = service;
     }
 
@@ -129,7 +133,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     private void initializeView() {
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
         if (bGirdLayout) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.addItemDecoration(new SpacesItemDecoration(8));
         } else {
             linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -269,5 +275,79 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
+    }
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int spacing;
+
+        public SpacesItemDecoration(int space) {
+            this.spacing = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            int halfSpacing = spacing / 2;
+
+            int childCount = parent.getAdapter().getItemCount();
+            int childIndex = parent.getChildAdapterPosition(view);
+            int spanCount = getTotalSpan(view, parent);
+            int spanIndex = childIndex % spanCount;
+
+            if (spanCount < 1) return;
+
+            outRect.top = halfSpacing;
+            outRect.bottom = halfSpacing;
+            outRect.left = halfSpacing;
+            outRect.right = halfSpacing;
+
+            if (isTopEdge(childIndex, spanCount)) {
+                outRect.top = spacing;
+            }
+
+            if (isLeftEdge(spanIndex, spanCount)) {
+                outRect.left = spacing;
+            }
+
+            if (isRightEdge(spanIndex, spanCount)) {
+                outRect.right = spacing;
+            }
+
+            if (isBottomEdge(childIndex, childCount, spanCount)) {
+                outRect.bottom = spacing;
+            }
+        }
+
+        protected boolean isLeftEdge(int spanIndex, int spanCount) {
+
+            return spanIndex == 0;
+        }
+
+        protected boolean isRightEdge(int spanIndex, int spanCount) {
+
+            return spanIndex == spanCount - 1;
+        }
+
+        protected boolean isTopEdge(int childIndex, int spanCount) {
+
+            return childIndex < spanCount;
+        }
+
+        protected boolean isBottomEdge(int childIndex, int childCount, int spanCount) {
+
+            return childIndex >= childCount - spanCount;
+        }
+
+        protected int getTotalSpan(View view, RecyclerView parent) {
+
+            RecyclerView.LayoutManager mgr = parent.getLayoutManager();
+            if (mgr instanceof GridLayoutManager) {
+                return ((GridLayoutManager) mgr).getSpanCount();
+            } else if (mgr instanceof StaggeredGridLayoutManager) {
+                return ((StaggeredGridLayoutManager) mgr).getSpanCount();
+            }
+
+            return -1;
+        }
     }
 }
