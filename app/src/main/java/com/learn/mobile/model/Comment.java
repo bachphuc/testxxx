@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.UserProfileActivity;
+import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
@@ -22,8 +23,8 @@ public class Comment extends DAbstractComment implements View.OnClickListener {
     }
 
     @Override
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
-        super.processViewHolder(itemBaseViewHolder, position);
+    public void processViewHolder(RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, int position) {
+        super.processViewHolder(adapter, itemBaseViewHolder, position);
 
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {

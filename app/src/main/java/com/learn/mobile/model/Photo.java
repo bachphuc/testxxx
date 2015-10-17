@@ -1,5 +1,7 @@
 package com.learn.mobile.model;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,8 +11,12 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.activity.PhotoDetailActivity;
+import com.learn.mobile.activity.PhotoViewerActivity;
+import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.PaletteImageView;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
@@ -18,7 +24,7 @@ import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
 
-public class Photo extends DAbstractPhoto implements View.OnClickListener, View.OnTouchListener {
+public class Photo extends DAbstractPhoto implements View.OnClickListener {
     public Photo() {
         registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout);
         registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
@@ -40,8 +46,8 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener, View.
     }
 
     @Override
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
-        super.processViewHolder(itemBaseViewHolder, position);
+    public void processViewHolder(final RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, final int position) {
+        super.processViewHolder(adapter, itemBaseViewHolder, position);
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {
             if (imageView instanceof PaletteImageView) {
@@ -57,7 +63,16 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener, View.
                     }
                 });
 
-                imageView.setOnTouchListener(this);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, adapter.getData());
+                        Intent intent = new Intent(context, PhotoDetailActivity.class);
+                        intent.putExtra(PhotoDetailActivity.PHOTO_POSITION, position);
+                        context.startActivity(intent);
+                    }
+                });
             }
             ImageHelper.display(imageView, images.big.url);
         }
@@ -67,10 +82,16 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener, View.
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.img_photo:
+                Context context = v.getContext();
+                DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
+                Intent intent = new Intent(context, PhotoDetailActivity.class);
+                context.startActivity(intent);
+                break;
+        }
     }
 
-    @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()) {
             case R.id.img_photo:
@@ -80,10 +101,8 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener, View.
 
                     View animateView = v;
 
-                    int cx = (animateView.getLeft() + animateView.getRight()) / 2;
-                    int cy = (animateView.getTop() + animateView.getBottom()) / 2;
-                    cx = x;
-                    cy = y;
+                    int cx = x;
+                    int cy = y;
                     int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
                     SupportAnimator animator = ViewAnimationUtils.createCircularReveal(animateView, cx, cy, 0, finalRadius);

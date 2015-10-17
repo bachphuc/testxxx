@@ -30,7 +30,8 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
         itemView = LayoutInflater.from(viewGroup.getContext()).
                 inflate(layout, viewGroup, false);
 
-        return new ItemBaseViewHolder(itemView);
+        ItemBaseViewHolder itemBaseViewHolder = new ItemBaseViewHolder(itemView);
+        return itemBaseViewHolder;
     }
 
     @Override
@@ -40,13 +41,17 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
     }
 
     @Override
-    public void onBindViewHolder(ItemBaseViewHolder ItemBaseViewHolder, int position) {
+    public void onBindViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
         DMobileModelBase item = data.get(position);
-        item.processViewHolder(ItemBaseViewHolder, position);
+        item.processViewHolder(this, itemBaseViewHolder, position);
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public List<DMobileModelBase> getData(){
+        return data;
     }
 }

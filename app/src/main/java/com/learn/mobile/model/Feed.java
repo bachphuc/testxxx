@@ -18,6 +18,7 @@ import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.FeedDetailActivity;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.FeedAdapter;
+import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -28,7 +29,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     private static final String TAG = Feed.class.getSimpleName();
     private boolean bItemReady = false;
 
-    public Feed(){
+    public Feed() {
 
     }
 
@@ -53,7 +54,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     }
 
     @Override
-    public int getLayoutType(String suffix){
+    public int getLayoutType(String suffix) {
         return getFeedLayoutType();
     }
 
@@ -121,13 +122,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             imageView.setOnClickListener(this);
         }
         textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
-        if(textView != null){
+        if (textView != null) {
             textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
         }
     }
 
     @Override
-    public int getTotalComment(){
+    public int getTotalComment() {
         DMobileModelBase item = getAttachment();
         if (item == null) {
             return 0;
@@ -231,7 +232,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     }
 
     @Override
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+    public void processViewHolder(RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, int position) {
         processFeedViewHolder(itemBaseViewHolder, position);
     }
 }

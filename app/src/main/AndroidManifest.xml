@@ -44,7 +44,7 @@
         <activity
             android:name=".activity.UploadActivity"
             android:label="@string/title_activity_upload"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PostActivity"
             android:theme="@style/Translucent">
@@ -64,6 +64,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.PhotoViewerActivity"
+            android:label="@string/title_activity_photo_viewer"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SampleActivity"
+            android:label="@string/title_activity_sample"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SampleDetailActivity"
+            android:label="@string/title_activity_sample_detail"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.PhotoDetailActivity"></activity>
     </application>
 
 </manifest>

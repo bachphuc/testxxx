@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
@@ -83,7 +84,7 @@ public class DMobileModelBase {
     public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
     }
 
-    public void processViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+    public void processViewHolder(RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, int position) {
     }
 
     public boolean isLike() {

@@ -59,7 +59,7 @@ public class DAbstractFeed extends DMobileModelBase{
     @SerializedName("user")
     public User user ;
     
-    @SerializedName("item")
+    @SerializedName("photo")
     public DMobileModelBase item ;
     
     @SerializedName("content")

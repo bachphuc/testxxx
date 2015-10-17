@@ -65,7 +65,7 @@ import com.learn.mobile.library.dmobi.DMobi;
  * result of the gesture and can only support one direct child. This view will
  * also be made the target of the gesture and will be forced to match both the
  * width and the height supplied in this layout. The SwipeRefreshLayout does not
- * provide accessibility events; instead, a menu item must be provided to allow
+ * provide accessibility events; instead, a menu photo must be provided to allow
  * refresh of the content wherever this gesture is used.
  * </p>
  */
@@ -118,7 +118,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     private float mInitialDownY;
     private boolean mIsBeingDragged;
     private int mActivePointerId = INVALID_POINTER;
-    // Whether this item is scaled up rather than clipped
+    // Whether this photo is scaled up rather than clipped
     private boolean mScale;
 
     // Target is returning to its start offset because it was cancelled or a
@@ -1115,7 +1115,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
 
     private void animateOffsetToStartPosition(int from, Animation.AnimationListener listener) {
         if (mScale) {
-            // Scale the item back down
+            // Scale the photo back down
             startScaleDownReturnToStartAnimation(from, listener);
         } else {
             mFrom = from;

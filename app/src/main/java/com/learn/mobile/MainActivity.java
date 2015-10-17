@@ -87,7 +87,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     public void showPostActivity() {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
-        // Start a activity with animate
+        // TODO Start a activity with animate
         // overridePendingTransition(R.animator.slide_in, R.animator.slide_out);
     }
 
@@ -248,7 +248,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar photo clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();

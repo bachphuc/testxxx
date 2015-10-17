@@ -29,4 +29,8 @@
     <string name="title_activity_upload">UploadActivity</string>
     <string name="delete_feed">Delete Feed</string>
     <string name="sample">In order to serve relevant ads, Google collects data about you and creates a profile. You can control and review the information Google has on you here</string>
+    <string name="title_activity_photo_viewer">PhotoViewerActivity</string>
+    <string name="title_activity_sample">SampleActivity</string>
+    <string name="title_activity_sample_detail">SampleDetailActivity</string>
+    <string name="title_sample">Nguyen Loc</string>
 </resources>

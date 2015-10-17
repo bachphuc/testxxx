@@ -1,6 +1,8 @@
 package com.learn.mobile;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.learn.mobile.activity.SampleActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 import com.learn.mobile.service.SUser;
 
@@ -25,7 +29,7 @@ import com.learn.mobile.service.SUser;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment {
+public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,20 +78,7 @@ public class LeftMenuFragment extends Fragment {
         view = inflater.inflate(R.layout.menu_main, container, false);
 
         navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.logout:
-                        SUser sUser = (SUser) DMobi.getService(SUser.class);
-                        sUser.logout();
-                        MainActivity mainActivity = (MainActivity) getActivity();
-                        mainActivity.showLoginActivity();
-                        break;
-                }
-                return false;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(this);
 
         DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, new Event.Action() {
             @Override
@@ -114,12 +105,16 @@ public class LeftMenuFragment extends Fragment {
         if(o instanceof User){
             User user = (User) o;
             TextView lbView = (TextView)view.findViewById(R.id.lb_email);
-            lbView.setText(user.email);
-            lbView = (TextView)view.findViewById(R.id.lb_fullname);
-            lbView.setText(user.fullName);
+            if(lbView != null){
+                lbView.setText(user.email);
+                lbView = (TextView)view.findViewById(R.id.lb_fullname);
+                lbView.setText(user.fullName);
+            }
 
             ImageView imageView = (ImageView)view.findViewById(R.id.im_avatar);
-            com.learn.mobile.library.dmobi.helper.ImageHelper.display(imageView, user.getImages().medium.url);
+            if(imageView != null){
+                ImageHelper.display(imageView, user.getImages().medium.url);
+            }
         }
     }
 
@@ -138,6 +133,24 @@ public class LeftMenuFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                SUser sUser = (SUser) DMobi.getService(SUser.class);
+                sUser.logout();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.showLoginActivity();
+                break;
+            case R.id.bt_sample:
+                Context context = getContext();
+                Intent intent = new Intent(context, SampleActivity.class);
+                context.startActivity(intent);
+                break;
+        }
+        return false;
     }
 
     /**

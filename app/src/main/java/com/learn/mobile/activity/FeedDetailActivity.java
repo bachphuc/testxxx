@@ -42,7 +42,7 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("");
 
-        // TODO Get item feed detail
+        // TODO Get photo feed detail
         feed = (Feed) DMobi.getData(FEED_DETAIL);
         item = feed.getAttachment();
         commentFragment = new CommentFragment();
