@@ -169,6 +169,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                     ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
                     if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
+                        adapter.fireNotifyDataSetChanged();
                     }
                     if (response.isSuccessfully() && !response.hasData()) {
                         dSwipeRefreshLayout.loadMoreFinish();

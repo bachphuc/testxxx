@@ -52,7 +52,7 @@ public class PhotoViewFragment extends Fragment {
         if (photo.user.images != null) {
             CircleImageView avatarImageView = (CircleImageView) view.findViewById(R.id.imageViewAvatar);
             if (avatarImageView != null) {
-                ImageHelper.display(avatarImageView, photo.images.avatar.url);
+                ImageHelper.display(avatarImageView, photo.user.images.avatar.url);
             }
         }
 

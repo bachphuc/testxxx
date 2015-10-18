@@ -29,7 +29,7 @@ public class Event {
         eventType = _actionType;
     }
 
-    public void setAction(Action _action){
+    public void addAction(Action _action){
         actions.add(_action);
     }
 
@@ -49,6 +49,10 @@ public class Event {
                 action.fireAction(eventType, o);
             }
         }
+    }
+
+    public void clearAction(){
+        actions.clear();
     }
 
     public interface Action {

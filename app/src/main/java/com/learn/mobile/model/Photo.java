@@ -1,8 +1,11 @@
 package com.learn.mobile.model;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -50,7 +53,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         super.processViewHolder(adapter, itemBaseViewHolder, position);
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {
-            if (imageView instanceof PaletteImageView) {
+            if (imageView instanceof PaletteImageView && false) {
                 PaletteImageView paletteImageView = (PaletteImageView) imageView;
                 paletteImageView.setOnPaletteListener(new PaletteImageView.PaletteListener.OnPaletteListener() {
                     @Override
@@ -62,18 +65,26 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                         tv.setTextColor(textColor);
                     }
                 });
+            }
 
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, adapter.getData());
-                        Intent intent = new Intent(context, PhotoDetailActivity.class);
-                        intent.putExtra(PhotoDetailActivity.PHOTO_POSITION, position);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, adapter.getData());
+                    Intent intent = new Intent(context, PhotoDetailActivity.class);
+                    intent.putExtra(PhotoDetailActivity.PHOTO_POSITION, position);
+                    intent.putExtra(RecyclerViewBaseAdapter.RECYCLER_VIEW_NOTIFY_DATA_CHANGE, adapter.getNotifyDataSetChangedEventKey());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation((Activity) context, v, "robot");
+                        context.startActivity(intent, options.toBundle());
+                    } else {
                         context.startActivity(intent);
                     }
-                });
-            }
+                }
+            });
+
             ImageHelper.display(imageView, images.big.url);
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
@@ -82,7 +93,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_photo:
                 Context context = v.getContext();
                 DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);

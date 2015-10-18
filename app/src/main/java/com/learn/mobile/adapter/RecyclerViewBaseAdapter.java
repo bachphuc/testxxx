@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.model.DMobileModelBase;
 
@@ -16,11 +17,19 @@ import java.util.List;
  */
 public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHolder> {
     protected List<DMobileModelBase> data;
+    public static final String RECYCLER_VIEW_NOTIFY_DATA_CHANGE = "RECYCLER_VIEW_NOTIFY_DATA_CHANGE";
+
+    protected int eventId;
 
     protected String layoutSuffix = LayoutHelper.LIST_LAYOUT;
 
     public RecyclerViewBaseAdapter(List<DMobileModelBase> data) {
         this.data = data;
+        eventId = DMobi.getIdentityId();
+    }
+
+    public String getNotifyDataSetChangedEventKey(){
+        return (RECYCLER_VIEW_NOTIFY_DATA_CHANGE + eventId);
     }
 
     @Override
@@ -53,5 +62,9 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
 
     public List<DMobileModelBase> getData(){
         return data;
+    }
+
+    public void fireNotifyDataSetChanged(){
+        DMobi.fireEvent(getNotifyDataSetChangedEventKey(),getData());
     }
 }

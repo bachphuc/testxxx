@@ -38,7 +38,7 @@ public class DMobi {
 
     }
 
-    public static int getIdentityId(){
+    public static int getIdentityId() {
         identityId++;
         return identityId;
     }
@@ -141,10 +141,9 @@ public class DMobi {
     }
 
     public static void showToast(String message, boolean isError) {
-        if(isError && DConfig.DEBUG_MODE == 1){
+        if (isError && DConfig.DEBUG_MODE == 1) {
             showToast(message);
-        }
-        else{
+        } else {
             DMobi.log(TAG, message);
         }
     }
@@ -157,7 +156,7 @@ public class DMobi {
     }
 
     // TODO Show login
-    public static ProgressDialog showLoading(Context context, String title, String description){
+    public static ProgressDialog showLoading(Context context, String title, String description) {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle(title);
         progressDialog.setMessage(description);
@@ -165,7 +164,7 @@ public class DMobi {
     }
 
     // TODO show alert
-    public static void alert(Context context, String title, String message){
+    public static void alert(Context context, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message).setTitle(title)
                 .setCancelable(false)
@@ -177,7 +176,7 @@ public class DMobi {
         alert.show();
     }
 
-    public static void alert(Context context, String message){
+    public static void alert(Context context, String message) {
         message = DMobi.translate(message);
         alert(context, DMobi.translate("Alert"), message);
     }
@@ -190,9 +189,9 @@ public class DMobi {
     }
 
     // TODO register a global event
-    public static Event registerEvent(String key){
+    public static Event registerEvent(String key) {
         Event event = eventHashTable.get(key);
-        if(event != null){
+        if (event != null) {
             return event;
         }
         event = new Event();
@@ -202,7 +201,10 @@ public class DMobi {
 
     public static Event registerEvent(String key, Event.Action action) {
         Event event = eventHashTable.get(key);
-        if(event != null){
+        if (event != null) {
+            if(action != null){
+                event.addAction(action);
+            }
             return event;
         }
         event = new Event(action, key);
@@ -210,19 +212,28 @@ public class DMobi {
         return event;
     }
 
-    public boolean isRegisterEvent(String key){
+    public boolean isRegisterEvent(String key) {
         Event event = eventHashTable.get(key);
         return (event != null ? true : false);
     }
 
-    public static Event getEvent(String key){
+    public static Event getEvent(String key) {
         Event event = eventHashTable.get(key);
         return event;
     }
 
-    public static boolean destroyEvent(String key){
+    public static boolean resetEvent(String key) {
         Event event = eventHashTable.get(key);
-        if(event == null){
+        if (event != null) {
+            event.clearAction();
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean destroyEvent(String key) {
+        Event event = eventHashTable.get(key);
+        if (event == null) {
             return false;
         }
         event = null;
@@ -230,31 +241,31 @@ public class DMobi {
         return true;
     }
 
-    public static void fireEvent(String key, Object o){
+    public static void fireEvent(String key, Object o) {
         Event event = eventHashTable.get(key);
-        if(event != null){
+        if (event != null) {
             event.fireAction(o);
         }
     }
 
-    public static void pushData(String key, Object o){
+    public static void pushData(String key, Object o) {
         globalDatas.put(key, o);
     }
 
-    public static Object getData(String key){
+    public static Object getData(String key) {
         return globalDatas.get(key);
     }
 
-    public static void clearData(){
+    public static void clearData() {
         globalDatas.clear();
     }
 
-    public static User getUser(){
+    public static User getUser() {
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         return sUser.getUser();
     }
 
-    public static String translate(String s){
+    public static String translate(String s) {
         return s;
     }
 }
