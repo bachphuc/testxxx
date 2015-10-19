@@ -20,6 +20,9 @@ import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 import com.learn.mobile.service.SFeed;
 
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,6 +120,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new SlideInUpAnimator());
 
         // TODO set user for service Feed
         if (user != null && user.userId == DMobi.getUser().userId) {

@@ -53,6 +53,7 @@ dependencies {
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.4.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.commit451:PhotoView:1.2.4'
+    compile 'jp.wasabeef:recyclerview-animators:2.0.0'
 
 }
 
