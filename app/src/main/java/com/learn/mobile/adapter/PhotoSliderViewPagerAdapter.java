@@ -3,6 +3,7 @@ package com.learn.mobile.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.learn.mobile.fragment.PhotoViewFragment;
 import com.learn.mobile.model.Photo;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by 09520_000 on 10/17/2015.
  */
-public class PhotoSliderViewPagerAdapter extends FragmentPagerAdapter {
+public class PhotoSliderViewPagerAdapter extends FragmentStatePagerAdapter {
     protected List<Photo> data;
 
     public PhotoSliderViewPagerAdapter(FragmentManager fragmentManager) {
