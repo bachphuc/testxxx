@@ -34,6 +34,7 @@
             android:text="@string/sample"
             android:textColor="@color/primary_icon_color"
             android:layout_alignBottom="@+id/rv_wrap_image"
+            android:visibility="gone"
             android:layout_alignParentStart="true" />
 
     </RelativeLayout>

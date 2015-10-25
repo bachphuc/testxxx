@@ -2,8 +2,11 @@ package com.learn.mobile.activity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.PhotoSliderViewPagerAdapter;
@@ -28,6 +31,13 @@ public class PhotoDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_detail);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("");
 
         viewPager = (ViewPager) findViewById(R.id.vp_photo_slider);
         adapter = new PhotoSliderViewPagerAdapter(getSupportFragmentManager());
@@ -65,5 +75,12 @@ public class PhotoDetailActivity extends AppCompatActivity {
         if(photos != null){
             viewPager.setCurrentItem(position);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.feed_action_menu, menu);
+        return true;
     }
 }

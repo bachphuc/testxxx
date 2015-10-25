@@ -29,8 +29,8 @@ import com.learn.mobile.service.SUser;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
-
+public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = LeftMenuFragment.class.getSimpleName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,6 +41,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     private String mParam2;
 
     private View view;
+    View headerView;
     private NavigationView navigationView;
 
     private OnLeftFragmentInteractionListener mListener;
@@ -77,8 +78,10 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menu_main, container, false);
 
-        navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) view.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        headerView = navigationView.inflateHeaderView(R.layout.menu_main_header);
 
         DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, new Event.Action() {
             @Override
@@ -93,27 +96,38 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         return view;
     }
 
-    public void setUser(){
+    public void setUser() {
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         User user = sUser.getUser();
-        if(user != null){
+        if (user != null) {
+            DMobi.log(TAG, "Update profile");
             updateProfile(user);
         }
+        DMobi.log(TAG, "Update profile done");
     }
 
-    public void updateProfile(Object o){
-        if(o instanceof User){
+    public void updateProfile(Object o) {
+        if (o instanceof User) {
+            DMobi.log(TAG, "User is exist");
             User user = (User) o;
-            TextView lbView = (TextView)view.findViewById(R.id.lb_email);
-            if(lbView != null){
+            TextView lbView = (TextView) headerView.findViewById(R.id.lb_email);
+            if (lbView != null) {
+                DMobi.log(TAG, "Update email done");
                 lbView.setText(user.email);
-                lbView = (TextView)view.findViewById(R.id.lb_fullname);
+                lbView = (TextView) headerView.findViewById(R.id.lb_fullName);
                 lbView.setText(user.fullName);
             }
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.im_avatar);
-            if(imageView != null){
+            ImageView imageView = (ImageView) headerView.findViewById(R.id.im_avatar);
+            if (imageView != null) {
                 ImageHelper.display(imageView, user.getImages().medium.url);
+            }
+
+            if(user.coverPhoto != null){
+                imageView = (ImageView) headerView.findViewById(R.id.img_cover);
+                if(imageView != null){
+                    ImageHelper.display(imageView, user.coverPhoto.full.url);
+                }
             }
         }
     }
@@ -137,7 +151,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);
                 sUser.logout();

@@ -33,4 +33,6 @@
     <string name="title_activity_sample">SampleActivity</string>
     <string name="title_activity_sample_detail">SampleDetailActivity</string>
     <string name="title_sample">Nguyen Loc</string>
+    <string name="string_email_sample">username@gmail.com</string>
+    <string name="image_description">sample</string>
 </resources>

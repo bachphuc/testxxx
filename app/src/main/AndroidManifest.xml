@@ -76,7 +76,13 @@
             android:name=".activity.SampleDetailActivity"
             android:label="@string/title_activity_sample_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.PhotoDetailActivity"></activity>
+        <activity
+            android:name=".activity.PhotoDetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

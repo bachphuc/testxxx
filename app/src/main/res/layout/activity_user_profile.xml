@@ -48,15 +48,8 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/background_red" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/img_cover"
-                    android:layout_alignParentStart="true"
-                    android:layout_gravity="bottom|left"
-                    android:gravity="bottom|left"></LinearLayout>
+                    android:src="@drawable/background_red"
+                    android:contentDescription="@string/image_description" />
 
                 <!-- TODO profile info panel -->
                 <LinearLayout
@@ -91,6 +84,15 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tab_bar"
+            style="@style/ProfileTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary_background_color"
+            android:fillViewport="false"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
 
     </com.learn.mobile.customview.ControllableAppBarLayout>
 
@@ -103,7 +105,6 @@
         android:src="@drawable/ic_add_white_24dp"
         android:tint="#ffffff"
         app:backgroundTint="@color/primary_color"
-        app:layout_anchor="@id/appBarLayout"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_gravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

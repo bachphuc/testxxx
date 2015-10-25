@@ -76,6 +76,18 @@
         <item name="tabIndicatorHeight">@dimen/primary_tab_height</item>
     </style>
 
+    <style name="ProfileTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/primary_color</item>
+        <item name="tabIndicatorHeight">@dimen/primary_tab_height</item>
+        <item name="tabTextAppearance">@style/ProfileTabLayoutText</item>
+        <item name="tabSelectedTextColor">@color/primary_color</item>
+    </style>
+
+    <style name="ProfileTabLayoutText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primary_text_color</item>
+    </style>
+
     <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
     </style>
 
@@ -153,4 +165,7 @@
         <item name="android:maxHeight">14dp</item>
     </style>
 
+    <style name="ThemeOverlay.MyApp.WhiteActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/actionbar_title_text</item>
+    </style>
 </resources>

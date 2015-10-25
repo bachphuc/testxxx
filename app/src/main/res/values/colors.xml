@@ -22,4 +22,6 @@
     <color name="primary_text_color">#666666</color>
     <color name="primary_dark_text_color">#333333</color>
     <color name="feed_action_default">#eeeeee</color>
+
+    <color name="actionbar_title_text">#ffffff</color>
 </resources>

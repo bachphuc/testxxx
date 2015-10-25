@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -36,8 +37,10 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.customview.ControllableAppBarLayout;
+import com.learn.mobile.fragment.BlankFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
@@ -47,6 +50,11 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     private NewFeedsFragment profileFeedFragment;
     private User user;
     private Toolbar toolbar;
+
+    private TabLayout tabLayout;
+    ViewPager viewPager;
+
+    String[] tabs =  {"Wall", "Info", "Photo"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,34 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         });
 
         updateView();
+
+        initTabBarLayoutWithTitle();
+    }
+
+    public void initTabBarLayoutWithTitle() {
+        tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
+        TabLayout.Tab tab;
+
+        for(int i = 0; i < tabs.length; i++){
+            tab = tabLayout.newTab();
+            tab.setText(DMobi.translate(tabs[i]));
+            tabLayout.addTab(tab);
+        }
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     // TODO initialize view pager
@@ -87,18 +123,38 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                profileFeedFragment = new NewFeedsFragment();
-                profileFeedFragment.setUser(user);
-                return profileFeedFragment;
+                if (position == 0) {
+                    profileFeedFragment = new NewFeedsFragment();
+                    profileFeedFragment.setUser(user);
+                    return profileFeedFragment;
+                }
+                return new BlankFragment();
             }
 
             @Override
             public int getCount() {
-                return 1;
+                return tabs.length;
             }
         };
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(fragmentPagerAdapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.getTabAt(position).select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
