@@ -83,6 +83,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.Sample1Activity"
+            android:label="@string/title_activity_sample1"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

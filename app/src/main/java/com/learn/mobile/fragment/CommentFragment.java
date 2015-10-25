@@ -21,9 +21,6 @@ public class CommentFragment extends ListBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        if(linearLayoutManager != null){
-            linearLayoutManager.setStackFromEnd(true);
-        }
 
         return view;
     }

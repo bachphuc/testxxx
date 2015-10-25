@@ -1,20 +1,19 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="BaseTheme">
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_color</item>
     </style>
 
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
     <style name="Translucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/primary_transparent_background</item>
         <item name="android:windowContentOverlay">@color/primary_transparent_background</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-	
-	<style name="MainLayout">
+
+    <style name="MainLayout">
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -88,8 +87,7 @@
         <item name="android:textColor">@color/primary_text_color</item>
     </style>
 
-    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
-    </style>
+    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo"></style>
 
     <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary_color</item>
@@ -104,11 +102,14 @@
         <item name="android:paddingBottom">24dp</item>
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Widget.MaterialProgressBar.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
@@ -167,5 +168,9 @@
 
     <style name="ThemeOverlay.MyApp.WhiteActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/actionbar_title_text</item>
+    </style>
+
+    <style name="AppStyle.MdToolbar" parent="MdToolbar">
+        <item name="android:elevation" tools:targetApi="lollipop">0dp</item>
     </style>
 </resources>

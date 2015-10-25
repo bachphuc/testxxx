@@ -17,34 +17,29 @@ package com.learn.mobile.activity;
  */
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.learn.mobile.R;
-import com.learn.mobile.customview.ControllableAppBarLayout;
-import com.learn.mobile.fragment.BlankFragment;
+import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
+import com.learn.mobile.fragment.DummyRecyclerViewFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
-public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+import me.henrytao.smoothappbarlayout.PagerAdapter;
+
+public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
 
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
@@ -54,107 +49,40 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     private TabLayout tabLayout;
     ViewPager viewPager;
 
-    String[] tabs =  {"Wall", "Info", "Photo"};
+    String[] tabs = {"Wall", "Info", "Photo"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_user_profile_v1);
         Intent intent = getIntent();
+
         user = (User) DMobi.getData(USER_PROFILE);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle(user.getTitle());
-        getSupportActionBar().setTitle(user.getTitle());
-        toolbar.bringToFront();
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
-        appBarLayout.addOnOffsetChangedListener(this);
 
         CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(user.getTitle());
-        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
-        initViewPager();
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.bt_post);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ControllableAppBarLayout controllableAppBarLayout = (ControllableAppBarLayout) appBarLayout;
-                controllableAppBarLayout.collapseToolbar(true);
-            }
-        });
+        collapsingToolbar.setTitleEnabled(false);
 
-        updateView();
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        initTabBarLayoutWithTitle();
-    }
+        ViewPagerRunnableAdapter adapter = new ViewPagerRunnableAdapter(getSupportFragmentManager());
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Cat", 100, R.layout.item_header_spacing), "Cat");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Dog");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Mouse", 100, R.layout.item_header_spacing), "Mouse");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Chicken", 5, R.layout.item_header_spacing), "Chicken");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Bird", 100, R.layout.item_header_spacing), "Bird");
 
-    public void initTabBarLayoutWithTitle() {
-        tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
-        TabLayout.Tab tab;
-
-        for(int i = 0; i < tabs.length; i++){
-            tab = tabLayout.newTab();
-            tab.setText(DMobi.translate(tabs[i]));
-            tabLayout.addTab(tab);
+        if (adapter instanceof PagerAdapter) {
+            viewPager.setAdapter(adapter);
         }
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-    }
-
-    // TODO initialize view pager
-    private void initViewPager() {
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                if (position == 0) {
-                    profileFeedFragment = new NewFeedsFragment();
-                    profileFeedFragment.setUser(user);
-                    return profileFeedFragment;
-                }
-                return new BlankFragment();
-            }
-
-            @Override
-            public int getCount() {
-                return tabs.length;
-            }
-        };
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(fragmentPagerAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tabLayout.getTabAt(position).select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     @Override
@@ -208,7 +136,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         }
 
         ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
-        if (user.images != null) {
+        if (imgAvatar != null && user.images != null) {
             ImageHelper.display(imgAvatar, user.images.medium.url);
         }
     }

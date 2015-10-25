@@ -35,4 +35,5 @@
     <string name="title_sample">Nguyen Loc</string>
     <string name="string_email_sample">username@gmail.com</string>
     <string name="image_description">sample</string>
+    <string name="title_activity_sample1">Sample1Activity</string>
 </resources>

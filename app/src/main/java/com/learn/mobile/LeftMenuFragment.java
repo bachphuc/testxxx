@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.learn.mobile.activity.Sample1Activity;
 import com.learn.mobile.activity.SampleActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -160,7 +161,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 break;
             case R.id.bt_sample:
                 Context context = getContext();
-                Intent intent = new Intent(context, SampleActivity.class);
+                Intent intent = new Intent(context, Sample1Activity.class);
                 context.startActivity(intent);
                 break;
         }
