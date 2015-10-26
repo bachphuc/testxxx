@@ -23,6 +23,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -55,12 +56,16 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_v1);
-        Intent intent = getIntent();
 
         user = (User) DMobi.getData(USER_PROFILE);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setTitle(user.getTitle());
+        getSupportActionBar().setTitle(user.getTitle());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -70,7 +75,11 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         ViewPagerRunnableAdapter adapter = new ViewPagerRunnableAdapter(getSupportFragmentManager());
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Cat", 100, R.layout.item_header_spacing), "Cat");
+
+        profileFeedFragment = new NewFeedsFragment();
+        profileFeedFragment.setUser(user);
+
+        adapter.addFragment(profileFeedFragment, "Cat");
         adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Dog");
         adapter.addFragment(DummyRecyclerViewFragment.newInstance("Mouse", 100, R.layout.item_header_spacing), "Mouse");
         adapter.addFragment(DummyRecyclerViewFragment.newInstance("Chicken", 5, R.layout.item_header_spacing), "Chicken");

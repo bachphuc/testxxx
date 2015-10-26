@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.FeedAdapter;
+import com.learn.mobile.adapter.ObservableScrollView;
+import com.learn.mobile.adapter.SimpleAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -22,6 +24,7 @@ import com.learn.mobile.service.SFeed;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
 
 
 /**
@@ -31,7 +34,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class NewFeedsFragment extends Fragment implements Event.Action {
+public class NewFeedsFragment extends Fragment implements Event.Action, ObservableScrollView {
     private OnFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
@@ -133,7 +136,23 @@ public class NewFeedsFragment extends Fragment implements Event.Action {
         }
 
         feedAdapter = new FeedAdapter(sFeed.getData());
-        recyclerView.setAdapter(feedAdapter);
+
+        if (user != null) {
+            RecyclerView.Adapter adapter = new SimpleRecyclerViewAdapter(feedAdapter) {
+                @Override
+                public RecyclerView.ViewHolder onCreateFooterViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+                    return null;
+                }
+
+                @Override
+                public RecyclerView.ViewHolder onCreateHeaderViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+                    return new HeaderHolder(layoutInflater, viewGroup, R.layout.item_header_spacing);
+                }
+            };
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.setAdapter(feedAdapter);
+        }
 
         completeResponse = new DResponse.Complete() {
             @Override
@@ -180,6 +199,14 @@ public class NewFeedsFragment extends Fragment implements Event.Action {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public View getScrollView() {
+        if (isAdded()) {
+            return recyclerView;
+        }
+        return null;
     }
 
     /**
