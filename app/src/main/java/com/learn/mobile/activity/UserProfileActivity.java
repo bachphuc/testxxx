@@ -34,16 +34,18 @@ import com.learn.mobile.R;
 import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
 import com.learn.mobile.fragment.DummyRecyclerViewFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
+import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
 import me.henrytao.smoothappbarlayout.PagerAdapter;
 
-public class UserProfileActivity extends AppCompatActivity implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
 
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
+    PhotoFragment photoFragment;
     private User user;
     private Toolbar toolbar;
 
@@ -67,6 +69,9 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(this);
+
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
@@ -79,11 +84,12 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         profileFeedFragment = new NewFeedsFragment();
         profileFeedFragment.setUser(user);
 
-        adapter.addFragment(profileFeedFragment, "Cat");
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Dog");
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Mouse", 100, R.layout.item_header_spacing), "Mouse");
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Chicken", 5, R.layout.item_header_spacing), "Chicken");
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Bird", 100, R.layout.item_header_spacing), "Bird");
+        adapter.addFragment(profileFeedFragment, "Wall");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Info");
+
+        photoFragment = new PhotoFragment();
+        photoFragment.setHasAppBar(true);
+        adapter.addFragment(photoFragment, "Photo");
 
         if (adapter instanceof PagerAdapter) {
             viewPager.setAdapter(adapter);
@@ -91,7 +97,8 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        updateView();
     }
 
     @Override
@@ -119,13 +126,6 @@ public class UserProfileActivity extends AppCompatActivity implements NewFeedsFr
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        if (profileFeedFragment != null) {
-            profileFeedFragment.setEnableRefresh(i == 0);
-        }
     }
 
     public void setUser(User user) {

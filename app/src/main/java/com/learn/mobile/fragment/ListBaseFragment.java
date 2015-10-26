@@ -29,6 +29,9 @@ import com.learn.mobile.service.SBase;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
+import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -37,6 +40,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class ListBaseFragment extends Fragment implements Event.Action {
+    public static final String TAG = ListBaseFragment.class.getSimpleName();
     protected DFragmentListener.OnFragmentInteractionListener mListener;
     protected int layout = 0;
     protected View view;
@@ -59,6 +63,12 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     protected LinearLayoutManager linearLayoutManager;
 
     protected HashMap<String, Object> requestParams = new HashMap<String, Object>();
+
+    protected boolean bHasAppBar = false;
+
+    public void setHasAppBar(boolean b){
+        bHasAppBar = b;
+    }
 
     public ListBaseFragment() {
 
@@ -131,11 +141,26 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     }
 
     private void initializeView() {
+        dSwipeRefreshLayout = (DSwipeRefreshLayout) view.findViewById(R.id.base_swipe_refresh_layout);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
+        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(8);
         if (bGirdLayout) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            if(bHasAppBar){
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+                    @Override
+                    public int getSpanSize(int position) {
+                        if(position == 0){
+                            return 2;
+                        }
+                        return 1;
+                    }
+                });
+                spacesItemDecoration.setHasHeader(true);
+            }
             recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.addItemDecoration(new SpacesItemDecoration(8));
+            recyclerView.addItemDecoration(spacesItemDecoration);
         } else {
             linearLayoutManager = new LinearLayoutManager(getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -158,7 +183,29 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         }
 
         adapter = new RecyclerViewBaseAdapter(service.getData());
-        recyclerView.setAdapter(adapter);
+
+        if (bHasAppBar) {
+            RecyclerView.Adapter recyclerAdapter = new SimpleRecyclerViewAdapter(adapter) {
+                @Override
+                public RecyclerView.ViewHolder onCreateFooterViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+                    return null;
+                }
+
+                @Override
+                public RecyclerView.ViewHolder onCreateHeaderViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+                    return new HeaderHolder(layoutInflater, viewGroup, R.layout.item_header_spacing);
+                }
+            };
+            recyclerView.setAdapter(recyclerAdapter);
+
+            int actionBarSize = ResourceUtils.getActionBarSize(getContext());
+            int progressViewStart = getResources().getDimensionPixelSize(R.dimen.app_bar_height) - actionBarSize;
+            int progressViewEnd = progressViewStart + (int) (actionBarSize * 1.5f);
+            dSwipeRefreshLayout.setProgressViewOffset(true, progressViewStart, progressViewEnd);
+
+        } else {
+            recyclerView.setAdapter(adapter);
+        }
 
         completeResponse = new DResponse.Complete() {
             @Override
@@ -178,7 +225,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             }
         };
 
-        dSwipeRefreshLayout = (DSwipeRefreshLayout) view.findViewById(R.id.base_swipe_refresh_layout);
         dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -242,12 +288,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (DFragmentListener.OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -281,6 +321,12 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int spacing;
 
+        private boolean bHasHeader = false;
+
+        public void setHasHeader(boolean b){
+            bHasHeader = b;
+        }
+
         public SpacesItemDecoration(int space) {
             this.spacing = space;
         }
@@ -291,8 +337,24 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             int halfSpacing = spacing / 2;
 
             int childCount = parent.getAdapter().getItemCount();
+
             int childIndex = parent.getChildAdapterPosition(view);
+            DMobi.log(TAG, "Child Index " + childIndex);
             int spanCount = getTotalSpan(view, parent);
+
+            if(bHasHeader && childIndex == 0){
+                outRect.top = spacing;
+                outRect.bottom = halfSpacing;
+                outRect.left = spacing;
+                outRect.right = spacing;
+                return;
+            }
+
+            if(bHasHeader){
+                childCount = childCount - 1;
+                childIndex = childIndex - 1;
+                DMobi.log(TAG, "Child Index after " + childIndex);
+            }
             int spanIndex = childIndex % spanCount;
 
             if (spanCount < 1) return;
@@ -303,18 +365,22 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             outRect.right = halfSpacing;
 
             if (isTopEdge(childIndex, spanCount)) {
+                DMobi.log(TAG, "TOP");
                 outRect.top = spacing;
             }
 
             if (isLeftEdge(spanIndex, spanCount)) {
+                DMobi.log(TAG, "LEFT");
                 outRect.left = spacing;
             }
 
             if (isRightEdge(spanIndex, spanCount)) {
+                DMobi.log(TAG, "RIGHT");
                 outRect.right = spacing;
             }
 
             if (isBottomEdge(childIndex, childCount, spanCount)) {
+                DMobi.log(TAG, "BOTTOM");
                 outRect.bottom = spacing;
             }
         }
@@ -330,7 +396,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         }
 
         protected boolean isTopEdge(int childIndex, int spanCount) {
-
             return childIndex < spanCount;
         }
 

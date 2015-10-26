@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.adapter.ObservableScrollView;
-import com.learn.mobile.adapter.SimpleAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -22,9 +21,9 @@ import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 import com.learn.mobile.service.SFeed;
 
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
+import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
 
 
 /**
@@ -118,6 +117,8 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     private void initRecycleView() {
+        dSwipeRefreshLayout = (DSwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -150,6 +151,12 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
                 }
             };
             recyclerView.setAdapter(adapter);
+
+            int actionBarSize = ResourceUtils.getActionBarSize(getContext());
+            int progressViewStart = getResources().getDimensionPixelSize(R.dimen.app_bar_height) - actionBarSize;
+            int progressViewEnd = progressViewStart + (int) (actionBarSize * 1.5f);
+            dSwipeRefreshLayout.setProgressViewOffset(true, progressViewStart, progressViewEnd);
+
         } else {
             recyclerView.setAdapter(feedAdapter);
         }
@@ -171,7 +178,6 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
             }
         };
 
-        dSwipeRefreshLayout = (DSwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
