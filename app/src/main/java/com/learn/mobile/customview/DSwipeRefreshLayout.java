@@ -566,11 +566,16 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
 
     // TODO CUSTOM LOAD MORE
     // True if we are still waiting for the last set of data to load.
-    private boolean bLoadMoreProcessing = false;
-    private boolean canLoadMore = true;
-    private LoadMoreListener loadMoreListener;
-    private int bottomLoadMoreHeight = 140;
-    private boolean bInitLoadMoreLayoutChange = false;
+    protected boolean bLoadMoreProcessing = false;
+    protected boolean canLoadMore = true;
+    protected LoadMoreListener loadMoreListener;
+    protected int bottomLoadMoreHeight = 140;
+    protected boolean bInitLoadMoreLayoutChange = false;
+    protected boolean bHasHeader = false;
+
+    public void setHasHeader(boolean b){
+        bHasHeader = b;
+    }
 
     public boolean isLoadMoreProcessing() {
         return bLoadMoreProcessing;
@@ -634,10 +639,10 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
             return;
         }
         int childCount = getListItemCount();
-        if (childCount > 0) {
-            return;
+
+        if(childCount == 0 || (childCount == 1 && bHasHeader)){
+            updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
         }
-        updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
     }
 
     // TODO get child count of child view
@@ -675,12 +680,14 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
 
         int childCount = getListItemCount();
 
-        if (childCount == 0) {
+        if (childCount == 0 || (bHasHeader && childCount == 1)) {
+            Log.i(LOG_TAG, "Child count " + childCount);
             Context context = getContext();
             int tempOffset = 0;
             if (context != null) {
                 if (context instanceof DActivityBase) {
                     DActivityBase dActivityBase = (DActivityBase) context;
+                    Log.i(LOG_TAG, "init event app bar offset change");
                     if (!bInitLoadMoreLayoutChange) {
                         bInitLoadMoreLayoutChange = true;
                         AppBarLayout appBarLayout = dActivityBase.getAppBarLayout();
@@ -690,6 +697,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
                     }
 
                     int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
+                    Log.i(LOG_TAG, "offset app bar layout " + offsetAppBarLayout);
                     int appBarLayoutHeight = dActivityBase.getAppBarHeight();
                     tempOffset = appBarLayoutHeight + offsetAppBarLayout;
                 }
@@ -697,6 +705,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
             mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), (height / 2 - circleLoadMoreHeight / 2 - tempOffset / 2),
                     (width / 2 + circleLoadMoreWidth / 2), (height / 2 + circleLoadMoreHeight / 2 - tempOffset / 2));
         } else {
+            Log.i(LOG_TAG, "Load more bottom, count " + childCount + ", header " + (bHasHeader ? 1 : 0));
             mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
                     (width / 2 + circleLoadMoreWidth / 2), height - 10);
         }

@@ -29,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
@@ -77,6 +78,11 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         collapsingToolbar.setTitleEnabled(false);
 
+        TextView textView = (TextView) findViewById(R.id.tv_title);
+        if(textView != null){
+            textView.setText(user.getTitle());
+        }
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         ViewPagerRunnableAdapter adapter = new ViewPagerRunnableAdapter(getSupportFragmentManager());
@@ -89,6 +95,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         photoFragment = new PhotoFragment();
         photoFragment.setHasAppBar(true);
+        photoFragment.setRefreshList(true);
         adapter.addFragment(photoFragment, "Photo");
 
         if (adapter instanceof PagerAdapter) {

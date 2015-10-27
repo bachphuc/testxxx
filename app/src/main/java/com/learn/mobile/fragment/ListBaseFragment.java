@@ -202,6 +202,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             int progressViewStart = getResources().getDimensionPixelSize(R.dimen.app_bar_height) - actionBarSize;
             int progressViewEnd = progressViewStart + (int) (actionBarSize * 1.5f);
             dSwipeRefreshLayout.setProgressViewOffset(true, progressViewStart, progressViewEnd);
+            dSwipeRefreshLayout.setHasHeader(true);
 
         } else {
             recyclerView.setAdapter(adapter);
