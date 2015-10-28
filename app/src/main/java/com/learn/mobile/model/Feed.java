@@ -67,7 +67,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
         DMobileModelBase item = getAttachment();
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
-        textView.setText(user.getTitle());
+        if(textView != null){
+            textView.setText(user.getTitle());
+        }
+
         textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
 
         if (DUtils.isEmpty(content)) {

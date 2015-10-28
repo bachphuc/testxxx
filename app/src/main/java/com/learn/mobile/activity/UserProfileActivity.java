@@ -90,8 +90,8 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         profileFeedFragment = new NewFeedsFragment();
         profileFeedFragment.setUser(user);
 
-//        adapter.addFragment(profileFeedFragment, "Wall");
-//        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Info");
+        adapter.addFragment(profileFeedFragment, "Wall");
+        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Info");
 
         photoFragment = new PhotoFragment();
         photoFragment.setHasAppBar(true);

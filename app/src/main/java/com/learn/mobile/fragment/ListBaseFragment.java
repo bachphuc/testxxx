@@ -66,7 +66,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     protected boolean bHasAppBar = false;
 
-    public void setHasAppBar(boolean b){
+    public void setHasAppBar(boolean b) {
         bHasAppBar = b;
     }
 
@@ -134,9 +134,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         initializeEvent();
 
-//        if (bAutoLoadData) {
-//            startLoad();
-//        }
+        if (bAutoLoadData) {
+            startLoad();
+        }
         return view;
     }
 
@@ -147,11 +147,11 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(8);
         if (bGirdLayout) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-            if(bHasAppBar){
-                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+            if (bHasAppBar) {
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        if(position == 0){
+                        if (position == 0) {
                             return 2;
                         }
                         return 1;
@@ -181,7 +181,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                 service.setRequestParams(new DRequest.RequestParam(entry.getKey(), entry.getValue()));
             }
         }
-        Log.i(TAG, "INITIAL IEM " + service.getData().size());
         adapter = new RecyclerViewBaseAdapter(service.getData());
 
         if (bHasAppBar) {
@@ -226,7 +225,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             }
         };
 
-        /*dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
+        dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 onRefreshData();
@@ -238,8 +237,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             public void loadMore() {
                 onLoadMoreData();
             }
-        });*/
-        dSwipeRefreshLayout.startLoad();
+        });
     }
 
     public void initializeEvent() {
@@ -325,7 +323,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         private boolean bHasHeader = false;
 
-        public void setHasHeader(boolean b){
+        public void setHasHeader(boolean b) {
             bHasHeader = b;
         }
 
@@ -341,21 +339,20 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             int childCount = parent.getAdapter().getItemCount();
 
             int childIndex = parent.getChildAdapterPosition(view);
-            DMobi.log(TAG, "Child Index " + childIndex);
+
             int spanCount = getTotalSpan(view, parent);
 
-            if(bHasHeader && childIndex == 0){
+            if (bHasHeader && childIndex == 0) {
                 outRect.top = spacing;
-                outRect.bottom = halfSpacing;
+                outRect.bottom = 0;
                 outRect.left = spacing;
                 outRect.right = spacing;
                 return;
             }
 
-            if(bHasHeader){
+            if (bHasHeader) {
                 childCount = childCount - 1;
                 childIndex = childIndex - 1;
-                DMobi.log(TAG, "Child Index after " + childIndex);
             }
             int spanIndex = childIndex % spanCount;
 
@@ -367,22 +364,18 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             outRect.right = halfSpacing;
 
             if (isTopEdge(childIndex, spanCount)) {
-                DMobi.log(TAG, "TOP");
                 outRect.top = spacing;
             }
 
             if (isLeftEdge(spanIndex, spanCount)) {
-                DMobi.log(TAG, "LEFT");
                 outRect.left = spacing;
             }
 
             if (isRightEdge(spanIndex, spanCount)) {
-                DMobi.log(TAG, "RIGHT");
                 outRect.right = spacing;
             }
 
             if (isBottomEdge(childIndex, childCount, spanCount)) {
-                DMobi.log(TAG, "BOTTOM");
                 outRect.bottom = spacing;
             }
         }

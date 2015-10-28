@@ -609,8 +609,8 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     public void showLoadMoreProcess() {
         ensureTarget();
         mLoadMoreProgress.start();
-        Log.i(LOG_TAG, "show load more process");
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
+        mLoadMoreCircleView.bringToFront();
         int childCount = getListItemCount();
         if (childCount != 0 && !(bHasHeader && childCount == 2)) {
             mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
@@ -683,13 +683,11 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         int childCount = getListItemCount();
 
         if (childCount == 0 || (bHasHeader && childCount == 2)) {
-            Log.i(LOG_TAG, "Child count " + childCount);
             Context context = getContext();
             int tempOffset = 0;
             if (context != null) {
                 if (context instanceof DActivityBase) {
                     DActivityBase dActivityBase = (DActivityBase) context;
-                    Log.i(LOG_TAG, "init event app bar offset change");
                     if (!bInitLoadMoreLayoutChange) {
                         bInitLoadMoreLayoutChange = true;
                         AppBarLayout appBarLayout = dActivityBase.getAppBarLayout();
@@ -699,15 +697,28 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
                     }
 
                     int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
-                    Log.i(LOG_TAG, "offset app bar layout " + offsetAppBarLayout);
                     int appBarLayoutHeight = dActivityBase.getAppBarHeight();
                     tempOffset = appBarLayoutHeight + offsetAppBarLayout;
                 }
             }
-            mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), (height / 2 - circleLoadMoreHeight / 2 - tempOffset / 2),
-                    (width / 2 + circleLoadMoreWidth / 2), (height / 2 + circleLoadMoreHeight / 2 - tempOffset / 2));
+            int newTop;
+            if(bHasHeader){
+                newTop = tempOffset + (height - tempOffset - circleLoadMoreHeight) / 2;
+            }
+            else{
+                newTop = (height / 2 - circleLoadMoreHeight / 2 - tempOffset / 2);
+            }
+
+            int newBottom = newTop + circleLoadMoreHeight;
+
+            int newLeft = (width / 2 - circleLoadMoreWidth / 2);
+            int newRight = newLeft + circleLoadMoreWidth;
+
+            Log.i(LOG_TAG, "RECT: W H T B L R " + width + ", " + height + ", " + newTop + ", " + newBottom + ", " + newLeft + ", " + newRight);
+
+            mLoadMoreCircleView.layout(newLeft, newTop,
+                    newRight, newBottom);
         } else {
-            Log.i(LOG_TAG, "Load more bottom, count " + childCount + ", header " + (bHasHeader ? 1 : 0));
             mLoadMoreCircleView.layout((width / 2 - circleLoadMoreWidth / 2), height - circleLoadMoreHeight - 10,
                     (width / 2 + circleLoadMoreWidth / 2), height - 10);
         }
