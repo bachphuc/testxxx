@@ -16,6 +16,7 @@ public class PhotoFragment extends ListBaseFragment implements ObservableScrollV
     public PhotoFragment(){
         setServiceClass(SPhoto.class);
         setGirdLayout(true);
+        setRefreshList(true);
     }
 
     @Override

@@ -573,7 +573,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     protected boolean bInitLoadMoreLayoutChange = false;
     protected boolean bHasHeader = false;
 
-    public void setHasHeader(boolean b){
+    public void setHasHeader(boolean b) {
         bHasHeader = b;
     }
 
@@ -609,8 +609,13 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     public void showLoadMoreProcess() {
         ensureTarget();
         mLoadMoreProgress.start();
+        Log.i(LOG_TAG, "show load more process");
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
-        mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
+        int childCount = getListItemCount();
+        if (childCount != 0 && !(bHasHeader && childCount == 2)) {
+            mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
+        }
+        updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
     }
 
     public void hideLoadMoreProcess() {
@@ -621,15 +626,13 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     }
 
     public void startLoad() {
-        if (DMobi.isUser()) {
-            onLoadMore();
-        }
+        onLoadMore();
     }
 
     private void onLoadMore() {
         bLoadMoreProcessing = true;
+        showLoadMoreProcess();
         if (loadMoreListener != null) {
-            showLoadMoreProcess();
             loadMoreListener.loadMore();
         }
     }
@@ -640,7 +643,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         }
         int childCount = getListItemCount();
 
-        if(childCount == 0 || (childCount == 1 && bHasHeader)){
+        if (childCount == 0 || (bHasHeader && childCount == 2)) {
             updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
         }
     }
@@ -667,8 +670,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
             DActivityBase dActivityBase = (DActivityBase) context;
             int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
             return (offsetAppBarLayout == 0);
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -680,7 +682,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
 
         int childCount = getListItemCount();
 
-        if (childCount == 0 || (bHasHeader && childCount == 1)) {
+        if (childCount == 0 || (bHasHeader && childCount == 2)) {
             Log.i(LOG_TAG, "Child count " + childCount);
             Context context = getContext();
             int tempOffset = 0;

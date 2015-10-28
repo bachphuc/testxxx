@@ -134,9 +134,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         initializeEvent();
 
-        if (bAutoLoadData) {
-            startLoad();
-        }
+//        if (bAutoLoadData) {
+//            startLoad();
+//        }
         return view;
     }
 
@@ -181,7 +181,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                 service.setRequestParams(new DRequest.RequestParam(entry.getKey(), entry.getValue()));
             }
         }
-
+        Log.i(TAG, "INITIAL IEM " + service.getData().size());
         adapter = new RecyclerViewBaseAdapter(service.getData());
 
         if (bHasAppBar) {
@@ -226,7 +226,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             }
         };
 
-        dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
+        /*dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 onRefreshData();
@@ -238,7 +238,8 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             public void loadMore() {
                 onLoadMoreData();
             }
-        });
+        });*/
+        dSwipeRefreshLayout.startLoad();
     }
 
     public void initializeEvent() {
