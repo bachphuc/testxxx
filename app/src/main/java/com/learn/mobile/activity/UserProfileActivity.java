@@ -36,6 +36,7 @@ import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
 import com.learn.mobile.fragment.DummyRecyclerViewFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
+import com.learn.mobile.fragment.UserInformationFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
@@ -47,6 +48,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
     PhotoFragment photoFragment;
+    UserInformationFragment userInformationFragment;
     private User user;
     private Toolbar toolbar;
 
@@ -91,7 +93,9 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         profileFeedFragment.setUser(user);
 
         adapter.addFragment(profileFeedFragment, "Wall");
-        adapter.addFragment(DummyRecyclerViewFragment.newInstance("Dog", 100, R.layout.item_header_spacing), "Info");
+        userInformationFragment = new UserInformationFragment();
+        userInformationFragment.setUser(user);
+        adapter.addFragment(userInformationFragment, "Info");
 
         photoFragment = new PhotoFragment();
         photoFragment.setHasAppBar(true);
