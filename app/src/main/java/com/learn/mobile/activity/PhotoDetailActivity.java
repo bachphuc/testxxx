@@ -41,6 +41,7 @@ public class PhotoDetailActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.vp_photo_slider);
         adapter = new PhotoSliderViewPagerAdapter(getSupportFragmentManager());
+        adapter.setViewPager(viewPager);
         Object object = DMobi.getData(PHOTO_SLIDER_DATA);
 
         Intent intent = getIntent();

@@ -9,14 +9,17 @@ import android.content.SharedPreferences;
 public class DConfig {
     private static Context context = null;
     private static String baseUrl = "http://dmobi.pe.hu";
-    private static String apiUrl = "http://dmobi.pe.hu/module/dmobile/api.php";
+    private static String apiUrl = baseUrl + "/module/dmobile/api.php";
     private static String token = null;
 
     public static final String TOKEN_KEY = "TOKEN_KEY";
     public static final String USER_DATA = "USER_DATA";
     public static final String BUNDLE_ID = "com.learn.mobile";
-    public static final String preference_file_key = "com.learn.mobile.PREFERENCE_FILE_KEY";
+    public static final String preference_file_key = BUNDLE_ID + ".PREFERENCE_FILE_KEY";
     public static final int DEBUG_MODE = 1;
+
+    // Can use GlideImageAdapter OR PicassoImageAdapter
+    public static final String IMAGE_ADAPTER = "GlideImageAdapter";
 
     public static void setContext(Context ctx){
         if(context != null){

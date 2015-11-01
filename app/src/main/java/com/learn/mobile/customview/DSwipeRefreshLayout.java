@@ -714,8 +714,6 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
             int newLeft = (width / 2 - circleLoadMoreWidth / 2);
             int newRight = newLeft + circleLoadMoreWidth;
 
-            Log.i(LOG_TAG, "RECT: W H T B L R " + width + ", " + height + ", " + newTop + ", " + newBottom + ", " + newLeft + ", " + newRight);
-
             mLoadMoreCircleView.layout(newLeft, newTop,
                     newRight, newBottom);
         } else {

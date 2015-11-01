@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import com.learn.mobile.fragment.PhotoViewFragment;
 import com.learn.mobile.model.Photo;
@@ -15,6 +16,10 @@ import java.util.List;
  */
 public class PhotoSliderViewPagerAdapter extends FragmentStatePagerAdapter {
     protected List<Photo> data;
+    ViewPager viewPager;
+    public void setViewPager(ViewPager v){
+        viewPager = v;
+    }
 
     public PhotoSliderViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -28,6 +33,9 @@ public class PhotoSliderViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         final int pos = position;
         PhotoViewFragment fragment = new PhotoViewFragment();
+        if(viewPager != null){
+            fragment.setViewPager(viewPager);
+        }
         Photo item = data.get(position);
         fragment.setPhoto(item);
         return fragment;
