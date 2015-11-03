@@ -58,18 +58,18 @@ public class PhotoViewFragment extends Fragment {
                 } else if (imageView instanceof GestureImageView) {
                     GestureImageView gestureImageView = (GestureImageView) imageView;
                     gestureImageView.getController().getSettings()
-                            .setMaxZoom(4f)
+                            .setMaxZoom(1f)
                             .setPanEnabled(true)
                             .setZoomEnabled(true)
                             .setDoubleTapEnabled(true)
                             .setRotationEnabled(false)
                             .setOverscrollDistance(0f, 0f)
-                            .setOverzoomFactor(2f)
+                            .setOverzoomFactor(1f)
                             .setFillViewport(false)
                             .setFitMethod(Settings.Fit.INSIDE)
                             .setGravity(Gravity.CENTER);
 
-                    ImageHelper.display(gestureImageView, photo.images.large.url);
+                    ImageHelper.display(gestureImageView, photo.images.full.url);
 
                     if(viewPager != null){
                         gestureImageView.getController().enableScrollInViewPager(viewPager);
