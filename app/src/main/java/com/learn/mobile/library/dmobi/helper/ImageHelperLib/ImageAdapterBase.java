@@ -11,5 +11,5 @@ public abstract class ImageAdapterBase {
 
     }
 
-    public abstract void display(Context context, String url, ImageView imageView);
+    public abstract void display(Context context, String url, ImageView imageView, String thumbnailUrl);
 }
