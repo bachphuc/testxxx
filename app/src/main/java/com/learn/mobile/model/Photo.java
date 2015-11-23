@@ -75,7 +75,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                     Intent intent = new Intent(context, PhotoDetailActivity.class);
                     intent.putExtra(PhotoDetailActivity.PHOTO_POSITION, position);
                     intent.putExtra(RecyclerViewBaseAdapter.RECYCLER_VIEW_NOTIFY_DATA_CHANGE, adapter.getNotifyDataSetChangedEventKey());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && false) {
                         ActivityOptions options = ActivityOptions
                                 .makeSceneTransitionAnimation((Activity) context, v, "robot");
                         context.startActivity(intent, options.toBundle());
