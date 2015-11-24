@@ -8,12 +8,14 @@ import android.content.SharedPreferences;
  */
 public class DConfig {
     private static Context context = null;
-    private static String baseUrl = "http://dmobi.pe.hu";
-    private static String apiUrl = baseUrl + "/module/dmobile/api.php";
+    private static String baseUrl;
+    private static String apiUrl;
     private static String token = null;
 
     public static final String TOKEN_KEY = "TOKEN_KEY";
     public static final String USER_DATA = "USER_DATA";
+    public static final String SITE_URL = "SITE_URL";
+    public static String DEFAULT_HOST = "http://dmobi.pe.hu";
     public static final String BUNDLE_ID = "com.learn.mobile";
     public static final String preference_file_key = BUNDLE_ID + ".PREFERENCE_FILE_KEY";
     public static final int DEBUG_MODE = 1;
@@ -32,11 +34,23 @@ public class DConfig {
         return context;
     }
 
+    public static void resetHostConfig(){
+        baseUrl = null;
+        apiUrl = null;
+    }
+
     public static String getBaseUrl(){
+        if(baseUrl != null){
+            baseUrl = getSetting(SITE_URL, DEFAULT_HOST);
+        }
         return baseUrl;
     }
 
     public static String getApiUrl(){
+        if(apiUrl != null){
+            return apiUrl;
+        }
+        apiUrl = getBaseUrl() + "/module/dmobile/api.php";
         return apiUrl;
     }
 

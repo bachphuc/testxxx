@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.activity.Sample1Activity;
 import com.learn.mobile.activity.SampleActivity;
+import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -124,9 +126,9 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 ImageHelper.display(imageView, user.getImages().medium.url);
             }
 
-            if(user.coverPhoto != null){
+            if (user.coverPhoto != null) {
                 imageView = (ImageView) headerView.findViewById(R.id.img_cover);
-                if(imageView != null){
+                if (imageView != null) {
                     ImageHelper.display(imageView, user.coverPhoto.full.url);
                 }
             }
@@ -164,6 +166,10 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 Intent intent = new Intent(context, Sample1Activity.class);
                 context.startActivity(intent);
                 break;
+
+            case R.id.drawer_settings_site:
+                showDialogSettingSite();
+                break;
         }
         return false;
     }
@@ -181,6 +187,13 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     public interface OnLeftFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onLeftFragmentInteraction(String id);
+    }
+
+    // TODO: Show dialog setting site
+    public void showDialogSettingSite(){
+        FragmentManager fragmentManager = getFragmentManager();
+        SettingSiteDialog settingSite = new SettingSiteDialog();
+        settingSite.show(fragmentManager, "dialog");
     }
 
 }

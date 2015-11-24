@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="siteHosts">
+        <item>http://dmobi.pe.hu</item>
+        <item>http://dmobi.byethost3.com</item>
+    </string-array>
+</resources>

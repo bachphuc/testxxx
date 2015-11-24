@@ -45,6 +45,11 @@
             app:showAsAction="collapseActionView|ifRoom" />
 
         <item
+            android:id="@+id/drawer_settings_site"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="@string/settings" />
+
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_power_settings_new_white_24dp"
             android:title="Logout"
