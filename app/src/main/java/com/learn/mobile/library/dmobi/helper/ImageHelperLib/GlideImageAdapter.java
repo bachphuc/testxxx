@@ -11,10 +11,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
  */
 public class GlideImageAdapter extends ImageAdapterBase {
     @Override
-    public void display(Context context, String url, ImageView imageView) {
-        Glide.with(imageView.getContext())
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView);
+    public void display(Context context, String url, ImageView imageView, String thumbnailUrl) {
+        if (thumbnailUrl != null) {
+            Glide.with(imageView.getContext())
+                    .load(url)
+                    .thumbnail(Glide.with(imageView.getContext())
+                            .load(thumbnailUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView);
+        } else {
+            Glide.with(imageView.getContext())
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView);
+        }
     }
 }

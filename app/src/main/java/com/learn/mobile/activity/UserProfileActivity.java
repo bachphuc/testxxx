@@ -81,7 +81,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         collapsingToolbar.setTitleEnabled(false);
 
         TextView textView = (TextView) findViewById(R.id.tv_title);
-        if(textView != null){
+        if (textView != null) {
             textView.setText(user.getTitle());
         }
 
@@ -126,9 +126,12 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        // noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

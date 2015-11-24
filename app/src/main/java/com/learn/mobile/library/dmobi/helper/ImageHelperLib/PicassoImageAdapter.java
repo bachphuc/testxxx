@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
  */
 public class PicassoImageAdapter extends ImageAdapterBase {
     @Override
-    public void display(Context context, String url, ImageView imageView) {
+    public void display(Context context, String url, ImageView imageView, String thumbnailUrl) {
         Picasso.with(imageView.getContext()).load(url).into(imageView);
     }
 }

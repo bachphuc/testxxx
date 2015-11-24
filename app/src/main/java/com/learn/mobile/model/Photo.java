@@ -40,9 +40,9 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
             if (imageView != null) {
-                float ratio = (float) images.large.height / (float) images.large.width;
+                float ratio = (float) images.extralarge.height / (float) images.extralarge.width;
                 imageView.setScale(ratio);
-                ImageHelper.display(imageView, images.large.url);
+                ImageHelper.display(imageView, images.extralarge.url);
             }
         }
 
@@ -85,7 +85,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 }
             });
 
-            ImageHelper.display(imageView, images.big.url);
+            ImageHelper.display(imageView, images.large.url);
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         textView.setText(getTitle());

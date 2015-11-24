@@ -50,7 +50,7 @@ public class ImageHelper {
         return drawable;
     }
 
-    public static void display(Context context, ImageView imageView, String imageUrl) {
+    public static void display(Context context, ImageView imageView, String imageUrl, String thumbnailUrl) {
         if (imageAdapterBase == null) {
             String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
             Class c = null;
@@ -68,12 +68,16 @@ public class ImageHelper {
             }
         }
         if (imageAdapterBase != null) {
-            imageAdapterBase.display(context, imageUrl, imageView);
+            imageAdapterBase.display(context, imageUrl, imageView, thumbnailUrl);
         }
     }
 
     public static void display(ImageView imageView, String imageUrl) {
-        display(null, imageView, imageUrl);
+        display(null, imageView, imageUrl, null);
+    }
+
+    public static void display(ImageView imageView, String imageUrl, String thumbnailUrl) {
+        display(null, imageView, imageUrl, thumbnailUrl);
     }
 
     public static void setTint(ImageView imageView, int color) {
