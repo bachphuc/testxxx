@@ -131,7 +131,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
                 return true;
             case android.R.id.home:
                 finish();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

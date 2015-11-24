@@ -40,7 +40,7 @@ public class DConfig {
     }
 
     public static String getBaseUrl(){
-        if(baseUrl != null){
+        if(baseUrl == null){
             baseUrl = getSetting(SITE_URL, DEFAULT_HOST);
         }
         return baseUrl;

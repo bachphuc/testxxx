@@ -69,7 +69,7 @@ public class PhotoViewFragment extends Fragment {
                             .setFitMethod(Settings.Fit.INSIDE)
                             .setGravity(Gravity.CENTER);
 
-                    ImageHelper.display(gestureImageView, photo.images.extralarge.url, photo.images.normal.url);
+                    ImageHelper.display(gestureImageView, photo.images.extralarge.url, photo.images.large.url);
 
                     if(viewPager != null){
                         gestureImageView.getController().enableScrollInViewPager(viewPager);

@@ -86,7 +86,12 @@
         <activity
             android:name=".activity.Sample1Activity"
             android:label="@string/title_activity_sample1"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

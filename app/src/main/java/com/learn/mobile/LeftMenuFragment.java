@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.learn.mobile.activity.Sample1Activity;
-import com.learn.mobile.activity.SampleActivity;
+import com.learn.mobile.activity.*;
+import com.learn.mobile.activity.LoginActivity;
 import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -34,14 +34,6 @@ import com.learn.mobile.service.SUser;
  */
 public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = LeftMenuFragment.class.getSimpleName();
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private View view;
     View headerView;
@@ -52,10 +44,6 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     // TODO: Rename and change types of parameters
     public static LeftMenuFragment newInstance(String param1, String param2) {
         LeftMenuFragment fragment = new LeftMenuFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -69,11 +57,6 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -154,6 +137,8 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Context context;
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);
@@ -162,13 +147,18 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 mainActivity.showLoginActivity();
                 break;
             case R.id.bt_sample:
-                Context context = getContext();
-                Intent intent = new Intent(context, Sample1Activity.class);
+                context = getContext();
+                intent = new Intent(context, Sample1Activity.class);
                 context.startActivity(intent);
                 break;
 
             case R.id.drawer_settings_site:
                 showDialogSettingSite();
+                break;
+            case R.id.bt_login_new:
+                context = getContext();
+                intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
                 break;
         }
         return false;

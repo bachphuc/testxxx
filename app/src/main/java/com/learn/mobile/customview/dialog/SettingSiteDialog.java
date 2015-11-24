@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * Created by phuclb on 11/24/2015.
  */
 public class SettingSiteDialog extends DialogFragment {
-
+    public static final String TAG = SettingSiteDialog.class.getSimpleName();
     private int selectedOption;
     private String[] options;
 
@@ -38,6 +39,7 @@ public class SettingSiteDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
+                        DMobi.log(TAG, "Update site host " + options[selectedOption]);
                         DConfig.setSetting(DConfig.SITE_URL, options[selectedOption]);
                         DConfig.resetHostConfig();
                     }
