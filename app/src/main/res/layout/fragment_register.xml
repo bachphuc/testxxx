@@ -190,17 +190,14 @@
                         android:src="@drawable/ic_lock_black_24dp"
                         android:tint="@color/primary_transparent_icon_color" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tb_birthday"
+                        android:text="Birthday"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#00000000"
-                        android:ems="10"
-                        android:hint="Birthday"
-                        android:inputType="date"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textColorHint="@color/primary_transparent_icon_color" />
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -227,6 +224,24 @@
                         android:minWidth="100dp"
                         android:text="Sign up"
                         android:textColor="#ffffff" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="or"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
+
+                    <Button
+                        android:id="@+id/bt_show_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:background="#00ffffff"
+                        android:elevation="4px"
+                        android:minWidth="100dp"
+                        android:text="Sign up"
+                        android:textColor="#ffffff" />
+
                 </LinearLayout>
             </LinearLayout>
 
