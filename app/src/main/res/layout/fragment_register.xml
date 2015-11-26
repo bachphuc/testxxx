@@ -192,11 +192,11 @@
 
                     <TextView
                         android:id="@+id/tb_birthday"
-                        android:text="Birthday"
                         android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/primary_transparent_icon_color"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Birthday"
+                        android:textColor="@color/primary_transparent_icon_color"
                         android:textSize="20dp" />
 
                 </LinearLayout>
@@ -207,6 +207,58 @@
                     android:layout_marginTop="6dp"
                     android:background="@color/primary_transparent_icon_color" />
 
+                <!-- Gender -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_lock_black_24dp"
+                        android:tint="@color/primary_transparent_icon_color" />
+
+                    <Spinner
+                        android:id="@+id/cb_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/primary_transparent_icon_color"></Spinner>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/primary_transparent_icon_color" />
+
+                <!-- Term and service -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center">
+
+                    <CheckBox
+                        android:id="@+id/cb_team_and_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_transparent_icon_color"
+                        android:text="@string/term_and_service" />
+
+                </LinearLayout>
+
+                <!-- Button group -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -227,9 +279,9 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="or"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="or" />
 
                     <Button
                         android:id="@+id/bt_show_login"

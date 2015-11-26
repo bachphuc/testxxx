@@ -105,7 +105,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         if (user.images != null) {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
             if (imageView != null) {
-                ImageHelper.display(imageView, user.images.avatar.url);
+                ImageHelper.display(imageView, user.images.getAvatar().url);
                 imageView.setOnClickListener(this);
             }
         }

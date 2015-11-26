@@ -106,13 +106,13 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
             ImageView imageView = (ImageView) headerView.findViewById(R.id.im_avatar);
             if (imageView != null) {
-                ImageHelper.display(imageView, user.getImages().medium.url);
+                ImageHelper.display(imageView, user.getImages().getMedium().url);
             }
 
             if (user.coverPhoto != null) {
                 imageView = (ImageView) headerView.findViewById(R.id.img_cover);
                 if (imageView != null) {
-                    ImageHelper.display(imageView, user.coverPhoto.full.url);
+                    ImageHelper.display(imageView, user.coverPhoto.getFull().url);
                 }
             }
         }

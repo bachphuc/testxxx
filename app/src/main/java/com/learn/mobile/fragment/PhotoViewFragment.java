@@ -51,10 +51,10 @@ public class PhotoViewFragment extends Fragment {
         if (photo != null && imageView != null) {
             if (photo.images != null) {
                 if (imageView instanceof DFeedImageView) {
-                    float ratio = (float) photo.images.large.height / (float) photo.images.large.width;
+                    float ratio = (float) photo.images.getLarge().height / (float) photo.images.getLarge().width;
                     DFeedImageView dFeedImageView = (DFeedImageView) imageView;
                     dFeedImageView.setScale(ratio);
-                    ImageHelper.display(imageView, photo.images.large.url);
+                    ImageHelper.display(imageView, photo.images.getLarge().url);
                 } else if (imageView instanceof GestureImageView) {
                     GestureImageView gestureImageView = (GestureImageView) imageView;
                     gestureImageView.getController().getSettings()
@@ -69,7 +69,7 @@ public class PhotoViewFragment extends Fragment {
                             .setFitMethod(Settings.Fit.INSIDE)
                             .setGravity(Gravity.CENTER);
 
-                    ImageHelper.display(gestureImageView, photo.images.extralarge.url, photo.images.large.url);
+                    ImageHelper.display(gestureImageView, photo.images.getExtraLarge().url, photo.images.getLarge().url);
 
                     if(viewPager != null){
                         gestureImageView.getController().enableScrollInViewPager(viewPager);
@@ -84,7 +84,7 @@ public class PhotoViewFragment extends Fragment {
         if (photo.user.images != null) {
             CircleImageView avatarImageView = (CircleImageView) view.findViewById(R.id.imageViewAvatar);
             if (avatarImageView != null) {
-                ImageHelper.display(avatarImageView, photo.user.images.avatar.url);
+                ImageHelper.display(avatarImageView, photo.user.images.getAvatar().url);
             }
         }
 

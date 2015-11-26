@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.PhotoDetailActivity;
-import com.learn.mobile.activity.PhotoViewerActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.PaletteImageView;
@@ -25,7 +24,6 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
-import io.codetail.widget.RevealFrameLayout;
 
 public class Photo extends DAbstractPhoto implements View.OnClickListener {
     public Photo() {
@@ -40,9 +38,9 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
             if (imageView != null) {
-                float ratio = (float) images.extralarge.height / (float) images.extralarge.width;
+                float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
                 imageView.setScale(ratio);
-                ImageHelper.display(imageView, images.extralarge.url);
+                ImageHelper.display(imageView, images.getExtraLarge().url);
             }
         }
 
@@ -85,7 +83,9 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 }
             });
 
-            ImageHelper.display(imageView, images.large.url);
+            if(images.getLarge() != null){
+                ImageHelper.display(imageView, images.getLarge().url);
+            }
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         textView.setText(getTitle());

@@ -29,7 +29,7 @@ public class User extends DAbstractUser {
         super.processViewHolder(adapter, itemBaseViewHolder, position);
         ImageView imageView = (ImageView)itemBaseViewHolder.findView(R.id.img_photo);
         if(imageView != null){
-            ImageHelper.display(imageView, images.normal.url);
+            ImageHelper.display(imageView, images.getNormal().url);
             final User that = this;
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

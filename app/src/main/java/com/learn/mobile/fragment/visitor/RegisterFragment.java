@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.datetimepicker.date.DatePickerDialog;
@@ -71,6 +73,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
         Button button = (Button) view.findViewById(R.id.bt_show_login);
         button.setOnClickListener(this);
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.cb_gender);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, R.layout.simple_spinner_layout);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         rootView = view;
         return view;
     }

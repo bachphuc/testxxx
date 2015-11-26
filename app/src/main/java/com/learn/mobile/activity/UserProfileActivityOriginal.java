@@ -214,14 +214,14 @@ public class UserProfileActivityOriginal extends DActivityBase implements NewFee
         }
 
         if (user.coverPhoto != null) {
-            DMobi.log("cover", user.coverPhoto.full.url);
+            DMobi.log("cover", user.coverPhoto.getFull().url);
             ImageView imageView = (ImageView) findViewById(R.id.img_cover);
-            ImageHelper.display(imageView, user.coverPhoto.full.url);
+            ImageHelper.display(imageView, user.coverPhoto.getFull().url);
         }
 
         ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
         if (imgAvatar != null && user.images != null) {
-            ImageHelper.display(imgAvatar, user.images.medium.url);
+            ImageHelper.display(imgAvatar, user.images.getMedium().url);
         }
     }
 }

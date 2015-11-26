@@ -37,4 +37,5 @@
     <string name="image_description">sample</string>
     <string name="title_activity_sample1">Sample1Activity</string>
     <string name="sample_title">Bach Phuc</string>
+    <string name="term_and_service">I accept with team and service</string>
 </resources>

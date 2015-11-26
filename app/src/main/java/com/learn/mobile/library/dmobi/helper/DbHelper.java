@@ -2,6 +2,7 @@ package com.learn.mobile.library.dmobi.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
@@ -43,7 +44,14 @@ public class DbHelper {
         Gson gson = new GsonBuilder().create();
         Type type = dAbstractItemObject.getListType();
 
-        ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
+        ListObjectResponse<DMobileModelBase> response = null;
+        try {
+            response = (ListObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
+        } catch (JsonParseException e) {
+            response = new ListObjectResponse();
+            response.setErrorRequest();
+        }
+
         return response;
     }
 
@@ -51,7 +59,14 @@ public class DbHelper {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<BasicObjectResponse>() {
         }.getType();
-        BasicObjectResponse baseObjectResponse = (BasicObjectResponse) gson.fromJson(jsonData, type);
+        BasicObjectResponse baseObjectResponse = null;
+        try {
+            baseObjectResponse = (BasicObjectResponse) gson.fromJson(jsonData, type);
+        } catch (JsonParseException e) {
+            baseObjectResponse = new BasicObjectResponse();
+            baseObjectResponse.setErrorRequest();
+        }
+
         return baseObjectResponse;
     }
 
@@ -59,17 +74,22 @@ public class DbHelper {
         Gson gson = new GsonBuilder().create();
         Type type;
 
-        if(sClass == DMobileModelBase.class){
+        if (sClass == DMobileModelBase.class) {
             type = new TypeToken<SingleObjectResponse<DMobileModelBase>>() {
             }.getType();
-        }
-        else{
+        } else {
             DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
             dAbstractItemObject.itemType = sClass.getSimpleName();
             type = dAbstractItemObject.getSingleType();
         }
+        SingleObjectResponse<DMobileModelBase> response = null;
+        try {
+            response = (SingleObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
+        } catch (JsonParseException e) {
+            response = new SingleObjectResponse();
+            response.setErrorRequest();
+        }
 
-        SingleObjectResponse<DMobileModelBase> response = (SingleObjectResponse<DMobileModelBase>) gson.fromJson(jsonData, type);
         return response;
     }
 }

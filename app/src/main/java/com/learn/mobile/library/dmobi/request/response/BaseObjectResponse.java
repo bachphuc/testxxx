@@ -1,8 +1,10 @@
 package com.learn.mobile.library.dmobi.request.response;
 
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by 09520_000 on 5/17/2015.
@@ -14,6 +16,13 @@ public class BaseObjectResponse<T> {
     public ArrayList<String> errors;
 
     public BaseObjectResponse(){
+    }
+
+    public void setErrorRequest(){
+        this.status = 0;
+        this.complete = 0;
+        this.errors = new ArrayList<String>();
+        this.errors.add(DMobi.translate("Can not fetch data from server."));
     }
 
     public String getErrors(){
