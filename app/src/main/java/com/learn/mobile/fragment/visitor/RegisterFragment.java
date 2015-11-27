@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.android.datetimepicker.date.DatePickerDialog;
-import com.android.datetimepicker.time.RadialPickerLayout;
-import com.android.datetimepicker.time.TimePickerDialog;
 import com.learn.mobile.R;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -132,7 +131,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
 
     }
 
