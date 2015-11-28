@@ -15,18 +15,20 @@ public class ImageObject {
     public ImageItem full = null;
 
     public ImageItem getAvatar() {
-        return avatar;
+        if(avatar != null){
+            return avatar;
+        }
+        if(avatar == null && normal == null && medium == null && big == null && large == null && extraLarge == null && full == null){
+            return null;
+        }
+        return getFull();
     }
 
     public ImageItem getNormal() {
         if (normal != null) {
             return normal;
         }
-        ImageItem item = getAvatar();
-        if(item == null){
-            return getFull();
-        }
-        return item;
+        return getAvatar();
     }
 
     public ImageItem getMedium() {

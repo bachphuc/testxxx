@@ -20,8 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.learn.mobile.activity.DActivityBase;
-import com.learn.mobile.activity.PostActivity;
+import com.learn.mobile.activity.*;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.fragment.NewFeedsFragment;
@@ -93,7 +92,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     public void showLoginActivity() {
         if (!DMobi.isUser()) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, com.learn.mobile.activity.LoginActivity.class);
             startActivity(intent);
         }
     }

@@ -97,7 +97,8 @@
                         android:ems="10"
                         android:hint="Full name"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textColorHint="@color/primary_transparent_icon_color" />
+                        android:textColorHint="@color/primary_transparent_icon_color"
+                        android:singleLine="true" />
                 </LinearLayout>
 
                 <View
@@ -163,6 +164,41 @@
                         android:background="#00000000"
                         android:ems="10"
                         android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/primary_transparent_icon_color"
+                        android:textColorHint="@color/primary_transparent_icon_color" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/primary_transparent_icon_color" />
+
+                <!-- Password confirm field -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_lock_black_24dp"
+                        android:tint="@color/primary_transparent_icon_color" />
+
+                    <EditText
+                        android:id="@+id/tb_password_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:ems="10"
+                        android:hint="Confirm Password"
                         android:inputType="textPassword"
                         android:textColor="@color/primary_transparent_icon_color"
                         android:textColorHint="@color/primary_transparent_icon_color" />
@@ -267,7 +303,7 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/bt_register"
+                        android:id="@+id/bt_end_step_info"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
@@ -291,7 +327,7 @@
                         android:background="#00ffffff"
                         android:elevation="4px"
                         android:minWidth="100dp"
-                        android:text="Sign up"
+                        android:text="Login"
                         android:textColor="#ffffff" />
 
                 </LinearLayout>

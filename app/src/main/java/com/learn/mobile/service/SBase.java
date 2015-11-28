@@ -4,8 +4,10 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,8 @@ public class SBase {
     public int page = 0;
     public int maxId = 0;
     public int minId = 0;
+
+    protected User user;
 
     protected List<DMobileModelBase> data = new ArrayList<DMobileModelBase>();
     protected List<DRequest.RequestParam> requestParams = new ArrayList<DRequest.RequestParam>();
@@ -30,49 +34,60 @@ public class SBase {
 
     protected int itemHeaderCount = 0;
 
-    public void append(DMobileModelBase item){
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void append(DMobileModelBase item) {
         data.add(item);
         updateMaxAndMinId();
     }
 
-    public void appends(List<DMobileModelBase> items){
+    public void appends(List<DMobileModelBase> items) {
         data.addAll(items);
         updateMaxAndMinId();
     }
 
-    public void addHeader(DMobileModelBase item){
+    public void addHeader(DMobileModelBase item) {
         data.add(0, item);
         itemHeaderCount++;
     }
 
-    public void prepend(DMobileModelBase item){
-        if(data.size() == 0){
+    public void prepend(DMobileModelBase item) {
+        if (data.size() == 0) {
             data.add(item);
-        }
-        else{
-            if(data.size() >= itemHeaderCount){
+        } else {
+            if (data.size() >= itemHeaderCount) {
                 data.add(itemHeaderCount, item);
-            }
-            else{
+            } else {
                 data.add(item);
             }
         }
         updateMaxAndMinId();
     }
 
-    public void prepends(List<DMobileModelBase> items){
-        if(data.size() == 0){
+    public void prepends(List<DMobileModelBase> items) {
+        if (data.size() == 0) {
             data.addAll(items);
-        }
-        else{
-            if(data.size() >= itemHeaderCount){
+        } else {
+            if (data.size() >= itemHeaderCount) {
                 data.addAll(itemHeaderCount, items);
-            }
-            else{
+            } else {
                 data.addAll(items);
             }
         }
         updateMaxAndMinId();
+    }
+
+    public void clear() {
+        data.clear();
+        page = 0;
+        maxId = 0;
+        minId = 0;
     }
 
     public void setData(List<DMobileModelBase> list) {
@@ -117,6 +132,9 @@ public class SBase {
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
+        if(user != null){
+            dRequest.addParam("user_id", user.getId());
+        }
         if (requestParams.size() > 0) {
             dRequest.addParams(requestParams);
         }
@@ -173,5 +191,19 @@ public class SBase {
 
     public void getMores(final DResponse.Complete complete) {
         this.gets(complete, LOADMORE_ACTION);
+    }
+
+    public void networkError(DResponse.Complete complete) {
+        if (complete != null) {
+            complete.onComplete(false, null);
+        }
+        DMobi.showToast("Network error!");
+    }
+
+    public void responseError(BaseObjectResponse response, DResponse.Complete complete){
+        DMobi.showToast(response.getErrors());
+        if(complete != null){
+            complete.onComplete(false, null);
+        }
     }
 }

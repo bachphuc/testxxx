@@ -1,10 +1,14 @@
 package com.learn.mobile.service;
 
+import android.view.View;
+
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
@@ -13,16 +17,20 @@ import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.User;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.
  */
 public class SUser extends SBase {
-
+    public static final String SIGNUP_TAG = "SIGNUP_TAG";
     User user;
 
-    public SUser(){
+    HashMap<String, Object> registerData = new HashMap<String, Object>();
+    String avatarPath;
+
+    public SUser() {
         itemClass = User.class;
     }
 
@@ -76,28 +84,89 @@ public class SUser extends SBase {
                 Gson gson = new GsonBuilder().create();
                 Type type = new TypeToken<SingleObjectResponse<LoginObjectResponseData>>() {
                 }.getType();
-
-                SingleObjectResponse<LoginObjectResponseData> response = gson.fromJson(respondString, type);
-                if (response.isSuccessfully()) {
-                    DConfig.setToken(response.data.token);
-
-                    user = response.data.user;
-                    DConfig.saveUserData(getUserJsonData());
-                    complete.onComplete(true, response.data.user);
-                } else {
-                    DMobi.showToast(response.getErrors());
-                    complete.onComplete(false, null);
+                try {
+                    SingleObjectResponse<LoginObjectResponseData> response = gson.fromJson(respondString, type);
+                    if (response.isSuccessfully()) {
+                        loginSuccess(response, complete);
+                    } else {
+                        responseError(response, complete);
+                    }
+                } catch (JsonParseException e) {
+                    DMobi.log("Login", respondString);
+                    networkError(complete);
                 }
+
             }
         }, new DResponse.ErrorListener() {
             @Override
             public void onErrorResponse(Object var1) {
-                if (complete != null) {
-                    complete.onComplete(false, null);
-                    DMobi.showToast("Network error!");
-                }
+                networkError(complete);
             }
         });
+    }
+
+    public void clearSignupData() {
+        registerData.clear();
+    }
+
+    public void setRegisterData(HashMap<String, Object> registerData) {
+        this.registerData = registerData;
+    }
+
+    public void setAvatarPath(String path) {
+        avatarPath = path;
+    }
+
+    public void register(final DResponse.Complete complete) {
+        DRequest dRequest = DMobi.createRequest();
+        dRequest.addPosts(registerData);
+
+        dRequest.setApi("user.signup");
+
+        DResponse.Listener listener = new DResponse.Listener() {
+            @Override
+            public void onResponse(String respondString) {
+                Gson gson = new GsonBuilder().create();
+                Type type = new TypeToken<SingleObjectResponse<LoginObjectResponseData>>() {
+                }.getType();
+                try {
+                    SingleObjectResponse<LoginObjectResponseData> response = gson.fromJson(respondString, type);
+                    if (response.isSuccessfully()) {
+                        loginSuccess(response, complete);
+                    } else {
+                        responseError(response, complete);
+                    }
+                } catch (JsonParseException e) {
+                    DMobi.log("Register", respondString);
+                    networkError(complete);
+                }
+
+            }
+        };
+
+        DResponse.ErrorListener errorListener = new DResponse.ErrorListener() {
+            @Override
+            public void onErrorResponse(Object var1) {
+                networkError(complete);
+            }
+        };
+        dRequest.setListener(listener);
+        dRequest.setErrorListener(errorListener);
+
+        if (avatarPath == null) {
+            dRequest.post();
+        } else {
+            dRequest.setFilePath(avatarPath);
+            dRequest.upload();
+        }
+    }
+
+    private void loginSuccess(SingleObjectResponse<LoginObjectResponseData> response, DResponse.Complete complete) {
+        DConfig.setToken(response.data.token);
+
+        user = response.data.user;
+        DConfig.saveUserData(getUserJsonData());
+        complete.onComplete(true, response.data.user);
     }
 
     class LoginObjectResponseData {

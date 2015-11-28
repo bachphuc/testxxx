@@ -47,6 +47,7 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         feed = (Feed) DMobi.getData(FEED_DETAIL);
         item = feed.getAttachment();
         commentFragment = new CommentFragment();
+        commentFragment.setScrollToBottomWhenLoadMoreFinish(true);
 
         sComment = (SComment) DMobi.getInstance(SComment.class);
         sComment.addHeader(feed);
@@ -93,6 +94,7 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
                     public void onComplete(Boolean status, Object o) {
                         commentFragment.notifyDataSetChanged();
                         resetComment();
+                        commentFragment.scrollToBottom(true);
                     }
                 });
                 break;

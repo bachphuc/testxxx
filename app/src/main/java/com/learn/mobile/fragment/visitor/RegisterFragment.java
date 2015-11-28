@@ -1,17 +1,27 @@
 package com.learn.mobile.fragment.visitor;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.dummy.DummyContent;
+import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.service.SUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -19,6 +29,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -29,13 +40,20 @@ import java.util.Locale;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class RegisterFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private OnFragmentInteractionListener mListener;
     private Calendar calendar;
     private DateFormat dateFormat;
     private SimpleDateFormat timeFormat;
     private static final String TIME_PATTERN = "HH:mm";
     private View rootView;
+
+    private int month;
+    private int day;
+    private int year;
+    private String gender;
+
+    private boolean bUploadAvatar = true;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -73,10 +91,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         Button button = (Button) view.findViewById(R.id.bt_show_login);
         button.setOnClickListener(this);
 
+        button = (Button) view.findViewById(R.id.bt_end_step_info);
+        button.setOnClickListener(this);
+
         Spinner spinner = (Spinner) view.findViewById(R.id.cb_gender);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, R.layout.simple_spinner_layout);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(this);
 
         rootView = view;
         return view;
@@ -86,6 +109,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     public void onButtonPressed(View view) {
         if (mListener != null) {
             mListener.onFragmentInteraction(view);
+        }
+    }
+
+    public void setLister(Context context) {
+        if (mListener == null) {
+            mListener = (OnFragmentInteractionListener) context;
         }
     }
 
@@ -116,22 +145,38 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             case R.id.bt_show_login:
                 onButtonPressed(v);
                 break;
+            case R.id.bt_end_step_info:
+                onRegister(v);
+                break;
         }
     }
 
     @Override
     public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
         calendar.set(year, monthOfYear, dayOfMonth);
+        month = monthOfYear;
+        this.year = year;
+        day = dayOfMonth;
         updateTime();
     }
 
-    private void updateTime(){
+    private void updateTime() {
         TextView textView = (TextView) rootView.findViewById(R.id.tb_birthday);
         textView.setText(dateFormat.format(calendar.getTime()));
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        gender = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
@@ -148,5 +193,98 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(View view);
+    }
+
+    private void onRegister(View v) {
+        SUser sUser = (SUser) DMobi.getService(SUser.class, SUser.SIGNUP_TAG);
+
+        HashMap<String, Object> registerData = new HashMap<String, Object>();
+
+        // get full name field
+        EditText editText = (EditText) rootView.findViewById(R.id.tb_fullName);
+        String str = editText.getText().toString();
+        if (DUtils.isEmpty(str)) {
+            DMobi.alert(getActivity(), "Full name can not be null.");
+            return;
+        }
+        registerData.put("full_name", str);
+
+        // get full name field
+        editText = (EditText) rootView.findViewById(R.id.tb_email);
+        str = editText.getText().toString();
+        if (DUtils.isEmpty(str)) {
+            DMobi.alert(getActivity(), "Email can not be null.");
+            return;
+        }
+        registerData.put("email", str);
+
+        // get password field
+        editText = (EditText) rootView.findViewById(R.id.tb_password);
+        String sPassword = editText.getText().toString();
+        if (DUtils.isEmpty(sPassword)) {
+            DMobi.alert(getActivity(), "Password can not be null.");
+            return;
+        }
+        registerData.put("password", sPassword);
+
+        // get password confirm field
+        editText = (EditText) rootView.findViewById(R.id.tb_password_confirm);
+        String sPasswordConfirm = editText.getText().toString();
+        if (DUtils.isEmpty(sPasswordConfirm)) {
+            DMobi.alert(getActivity(), "Password confirm can not be null.");
+            return;
+        }
+
+        if (!sPassword.equals(sPasswordConfirm)) {
+            DMobi.alert(getActivity(), "Password not match.");
+            return;
+        }
+
+        if (DUtils.isEmpty(month) || DUtils.isEmpty(year) || DUtils.isEmpty(day)) {
+            DMobi.alert(getActivity(), "Birthday can not be null.");
+            return;
+        }
+
+        registerData.put("month", month);
+        registerData.put("year", year);
+        registerData.put("day", day);
+
+        if (DUtils.isEmpty(gender)) {
+            DMobi.alert(getActivity(), "Gender can not be null.");
+            return;
+        }
+
+        registerData.put("gender", gender);
+
+        CheckBox checkBox = (CheckBox) rootView.findViewById(R.id.cb_team_and_service);
+        if (!checkBox.isChecked()) {
+            DMobi.alert(getActivity(), "You must accept with our team and service.");
+            return;
+        }
+
+        sUser.setRegisterData(registerData);
+
+        if (bUploadAvatar) {
+            onButtonPressed(v);
+        } else {
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Register....");
+            progressDialog.setMessage("Wait some minute...");
+            progressDialog.show();
+            sUser.register(new DResponse.Complete() {
+                @Override
+                public void onComplete(Boolean status, Object o) {
+                    progressDialog.hide();
+                    if (o != null) {
+                        DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
+                        DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
+                        DMobi.fireEvent(Event.EVENT_LOGIN_SUCCESS, o);
+                        DMobi.showToast("Register successfully.");
+                        getActivity().finish();
+                    }
+                }
+            });
+        }
+
     }
 }

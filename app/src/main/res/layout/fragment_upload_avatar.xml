@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.learn.mobile.fragment.visitor.UploadAvatarFragment">
+
+    <ImageView
+        android:id="@+id/im_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_open_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose from library" />
+
+    <Button
+        android:id="@+id/bt_open_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open camera" />
+
+    <Button
+        android:id="@+id/bt_signup_process"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a new Account" />
+</LinearLayout>

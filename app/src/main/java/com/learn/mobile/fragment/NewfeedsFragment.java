@@ -34,6 +34,7 @@ import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
  * create an instance of this fragment.
  */
 public class NewFeedsFragment extends Fragment implements Event.Action, ObservableScrollView {
+    public static final String TAG = NewFeedsFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
@@ -60,6 +61,9 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     public void refreshFeed() {
+        if(!DMobi.isUser()){
+            return;
+        }
         if (!dSwipeRefreshLayout.isRefreshing()) {
             dSwipeRefreshLayout.setRefreshing(true);
         }
@@ -67,6 +71,10 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     public void loadMoreFeed() {
+        if(!DMobi.isUser()){
+            return;
+        }
+        DMobi.log(TAG, "LoadMoreFeed");
         sFeed.getMores(this.completeResponse);
     }
 
@@ -92,6 +100,9 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
         DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this);
 
         DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
+
+        // TODO Remove data when logout
+        DMobi.registerEvent(Event.EVENT_LOGOUT_SUCCESS, this);
     }
 
     @Override
@@ -107,6 +118,10 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
             case Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
                 boolean canRefresh = (boolean) o;
                 setEnableRefresh(canRefresh);
+                break;
+            case Event.EVENT_LOGOUT_SUCCESS:
+                sFeed.clear();
+                recyclerView.getAdapter().notifyDataSetChanged();
                 break;
         }
     }
@@ -192,7 +207,9 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
                 loadMoreFeed();
             }
         });
-        dSwipeRefreshLayout.startLoad();
+        if (DMobi.isUser()) {
+            dSwipeRefreshLayout.startLoad();
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public class DRequest {
     private static final String TAG = DRequest.class.getSimpleName();
+
     public DRequest() {
         requestParams = new ArrayList<RequestParam>();
         postData = new HashMap<String, String>();
@@ -63,6 +64,22 @@ public class DRequest {
 
     public void addParams(List<RequestParam> params) {
         requestParams.addAll(params);
+    }
+
+    public void addPosts(HashMap<String, Object> params) {
+        if (params != null && params.size() > 0) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                addPost(entry.getKey(), entry.getValue().toString());
+            }
+        }
+    }
+
+    public void addParams(HashMap<String, Object> params) {
+        if (params != null && params.size() > 0) {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                addParam(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     public static RequestParam createRequestParam(String key, Object value) {
@@ -158,7 +175,7 @@ public class DRequest {
                 return super.getHeaders();
             }
         };
-        if(preExecute != null){
+        if (preExecute != null) {
             preExecute.onPreExecute();
         }
         requestQueue.add(stringRequest);
@@ -170,6 +187,12 @@ public class DRequest {
     }
 
     public void post() {
+        this.execute(Request.Method.POST);
+    }
+
+    public void post(DResponse.Listener listener, DResponse.ErrorListener errorListener) {
+        this.listener = listener;
+        this.errorListener = errorListener;
         this.execute(Request.Method.POST);
     }
 
@@ -203,7 +226,7 @@ public class DRequest {
         uploadFileToServer.setCallBack(preExecute, updateProcess, listener, errorListener, complete);
         uploadFileToServer.setFilePath(filePath);
         uploadFileToServer.setUrl(this.getRequestUrl());
-        if(postData.size() > 0){
+        if (postData.size() > 0) {
             uploadFileToServer.setParams(postData);
         }
         uploadFileToServer.execute();
@@ -214,7 +237,7 @@ public class DRequest {
         this.upload();
     }
 
-    public void setContext(Context c){
+    public void setContext(Context c) {
         this.context = c;
     }
 }

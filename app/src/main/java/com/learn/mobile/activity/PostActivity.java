@@ -450,20 +450,20 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 previewImage();
             } else if (resultCode == RESULT_CANCELED) {
                 // TODO Process when user cancelled Image capture
-                DMobi.showToast("User cancelled image capture.");
+                // DMobi.showToast("User cancelled image capture.");
 
             } else {
                 // TODO Process when user failed to capture image
-                DMobi.showToast("Sorry! Failed to capture image.");
+                // DMobi.showToast("Sorry! Failed to capture image.");
             }
         } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
             } else if (resultCode == RESULT_CANCELED) {
-                DMobi.showToast("User cancelled video recording.");
+                // DMobi.showToast("User cancelled video recording.");
 
             } else {
-                DMobi.showToast("Sorry! Failed to record video.");
+                // DMobi.showToast("Sorry! Failed to record video.");
             }
         }
     }

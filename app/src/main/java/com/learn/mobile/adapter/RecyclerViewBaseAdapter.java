@@ -57,6 +57,9 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
 
     @Override
     public int getItemCount() {
+        if(data == null){
+            return 0;
+        }
         return data.size();
     }
 
@@ -66,5 +69,12 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
 
     public void fireNotifyDataSetChanged(){
         DMobi.fireEvent(getNotifyDataSetChangedEventKey(),getData());
+    }
+
+    public void remove(int position){
+        if(data != null && data.size() >= position - 1){
+            data.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 }

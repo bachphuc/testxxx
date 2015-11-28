@@ -9,11 +9,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
@@ -24,6 +22,7 @@ import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.User;
 import com.learn.mobile.service.SBase;
 
 import java.util.HashMap;
@@ -50,7 +49,8 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     protected SBase service;
     protected Class serviceClass;
-    protected DResponse.Complete completeResponse;
+    protected DResponse.Complete refreshCompleteResponse;
+    protected DResponse.Complete loadMoreCompleteResponse;
 
     protected RecyclerViewBaseAdapter adapter;
     protected boolean bFirstLoaded = false;
@@ -62,9 +62,20 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     protected boolean bRefreshList = false;
     protected LinearLayoutManager linearLayoutManager;
 
+    protected User user;
+
     protected HashMap<String, Object> requestParams = new HashMap<String, Object>();
 
     protected boolean bHasAppBar = false;
+
+    protected boolean bScrollBottomTopWhenLoadMoreFinish = false;
+    public void setScrollToBottomWhenLoadMoreFinish(boolean b){
+        bScrollBottomTopWhenLoadMoreFinish = b;
+    }
+    protected boolean bScrollBottomAnimate = false;
+    public void setScrollBottomAnimate(boolean b){
+        bScrollBottomAnimate = b;
+    }
 
     public void setHasAppBar(boolean b) {
         bHasAppBar = b;
@@ -72,6 +83,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public ListBaseFragment() {
 
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setAutoLoadData(boolean b) {
@@ -104,6 +119,19 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public int getLayout() {
         return layout;
+    }
+
+    public void scrollToBottom(boolean animate) {
+        if (recyclerView != null) {
+            if(recyclerView.getAdapter().getItemCount() > 0){
+                if(!animate){
+                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                }
+                else{
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                }
+            }
+        }
     }
 
     public void setGirdLayout(boolean bGirdLayout) {
@@ -175,6 +203,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             }
         }
 
+        if (user != null) {
+            service.setUser(user);
+        }
+
         if (requestParams != null && requestParams.size() > 0) {
             service.clearRequestParams();
             for (Map.Entry<String, Object> entry : requestParams.entrySet()) {
@@ -207,9 +239,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             recyclerView.setAdapter(adapter);
         }
 
-        completeResponse = new DResponse.Complete() {
+        refreshCompleteResponse = new DResponse.Complete() {
             @Override
-            public void onComplete(Boolean statis, Object o) {
+            public void onComplete(Boolean status, Object o) {
                 dSwipeRefreshLayout.setRefreshing(false);
                 dSwipeRefreshLayout.stopLoadMore();
                 if (o != null) {
@@ -217,6 +249,27 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                     if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
                         adapter.fireNotifyDataSetChanged();
+                    }
+                    if (response.isSuccessfully() && !response.hasData()) {
+                        dSwipeRefreshLayout.loadMoreFinish();
+                    }
+                }
+            }
+        };
+
+        loadMoreCompleteResponse = new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                dSwipeRefreshLayout.setRefreshing(false);
+                dSwipeRefreshLayout.stopLoadMore();
+                if (o != null) {
+                    ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
+                    if (response.isSuccessfully() && response.hasData()) {
+                        adapter.notifyDataSetChanged();
+                        adapter.fireNotifyDataSetChanged();
+                        if(bScrollBottomTopWhenLoadMoreFinish){
+                            scrollToBottom(bScrollBottomAnimate);
+                        }
                     }
                     if (response.isSuccessfully() && !response.hasData()) {
                         dSwipeRefreshLayout.loadMoreFinish();
@@ -271,11 +324,11 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     }
 
     public void onRefreshData() {
-        service.getNews(this.completeResponse);
+        service.getNews(this.refreshCompleteResponse);
     }
 
     public void onLoadMoreData() {
-        service.getMores(this.completeResponse);
+        service.getMores(this.loadMoreCompleteResponse);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -2,14 +2,20 @@ package com.learn.mobile.fragment.visitor;
 
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.service.SUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +26,10 @@ import com.learn.mobile.R;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
+    public static final String TAG = LoginFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
+
+    private View rootView;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -53,19 +62,31 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Button button = (Button) view.findViewById(R.id.bt_signUp);
         button.setOnClickListener(this);
 
+        button = (Button) view.findViewById(R.id.bt_login);
+        button.setOnClickListener(this);
+        rootView = view;
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(View view) {
+        DMobi.log(TAG, "onButtonPressed");
         if (mListener != null) {
+            DMobi.log(TAG, "pass onButtonPressed to parent activity");
             mListener.onFragmentInteraction(view);
+        }
+    }
+
+    public void setLister(Context context){
+        if(mListener == null){
+            mListener = (OnFragmentInteractionListener) context;
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        DMobi.log(TAG, "onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -86,6 +107,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.bt_signUp:
                 onButtonPressed(v);
                 break;
+            case R.id.bt_login:
+                onLogin();
+                break;
         }
     }
 
@@ -102,5 +126,30 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(View view);
+    }
+
+    private void onLogin() {
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        EditText emailInput = (EditText) rootView.findViewById(R.id.tb_email);
+        EditText passwordInput = (EditText) rootView.findViewById(R.id.tb_password);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Login....");
+        progressDialog.setMessage("Wait some minute...");
+        progressDialog.show();
+
+        sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                progressDialog.hide();
+                if (o != null) {
+                    DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
+                    DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
+                    DMobi.fireEvent(Event.EVENT_LOGIN_SUCCESS, o);
+                    DMobi.showToast("Login successfully.");
+                    getActivity().finish();
+                }
+            }
+        });
     }
 }

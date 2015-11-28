@@ -3,6 +3,7 @@ package com.learn.mobile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,7 @@ import com.learn.mobile.service.SUser;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static final String TAG = LeftMenuFragment.class.getSimpleName();
 
     private View view;
@@ -68,6 +69,9 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         headerView = navigationView.inflateHeaderView(R.layout.menu_main_header);
+
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.img_cover);
+        imageView.setOnClickListener(this);
 
         DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, new Event.Action() {
             @Override
@@ -143,6 +147,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);
                 sUser.logout();
+                DMobi.fireEvent(Event.EVENT_LOGOUT_SUCCESS, null);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.showLoginActivity();
                 break;
@@ -164,6 +169,22 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         return false;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_cover:
+                User user = DMobi.getUser();
+                if (user != null) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
+
+                    context.startActivity(intent);
+                }
+                break;
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -180,7 +201,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     }
 
     // TODO: Show dialog setting site
-    public void showDialogSettingSite(){
+    public void showDialogSettingSite() {
         FragmentManager fragmentManager = getFragmentManager();
         SettingSiteDialog settingSite = new SettingSiteDialog();
         settingSite.show(fragmentManager, "dialog");

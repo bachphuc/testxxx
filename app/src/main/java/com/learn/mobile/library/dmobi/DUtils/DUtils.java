@@ -11,6 +11,7 @@ import com.learn.mobile.R;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 
 /**
@@ -91,10 +92,11 @@ public class DUtils {
 
     public static String getRealPathFromURI(Context context, Uri contentUri) {
         String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor != null){
-            if(cursor.moveToFirst()){;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                ;
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 res = cursor.getString(column_index);
                 return res;
@@ -105,24 +107,27 @@ public class DUtils {
         return contentUri.getPath();
     }
 
-    public static String getString(String str){
-        if(str != null){
+    public static String getString(String str) {
+        if (str != null) {
             return str;
         }
         return "";
     }
 
-    public static boolean isEmpty(String str){
-        if(str == null){
+    public static boolean isEmpty(Object o) {
+        if (o == null) {
             return true;
         }
-        if(str == ""){
-            return true;
+        if (o instanceof String) {
+            return (o.equals("") ? true : false);
+        }
+        if (o instanceof Integer) {
+            return (o.equals(0) ? true : false);
         }
         return false;
     }
 
-    public static String urlEncode(String url)  {
+    public static String urlEncode(String url) {
         try {
             return URLEncoder.encode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.ParcelUuid;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -38,6 +39,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
             if (imageView != null) {
+                imageView.setOnClickListener(this);
                 float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
                 imageView.setScale(ratio);
                 ImageHelper.display(imageView, images.getExtraLarge().url);
@@ -91,6 +93,12 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         textView.setText(getTitle());
     }
 
+    public void showPhotoDetail(Context context){
+        DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
+        Intent intent = new Intent(context, PhotoDetailActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -99,6 +107,9 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
                 Intent intent = new Intent(context, PhotoDetailActivity.class);
                 context.startActivity(intent);
+                break;
+            case R.id.main_image:
+                showPhotoDetail(v.getContext());
                 break;
         }
     }

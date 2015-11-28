@@ -16,7 +16,6 @@ package com.learn.mobile.activity;
  * limitations under the License.
  */
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -24,7 +23,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +31,6 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
-import com.learn.mobile.fragment.DummyRecyclerViewFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserInformationFragment;
@@ -60,7 +57,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile_v1);
+        setContentView(R.layout.activity_user_profile_detail);
 
         user = (User) DMobi.getData(USER_PROFILE);
 
@@ -98,6 +95,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         adapter.addFragment(userInformationFragment, "Info");
 
         photoFragment = new PhotoFragment();
+        photoFragment.setUser(user);
         photoFragment.setHasAppBar(true);
         photoFragment.setRefreshList(true);
         adapter.addFragment(photoFragment, "Photo");
