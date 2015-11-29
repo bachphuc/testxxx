@@ -61,7 +61,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     public void refreshFeed() {
-        if(!DMobi.isUser()){
+        if (!DMobi.isUser()) {
             return;
         }
         if (!dSwipeRefreshLayout.isRefreshing()) {
@@ -71,7 +71,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     public void loadMoreFeed() {
-        if(!DMobi.isUser()){
+        if (!DMobi.isUser()) {
             return;
         }
         DMobi.log(TAG, "LoadMoreFeed");
@@ -103,6 +103,8 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
 
         // TODO Remove data when logout
         DMobi.registerEvent(Event.EVENT_LOGOUT_SUCCESS, this);
+
+        DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
     }
 
     @Override
@@ -122,6 +124,9 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
             case Event.EVENT_LOGOUT_SUCCESS:
                 sFeed.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
+                break;
+            case Event.EVENT_FEED_UPDATE_VIEW:
+                updateRecyclerView();
                 break;
         }
     }
@@ -231,6 +236,10 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
             return recyclerView;
         }
         return null;
+    }
+
+    public void updateRecyclerView() {
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     /**

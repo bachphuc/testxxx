@@ -36,12 +36,12 @@ public class SComment extends SBase {
                         }
                     } else {
                         DMobi.showToast(response.getErrors());
-                        complete.onComplete(status, o);
+                        complete.onComplete(false, o);
                     }
 
                 } else {
                     if (complete != null) {
-                        complete.onComplete(status, o);
+                        complete.onComplete(false, o);
                     }
                     String error = (String) o;
                     DMobi.showToast(error);

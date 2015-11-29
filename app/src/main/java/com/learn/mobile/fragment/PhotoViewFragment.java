@@ -21,6 +21,7 @@ import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.com.faradaj.blurbehind.BlurBehind;
 import com.learn.mobile.customview.com.faradaj.blurbehind.OnBlurCompleteListener;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.Photo;
 
@@ -32,7 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class PhotoViewFragment extends Fragment implements View.OnClickListener {
+public class PhotoViewFragment extends Fragment implements View.OnClickListener, Event.Action {
+    public static final String TAG = PhotoViewFragment.class.getSimpleName();
     protected Photo photo;
     protected View view;
 
@@ -89,9 +91,6 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener 
         TextView textView = (TextView) view.findViewById(R.id.tvTitle);
         textView.setText(photo.user.getTitle());
 
-        textView = (TextView) view.findViewById(R.id.tb_total_comment);
-        textView.setText(photo.getTotalComment() + " " + (photo.getTotalComment() > 1 ? DMobi.translate("comments") : DMobi.translate("comment")));
-
         textView = (TextView) view.findViewById(R.id.tvDescription);
         textView.setText(photo.getDescription());
 
@@ -105,7 +104,21 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener 
         imageView = (ImageView) view.findViewById(R.id.bt_comment);
         imageView.setOnClickListener(this);
 
+        initEvent();
+
+        updateView();
+
         return view;
+    }
+
+    public void updateView() {
+        DMobi.log(TAG, "total comment " + photo.getTotalComment());
+        TextView textView = (TextView) view.findViewById(R.id.tb_total_comment);
+        textView.setText(photo.getTotalComment() + " " + (photo.getTotalComment() > 1 ? DMobi.translate("comments") : DMobi.translate("comment")));
+    }
+
+    public void initEvent() {
+        DMobi.registerEvent(photo.getEventType(), this);
     }
 
     public void setPhoto(Photo photo) {
@@ -130,5 +143,14 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener 
                 context.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void fireAction(String eventType, Object o) {
+        if (o instanceof Event.ModelAction) {
+            DMobi.log(TAG, "Update view...");
+            Event.ModelAction response = (Event.ModelAction) o;
+            updateView();
+        }
     }
 }

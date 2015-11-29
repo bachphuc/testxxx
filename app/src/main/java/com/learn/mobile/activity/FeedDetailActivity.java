@@ -15,12 +15,13 @@ import com.learn.mobile.R;
 import com.learn.mobile.fragment.CommentFragment;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Feed;
 import com.learn.mobile.service.SComment;
 
-public class FeedDetailActivity extends DActivityBase implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener {
+public class FeedDetailActivity extends DActivityBase implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener, Event.Action {
     public static final String FEED_DETAIL = "FEED_DETAIL";
     EditText commentEditText;
     Feed feed;
@@ -64,6 +65,8 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         button.setOnClickListener(this);
 
         commentEditText = (EditText) findViewById(R.id.tb_comment);
+
+        DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
     }
 
     private SComment getCommentService() {
@@ -92,9 +95,9 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
                 s.comment(item, content, new DResponse.Complete() {
                     @Override
                     public void onComplete(Boolean status, Object o) {
-                        commentFragment.notifyDataSetChanged();
                         resetComment();
                         commentFragment.scrollToBottom(true);
+                        DMobi.fireEvent(Event.EVENT_FEED_UPDATE_VIEW, null);
                     }
                 });
                 break;
@@ -122,5 +125,14 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void fireAction(String eventType, Object o) {
+        switch (eventType) {
+            case Event.EVENT_FEED_UPDATE_VIEW:
+                commentFragment.notifyDataSetChanged();
+                break;
+        }
     }
 }

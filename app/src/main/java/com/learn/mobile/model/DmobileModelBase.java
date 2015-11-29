@@ -6,6 +6,8 @@ import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class DMobileModelBase {
     @SerializedName("total_comment")
     public int totalComment;
 
-    public int getTotalComment(){
+    public int getTotalComment() {
         return totalComment;
     }
 
@@ -131,5 +133,19 @@ public class DMobileModelBase {
 
     public void setTotalLike(int totalLike) {
         this.totalLike = totalLike;
+    }
+
+    public String getEventType() {
+        String sType = getItemType();
+        int iId = getId();
+        if (DUtils.isEmpty(sType) || DUtils.isEmpty(iId)) {
+            return null;
+        }
+
+        return (Event.EVENT_OBJECT_UPDATE + "_" + sType + "_" + iId);
+    }
+
+    public Event.ModelAction getEventData() {
+        return Event.getModelActionInstance(getItemType(), getId(), this);
     }
 }

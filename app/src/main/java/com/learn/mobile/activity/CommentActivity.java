@@ -10,6 +10,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.customview.com.faradaj.blurbehind.BlurBehind;
 import com.learn.mobile.fragment.CommentFragment;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.service.SComment;
@@ -57,6 +58,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         commentFragment.notifyDataSetChanged();
                         resetComment();
                         commentFragment.scrollToBottom(true);
+                        if (status) {
+                            item.totalComment++;
+                            DMobi.fireEvent(item.getEventType(), item.getEventData());
+                            DMobi.fireEvent(Event.EVENT_FEED_UPDATE_VIEW, null);
+                        }
                     }
                 });
                 break;
