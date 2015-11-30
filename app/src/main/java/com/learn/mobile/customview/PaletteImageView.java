@@ -12,11 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
 
 /**
  * Created by 09520_000 on 10/13/2015.
  */
 public class PaletteImageView extends ImageView {
+    public static final String TAG = PaletteImageView.class.getSimpleName();
     protected PaletteListener.OnPaletteListener onPaletteListener;
 
     protected boolean enabledPalette = true;
@@ -50,12 +52,12 @@ public class PaletteImageView extends ImageView {
     @Override
     public void setImageDrawable(@Nullable Drawable drawable) {
         super.setImageDrawable(drawable);
-        if(!enabledPalette){
+        if (!enabledPalette) {
             return;
         }
         Drawable d = getDrawable();
         if (d != null) {
-            if(d instanceof BitmapDrawable){
+            if (d instanceof BitmapDrawable) {
                 Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
                 if (bitmap != null) {
                     Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {

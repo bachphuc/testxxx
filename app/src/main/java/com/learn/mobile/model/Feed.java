@@ -67,7 +67,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
         DMobileModelBase item = getAttachment();
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
-        if(textView != null){
+        if (textView != null) {
             textView.setText(user.getTitle());
         }
 
@@ -127,6 +127,11 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
         if (textView != null) {
             textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
+        }
+
+        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_share);
+        if (imageView != null) {
+            imageView.setOnClickListener(this);
         }
     }
 
@@ -206,14 +211,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                     @Override
                     public void onComplete(Boolean status, Object o) {
                         if (status) {
-                            // TODO Update data and view when success
+
                         } else {
-                            // TODO revert data and update view
+
                         }
                     }
                 });
 
-                // TODO Update view after click
                 updateLikeView(v);
 
                 break;
@@ -229,7 +233,9 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 intent = new Intent(context, FeedDetailActivity.class);
                 DMobi.pushData(FeedDetailActivity.FEED_DETAIL, this);
                 context.startActivity(intent);
-
+                break;
+            case R.id.bt_share:
+                share(v.getContext());
                 break;
         }
     }

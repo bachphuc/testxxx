@@ -2,8 +2,11 @@ package com.learn.mobile.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import com.learn.mobile.customview.com.faradaj.blurbehind.OnBlurCompleteListener
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.Photo;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -104,6 +108,12 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
         imageView = (ImageView) view.findViewById(R.id.bt_comment);
         imageView.setOnClickListener(this);
 
+        imageView = (ImageView) view.findViewById(R.id.bt_like);
+        imageView.setOnClickListener(this);
+
+        imageView = (ImageView) view.findViewById(R.id.bt_share);
+        imageView.setOnClickListener(this);
+
         initEvent();
 
         updateView();
@@ -112,9 +122,15 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
     }
 
     public void updateView() {
-        DMobi.log(TAG, "total comment " + photo.getTotalComment());
         TextView textView = (TextView) view.findViewById(R.id.tb_total_comment);
         textView.setText(photo.getTotalComment() + " " + (photo.getTotalComment() > 1 ? DMobi.translate("comments") : DMobi.translate("comment")));
+
+        textView = (TextView) view.findViewById(R.id.tv_total_like);
+        textView.setText(photo.getTotalLike() + " " + (photo.getTotalLike() > 1 ? DMobi.translate("likes") : DMobi.translate("like")));
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.bt_like);
+        textView = (TextView) view.findViewById(R.id.tv_total_like);
+        photo.updateLikeView(imageView, textView);
     }
 
     public void initEvent() {
@@ -130,6 +146,13 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.bt_comment:
                 showCommentDetail(v.getContext());
+                break;
+            case R.id.bt_like:
+                TextView textView = (TextView) view.findViewById(R.id.tv_total_like);
+                photo.like((ImageView) v, textView);
+                break;
+            case R.id.bt_share:
+                photo.share(v.getContext());
                 break;
         }
     }

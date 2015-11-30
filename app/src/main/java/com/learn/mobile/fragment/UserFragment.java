@@ -8,5 +8,6 @@ import com.learn.mobile.service.SUser;
 public class UserFragment extends ListBaseFragment{
     public UserFragment(){
         setServiceClass(SUser.class);
+        setGirdLayout(true);
     }
 }

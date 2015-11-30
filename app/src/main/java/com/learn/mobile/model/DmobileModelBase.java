@@ -1,6 +1,13 @@
 package com.learn.mobile.model;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
@@ -8,6 +15,7 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 import java.util.HashMap;
@@ -131,6 +139,48 @@ public class DMobileModelBase {
         isLike = !isLike;
     }
 
+    public void like(final ImageView imageView, final TextView textView) {
+        SLike sLike = (SLike) DMobi.getService(SLike.class);
+        DResponse.Complete complete = new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                DMobileModelBase itemBase = (DMobileModelBase) o;
+                if (status) {
+                    totalLike = itemBase.totalLike;
+                    isLike = itemBase.isLike;
+                } else {
+
+                }
+                updateLikeView(imageView, textView);
+            }
+        };
+
+        if (isLike) {
+            sLike.removeLike(itemType, id, complete);
+            totalLike--;
+        } else {
+            sLike.like(itemType, id, complete);
+            totalLike++;
+        }
+        isLike = !isLike;
+        updateLikeView(imageView, textView);
+    }
+
+    public void updateLikeView(ImageView imageView, TextView textView) {
+        if (imageView != null) {
+            if (isLike()) {
+                imageView.setSelected(true);
+                imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.primary_icon_color), PorterDuff.Mode.SRC_IN);
+            } else {
+                imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.feed_icon_action_color), PorterDuff.Mode.MULTIPLY);
+                imageView.setSelected(false);
+            }
+        }
+        if (textView != null) {
+            textView.setText(getTotalLike() + " " + DMobi.translate(getTotalLike() > 1 ? "likes" : "like"));
+        }
+    }
+
     public void setTotalLike(int totalLike) {
         this.totalLike = totalLike;
     }
@@ -147,5 +197,21 @@ public class DMobileModelBase {
 
     public Event.ModelAction getEventData() {
         return Event.getModelActionInstance(getItemType(), getId(), this);
+    }
+
+    public String getItemLink() {
+        return DConfig.getBaseUrl();
+    }
+
+    public void share(Context context) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getItemLink());
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, DMobi.translate("Send To")));
+    }
+
+    public void showItemDetail(Context context){
+        return;
     }
 }

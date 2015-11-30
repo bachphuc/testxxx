@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.ParcelUuid;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -93,7 +92,8 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         textView.setText(getTitle());
     }
 
-    public void showPhotoDetail(Context context){
+    @Override
+    public void showItemDetail(Context context){
         DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
         Intent intent = new Intent(context, PhotoDetailActivity.class);
         context.startActivity(intent);
@@ -109,7 +109,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 context.startActivity(intent);
                 break;
             case R.id.main_image:
-                showPhotoDetail(v.getContext());
+                showItemDetail(v.getContext());
                 break;
         }
     }
