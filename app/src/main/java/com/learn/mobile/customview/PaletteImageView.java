@@ -57,20 +57,24 @@ public class PaletteImageView extends ImageView {
         }
         Drawable d = getDrawable();
         if (d != null) {
+            Bitmap bitmap;
             if (d instanceof BitmapDrawable) {
-                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-                if (bitmap != null) {
-                    Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                        @Override
-                        public void onGenerated(Palette palette) {
-                            Palette.Swatch vibrant =
-                                    palette.getVibrantSwatch();
-                            if (vibrant != null) {
-                                onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor());
-                            }
+                bitmap = ((BitmapDrawable) d).getBitmap();
+            } else {
+                this.buildDrawingCache();
+                bitmap = this.getDrawingCache();
+            }
+            if (bitmap != null) {
+                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        Palette.Swatch vibrant =
+                                palette.getVibrantSwatch();
+                        if (vibrant != null) {
+                            onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor());
                         }
-                    });
-                }
+                    }
+                });
             }
         }
     }
