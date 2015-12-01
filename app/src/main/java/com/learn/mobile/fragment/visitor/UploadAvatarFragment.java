@@ -1,17 +1,11 @@
 package com.learn.mobile.fragment.visitor;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +13,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.fragment.UploadFileBase;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,19 +28,10 @@ import java.util.Locale;
  * Use the {@link UploadAvatarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UploadAvatarFragment extends Fragment implements View.OnClickListener {
+public class UploadAvatarFragment extends UploadFileBase implements View.OnClickListener {
     public static final String TAG = UploadAvatarFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private View rootView;
-
-    private Uri fileUri;
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
-    private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
-    private static final int GALLERY_IMAGE_REQUEST_CODE = 300;
-
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
-    static final String IMAGE_DIRECTORY_NAME = "test_upload";
 
     private ImageView imgPreview;
 
@@ -152,7 +133,7 @@ public class UploadAvatarFragment extends Fragment implements View.OnClickListen
         SUser sUser = (SUser) DMobi.getService(SUser.class, SUser.SIGNUP_TAG);
         String avatarPath = DUtils.getRealPathFromURI(getActivity(), fileUri);
         sUser.setAvatarPath(avatarPath);
-        
+
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Register....");
         progressDialog.setMessage("Wait some minute...");
@@ -188,56 +169,8 @@ public class UploadAvatarFragment extends Fragment implements View.OnClickListen
         void onFragmentInteraction(View view);
     }
 
-    // TODO Open camera to capture photo
-    private void captureImage() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-        startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
-    }
-
-    public void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, GALLERY_IMAGE_REQUEST_CODE);
-    }
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                // TODO Process when capture success
-                previewImage();
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                // TODO Process when user cancelled Image capture
-                // DMobi.showToast("User cancelled image capture.");
-
-            } else {
-                // TODO Process when user failed to capture image
-                // DMobi.showToast("Sorry! Failed to capture image.");
-            }
-        } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                // DMobi.showToast("User cancelled video recording.");
-
-            } else {
-                // DMobi.showToast("Sorry! Failed to record video.");
-            }
-        } else if (requestCode == GALLERY_IMAGE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                fileUri = data.getData();
-                previewImage();
-            }
-        }
-    }
-
-    private void previewImage() {
+    public void previewImage() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
@@ -245,51 +178,5 @@ public class UploadAvatarFragment extends Fragment implements View.OnClickListen
         final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
         imgPreview.setImageBitmap(bitmap);
-    }
-
-    public Uri getOutputMediaFileUri(int type) {
-        return Uri.fromFile(getOutputMediaFile(type));
-    }
-
-    private static File getOutputMediaFile(int type) {
-        // TODO Create an place to External sdcard location
-        File mediaStorageDir = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                IMAGE_DIRECTORY_NAME);
-
-        // TODO Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                DMobi.log(TAG, "Oops! Failed create " + IMAGE_DIRECTORY_NAME + " directory");
-                return null;
-            }
-        }
-
-        // TODO Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date());
-        File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
-        } else if (type == MEDIA_TYPE_VIDEO) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "VID_" + timeStamp + ".mp4");
-        } else {
-            return null;
-        }
-
-        return mediaFile;
-    }
-
-    private boolean isDeviceSupportCamera() {
-        if (getActivity().getApplicationContext().getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_CAMERA)) {
-            // TODO this device has a camera
-            return true;
-        } else {
-            // TODO no camera on this device
-            return false;
-        }
     }
 }

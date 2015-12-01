@@ -13,6 +13,7 @@ public class DConfig {
     private static String token = null;
 
     public static final String TOKEN_KEY = "TOKEN_KEY";
+    public static final String APP_NAME = "dmobi";
     public static final String USER_DATA = "USER_DATA";
     public static final String SITE_URL = "SITE_URL";
     public static String DEFAULT_HOST = "http://dmobi.pe.hu";
