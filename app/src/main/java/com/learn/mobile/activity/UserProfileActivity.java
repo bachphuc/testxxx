@@ -16,6 +16,8 @@ package com.learn.mobile.activity;
  * limitations under the License.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -114,6 +116,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_user_profile, menu);
+
         return true;
     }
 
@@ -130,6 +133,10 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_update_avatar:
+                Intent intent = new Intent(this, UploadAvatarActivity.class);
+                this.startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

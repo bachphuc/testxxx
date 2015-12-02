@@ -89,8 +89,9 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".activity.CommentActivity"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".activity.CommentActivity" />
+        <activity android:name=".activity.UploadAvatarActivity"></activity>
     </application>
 
 </manifest>

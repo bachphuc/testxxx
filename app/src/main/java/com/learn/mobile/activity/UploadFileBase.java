@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 import java.io.File;
@@ -29,6 +33,8 @@ public class UploadFileBase extends AppCompatActivity {
     protected static final int MEDIA_TYPE_IMAGE = 1;
     protected static final int MEDIA_TYPE_VIDEO = 2;
     protected static final String IMAGE_DIRECTORY_NAME = DConfig.APP_NAME;
+
+    protected ImageView imgPreview;
 
     protected void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -75,7 +81,16 @@ public class UploadFileBase extends AppCompatActivity {
     }
 
     public void previewImage() {
+        if(imgPreview == null || fileUri == null){
+            return;
+        }
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
 
+        String path = DUtils.getRealPathFromURI(this, fileUri);
+        final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+
+        imgPreview.setImageBitmap(bitmap);
     }
 
     public Uri getOutputMediaFileUri(int type) {

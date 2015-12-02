@@ -3,6 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_update_avatar">Update Avatar</string>
     <string name="test">test</string>
     <string name="title_activity_display_message">DisplayMessage</string>
 
