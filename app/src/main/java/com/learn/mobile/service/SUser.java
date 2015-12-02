@@ -9,11 +9,14 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
+import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 
 import java.lang.reflect.Type;
@@ -172,5 +175,40 @@ public class SUser extends SBase {
     class LoginObjectResponseData {
         public String token;
         public User user;
+    }
+
+    public void updateUser(User user) {
+        this.user = user;
+        DConfig.saveUserData(getUserJsonData());
+        DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, user);
+    }
+
+    public void updateAvatar(String filePath, final DResponse.Complete complete) {
+        if (filePath == null) {
+            return;
+        }
+        DRequest dRequest = DMobi.createRequest();
+        dRequest.setApi("user.updateAvatar");
+        dRequest.setFilePath(filePath);
+        dRequest.setComplete(new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    String response = (String) o;
+                    DMobi.log("Update Avatar", response);
+                    SingleObjectResponse<DMobileModelBase> responseObject = DbHelper.parseSingleObjectResponse(response, User.class);
+                    if (responseObject.isSuccessfully()) {
+                        User u = (User) responseObject.data;
+                        updateUser(u);
+                        complete.onComplete(true, o);
+                    } else {
+                        responseError(responseObject, complete);
+                    }
+                } else {
+                    networkError(complete);
+                }
+            }
+        });
+        dRequest.upload();
     }
 }

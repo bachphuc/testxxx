@@ -1,11 +1,17 @@
 package com.learn.mobile.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.request.DRequest;
+import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.service.SUser;
 
 public class UploadAvatarActivity extends UploadFileBase implements View.OnClickListener {
 
@@ -38,13 +44,29 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
             case R.id.bt_open_library:
                 openGallery();
                 break;
-            case R.id.bt_signup_process:
+            case R.id.bt_update_avatar:
                 onUpdateAvatar();
                 break;
         }
     }
 
-    public void onUpdateAvatar(){
+    public void onUpdateAvatar() {
+        if (fileUri == null) {
+            return;
+        }
+        final ProgressDialog progressDialog = DMobi.showLoading(this, "", "Upload avatar...");
+        progressDialog.show();
 
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        String filePath = DUtils.getRealPathFromURI(this, fileUri);
+        sUser.updateAvatar(filePath, new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    progressDialog.hide();
+                    DMobi.showToast(DMobi.translate("Update profile avatar successfully."));
+                }
+            }
+        });
     }
 }

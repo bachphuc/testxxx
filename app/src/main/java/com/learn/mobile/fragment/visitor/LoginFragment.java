@@ -77,8 +77,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setLister(Context context){
-        if(mListener == null){
+    public void setLister(Context context) {
+        if (mListener == null) {
             mListener = (OnFragmentInteractionListener) context;
         }
     }
