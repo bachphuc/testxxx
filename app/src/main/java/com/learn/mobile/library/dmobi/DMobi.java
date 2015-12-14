@@ -26,7 +26,7 @@ public class DMobi {
     private static Hashtable<String, SBase> bases;
     private static Hashtable<String, Event> eventHashTable;
     private static Hashtable<String, Object> globalDatas;
-    private static int identityId = 0;
+    private static int identityId = 100;
 
     static {
         bases = new Hashtable<String, SBase>();

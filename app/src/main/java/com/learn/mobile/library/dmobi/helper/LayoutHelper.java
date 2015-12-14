@@ -14,10 +14,10 @@ public class LayoutHelper {
 
     public final static String FEED_LAYOUT = "FEED_LAYOUT";
     public final static String LIST_LAYOUT = "LIST_LAYOUT";
-    public final static int FEED_DEFAULT_LAYOUT = -1;
+    public final static int FEED_DEFAULT_LAYOUT = 5;
 
     static {
-        layoutTypes.put(-1 + "", R.layout.feed_basic_layout);
+        layoutTypes.put(FEED_DEFAULT_LAYOUT + "", R.layout.feed_basic_layout);
     }
 
     public static int registerLayout(Class c, String suffix, int layout){

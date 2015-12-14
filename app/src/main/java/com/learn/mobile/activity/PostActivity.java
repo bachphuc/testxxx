@@ -340,7 +340,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         imgPreview.setVisibility(View.VISIBLE);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
+        options.inSampleSize = 2;
 
         String path = DUtils.getRealPathFromURI(this, fileUri);
         final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
