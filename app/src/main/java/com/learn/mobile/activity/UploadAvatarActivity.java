@@ -1,11 +1,13 @@
 package com.learn.mobile.activity;
 
 import android.app.ProgressDialog;
+import android.database.CrossProcessCursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.edmodo.cropper.CropImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
@@ -33,6 +35,9 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
 
         button = (Button) findViewById(R.id.bt_update_avatar);
         button.setOnClickListener(this);
+
+        CropImageView cropImageView = (CropImageView) findViewById(R.id.cropImageView);
+        cropImageView.setImageResource(R.drawable.background_red);
     }
 
     @Override
