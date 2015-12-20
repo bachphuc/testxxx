@@ -1,44 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="com.edmodo.cropper.CropImageView"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.learn.mobile.activity.UploadAvatarActivity">
 
-    <ImageView
-        android:id="@+id/im_preview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.alexvasilkov.gestures.views.GestureImageView
+        android:id="@+id/cropping_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:paddingTop="?attr/actionBarSize" />
 
-    <Button
-        android:id="@+id/bt_open_library"
-        android:layout_width="wrap_content"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#84000000" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@drawable/image_frame_overlay" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose from library" />
+        android:fitsSystemWindows="true">
 
-    <Button
-        android:id="@+id/bt_open_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open camera" />
+        <android.support.v7.widget.Toolbar style="@style/App.Toolbar.Transparent" />
 
-    <Button
-        android:id="@+id/bt_update_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Avatar" />
+    </FrameLayout>
 
-    <com.edmodo.cropper.CropImageView
-        android:id="@+id/cropImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:aspectRatioX="5"
-        custom:showGuidelines="on" />
-
-</LinearLayout>
+</merge>
