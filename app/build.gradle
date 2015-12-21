@@ -37,13 +37,12 @@ dependencies {
     compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
         transitive = true;
     }
-
-
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:palette-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:support-v4:23.1.1'
     compile 'com.malinskiy:superrecyclerview:1.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'org.apache.commons:commons-lang3:3.3.2'
@@ -56,17 +55,22 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
+    // smooth appbar layout
     compile 'me.henrytao:smooth-app-bar-layout:+'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'me.henrytao:recyclerview:+'
     compile 'me.henrytao:mdcore:1.9.0'
-    compile 'com.alexvasilkov:gesture-views:2.0.0'
+    
+    // zoom and crop image view
+    // compile 'com.alexvasilkov:gesture-views:2.0.3'
+
+    // image loader like Picasso
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    // datetime picker
     compile 'com.github.citux:datetimepicker:0.1.2'
     compile 'com.wdullaer:materialdatetimepicker:2.0.2'
 
-    compile 'com.edmodo:cropper:1.0.1'
+    compile files('libs/com.alexvasilkovgesture-views2.0.5.jar')
 }
 
 

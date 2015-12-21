@@ -2,31 +2,33 @@ package com.learn.mobile.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.CrossProcessCursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import com.alexvasilkov.gestures.Settings;
 import com.alexvasilkov.gestures.views.GestureImageView;
-import com.edmodo.cropper.CropImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.User;
 import com.learn.mobile.service.SUser;
 
-public class UploadAvatarActivity extends UploadFileBase implements View.OnClickListener {
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class UploadAvatarActivity extends UploadFileBase {
     public static final String USER_AVATAR = "USER_AVATAR";
-    GestureImageView gestureImageView;
+    public static final String IMAGE_UPLOAD_FILE = "IMAGE_UPLOAD_FILE.png";
+
+    private String imageUploadFilePath;
+    private GestureImageView gestureImageView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,25 +42,8 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
         Intent intent = getIntent();
         String avatarUrl = intent.getStringExtra(USER_AVATAR);
 
-        /*imgPreview = (ImageView) findViewById(R.id.im_preview);
-
-        Button button = (Button) findViewById(R.id.bt_open_library);
-        button.setOnClickListener(this);
-
-        button = (Button) findViewById(R.id.bt_open_camera);
-        button.setOnClickListener(this);
-
-        button = (Button) findViewById(R.id.bt_open_library);
-        button.setOnClickListener(this);
-
-        button = (Button) findViewById(R.id.bt_update_avatar);
-        button.setOnClickListener(this);*/
-
-        // CropImageView cropImageView = (CropImageView) findViewById(R.id.cropImageView);
-        // cropImageView.setImageResource(R.drawable.background_red);
-
-        int frameW = getResources().getDimensionPixelSize(R.dimen.image_frame_width);
-        int frameH = getResources().getDimensionPixelSize(R.dimen.image_frame_height);
+        int frameW = getResources().getDimensionPixelSize(R.dimen.image_avatar_crop_width);
+        int frameH = getResources().getDimensionPixelSize(R.dimen.image_avatar_crop_height);
 
         gestureImageView = (GestureImageView) findViewById(R.id.cropping_image);
         gestureImageView.getController().getSettings()
@@ -75,34 +60,15 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
                 ImageHelper.display(gestureImageView, user.getImages().getFull().url);
             }
         }
-
-        // mImageView.setImageResource(R.drawable.background_red);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_open_camera:
-                captureImage();
-                break;
-            case R.id.bt_open_library:
-                openGallery();
-                break;
-            /*case R.id.bt_update_avatar:
-                onUpdateAvatar();
-                break;*/
-        }
     }
 
     public void onUpdateAvatar() {
-        if (fileUri == null) {
+        if (fileUri == null && imageUploadFilePath == null) {
             return;
         }
-        final ProgressDialog progressDialog = DMobi.showLoading(this, "", "Upload avatar...");
-        progressDialog.show();
 
         SUser sUser = (SUser) DMobi.getService(SUser.class);
-        String filePath = DUtils.getRealPathFromURI(this, fileUri);
+        String filePath = (imageUploadFilePath == null ? DUtils.getRealPathFromURI(this, fileUri) : imageUploadFilePath);
         sUser.updateAvatar(filePath, new DResponse.Complete() {
             @Override
             public void onComplete(Boolean status, Object o) {
@@ -134,12 +100,35 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_crop:
-                /*Bitmap cropped = gestureImageView.crop();
+                Bitmap cropped = gestureImageView.crop();
                 if (cropped != null) {
-                    finish();
-                }*/
-                finish();
-                return true;
+                    gestureImageView.setImageBitmap(cropped);
+                    progressDialog = DMobi.showLoading(this, "", "Upload avatar...");
+                    progressDialog.show();
+
+                    FileOutputStream out = null;
+                    try {
+                        imageUploadFilePath = getExternalCacheDir() + "/" + IMAGE_UPLOAD_FILE;
+                        out = new FileOutputStream(imageUploadFilePath);
+
+                        // bmp is your Bitmap instance
+                        // PNG is a loss less format, the compression factor (100) is ignored
+                        cropped.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                        onUpdateAvatar();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
             case R.id.mn_choose_from_gallery:
                 openGallery();
                 break;
