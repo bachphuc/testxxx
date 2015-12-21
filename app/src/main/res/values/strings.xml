@@ -10,8 +10,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_recycler_view_test">RecyclerViewTest</string>
-    <string name="descr_image">descr_image</string>
-    <string name="title_activity_gson_turtorial">GsonTurtorial</string>
+    <string name="description_image">Description Image</string>
+    <string name="title_activity_gson_turtorial">Gson Turtorial</string>
     <string name="menu_refresh">Refresh Layout</string>
     <string name="title_activity_load_more">LoadMore</string>
     <string name="feed_image">Feed Image</string>
@@ -37,6 +37,9 @@
     <string name="string_email_sample">username@gmail.com</string>
     <string name="image_description">sample</string>
     <string name="title_activity_sample1">Sample1Activity</string>
-    <string name="sample_title">Bach Phuc</string>
+    <string name="sample_title">Candy sweet</string>
     <string name="term_and_service">I accept with team and service</string>
+    <string name="crop_image">Crop Image</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="take_from_camera">Take from Camera</string>
 </resources>

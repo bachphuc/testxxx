@@ -1,8 +1,13 @@
 package com.learn.mobile.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.CrossProcessCursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,16 +18,27 @@ import com.edmodo.cropper.CropImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.model.User;
 import com.learn.mobile.service.SUser;
 
 public class UploadAvatarActivity extends UploadFileBase implements View.OnClickListener {
+    public static final String USER_AVATAR = "USER_AVATAR";
+    GestureImageView gestureImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_avatar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        Intent intent = getIntent();
+        String avatarUrl = intent.getStringExtra(USER_AVATAR);
 
         /*imgPreview = (ImageView) findViewById(R.id.im_preview);
 
@@ -44,14 +60,23 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
         int frameW = getResources().getDimensionPixelSize(R.dimen.image_frame_width);
         int frameH = getResources().getDimensionPixelSize(R.dimen.image_frame_height);
 
-        GestureImageView  mImageView = (GestureImageView) findViewById( R.id.cropping_image);
-        mImageView.getController().getSettings()
+        gestureImageView = (GestureImageView) findViewById(R.id.cropping_image);
+        gestureImageView.getController().getSettings()
                 .setFitMethod(Settings.Fit.OUTSIDE)
                 .setFillViewport(true)
                 .setMovementArea(frameW, frameH)
                 .setRotationEnabled(true);
 
-        mImageView.setImageResource(R.drawable.background_red);
+        if (avatarUrl != null) {
+            ImageHelper.display(gestureImageView, avatarUrl);
+        } else {
+            User user = DMobi.getUser();
+            if (user != null) {
+                ImageHelper.display(gestureImageView, user.getImages().getFull().url);
+            }
+        }
+
+        // mImageView.setImageResource(R.drawable.background_red);
     }
 
     @Override
@@ -87,5 +112,45 @@ public class UploadAvatarActivity extends UploadFileBase implements View.OnClick
                 }
             }
         });
+    }
+
+    @Override
+    public void onAfterActivityResult(int requestCode, int resultCode, Intent data) {
+        if (fileUri != null) {
+            String filePath = DUtils.getRealPathFromURI(this, fileUri);
+            if (filePath != null) {
+                ImageHelper.display(gestureImageView, filePath);
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.update_avatar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_crop:
+                /*Bitmap cropped = gestureImageView.crop();
+                if (cropped != null) {
+                    finish();
+                }*/
+                finish();
+                return true;
+            case R.id.mn_choose_from_gallery:
+                openGallery();
+                break;
+            case R.id.mn_take_from_camera:
+                captureImage();
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return false;
     }
 }

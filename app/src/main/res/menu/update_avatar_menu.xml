@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_crop"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="@string/crop_image"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/mn_choose_from_gallery"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/choose_from_gallery" />
+
+    <item
+        android:id="@+id/mn_take_from_camera"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/take_from_camera" />
+</menu>

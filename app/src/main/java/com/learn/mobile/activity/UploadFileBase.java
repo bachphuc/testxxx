@@ -51,6 +51,9 @@ public class UploadFileBase extends AppCompatActivity {
         startActivityForResult(intent, GALLERY_IMAGE_REQUEST_CODE);
     }
 
+    public void onAfterActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -78,10 +81,12 @@ public class UploadFileBase extends AppCompatActivity {
                 previewImage();
             }
         }
+
+        onAfterActivityResult(requestCode, resultCode, data);
     }
 
     public void previewImage() {
-        if(imgPreview == null || fileUri == null){
+        if (imgPreview == null || fileUri == null) {
             return;
         }
         BitmapFactory.Options options = new BitmapFactory.Options();
