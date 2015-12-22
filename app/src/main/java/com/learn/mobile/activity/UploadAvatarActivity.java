@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.alexvasilkov.gestures.Settings;
 import com.alexvasilkov.gestures.views.GestureImageView;
 import com.learn.mobile.R;
+import com.learn.mobile.customview.CustomGestureImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -26,7 +27,7 @@ public class UploadAvatarActivity extends UploadFileBase {
     public static final String IMAGE_UPLOAD_FILE = "IMAGE_UPLOAD_FILE.png";
 
     private String imageUploadFilePath;
-    private GestureImageView gestureImageView;
+    private CustomGestureImageView gestureImageView;
 
     ProgressDialog progressDialog;
 
@@ -45,8 +46,9 @@ public class UploadAvatarActivity extends UploadFileBase {
         int frameW = getResources().getDimensionPixelSize(R.dimen.image_avatar_crop_width);
         int frameH = getResources().getDimensionPixelSize(R.dimen.image_avatar_crop_height);
 
-        gestureImageView = (GestureImageView) findViewById(R.id.cropping_image);
-        gestureImageView.getController().getSettings()
+        gestureImageView = (CustomGestureImageView) findViewById(R.id.cropping_image);
+        gestureImageView.setMovementAreaSpecified(true)
+                .getController().getSettings()
                 .setFitMethod(Settings.Fit.OUTSIDE)
                 .setFillViewport(true)
                 .setMovementArea(frameW, frameH)

@@ -5,11 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.learn.mobile.activity.UploadAvatarActivity">
 
-    <com.alexvasilkov.gestures.views.GestureImageView
+    <com.learn.mobile.customview.CustomGestureImageView
         android:id="@+id/cropping_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
         android:paddingTop="?attr/actionBarSize" />
 
     <View
@@ -20,8 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="@drawable/image_frame_overlay" />
+        android:layout_marginTop="?attr/actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
