@@ -50,6 +50,27 @@ public class ImageHelper {
         return drawable;
     }
 
+    public static ImageAdapterBase getAdapter() {
+        if (imageAdapterBase != null) {
+            return imageAdapterBase;
+        }
+        String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
+        Class c = null;
+        try {
+            c = Class.forName(sClass);
+            try {
+                imageAdapterBase = (ImageAdapterBase) c.newInstance();
+            } catch (InstantiationException e) {
+                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+            } catch (IllegalAccessException e) {
+                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Can not find  " + DConfig.IMAGE_ADAPTER);
+        }
+        return imageAdapterBase;
+    }
+
     public static void display(Context context, ImageView imageView, String imageUrl, String thumbnailUrl) {
         if (imageAdapterBase == null) {
             String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;

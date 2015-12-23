@@ -87,7 +87,7 @@ public class UploadAvatarActivity extends UploadFileBase {
         if (fileUri != null) {
             String filePath = DUtils.getRealPathFromURI(this, fileUri);
             if (filePath != null) {
-                ImageHelper.display(gestureImageView, filePath);
+                ImageHelper.getAdapter().resize(1024, 1024).display(gestureImageView, filePath);
             }
         }
     }
