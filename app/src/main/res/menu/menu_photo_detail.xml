@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/drawer_download"
+        android:checked="true"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="@string/download" />
+
+    <item
+        android:id="@+id/drawer_make_your_avatar"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="@string/make_your_avatar" />
+
+</menu>

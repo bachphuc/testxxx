@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,15 +51,16 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         super.processViewHolder(adapter, itemBaseViewHolder, position);
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {
-            if (imageView instanceof PaletteImageView && false) {
+            boolean usePallet = false;
+            if (imageView instanceof PaletteImageView && usePallet) {
                 PaletteImageView paletteImageView = (PaletteImageView) imageView;
                 paletteImageView.setOnPaletteListener(new PaletteImageView.PaletteListener.OnPaletteListener() {
                     @Override
                     public void onChange(View view, int backgroundColor, int textColor) {
                         View parentView = (View) view.getParent();
                         TextView tv = (TextView) parentView.findViewById(R.id.tv_title);
-                        int newBackgroundColor = Color.argb(150, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor));
-                        tv.setBackgroundColor(newBackgroundColor);
+                        int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
+                        tv.setBackgroundColor(bgColor);
                         tv.setTextColor(textColor);
                     }
                 });

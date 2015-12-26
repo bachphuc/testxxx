@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alexvasilkov.gestures.Settings;
-import com.alexvasilkov.gestures.views.GestureImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.CustomGestureImageView;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -24,7 +23,7 @@ import java.io.IOException;
 
 public class UploadAvatarActivity extends UploadFileBase {
     public static final String USER_AVATAR = "USER_AVATAR";
-    public static final String IMAGE_UPLOAD_FILE = "IMAGE_UPLOAD_FILE.png";
+    private static final String IMAGE_UPLOAD_FILE = "IMAGE_UPLOAD_FILE.png";
 
     private String imageUploadFilePath;
     private CustomGestureImageView gestureImageView;
@@ -94,7 +93,7 @@ public class UploadAvatarActivity extends UploadFileBase {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.update_avatar_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_update_avatar, menu);
         return true;
     }
 
@@ -115,7 +114,7 @@ public class UploadAvatarActivity extends UploadFileBase {
 
                         // bmp is your Bitmap instance
                         // PNG is a loss less format, the compression factor (100) is ignored
-                        cropped.compress(Bitmap.CompressFormat.PNG, 100, out);
+                        cropped.compress(Bitmap.CompressFormat.PNG, 80, out);
 
                         onUpdateAvatar();
                     } catch (Exception e) {
@@ -136,6 +135,7 @@ public class UploadAvatarActivity extends UploadFileBase {
                 break;
             case R.id.mn_take_from_camera:
                 captureImage();
+                break;
             case android.R.id.home:
                 finish();
                 return true;

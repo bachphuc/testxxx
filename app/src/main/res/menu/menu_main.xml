@@ -7,59 +7,28 @@
         <item
             android:id="@+id/drawer_home"
             android:checked="true"
-            android:icon="@drawable/ic_favorite_black_24dp"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/home" />
 
         <item
-            android:id="@+id/drawer_favourite"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="@string/favourite" />
+            android:id="@+id/drawer_member"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/member" />
 
         <item
-            android:id="@+id/drawer_downloaded"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="@string/downloaded" />
-
-        <item
-            android:id="@+id/bt_capture_image"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Capture Image" />
-
-        <item
-            android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="@string/settings" />
-
-        <item
-            android:id="@+id/search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Search..."
-            app:actionViewClass="android.support.v7.widget.SearchView"
-            app:showAsAction="collapseActionView|ifRoom" />
-
-        <item
-            android:id="@+id/bt_sample"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Sample Activity"
-            app:actionViewClass="android.support.v7.widget.SearchView"
-            app:showAsAction="collapseActionView|ifRoom" />
+            android:id="@+id/drawer_photo"
+            android:icon="@drawable/ic_photo_library_black_24dp"
+            android:title="@string/photo" />
 
         <item
             android:id="@+id/drawer_settings_site"
-            android:icon="@drawable/ic_favorite_black_24dp"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/settings" />
 
         <item
-            android:id="@+id/bt_login_new"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Login New" />
-
-        <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_power_settings_new_white_24dp"
-            android:title="Logout"
-            app:actionViewClass="android.support.v7.widget.SearchView"
-            app:showAsAction="collapseActionView|ifRoom" />
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:title="Logout" />
 
     </group>
 </menu>

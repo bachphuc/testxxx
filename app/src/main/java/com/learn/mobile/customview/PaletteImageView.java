@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
-import com.learn.mobile.library.dmobi.DMobi;
 
 /**
  * Created by 09520_000 on 10/13/2015.
@@ -22,6 +21,7 @@ public class PaletteImageView extends ImageView {
     protected PaletteListener.OnPaletteListener onPaletteListener;
 
     protected boolean enabledPalette = true;
+    protected boolean executePalette = true;
 
     public void setOnPaletteListener(PaletteListener.OnPaletteListener onPaletteListener) {
         this.onPaletteListener = onPaletteListener;
@@ -55,6 +55,17 @@ public class PaletteImageView extends ImageView {
         if (!enabledPalette) {
             return;
         }
+        if (onPaletteListener == null) {
+            return;
+        }
+        if (!executePalette) {
+            return;
+        }
+
+        initPalette();
+    }
+
+    protected void initPalette() {
         Drawable d = getDrawable();
         if (d != null) {
             Bitmap bitmap;
@@ -76,6 +87,21 @@ public class PaletteImageView extends ImageView {
                     }
                 });
             }
+        }
+    }
+
+    protected void initPalette(Bitmap bitmap) {
+        if (bitmap != null) {
+            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                @Override
+                public void onGenerated(Palette palette) {
+                    Palette.Swatch vibrant =
+                            palette.getVibrantSwatch();
+                    if (vibrant != null) {
+                        onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor());
+                    }
+                }
+            });
         }
     }
 

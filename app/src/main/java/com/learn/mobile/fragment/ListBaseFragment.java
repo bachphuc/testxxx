@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     protected int fragmentIndex;
 
     protected boolean bGirdLayout = false;
+    protected int spanSize = 2;
 
     protected boolean bAutoLoadData = false;
     protected boolean bRefreshList = false;
@@ -83,6 +85,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public ListBaseFragment() {
 
+    }
+
+    public void setSpanSize(int size){
+        spanSize = size;
     }
 
     public void setUser(User user) {
@@ -174,13 +180,13 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(8);
         if (bGirdLayout) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), spanSize);
             if (bHasAppBar) {
                 gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
                         if (position == 0) {
-                            return 2;
+                            return spanSize;
                         }
                         return 1;
                     }
@@ -448,8 +454,8 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         }
 
         protected boolean isBottomEdge(int childIndex, int childCount, int spanCount) {
-
-            return childIndex >= childCount - spanCount;
+            int row = childCount % spanCount;
+            return childIndex >= childCount - row;
         }
 
         protected int getTotalSpan(View view, RecyclerView parent) {

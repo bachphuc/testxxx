@@ -78,7 +78,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.PhotoDetailActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Translucent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -91,7 +92,9 @@
             android:name=".activity.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activity.CommentActivity" />
-        <activity android:name=".activity.UploadAvatarActivity"></activity>
+        <activity
+            android:name=".activity.UploadAvatarActivity"
+            android:theme="@style/Translucent"></activity>
     </application>
 
 </manifest>

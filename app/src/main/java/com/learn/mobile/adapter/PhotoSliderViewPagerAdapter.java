@@ -17,7 +17,8 @@ import java.util.List;
 public class PhotoSliderViewPagerAdapter extends FragmentStatePagerAdapter {
     protected List<Photo> data;
     ViewPager viewPager;
-    public void setViewPager(ViewPager v){
+
+    public void setViewPager(ViewPager v) {
         viewPager = v;
     }
 
@@ -29,11 +30,19 @@ public class PhotoSliderViewPagerAdapter extends FragmentStatePagerAdapter {
         this.data = data;
     }
 
+    public List<Photo> getDate() {
+        return data;
+    }
+
+    public Photo getPhotoItem(int position) {
+        return data.get(position);
+    }
+
     @Override
     public Fragment getItem(int position) {
         final int pos = position;
         PhotoViewFragment fragment = new PhotoViewFragment();
-        if(viewPager != null){
+        if (viewPager != null) {
             fragment.setViewPager(viewPager);
         }
         Photo item = data.get(position);

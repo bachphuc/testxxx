@@ -6,4 +6,8 @@
     <declare-styleable name="PaletteSquareImageView">
         <attr name="enableSquareImage" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="DRatioImageView">
+        <attr name="ratio" format="float" />
+    </declare-styleable>
 </resources>

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,7 +85,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             public void onClick(View v) {
                 final PopupMenu popup = new PopupMenu(v.getContext(), v);
                 MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.feed_action_menu, popup.getMenu());
+                inflater.inflate(R.menu.menu_feed_action, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -224,12 +223,18 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             case R.id.imageViewAvatar:
                 context = v.getContext();
                 intent = new Intent(context, UserProfileActivity.class);
-                DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
-
-                context.startActivity(intent);
+                User currentUser = (User) DMobi.getData(UserProfileActivity.USER_PROFILE);
+                boolean canOpen = (currentUser == null ? true : (currentUser.getId() != user.getId() ? true : false));
+                if (canOpen) {
+                    DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
+                    context.startActivity(intent);
+                }
                 break;
             case R.id.bt_comment:
                 context = v.getContext();
+                if (context instanceof FeedDetailActivity) {
+                    return;
+                }
                 intent = new Intent(context, FeedDetailActivity.class);
                 DMobi.pushData(FeedDetailActivity.FEED_DETAIL, this);
                 context.startActivity(intent);

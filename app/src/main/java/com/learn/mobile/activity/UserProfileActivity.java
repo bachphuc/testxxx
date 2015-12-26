@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +41,7 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.henrytao.smoothappbarlayout.PagerAdapter;
 
 public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
@@ -165,6 +167,11 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
         if (imgAvatar != null && user.images != null) {
+            if(imgAvatar instanceof CircleImageView){
+                CircleImageView circleImageView = (CircleImageView) imgAvatar;
+                circleImageView.setBorderWidth(1);
+                circleImageView.setBorderColor(ContextCompat.getColor(this, R.color.image_border_color));
+            }
             ImageHelper.display(imgAvatar, user.images.getMedium().url);
         }
     }

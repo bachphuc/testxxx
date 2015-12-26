@@ -123,7 +123,12 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
             @Override
             public void onPageSelected(int position) {
-                tabLayout.getTabAt(position).select();
+                if (tabLayout != null) {
+                    if (tabLayout.getTabCount() > position) {
+                        tabLayout.getTabAt(position).select();
+                    }
+                }
+
                 DMobi.fireEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
             }
 
@@ -136,11 +141,16 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     public void initTabBarLayoutWithTitle() {
         tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
+        if (DConfig.HIDE_TAB_BAR) {
+            tabLayout.setVisibility(View.GONE);
+            return;
+        }
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         TabLayout.Tab tab;
 
-        String[] tabs =  {"Home", "Photo", "Member", "Message", "Notification"};
-        for(int i = 0; i < tabs.length; i++){
+        String[] tabs = getResources().getStringArray(R.array.mainTab);
+
+        for (int i = 0; i < tabs.length; i++) {
             tab = tabLayout.newTab();
             tab.setText(DMobi.translate(tabs[i]));
             tabLayout.addTab(tab);
@@ -241,8 +251,19 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     }
 
     @Override
-    public void onLeftFragmentInteraction(String id) {
-
+    public void onLeftFragmentInteraction(int id) {
+        drawerLayout.closeDrawers();
+        switch (id) {
+            case R.id.drawer_home:
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.drawer_member:
+                viewPager.setCurrentItem(2);
+                break;
+            case R.id.drawer_photo:
+                viewPager.setCurrentItem(1);
+                break;
+        }
     }
 
     @Override

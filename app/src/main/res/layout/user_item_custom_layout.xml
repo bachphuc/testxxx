@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="com.learn.mobile.customview.DRatioImageView"
+    xmlns:layout="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:cardCornerRadius="0dp">
+
+    <LinearLayout
+        android:id="@+id/panel_user_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/panel_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.learn.mobile.customview.DRatioImageView
+                    android:id="@+id/img_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="false"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/background_red"
+                    custom:ratio="2f" />
+            </RelativeLayout>
+
+            <com.learn.mobile.customview.DCirclePaletteImageView
+                android:id="@+id/img_photo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignBottom="@+id/panel_cover"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentStart="false"
+                android:layout_marginBottom="-16dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/no_avatar" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:text="Youtube"
+                android:textColor="@color/primary_icon_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/add_friend_c"
+                android:textColor="@color/primary_icon_color" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

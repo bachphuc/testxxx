@@ -9,4 +9,9 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="mainTab">
+        <item>Home</item>
+        <item>Photo</item>
+        <item>Member</item>
+    </string-array>
 </resources>

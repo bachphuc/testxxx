@@ -18,8 +18,11 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="app_title">DMobi</string>
     <string name="home">Home</string>
+    <string name="member">Member</string>
+    <string name="photo">Photo</string>
     <string name="favourite">Favourite</string>
-    <string name="downloaded">Downloaded</string>
+    <string name="download">Download</string>
+    <string name="make_your_avatar">Make your avatar</string>
     <string name="more">More</string>
     <string name="settings">Settings</string>
     <string name="search_hint">Search something...</string>
@@ -27,6 +30,7 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="description_card_default">Description</string>
     <string name="add_friend">Add Friend</string>
+    <string name="add_friend_c">ADD FRIEND</string>
     <string name="title_activity_upload">UploadActivity</string>
     <string name="delete_feed">Delete Feed</string>
     <string name="sample">In order to serve relevant ads, Google collects data about you and creates a profile. You can control and review the information Google has on you here</string>
@@ -42,4 +46,5 @@
     <string name="crop_image">Crop Image</string>
     <string name="choose_from_gallery">Choose from Gallery</string>
     <string name="take_from_camera">Take from Camera</string>
+    <string name="add_comment">Add comment</string>
 </resources>

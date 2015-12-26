@@ -1,5 +1,6 @@
 package com.learn.mobile.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.PhotoSliderViewPagerAdapter;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
+import com.learn.mobile.customview.activity.SwipeBackActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.model.Photo;
@@ -19,7 +21,7 @@ import com.learn.mobile.model.Photo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoDetailActivity extends AppCompatActivity {
+public class PhotoDetailActivity extends SwipeBackActivity {
     public static final String TAG = PhotoDetailActivity.class.getSimpleName();
     public static final String PHOTO_SLIDER_DATA = "PHOTO_SLIDER_DATA";
     public static final String PHOTO_POSITION = "PHOTO_POSITION";
@@ -49,7 +51,7 @@ public class PhotoDetailActivity extends AppCompatActivity {
         int position = intent.getIntExtra(PHOTO_POSITION, 0);
 
         eventNotifyDataSetChangedKey = intent.getStringExtra(RecyclerViewBaseAdapter.RECYCLER_VIEW_NOTIFY_DATA_CHANGE);
-        if(eventNotifyDataSetChangedKey != null){
+        if (eventNotifyDataSetChangedKey != null) {
             DMobi.resetEvent(eventNotifyDataSetChangedKey);
             DMobi.log(TAG, "Register event in photo detail");
             DMobi.registerEvent(eventNotifyDataSetChangedKey, new Event.Action() {
@@ -60,21 +62,20 @@ public class PhotoDetailActivity extends AppCompatActivity {
                 }
             });
         }
-        if(object != null){
-            if(object instanceof Photo){
+        if (object != null) {
+            if (object instanceof Photo) {
                 Photo photo = (Photo) object;
                 photos = new ArrayList<>();
                 photos.add(photo);
-            }
-            else{
-                photos = (List<Photo>)object;
+            } else {
+                photos = (List<Photo>) object;
             }
         }
-        if(photos != null) {
+        if (photos != null) {
             adapter.setData(photos);
         }
         viewPager.setAdapter(adapter);
-        if(photos != null){
+        if (photos != null) {
             viewPager.setCurrentItem(position);
         }
     }
@@ -82,7 +83,7 @@ public class PhotoDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.feed_action_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_photo_detail, menu);
         return true;
     }
 
@@ -97,8 +98,23 @@ public class PhotoDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.drawer_download:
+                break;
+            case R.id.drawer_make_your_avatar:
+                makeAvatar();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void makeAvatar() {
+        int current = viewPager.getCurrentItem();
+        Photo photo = adapter.getPhotoItem(current);
+        if (photo != null) {
+            Intent intent = new Intent(this, UploadAvatarActivity.class);
+            intent.putExtra(UploadAvatarActivity.USER_AVATAR, photo.images.getFull().url);
+            startActivity(intent);
+        }
     }
 }

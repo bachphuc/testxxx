@@ -143,6 +143,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         Context context;
         Intent intent;
+        mListener.onLeftFragmentInteraction(item.getItemId());
         switch (item.getItemId()) {
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);
@@ -151,21 +152,15 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.showLoginActivity();
                 break;
-            case R.id.bt_sample:
-                context = getContext();
-                intent = new Intent(context, Sample1Activity.class);
-                context.startActivity(intent);
-                break;
-
             case R.id.drawer_settings_site:
                 showDialogSettingSite();
                 break;
-            case R.id.bt_login_new:
-                context = getContext();
-                intent = new Intent(context, LoginActivity.class);
-                context.startActivity(intent);
-                break;
+            case R.id.drawer_home:
+            case R.id.drawer_member:
+            case R.id.drawer_photo:
+                return true;
         }
+
         return false;
     }
 
@@ -197,7 +192,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
      */
     public interface OnLeftFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onLeftFragmentInteraction(String id);
+        public void onLeftFragmentInteraction(int id);
     }
 
     // TODO: Show dialog setting site

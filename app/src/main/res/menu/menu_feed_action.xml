@@ -8,7 +8,7 @@
     <item
         android:id="@+id/drawer_downloaded"
         android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="@string/downloaded" />
+        android:title="@string/download" />
 
     <item
         android:id="@+id/bt_capture_image"

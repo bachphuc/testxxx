@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.learn.mobile.customview.activity.SwipeBackActivity;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
@@ -23,7 +24,7 @@ import java.util.Locale;
 /**
  * Created by 09520_000 on 12/2/2015.
  */
-public class UploadFileBase extends AppCompatActivity {
+public class UploadFileBase extends SwipeBackActivity {
     public static final String TAG = UploadFileBase.class.getSimpleName();
     protected Uri fileUri;
     protected static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;

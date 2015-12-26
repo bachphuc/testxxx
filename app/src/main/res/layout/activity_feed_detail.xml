@@ -18,7 +18,7 @@
             android:id="@+id/feed_detail_comment_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -60,7 +60,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="#00000000" />
+            android:background="#00000000"
+            android:hint="@string/add_comment" />
 
         <ImageView
             android:id="@+id/bt_comment"

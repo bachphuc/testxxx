@@ -1,6 +1,7 @@
 package com.learn.mobile.library.dmobi.helper;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -111,5 +112,29 @@ public class ImageHelper {
         }
         drawable = getIconDrawable(drawable, color);
         imageView.setImageDrawable(drawable);
+    }
+
+    public static int makeColorDarker(int color, int percent){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        if(hsv[1] < 100){
+            hsv[1] *= (float)((percent + 100) / 100);
+            if(hsv[1] > 100){
+                hsv[1] = 100;
+            }
+        }
+
+        color = Color.HSVToColor(hsv);
+        return color;
+    }
+
+    public static int makeColorLighter(int color, int percent){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        if(hsv[1] < 100){
+            hsv[1] *= (float)((100 - percent) / 100);
+        }
+        color = Color.HSVToColor(hsv);
+        return color;
     }
 }

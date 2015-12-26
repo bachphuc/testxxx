@@ -69,6 +69,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        setShadowBackgroundColor(R.color.transparent);
         // TODO set global application context config
         DConfig.setContext(getApplicationContext());
 

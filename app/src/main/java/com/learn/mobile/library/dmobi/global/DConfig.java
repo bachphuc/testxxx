@@ -21,6 +21,8 @@ public class DConfig {
     public static final String preference_file_key = BUNDLE_ID + ".PREFERENCE_FILE_KEY";
     public static final int DEBUG_MODE = 1;
 
+    public static final boolean HIDE_TAB_BAR = true;
+
     // Can use GlideImageAdapter OR PicassoImageAdapter
     public static final String IMAGE_ADAPTER = "GlideImageAdapter";
 

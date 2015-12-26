@@ -2,7 +2,7 @@ package com.learn.mobile.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +12,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
+import com.learn.mobile.customview.DCirclePaletteImageView;
 import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -21,7 +22,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     public static final String TAG = User.class.getSimpleName();
 
     public User() {
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.user_item_gird_layout);
+        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.user_item_custom_layout);
     }
 
     @Override
@@ -38,8 +39,19 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
                 PaletteImageView paletteImageView = (PaletteImageView) imageView;
                 paletteImageView.setOnPaletteListener(this);
             }
+            if (imageView instanceof DCirclePaletteImageView) {
+                DCirclePaletteImageView dCirclePaletteImageView = (DCirclePaletteImageView) imageView;
+                dCirclePaletteImageView.setBorderWidth(1);
+                dCirclePaletteImageView.setBorderColor(ContextCompat.getColor(imageView.getContext(), R.color.image_border_color));
+            }
             ImageHelper.display(imageView, images.getLarge().url);
             imageView.setOnClickListener(this);
+        }
+        imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_cover);
+        if (imageView != null) {
+            if (coverPhoto != null) {
+                ImageHelper.display(imageView, coverPhoto.getLarge().url);
+            }
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         textView.setText(getTitle());
@@ -65,8 +77,15 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     @Override
     public void onChange(View view, int backgroundColor, int textColor) {
         View parentView = (View) view.getParent().getParent();
-        LinearLayout linearLayout = (LinearLayout) parentView.findViewById(R.id.user_panel_info);
-        int newBackgroundColor = Color.argb(150, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor));
-        linearLayout.setBackgroundColor(newBackgroundColor);
+        if (parentView.getId() == R.id.panel_user_item) {
+            int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
+            parentView.setBackgroundColor(bgColor);
+        } else {
+            LinearLayout linearLayout = (LinearLayout) parentView.findViewById(R.id.user_panel_info);
+            if (linearLayout != null) {
+                int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
+                linearLayout.setBackgroundColor(bgColor);
+            }
+        }
     }
 }
