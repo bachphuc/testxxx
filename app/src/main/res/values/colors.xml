@@ -13,14 +13,16 @@
     <color name="background_color">#ffffff</color>
 
     <color name="primary_color">#F04A75</color>
+    <color name="primary_button_color">#F04A75</color>
     <color name="primary_lighter_color">#F04A75</color>
     <color name="primary_darker_color">#ff1a55</color>
     <color name="primary_accent">#F04A75</color>
+    <color name="text_color_primary">#ffffff</color>
 
     <color name="primary_icon_color">#ffffff</color>
     <color name="primary_background_color">#ffffff</color>
     <color name="primary_tab_border_color">#ffffff</color>
-    <color name="primary_transparent_icon_color">#ddffffff</color>
+    <color name="primary_transparent_icon_color">#ffffff</color>
     <color name="primary_transparent_background">#60333333</color>
     <color name="primary_text_color">#666666</color>
     <color name="primary_dark_text_color">#333333</color>

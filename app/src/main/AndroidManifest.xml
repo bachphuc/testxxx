@@ -30,7 +30,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
@@ -44,7 +44,7 @@
         <activity
             android:name=".activity.UploadActivity"
             android:label="@string/title_activity_upload"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.PostActivity"
             android:theme="@style/Translucent">
@@ -90,7 +90,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".activity.CommentActivity" />
         <activity
             android:name=".activity.UploadAvatarActivity"

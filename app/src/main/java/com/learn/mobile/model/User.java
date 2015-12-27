@@ -50,6 +50,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_cover);
         if (imageView != null) {
             if (coverPhoto != null) {
+                imageView.setOnClickListener(this);
                 ImageHelper.display(imageView, coverPhoto.getLarge().url);
             }
         }
@@ -68,6 +69,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_cover:
             case R.id.img_photo:
                 showItemDetail(v.getContext());
                 break;

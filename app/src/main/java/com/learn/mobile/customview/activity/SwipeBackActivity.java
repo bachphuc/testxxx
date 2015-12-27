@@ -20,8 +20,14 @@ public class SwipeBackActivity extends AppCompatActivity implements SwipeBackLay
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
 
+    protected boolean enableSwipe = true;
+
     @Override
     public void setContentView(int layoutResID) {
+        if(!enableSwipe){
+            super.setContentView(layoutResID);
+            return;
+        }
         super.setContentView(getContainer());
         View view = LayoutInflater.from(this).inflate(layoutResID, null);
         swipeBackLayout.addView(view);

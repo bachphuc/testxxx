@@ -6,7 +6,7 @@
     android:background="@drawable/gradient_background"
     tools:context="com.learn.mobile.LoginActivity">
 
-    <ImageView
+    <com.learn.mobile.customview.BlurImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description_default"
@@ -48,12 +48,6 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_android_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -161,9 +155,9 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="or"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="or" />
 
                     <Button
                         android:id="@+id/bt_signUp"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/gradient_background"
+    android:background="@color/primary_color"
     tools:context="com.learn.mobile.LoginActivity">
 
     <!-- Background -->
@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description_default"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_red" />
+        android:src="@drawable/background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,12 +51,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_android_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,13 +74,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_email_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
 
                     <EditText
                         android:id="@+id/tb_fullName"
@@ -115,13 +102,6 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_email_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
-
                     <EditText
                         android:id="@+id/tb_email"
                         android:layout_width="wrap_content"
@@ -148,13 +128,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_lock_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
 
                     <EditText
                         android:id="@+id/tb_password"
@@ -184,13 +157,6 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_lock_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
-
                     <EditText
                         android:id="@+id/tb_password_confirm"
                         android:layout_width="wrap_content"
@@ -219,13 +185,6 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_lock_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
-
                     <TextView
                         android:id="@+id/tb_birthday"
                         android:layout_width="wrap_content"
@@ -250,13 +209,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_lock_black_24dp"
-                        android:tint="@color/primary_transparent_icon_color" />
 
                     <Spinner
                         android:id="@+id/cb_gender"
@@ -307,7 +259,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
-                        android:background="#00ffffff"
                         android:elevation="4px"
                         android:minWidth="100dp"
                         android:text="Sign up"
@@ -324,7 +275,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
-                        android:background="#00ffffff"
                         android:elevation="4px"
                         android:minWidth="100dp"
                         android:text="Login"

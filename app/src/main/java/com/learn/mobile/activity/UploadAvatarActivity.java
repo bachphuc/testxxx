@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class UploadAvatarActivity extends UploadFileBase {
+
     public static final String USER_AVATAR = "USER_AVATAR";
     private static final String IMAGE_UPLOAD_FILE = "IMAGE_UPLOAD_FILE.png";
 
@@ -33,6 +34,7 @@ public class UploadAvatarActivity extends UploadFileBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        enableSwipe = false;
         setContentView(R.layout.activity_upload_avatar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
