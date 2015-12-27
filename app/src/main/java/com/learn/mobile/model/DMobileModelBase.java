@@ -32,6 +32,16 @@ public class DMobileModelBase {
     public String description;
     public int id;
 
+    private HashMap<String, Object> _data = new HashMap<String, Object>();
+
+    public void addData(String key, Object value) {
+        _data.put(key, value);
+    }
+
+    public Object getData(String key) {
+        return _data.get(key);
+    }
+
     public ImageObject images;
 
     @SerializedName("item_type")
@@ -211,7 +221,7 @@ public class DMobileModelBase {
         context.startActivity(Intent.createChooser(sendIntent, DMobi.translate("Send To")));
     }
 
-    public void showItemDetail(Context context){
+    public void showItemDetail(Context context) {
         return;
     }
 }

@@ -21,6 +21,8 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 public class User extends DAbstractUser implements View.OnClickListener, PaletteImageView.PaletteListener.OnPaletteListener {
     public static final String TAG = User.class.getSimpleName();
 
+    public static final String PALETTE_AVATAR_COLOR = "PALETTE_AVATAR_COLOR";
+
     public User() {
         registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.user_item_custom_layout);
     }
@@ -36,8 +38,16 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {
             if (imageView instanceof PaletteImageView) {
-                PaletteImageView paletteImageView = (PaletteImageView) imageView;
-                paletteImageView.setOnPaletteListener(this);
+                Object paletteColor = getData(PALETTE_AVATAR_COLOR);
+                if (paletteColor != null) {
+                    LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.panel_user_item);
+                    if (linearLayout != null) {
+                        linearLayout.setBackgroundColor((int) paletteColor);
+                    }
+                } else {
+                    PaletteImageView paletteImageView = (PaletteImageView) imageView;
+                    paletteImageView.setOnPaletteListener(this);
+                }
             }
             if (imageView instanceof DCirclePaletteImageView) {
                 DCirclePaletteImageView dCirclePaletteImageView = (DCirclePaletteImageView) imageView;
@@ -78,14 +88,15 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
 
     @Override
     public void onChange(View view, int backgroundColor, int textColor) {
+        int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
+        addData(PALETTE_AVATAR_COLOR, bgColor);
         View parentView = (View) view.getParent().getParent();
         if (parentView.getId() == R.id.panel_user_item) {
-            int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
+
             parentView.setBackgroundColor(bgColor);
         } else {
             LinearLayout linearLayout = (LinearLayout) parentView.findViewById(R.id.user_panel_info);
             if (linearLayout != null) {
-                int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
                 linearLayout.setBackgroundColor(bgColor);
             }
         }
