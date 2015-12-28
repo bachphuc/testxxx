@@ -39,13 +39,14 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
         if (imageView != null) {
             if (imageView instanceof PaletteImageView) {
                 Object paletteColor = getData(PALETTE_AVATAR_COLOR);
+                PaletteImageView paletteImageView = (PaletteImageView) imageView;
                 if (paletteColor != null) {
+                    paletteImageView.removeOnPaletteListerner();
                     LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.panel_user_item);
                     if (linearLayout != null) {
                         linearLayout.setBackgroundColor((int) paletteColor);
                     }
                 } else {
-                    PaletteImageView paletteImageView = (PaletteImageView) imageView;
                     paletteImageView.setOnPaletteListener(this);
                 }
             }

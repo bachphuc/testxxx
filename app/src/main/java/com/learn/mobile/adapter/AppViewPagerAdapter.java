@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.fragment.FunnyFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserFragment;
@@ -38,6 +39,10 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                 UserFragment userFragment = new UserFragment();
                 userFragment.setFragmentIndex(position);
                 return userFragment;
+            case 3:
+                FunnyFragment funnyFragment = new FunnyFragment();
+                funnyFragment.setFragmentIndex(position);
+                return funnyFragment;
             default:
                 fragment = new Fragment() {
                     @Override
@@ -57,7 +62,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

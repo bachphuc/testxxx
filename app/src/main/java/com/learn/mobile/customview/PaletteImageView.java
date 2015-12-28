@@ -27,6 +27,12 @@ public class PaletteImageView extends ImageView {
         this.onPaletteListener = onPaletteListener;
     }
 
+    public void removeOnPaletteListerner(){
+        if(onPaletteListener != null){
+            onPaletteListener = null;
+        }
+    }
+
     public PaletteImageView(Context context) {
         super(context);
     }

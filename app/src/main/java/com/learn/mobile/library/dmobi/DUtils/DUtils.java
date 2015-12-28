@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Html;
 
 import com.learn.mobile.R;
 
@@ -133,5 +134,17 @@ public class DUtils {
         } catch (UnsupportedEncodingException e) {
             return url;
         }
+    }
+
+    public static String decodeUTF8(String str) {
+        String name = "";
+        try {
+            name = new String(str.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            name = str;
+        }
+
+        String decodedName = Html.fromHtml(name).toString();
+        return decodedName;
     }
 }

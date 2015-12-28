@@ -78,6 +78,21 @@ public class DAbstractItemObject {
 			}.getType();
 			Comment objComment = gson.fromJson(jsonData, type);
 			return objComment;
+		case "Project":
+			type = new TypeToken<Project>() {
+			}.getType();
+			Project objProject = gson.fromJson(jsonData, type);
+			return objProject;
+		case "ProjectTask":
+			type = new TypeToken<ProjectTask>() {
+			}.getType();
+			ProjectTask objProjectTask = gson.fromJson(jsonData, type);
+			return objProjectTask;
+		case "Funny":
+			type = new TypeToken<Funny>() {
+			}.getType();
+			Funny objFunny = gson.fromJson(jsonData, type);
+			return objFunny;
             default:
                 return new DMobileModelBase();
         }
@@ -128,6 +143,18 @@ public class DAbstractItemObject {
             return type;
         case "Comment":
             type = new TypeToken<Comment>() {
+            }.getType();
+            return type;
+        case "Project":
+            type = new TypeToken<Project>() {
+            }.getType();
+            return type;
+        case "ProjectTask":
+            type = new TypeToken<ProjectTask>() {
+            }.getType();
+            return type;
+        case "Funny":
+            type = new TypeToken<Funny>() {
             }.getType();
             return type;
             default:
@@ -182,6 +209,18 @@ public class DAbstractItemObject {
             type = new TypeToken<ListObjectResponse<Comment>>() {
             }.getType();
             return type;
+        case "Project":
+            type = new TypeToken<ListObjectResponse<Project>>() {
+            }.getType();
+            return type;
+        case "ProjectTask":
+            type = new TypeToken<ListObjectResponse<ProjectTask>>() {
+            }.getType();
+            return type;
+        case "Funny":
+            type = new TypeToken<ListObjectResponse<Funny>>() {
+            }.getType();
+            return type;
             default:
                 return null;
         }
@@ -232,6 +271,18 @@ public class DAbstractItemObject {
             return type;
         case "Comment":
             type = new TypeToken<SingleObjectResponse<Comment>>() {
+            }.getType();
+            return type;
+        case "Project":
+            type = new TypeToken<SingleObjectResponse<Project>>() {
+            }.getType();
+            return type;
+        case "ProjectTask":
+            type = new TypeToken<SingleObjectResponse<ProjectTask>>() {
+            }.getType();
+            return type;
+        case "Funny":
+            type = new TypeToken<SingleObjectResponse<Funny>>() {
             }.getType();
             return type;
             default:

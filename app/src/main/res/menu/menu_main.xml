@@ -21,6 +21,11 @@
             android:title="@string/photo" />
 
         <item
+            android:id="@+id/drawer_funny"
+            android:icon="@drawable/ic_insert_emoticon_black_24dp"
+            android:title="@string/funny" />
+
+        <item
             android:id="@+id/drawer_settings_site"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/settings" />

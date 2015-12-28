@@ -263,6 +263,9 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
             case R.id.drawer_photo:
                 viewPager.setCurrentItem(1);
                 break;
+            case R.id.drawer_funny:
+                viewPager.setCurrentItem(3);
+                break;
         }
     }
 
