@@ -1,5 +1,9 @@
 package com.learn.mobile.model;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,11 +12,14 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
+import com.learn.mobile.customview.chromecustomtab.CustomTabActivityHelper;
+import com.learn.mobile.customview.chromecustomtab.WebviewFallback;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
-public class Funny extends DAbstractFunny {
+public class Funny extends DAbstractFunny implements View.OnClickListener {
     public Funny() {
         registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.funny_item_layout);
     }
@@ -34,6 +41,7 @@ public class Funny extends DAbstractFunny {
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.main_image);
         if (imageView != null) {
             ImageHelper.display(imageView, image);
+            imageView.setOnClickListener(this);
         }
 
         textView = (TextView) itemBaseViewHolder.findView(R.id.tv_funny_title);
@@ -50,5 +58,24 @@ public class Funny extends DAbstractFunny {
             textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
             textView.setText(getDescription());
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_image:
+                Context context = v.getContext();
+                if (context instanceof Activity) {
+                    CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+                    CustomTabActivityHelper.openCustomTab(
+                            (Activity) context, customTabsIntent, Uri.parse(getLink()), new WebviewFallback());
+                }
+                break;
+        }
+    }
+
+    @Override
+    public String getLink() {
+        return (DUtils.isEmpty(link) ? DConfig.getBaseUrl() : link);
     }
 }

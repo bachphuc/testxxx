@@ -1,6 +1,7 @@
 package com.learn.mobile.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.fragment.visitor.LoginFragment;
 import com.learn.mobile.fragment.visitor.RegisterFragment;
 import com.learn.mobile.fragment.visitor.UploadAvatarFragment;
+import com.learn.mobile.library.dmobi.DMobi;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, UploadAvatarFragment.OnFragmentInteractionListener {
     public static final String TAG = LoginActivity.class.getSimpleName();
@@ -44,6 +46,20 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
                 viewPager.setCurrentItem(2);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!DMobi.isUser()) {
+            exitApp();
+        }
+    }
+
+    public void exitApp() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public static class LoginViewPagerAdapter extends FragmentPagerAdapter {

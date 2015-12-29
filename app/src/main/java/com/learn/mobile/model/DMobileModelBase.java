@@ -224,4 +224,8 @@ public class DMobileModelBase {
     public void showItemDetail(Context context) {
         return;
     }
+
+    public String getLink() {
+        return DConfig.getBaseUrl();
+    }
 }
