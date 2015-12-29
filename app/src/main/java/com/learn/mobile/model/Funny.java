@@ -38,7 +38,7 @@ public class Funny extends DAbstractFunny {
 
         textView = (TextView) itemBaseViewHolder.findView(R.id.tv_funny_title);
         if (getTitle() != null) {
-            textView.setText(DUtils.decodeUTF8(getTitle()));
+            textView.setText(getTitle());
         } else {
             textView.setVisibility(View.GONE);
         }
