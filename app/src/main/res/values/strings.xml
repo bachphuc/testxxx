@@ -48,4 +48,8 @@
     <string name="choose_from_gallery">Choose from Gallery</string>
     <string name="take_from_camera">Take from Camera</string>
     <string name="add_comment">Add comment</string>
+
+    <!-- Slider Panel -->
+    <string name="hello"><![CDATA[<b>The Awesome Sliding Up Panel</b><br/> Brought to you by<br/><a href="http://umanoapp.com">http://umanoapp.com</a>]]></string>
+    <string name="follow"><![CDATA[Follow us<br/>on <a href="http://twitter.com/umanoapp">Twitter</a>]]></string>
 </resources>

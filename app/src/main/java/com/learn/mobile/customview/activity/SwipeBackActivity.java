@@ -24,7 +24,7 @@ public class SwipeBackActivity extends AppCompatActivity implements SwipeBackLay
 
     @Override
     public void setContentView(int layoutResID) {
-        if(!enableSwipe){
+        if (!enableSwipe) {
             super.setContentView(layoutResID);
             return;
         }
@@ -51,7 +51,13 @@ public class SwipeBackActivity extends AppCompatActivity implements SwipeBackLay
         return container;
     }
 
-    public void setShadowBackgroundColor(int color){
+    public void setShadowBackgroundColor(int color) {
+        if (!enableSwipe) {
+            return;
+        }
+        if (ivShadow == null) {
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ivShadow.setBackgroundColor(ContextCompat.getColor(this, color));
         } else {

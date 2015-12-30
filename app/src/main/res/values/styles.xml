@@ -14,6 +14,13 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="PostActivity" parent="Translucent">
+        <item name="android:windowBackground">@color/primary_transparent_background</item>
+        <item name="android:windowContentOverlay">@color/primary_transparent_background</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
     <style name="MainLayout">
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>

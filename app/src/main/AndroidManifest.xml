@@ -47,7 +47,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.PostActivity"
-            android:theme="@style/Translucent">
+            android:theme="@style/PostActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
