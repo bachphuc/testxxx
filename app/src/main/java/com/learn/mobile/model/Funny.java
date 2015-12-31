@@ -2,6 +2,7 @@ package com.learn.mobile.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.activity.FunnyViewer;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.chromecustomtab.CustomTabActivityHelper;
 import com.learn.mobile.customview.chromecustomtab.WebviewFallback;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -64,11 +67,18 @@ public class Funny extends DAbstractFunny implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_image:
+                boolean showWithBrowser = false;
                 Context context = v.getContext();
-                if (context instanceof Activity) {
-                    CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
-                    CustomTabActivityHelper.openCustomTab(
-                            (Activity) context, customTabsIntent, Uri.parse(getLink()), new WebviewFallback());
+                if (showWithBrowser) {
+                    if (context instanceof Activity) {
+                        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+                        CustomTabActivityHelper.openCustomTab(
+                                (Activity) context, customTabsIntent, Uri.parse(getLink()), new WebviewFallback());
+                    }
+                } else {
+                    DMobi.pushData(FunnyViewer.FUNNY_DETAIL, this);
+                    Intent intent = new Intent(context, FunnyViewer.class);
+                    context.startActivity(intent);
                 }
                 break;
         }

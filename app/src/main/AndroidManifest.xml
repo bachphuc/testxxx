@@ -94,7 +94,8 @@
         <activity android:name=".activity.CommentActivity" />
         <activity
             android:name=".activity.UploadAvatarActivity"
-            android:theme="@style/Translucent"></activity>
+            android:theme="@style/Translucent" />
+        <activity android:name=".activity.FunnyViewer"></activity>
     </application>
 
 </manifest>

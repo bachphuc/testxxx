@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.DisplayMetrics;
 
 import com.learn.mobile.R;
 
@@ -147,4 +148,17 @@ public class DUtils {
         String decodedName = Html.fromHtml(name).toString();
         return decodedName;
     }
+
+    public static int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
+
+    public static int pxToDp(Context context, int px) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return dp;
+    }
+
 }

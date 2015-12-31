@@ -19,8 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +33,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -537,28 +534,14 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             String img = data.get(position);
             GalleryViewHolder galleryViewHolder = (GalleryViewHolder) holder;
-            int width = dpToPx(galleryViewHolder.imageView.getContext(), 120);
-            Glide.with(galleryViewHolder.imageView.getContext())
-                    .load(img)
-                    .override(width, width)
-                    .into(galleryViewHolder.imageView);
+            int width = DUtils.dpToPx(galleryViewHolder.imageView.getContext(), 120);
+
+            ImageHelper.getAdapter().resize(width, width).display(galleryViewHolder.imageView, img);
         }
 
         @Override
         public int getItemCount() {
             return data.size();
-        }
-
-        public int dpToPx(Context context, int dp) {
-            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-            int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-            return px;
-        }
-
-        public int pxToDp(Context context, int px) {
-            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-            int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-            return dp;
         }
     }
 
