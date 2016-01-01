@@ -3,6 +3,7 @@ package com.learn.mobile.model;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,11 +90,17 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
 
     @Override
     public void onChange(View view, int backgroundColor, int textColor) {
+        if(view instanceof PaletteImageView){
+            PaletteImageView paletteImageView = (PaletteImageView) view;
+            paletteImageView.removeOnPaletteListerner();
+        }
+
         int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
         addData(PALETTE_AVATAR_COLOR, bgColor);
         View parentView = (View) view.getParent().getParent();
         if (parentView.getId() == R.id.panel_user_item) {
-
+            String hexColor = String.format("#%06X", (0xFFFFFF & bgColor));
+            Log.i(TAG, "Item: " + getId() + " ,Color: " + hexColor);
             parentView.setBackgroundColor(bgColor);
         } else {
             LinearLayout linearLayout = (LinearLayout) parentView.findViewById(R.id.user_panel_info);

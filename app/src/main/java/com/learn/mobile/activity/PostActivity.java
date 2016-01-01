@@ -11,20 +11,21 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.ItemClickSupport;
 import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
@@ -50,6 +52,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.apache.commons.validator.routines.UrlValidator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,8 +78,10 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     PromptTextDialog newFragment;
 
     // Gallery Slider
-    private SlidingUpPanelLayout mLayout;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
+    int itemMaxWidth = 200;
+    GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +112,9 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
 
         // TODO Init Gallery Slider Panel
         initSliderGallery();
+
+        // TODO calculator size
+        calculatorSize();
     }
 
     private void initView() {
@@ -257,6 +265,15 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         newFragment.show(getSupportFragmentManager(), "promTextDialog");
     }
 
+    public void hideKeyboard() {
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public void uploadToServer() {
         String description = tbDescription.getText().toString();
         dRequest.addPost("content", description);
@@ -265,6 +282,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         }
 
         final Context that = this;
+        hideKeyboard();
         final ProgressDialog progressDialog = DMobi.showLoading(that, "", "Posting...");
 
         // TODO Share link
@@ -366,13 +384,9 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         bHasImage = true;
         imgPreview.setVisibility(View.VISIBLE);
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
-
         String path = DUtils.getRealPathFromURI(this, fileUri);
-        final Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        ImageHelper.display(imgPreview, path);
 
-        imgPreview.setImageBitmap(bitmap);
         btRemoveImage.setVisibility(View.VISIBLE);
 
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
@@ -444,9 +458,9 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         // This is the array adapter, it takes the context of the activity as a
         // first parameter, the type of list view as a second parameter and your
         // array as a third parameter.
-        GalleryAdapter galleryAdapter = new GalleryAdapter();
+        final GalleryAdapter galleryAdapter = new GalleryAdapter();
         galleryAdapter.setData(imageData);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(galleryAdapter);
 
@@ -467,10 +481,21 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             }
         });
 
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                String imagePath = galleryAdapter.getItem(position);
+                fileUri = Uri.fromFile(new File(imagePath));
+                previewImage();
+            }
+        });
+
         galleryAdapter.notifyDataSetChanged();
 
-        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        mLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+
+        slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
 
@@ -484,7 +509,6 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             @Override
             public void onPanelCollapsed(View panel) {
 
-
             }
 
             @Override
@@ -497,20 +521,6 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
 
             }
         });
-
-        TextView t = (TextView) findViewById(R.id.name);
-        t.setText(Html.fromHtml(getString(R.string.hello)));
-        Button f = (Button) findViewById(R.id.follow);
-        f.setText(Html.fromHtml(getString(R.string.follow)));
-        f.setMovementMethod(LinkMovementMethod.getInstance());
-        f.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.twitter.com/umanoapp"));
-                startActivity(i);
-            }
-        });
     }
 
     class GalleryAdapter extends RecyclerView.Adapter {
@@ -518,6 +528,10 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
 
         public void setData(List<String> list) {
             data = list;
+        }
+
+        public String getItem(int position) {
+            return data.get(position);
         }
 
         @Override
@@ -552,5 +566,39 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.im_view);
         }
+    }
+
+    public void calculatorSize() {
+        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.post_main_content);
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < 16) {
+                    layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                int width = layout.getMeasuredWidth();
+                int height = layout.getMeasuredHeight();
+                Log.i(TAG, "width : " + width + ", height: " + height);
+                int count = 3;
+                int paddingBottom = width / count;
+                if (paddingBottom > itemMaxWidth) {
+                    count = width / itemMaxWidth;
+                    float mod = width % 200;
+                    if (mod == 0) {
+                        paddingBottom = itemMaxWidth;
+                    } else if (mod > itemMaxWidth / 2) {
+                        count++;
+                    }
+                    paddingBottom = width / count;
+                }
+                gridLayoutManager.setSpanCount(count);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                layout.setPadding(0, 0, 0, paddingBottom + 20);
+                slidingUpPanelLayout.setPanelHeight(paddingBottom);
+            }
+        });
     }
 }

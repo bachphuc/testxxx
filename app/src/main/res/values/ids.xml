@@ -15,7 +15,6 @@
   -->
 
 <resources>
-
-  <item name="tag_view_target" type="id" />
-
+    <item name="tag_view_target" type="id" />
+    <item name="item_click_support" type="id" />
 </resources>
