@@ -1,17 +1,22 @@
 package com.learn.mobile.library.dmobi.helper;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.util.Size;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
+import com.learn.mobile.model.ImageItem;
 import com.learn.mobile.service.SBase;
 import com.squareup.picasso.Picasso;
 
@@ -98,6 +103,17 @@ public class ImageHelper {
         display(null, imageView, imageUrl, null);
     }
 
+    public static void display(ImageView imageView, ImageItem image) {
+        if (image == null) {
+            return;
+        }
+        String imageUrl = image.url;
+        if (DUtils.isEmpty(imageUrl)) {
+            return;
+        }
+        display(null, imageView, imageUrl, null);
+    }
+
     public static void display(ImageView imageView, String imageUrl, String thumbnailUrl) {
         display(null, imageView, imageUrl, thumbnailUrl);
     }
@@ -114,12 +130,12 @@ public class ImageHelper {
         imageView.setImageDrawable(drawable);
     }
 
-    public static int makeColorDarker(int color, int percent){
+    public static int makeColorDarker(int color, int percent) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        if(hsv[1] < 100){
-            hsv[1] *= (float)((percent + 100) / 100);
-            if(hsv[1] > 100){
+        if (hsv[1] < 100) {
+            hsv[1] *= (float) ((percent + 100) / 100);
+            if (hsv[1] > 100) {
                 hsv[1] = 100;
             }
         }
@@ -128,13 +144,45 @@ public class ImageHelper {
         return color;
     }
 
-    public static int makeColorLighter(int color, int percent){
+    public static int makeColorLighter(int color, int percent) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        if(hsv[1] < 100){
-            hsv[1] *= (float)((100 - percent) / 100);
+        if (hsv[1] < 100) {
+            hsv[1] *= (float) ((100 - percent) / 100);
         }
         color = Color.HSVToColor(hsv);
         return color;
+    }
+
+    public static Size getImageSize(String filePath) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        Size size = new Size(imageWidth, imageHeight);
+        return size;
+    }
+
+    public static class Size {
+        public Size() {
+
+        }
+
+        public Size(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        private int width;
+        private int height;
+
+        public int getWidth() {
+            return width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
     }
 }

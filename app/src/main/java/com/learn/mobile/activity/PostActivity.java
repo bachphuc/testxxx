@@ -15,9 +15,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +49,7 @@ import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.model.Link;
+import com.learn.mobile.model.User;
 import com.learn.mobile.service.SLink;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -80,7 +83,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     // Gallery Slider
     private SlidingUpPanelLayout slidingUpPanelLayout;
     RecyclerView recyclerView;
-    int itemMaxWidth = 200;
+    int itemMaxWidth = 240;
     GridLayoutManager gridLayoutManager;
 
     @Override
@@ -139,6 +142,14 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         tbDescription = (EditText) findViewById(R.id.tb_description);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
         progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
+
+        if (DMobi.isUser()) {
+            TextView textView = (TextView) findViewById(R.id.tv_title);
+            User user = (User) DMobi.getUser();
+            textView.setText(user.getTitle());
+            ImageView avatarView = (ImageView) findViewById(R.id.im_avatar);
+            ImageHelper.display(avatarView, user.getImages().getAvatar());
+        }
     }
 
     private void initRequest() {
@@ -422,6 +433,8 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         recyclerView = (RecyclerView) findViewById(R.id.list);
 
         List<String> imageData = new ArrayList<String>();
+        imageData.add(getResources().getString(R.string.take_from_camera));
+        imageData.add(getResources().getString(R.string.choose_from_gallery));
 
         // Find the last picture
         String[] projection = new String[]{
@@ -485,9 +498,19 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                String imagePath = galleryAdapter.getItem(position);
-                fileUri = Uri.fromFile(new File(imagePath));
-                previewImage();
+                switch (position) {
+                    case 0:
+                        captureImage();
+                        break;
+                    case 1:
+                        openGallery();
+                        break;
+                    default:
+                        String imagePath = galleryAdapter.getItem(position);
+                        fileUri = Uri.fromFile(new File(imagePath));
+                        previewImage();
+                        break;
+                }
             }
         });
 
@@ -537,20 +560,43 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // create a new view
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.gallery_item, parent, false);
+            View v;
+            if (viewType > 1) {
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.gallery_item, parent, false);
+            } else {
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.gallery_item_camera, parent, false);
+            }
             // set the view's size, margins, padding and layout parameters
             GalleryViewHolder vh = new GalleryViewHolder(v);
             return vh;
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            String img = data.get(position);
-            GalleryViewHolder galleryViewHolder = (GalleryViewHolder) holder;
-            int width = DUtils.dpToPx(galleryViewHolder.imageView.getContext(), 120);
+        public int getItemViewType(int position) {
+            return position;
+        }
 
-            ImageHelper.getAdapter().resize(width, width).display(galleryViewHolder.imageView, img);
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            GalleryViewHolder galleryViewHolder = (GalleryViewHolder) holder;
+            ImageView imageView = galleryViewHolder.imageView;
+            Context context = imageView.getContext();
+            switch (position) {
+                case 0:
+                    imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_camera_white_36dp));
+                    break;
+                case 1:
+                    imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_photo_white_36dp));
+                    break;
+                default:
+                    String img = data.get(position);
+                    int width = DUtils.dpToPx(context, 120);
+
+                    ImageHelper.getAdapter().resize(width, width).display(imageView, img);
+                    break;
+            }
         }
 
         @Override
@@ -579,9 +625,20 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
                 } else {
                     layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
+
+                // layout size
                 int width = layout.getMeasuredWidth();
                 int height = layout.getMeasuredHeight();
-                Log.i(TAG, "width : " + width + ", height: " + height);
+                Log.i(TAG, "Layout: width : " + width + ", height: " + height);
+
+                // screen size
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                height = displaymetrics.heightPixels;
+                width = displaymetrics.widthPixels;
+
+                Log.i(TAG, "Screen: width : " + width + ", height: " + height);
+
                 int count = 3;
                 int paddingBottom = width / count;
                 if (paddingBottom > itemMaxWidth) {
@@ -596,7 +653,8 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
                 }
                 gridLayoutManager.setSpanCount(count);
                 recyclerView.getAdapter().notifyDataSetChanged();
-                layout.setPadding(0, 0, 0, paddingBottom + 20);
+
+                layout.setPadding(layout.getPaddingLeft(), layout.getPaddingTop(), layout.getPaddingRight(), paddingBottom + 20);
                 slidingUpPanelLayout.setPanelHeight(paddingBottom);
             }
         });

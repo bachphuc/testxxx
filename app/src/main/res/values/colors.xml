@@ -32,4 +32,6 @@
 
     <color name="background_drag_activity">#000000</color>
     <color name="image_border_color">#ffffff</color>
+    <color name="primary_background_dark_color">#cccccc</color>
+    <color name="primary_background_darker_color">#999999</color>
 </resources>

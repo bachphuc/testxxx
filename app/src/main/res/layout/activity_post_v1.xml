@@ -3,8 +3,7 @@
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_layout"
@@ -24,179 +23,196 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="72dp"
+            android:paddingLeft="@dimen/normal_padding"
+            android:paddingRight="@dimen/normal_padding"
+            android:paddingTop="@dimen/normal_padding"
             tools:context="com.learn.mobile.activity.PostActivity">
 
-            <ScrollView
+            <RelativeLayout
+                android:id="@+id/post_main_content_inner"
                 android:layout_width="match_parent"
-                android:background="#ffffff"
                 android:layout_height="match_parent">
-                <!-- TODO Header post activity -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff">
+                    <!-- TODO Header post activity -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_stub" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:text="Trieu Quang Phuc"
-                            android:textColor="@color/primary_text_color" />
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="right">
+                            android:layout_gravity="center_vertical"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
 
-                            <ImageView
-                                android:id="@+id/bt_post"
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/im_avatar"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/ic_stub" />
+
+                            <TextView
+                                android:id="@+id/tv_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_send_white_24dp"
-                                android:tint="@color/primary_text_color" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!-- TODO This is content -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <EditText
-                            android:id="@+id/tb_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:background="#00000000"
-                            android:gravity="top"
-                            android:hint="Write something..."
-                            android:inputType="textMultiLine"
-                            android:minHeight="72dp"
-                            android:textAlignment="gravity"
-                            android:textAppearance="?android:attr/textAppearance" />
-                    </LinearLayout>
-
-                    <!-- Attachments -->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <!-- TOTO Image capture preview -->
-                        <RelativeLayout
-                            android:id="@+id/panel_photo_attachment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="16dp"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:id="@+id/photo_image_preview"
-                                android:layout_width="match_parent"
-                                android:layout_height="240dp"
-                                android:layout_alignParentEnd="false"
-                                android:layout_alignParentStart="false"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/background_red" />
-
-                        </RelativeLayout>
-
-                        <!-- TODO Link preview attachment -->
-                        <RelativeLayout
-                            android:id="@+id/panel_link_attachment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="120dp"
-                            android:padding="16dp"
-                            android:visibility="gone">
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="16dp"
+                                android:text="@string/trieu_quang_phuc"
+                                android:textColor="@color/primary_text_color"
+                                android:textStyle="bold" />
 
                             <LinearLayout
-                                android:id="@+id/panel_link_attachment_content"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="right">
+
+                                <ImageView
+                                    android:id="@+id/bt_post"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_send_white_36dp"
+                                    android:tint="@color/primary_color" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!-- TODO This is content -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <EditText
+                                android:id="@+id/tb_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:background="#00000000"
+                                android:gravity="top"
+                                android:hint="Write something..."
+                                android:inputType="textMultiLine"
+                                android:minHeight="72dp"
+                                android:textAlignment="gravity"
+                                android:textAppearance="?android:attr/textAppearance" />
+                        </LinearLayout>
+
+                        <!-- Attachments -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!-- TOTO Image capture preview -->
+                            <RelativeLayout
+                                android:id="@+id/panel_photo_attachment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:id="@+id/photo_image_preview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="240dp"
+                                    android:layout_alignParentEnd="false"
+                                    android:layout_alignParentStart="false"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/background_red" />
+
+                            </RelativeLayout>
+
+                            <!-- TODO Link preview attachment -->
+                            <RelativeLayout
+                                android:id="@+id/panel_link_attachment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="120dp"
+                                android:padding="16dp"
                                 android:visibility="gone">
 
                                 <LinearLayout
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp">
-
-                                    <ImageView
-                                        android:id="@+id/link_image_preview"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/ic_stub" />
-                                </LinearLayout>
-
-                                <LinearLayout
+                                    android:id="@+id/panel_link_attachment_content"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="16dp"
-                                    android:orientation="vertical">
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
-                                    <TextView
-                                        android:id="@+id/link_title"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Facebook.com" />
+                                    <LinearLayout
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp">
 
-                                    <TextView
-                                        android:id="@+id/link_url"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="https://www.facebook.com" />
+                                        <ImageView
+                                            android:id="@+id/link_image_preview"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:scaleType="centerCrop"
+                                            android:src="@drawable/ic_stub" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/link_description"
-                                        android:layout_width="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Network social large in the world, connect another people" />
+                                        android:layout_marginLeft="16dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/link_title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Facebook.com" />
+
+                                        <TextView
+                                            android:id="@+id/link_url"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="https://www.facebook.com" />
+
+                                        <TextView
+                                            android:id="@+id/link_description"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Network social large in the world, connect another people" />
+                                    </LinearLayout>
                                 </LinearLayout>
-                            </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/link_preview_loader"
-                                style="@style/Widget.MaterialProgressBar.ProgressBar"
+                                <ProgressBar
+                                    android:id="@+id/link_preview_loader"
+                                    style="@style/Widget.MaterialProgressBar.ProgressBar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center|center"
+                                    android:gravity="center_vertical|center_horizontal"
+                                    android:indeterminate="true" />
+
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:id="@+id/bt_remove_attachment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center|center"
-                                android:gravity="center_vertical|center_horizontal"
-                                android:indeterminate="true" />
-
+                                android:layout_margin="24dp"
+                                android:src="@drawable/ic_remove_circle_outline_white_24dp" />
                         </RelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/bt_remove_attachment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="24dp"
-                            android:src="@drawable/ic_remove_circle_outline_white_24dp" />
-                    </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:layout_marginTop="16dp"></View>
+                    </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_marginTop="16dp"></View>
-                </LinearLayout>
-
-            </ScrollView>
-
+                </ScrollView>
+            </RelativeLayout>
 
             <!-- TODO Toolbar bottom -->
             <RelativeLayout
@@ -204,14 +220,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
-                android:background="#dddddd"
                 android:gravity="bottom">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/main_tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="#cccccc">
+                    android:background="@color/primary_color">
 
                     <ImageButton
                         android:id="@+id/bt_capture_image"
@@ -219,7 +234,7 @@
                         android:layout_height="wrap_content"
                         android:background="#00000000"
                         android:src="@drawable/ic_camera_white_24dp"
-                        android:tint="@color/primary_text_color" />
+                        android:tint="@color/primary_icon_color" />
 
                     <ImageButton
                         android:id="@+id/bt_open_library"
@@ -228,7 +243,7 @@
                         android:layout_marginLeft="32dp"
                         android:background="#00000000"
                         android:src="@drawable/ic_image_white_24dp"
-                        android:tint="@color/primary_text_color" />
+                        android:tint="@color/primary_icon_color" />
 
                     <ImageButton
                         android:id="@+id/bt_share_link"
@@ -237,7 +252,7 @@
                         android:layout_marginLeft="32dp"
                         android:background="#00000000"
                         android:src="@drawable/ic_link_white_24dp"
-                        android:tint="@color/primary_text_color" />
+                        android:tint="@color/primary_icon_color" />
 
                 </android.support.v7.widget.Toolbar>
             </RelativeLayout>
@@ -250,7 +265,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="35dp"
                 android:progress="30"
-                android:progressTint="#0066FF"
+                android:progressTint="@color/primary_color"
+                android:progressTintMode="src_in"
                 android:visibility="gone" />
 
         </RelativeLayout>
