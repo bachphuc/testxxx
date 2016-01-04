@@ -1,14 +1,17 @@
 package com.learn.mobile.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alexvasilkov.gestures.Settings;
+import com.alexvasilkov.gestures.views.GestureImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.CustomGestureImageView;
 import com.learn.mobile.library.dmobi.DMobi;
@@ -106,30 +109,7 @@ public class UploadAvatarActivity extends UploadFileBase {
                 Bitmap cropped = gestureImageView.crop();
                 if (cropped != null) {
                     gestureImageView.setImageBitmap(cropped);
-                    progressDialog = DMobi.showLoading(this, "", "Upload avatar...");
-                    progressDialog.show();
-
-                    FileOutputStream out = null;
-                    try {
-                        imageUploadFilePath = getExternalCacheDir() + "/" + IMAGE_UPLOAD_FILE;
-                        out = new FileOutputStream(imageUploadFilePath);
-
-                        // bmp is your Bitmap instance
-                        // PNG is a loss less format, the compression factor (100) is ignored
-                        cropped.compress(Bitmap.CompressFormat.PNG, 80, out);
-
-                        onUpdateAvatar();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (out != null) {
-                                out.close();
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    new ProcessImageToUpload(this).execute(cropped);
                 }
                 break;
             case R.id.mn_choose_from_gallery:
@@ -145,5 +125,58 @@ public class UploadAvatarActivity extends UploadFileBase {
                 return super.onOptionsItemSelected(item);
         }
         return false;
+    }
+
+    class ProcessImageToUpload extends AsyncTask<Bitmap, Void, String> {
+        Context context;
+
+        public ProcessImageToUpload(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = DMobi.showLoading(context, "", "Upload avatar...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Bitmap... params) {
+            int count = params.length;
+            long totalSize = 0;
+            for (int i = 0; i < count; i++) {
+                Bitmap cropped = params[i];
+                if (cropped != null) {
+                    FileOutputStream out = null;
+                    try {
+                        imageUploadFilePath = getExternalCacheDir() + "/" + IMAGE_UPLOAD_FILE;
+                        out = new FileOutputStream(imageUploadFilePath);
+
+                        // bmp is your Bitmap instance
+                        // PNG is a loss less format, the compression factor (100) is ignored
+                        cropped.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                        return imageUploadFilePath;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            onUpdateAvatar();
+        }
     }
 }
