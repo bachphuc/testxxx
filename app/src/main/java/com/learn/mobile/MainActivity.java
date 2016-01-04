@@ -296,4 +296,14 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     protected void onAppBarLayoutOffsetChange(AppBarLayout appBarLayout, int i) {
         super.onAppBarLayoutOffsetChange(appBarLayout, i);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() != 0) {
+            // back go home fragment
+            viewPager.setCurrentItem(0);
+            return;
+        }
+        super.onBackPressed();
+    }
 }
