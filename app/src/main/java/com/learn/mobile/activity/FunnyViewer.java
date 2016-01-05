@@ -9,15 +9,13 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.LargeRecyclerImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DecodeRunnable;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
 import com.learn.mobile.model.Funny;
 import com.learn.mobile.model.ImageItem;
 
@@ -69,21 +67,26 @@ public class FunnyViewer extends AppCompatActivity implements DecodeRunnable.Dec
                     multiImageViewer.notifyDataSetChanged();
                     processBar.setVisibility(View.GONE);
                 } else {
-                    Glide.with(context)
+                    ImageHelper
+                            .getAdapter()
+                            .with(this)
                             .load(imageItem.url)
                             .asBitmap()
-                            .into(new SimpleTarget<Bitmap>(imageItem.width, imageItem.height) {
+                            .resize(imageItem.width, imageItem.height)
+                            .callback(new ImageAdapterBase.ImageBitmapLoadedListener() {
                                 @Override
-                                public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                public void onCompleted(Bitmap bitmap) {
+                                    DMobi.log(TAG, "onCompleted");
                                     onBitmapResourceReady(bitmap);
                                 }
-                            });
+                            }).display();
                 }
             }
         }
     }
 
     public void onBitmapResourceReady(final Bitmap bitmap) {
+        DMobi.log(TAG, "onBitmapResourceReady");
         ImageItem imageItem = funny.getImages().getFull();
         DecodeRunnable decodeRunnable = new DecodeRunnable();
         decodeRunnable.setBitmap(bitmap);

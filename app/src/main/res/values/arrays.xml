@@ -11,8 +11,8 @@
     </string-array>
     <string-array name="mainTab">
         <item>Home</item>
-        <item>Photo</item>
         <item>Member</item>
+        <item>Photo</item>
         <item>Funny</item>
     </string-array>
 </resources>

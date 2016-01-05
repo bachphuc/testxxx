@@ -33,7 +33,7 @@ import com.learn.mobile.service.SUser;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Event.Action {
     private static final String TAG = LeftMenuFragment.class.getSimpleName();
 
     private View view;
@@ -41,12 +41,6 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
     private NavigationView navigationView;
 
     private OnLeftFragmentInteractionListener mListener;
-
-    // TODO: Rename and change types of parameters
-    public static LeftMenuFragment newInstance(String param1, String param2) {
-        LeftMenuFragment fragment = new LeftMenuFragment();
-        return fragment;
-    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,12 +67,9 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         ImageView imageView = (ImageView) headerView.findViewById(R.id.img_cover);
         imageView.setOnClickListener(this);
 
-        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, new Event.Action() {
-            @Override
-            public void fireAction(String eventType, Object o) {
-                updateProfile(o);
-            }
-        });
+        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
+
+        DMobi.registerEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, this);
 
         // display user information  if user has already login
         setUser();
@@ -178,6 +169,19 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
                     context.startActivity(intent);
                 }
+                break;
+        }
+    }
+
+    @Override
+    public void fireAction(String eventType, Object o) {
+        switch (eventType) {
+            case Event.EVENT_UPDATE_LEFT_MENU_SELECTED:
+                DMobi.log(TAG, "Select menu " + (int) o);
+                navigationView.getMenu().getItem((int) o).setChecked(true);
+                break;
+            case Event.EVENT_UPDATE_PROFILE:
+                updateProfile(o);
                 break;
         }
     }

@@ -20,6 +20,7 @@ public class Event {
     public static final String EVENT_LOGOUT_SUCCESS = "EVENT_LOGOUT_SUCCESS";
     public static final String EVENT_OBJECT_UPDATE = "EVENT_OBJECT_UPDATE";
     public static final String EVENT_FEED_UPDATE_VIEW = "EVENT_FEED_UPDATE_VIEW";
+    public static final String EVENT_UPDATE_LEFT_MENU_SELECTED = "EVENT_UPDATE_LEFT_MENU_SELECTED";
 
     private ArrayList<Action> actions = new ArrayList<Action>();
     private String eventType;

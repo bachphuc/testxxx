@@ -128,7 +128,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
                         tabLayout.getTabAt(position).select();
                     }
                 }
-
+                DMobi.fireEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, position);
                 DMobi.fireEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
             }
 
@@ -258,10 +258,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.drawer_member:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
                 break;
             case R.id.drawer_photo:
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
                 break;
             case R.id.drawer_funny:
                 viewPager.setCurrentItem(3);

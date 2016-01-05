@@ -32,13 +32,13 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                 fragment = new NewFeedsFragment();
                 break;
             case 1:
-                PhotoFragment frag = new PhotoFragment();
-                frag.setFragmentIndex(position);
-                return frag;
-            case 2:
                 UserFragment userFragment = new UserFragment();
                 userFragment.setFragmentIndex(position);
                 return userFragment;
+            case 2:
+                PhotoFragment frag = new PhotoFragment();
+                frag.setFragmentIndex(position);
+                return frag;
             case 3:
                 FunnyFragment funnyFragment = new FunnyFragment();
                 funnyFragment.setFragmentIndex(position);
