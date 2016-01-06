@@ -1,6 +1,7 @@
 package com.learn.mobile;
 
 import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +31,9 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
-public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener {
+import java.util.List;
+
+public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -236,12 +240,15 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
             }
         }
 
-        // Associate searchable configuration with the SearchView
+        // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        // Do not iconify the widget; expand it by default
 
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -305,5 +312,16 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.i(TAG, "Query: " + newText);
+        return false;
     }
 }
