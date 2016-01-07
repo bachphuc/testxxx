@@ -5,15 +5,19 @@ import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.MatrixCursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +40,14 @@ import java.util.List;
 public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final String QUERY_KEY = "QUERY_KEY";
+    private static final String[] SUGGESTIONS = {
+            "Hello", "Sao Paulo", "Japan",
+            "Bahia", "New york", "Thailand",
+            "Tocantins", "View Nam"
+    };
+    private SimpleCursorAdapter mAdapter;
 
     private DrawerLayout drawerLayout;
 
@@ -67,6 +79,9 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(this);
+
+        // TODO init search service
+        initSearch();
 
         // TODO init left navigation menu
         initNavigationMenu();
@@ -245,11 +260,64 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        // show search icon if unlock this code
+        // searchView.setIconifiedByDefault(false);
         // Do not iconify the widget; expand it by default
+
+        searchView.setSuggestionsAdapter(mAdapter);
 
         searchView.setOnQueryTextListener(this);
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    public void initSearch() {
+        if (getIntent() != null) {
+            handleIntent(getIntent());
+        }
+        final String[] from = new String[]{"cityName"};
+        final int[] to = new int[]{android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_1,
+                null,
+                from,
+                to,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+    }
+
+    // You must implements your logic to get data using OrmLite
+    private void populateAdapter(String query) {
+        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, "cityName"});
+        for (int i = 0; i < SUGGESTIONS.length; i++) {
+            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
+                c.addRow(new Object[]{i, SUGGESTIONS[i]});
+        }
+        mAdapter.changeCursor(c);
+    }
+
+    /**
+     * Assuming this activity was started with a new intent, process the incoming information and
+     * react accordingly.
+     *
+     * @param intent
+     */
+    private void handleIntent(Intent intent) {
+        // Special processing of the incoming intent only occurs if the if the action specified
+        // by the intent is ACTION_SEARCH.
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            // SearchManager.QUERY is the key that a SearchManager will use to send a query string
+            // to an Activity.
+            String query = intent.getStringExtra(SearchManager.QUERY);
+
+            // We need to create a bundle containing the query string to send along to the
+            // LoaderManager, which will be handling querying the database and returning results.
+            Bundle bundle = new Bundle();
+            bundle.putString(QUERY_KEY, query);
+        }
     }
 
     @Override
@@ -321,7 +389,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.i(TAG, "Query: " + newText);
+        populateAdapter(newText);
         return false;
     }
 }

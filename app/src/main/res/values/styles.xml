@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_darker_color</item>
         <item name="colorButtonNormal">@color/primary_button_color</item>
+        <item name="android:popupBackground">@color/background_color</item>
     </style>
 
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
