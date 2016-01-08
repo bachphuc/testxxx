@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.MatrixCursor;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 
 import com.learn.mobile.activity.*;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
@@ -264,6 +266,37 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         // searchView.setIconifiedByDefault(false);
         // Do not iconify the widget; expand it by default
 
+        // set full width suggestion search for search view
+        // id of AutoCompleteTextView
+        int searchEditTextId = R.id.search_src_text; // for AppCompat
+
+        // get AutoCompleteTextView from SearchView
+        final AutoCompleteTextView searchEditText = (AutoCompleteTextView) searchView.findViewById(searchEditTextId);
+        final View dropDownAnchor = searchView.findViewById(searchEditText.getDropDownAnchor());
+        if (dropDownAnchor != null) {
+            dropDownAnchor.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                    // calculate width of DropdownView
+                    int point[] = new int[2];
+                    dropDownAnchor.getLocationOnScreen(point);
+                    // x coordinate of DropDownView
+                    // int dropDownPadding = point[0] + searchEditText.getDropDownHorizontalOffset();
+
+                    Rect screenSize = new Rect();
+                    getWindowManager().getDefaultDisplay().getRectSize(screenSize);
+                    // screen width
+                    int screenWidth = screenSize.width();
+
+                    // set DropDownView width
+                    // searchEditText.setDropDownWidth(screenWidth - dropDownPadding * 2);
+                    searchEditText.setDropDownWidth(screenWidth);
+                }
+            });
+        }
+
         searchView.setSuggestionsAdapter(mAdapter);
 
         searchView.setOnQueryTextListener(this);
@@ -282,7 +315,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         final String[] from = new String[]{"cityName"};
         final int[] to = new int[]{android.R.id.text1};
         mAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                R.layout.suggestion_search_simple,
                 null,
                 from,
                 to,
