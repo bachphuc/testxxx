@@ -71,11 +71,14 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     protected boolean bHasAppBar = false;
 
     protected boolean bScrollBottomTopWhenLoadMoreFinish = false;
-    public void setScrollToBottomWhenLoadMoreFinish(boolean b){
+
+    public void setScrollToBottomWhenLoadMoreFinish(boolean b) {
         bScrollBottomTopWhenLoadMoreFinish = b;
     }
+
     protected boolean bScrollBottomAnimate = false;
-    public void setScrollBottomAnimate(boolean b){
+
+    public void setScrollBottomAnimate(boolean b) {
         bScrollBottomAnimate = b;
     }
 
@@ -87,7 +90,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     }
 
-    public void setSpanSize(int size){
+    public void setSpanSize(int size) {
         spanSize = size;
     }
 
@@ -129,11 +132,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public void scrollToBottom(boolean animate) {
         if (recyclerView != null) {
-            if(recyclerView.getAdapter().getItemCount() > 0){
-                if(!animate){
+            if (recyclerView.getAdapter().getItemCount() > 0) {
+                if (!animate) {
                     recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-                }
-                else{
+                } else {
                     recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
                 }
             }
@@ -273,7 +275,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                     if (response.isSuccessfully() && response.hasData()) {
                         adapter.notifyDataSetChanged();
                         adapter.fireNotifyDataSetChanged();
-                        if(bScrollBottomTopWhenLoadMoreFinish){
+                        if (bScrollBottomTopWhenLoadMoreFinish) {
                             scrollToBottom(bScrollBottomAnimate);
                         }
                     }
@@ -303,6 +305,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         DMobi.registerEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex, new Event.Action() {
             @Override
             public void fireAction(String eventType, Object o) {
+                adapter.notifyDataSetChanged();
                 startLoad();
             }
         });

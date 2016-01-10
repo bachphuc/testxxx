@@ -6,6 +6,7 @@ import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.BaseObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
+import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 
@@ -27,6 +28,7 @@ public class SBase {
 
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
+    public static final String ENTRY_ID = "id";
 
     protected boolean getDataByPage = false;
 
@@ -34,11 +36,11 @@ public class SBase {
 
     protected int itemHeaderCount = 0;
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 
@@ -132,7 +134,7 @@ public class SBase {
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
         dRequest.addParam("action", action);
-        if(user != null){
+        if (user != null) {
             dRequest.addParam("user_id", user.getId());
         }
         if (requestParams.size() > 0) {
@@ -143,6 +145,7 @@ public class SBase {
                 dRequest.addParam("page", this.page);
             }
         }
+        updateMaxAndMinId();
         dRequest.addParam("max_id", this.maxId);
         dRequest.addParam("min_id", this.minId);
 
@@ -200,10 +203,53 @@ public class SBase {
         DMobi.showToast("Network error!");
     }
 
-    public void responseError(BaseObjectResponse response, DResponse.Complete complete){
+    public void responseError(BaseObjectResponse response, DResponse.Complete complete) {
         DMobi.showToast(response.getErrors());
-        if(complete != null){
+        if (complete != null) {
             complete.onComplete(false, null);
         }
+    }
+
+    public void get(final DResponse.Complete complete, int itemId) {
+        DRequest dRequest = DMobi.createRequest();
+
+        dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".get");
+        dRequest.addParam(ENTRY_ID, itemId);
+        final SBase that = this;
+        dRequest.get(new DResponse.Listener() {
+            @Override
+            public void onResponse(String respondString) {
+                DMobi.log("REQUEST", respondString);
+                SingleObjectResponse<DMobileModelBase> response = DbHelper.parseSingleObjectResponse(respondString, itemClass);
+                if (response != null) {
+                    if (response.isSuccessfully()) {
+                        if (response.hasData()) {
+                            complete.onComplete(true, response.data);
+                        } else {
+                            if (complete != null) {
+                                complete.onComplete(false, null);
+                            }
+                        }
+                    } else {
+                        DMobi.showToast(response.getErrors());
+                        if (complete != null) {
+                            complete.onComplete(false, null);
+                        }
+                    }
+                } else {
+                    if (complete != null) {
+                        complete.onComplete(false, null);
+                    }
+                }
+            }
+        }, new DResponse.ErrorListener() {
+            @Override
+            public void onErrorResponse(Object error) {
+                if (complete != null) {
+                    complete.onComplete(false, null);
+                    DMobi.showToast("Network error!");
+                }
+            }
+        });
     }
 }

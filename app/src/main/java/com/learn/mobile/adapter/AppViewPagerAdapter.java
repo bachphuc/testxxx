@@ -44,17 +44,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                 funnyFragment.setFragmentIndex(position);
                 return funnyFragment;
             default:
-                fragment = new Fragment() {
-                    @Override
-                    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                             Bundle savedInstanceState) {
-                        View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
-                        Bundle args = getArguments();
-                        ((TextView) rootView.findViewById(R.id.viewpage_title)).setText("View page:" + pos);
-                        return rootView;
-                    }
-                };
-                break;
+                return null;
         }
 
         return fragment;

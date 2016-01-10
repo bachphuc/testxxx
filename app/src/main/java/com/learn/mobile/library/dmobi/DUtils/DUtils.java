@@ -161,4 +161,14 @@ public class DUtils {
         return dp;
     }
 
+    public static String convertToClassName(String str) {
+        str = str.toLowerCase();
+        String[] parts = str.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = StringUtils.capitalize(parts[i]);
+        }
+        str = StringUtils.join(parts, "");
+        return str;
+    }
+
 }

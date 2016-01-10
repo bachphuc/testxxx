@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.annotations.SerializedName;
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
@@ -17,12 +16,12 @@ import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
-
-import java.util.HashMap;
-
-import com.google.gson.annotations.SerializedName;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SLike;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
 
 /**
  * Created by 09520_000 on 5/17/2015.
@@ -227,5 +226,27 @@ public class DMobileModelBase {
 
     public String getLink() {
         return DConfig.getBaseUrl();
+    }
+
+    public static DMobileModelBase getModelByType(String itemType) {
+        String type = itemType;
+        type = DUtils.convertToClassName(type);
+        String sClass = DConfig.BUNDLE_ID + "." + DConfig.MODEL_NAME + "." + type;
+        Class c = null;
+        DMobileModelBase dMobileModelBase;
+        try {
+            c = Class.forName(sClass);
+            try {
+                dMobileModelBase = (DMobileModelBase) c.newInstance();
+                dMobileModelBase.itemType = itemType;
+                return dMobileModelBase;
+            } catch (InstantiationException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            }
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 }

@@ -80,7 +80,7 @@ public class DMobi {
     }
 
     public static SBase getInstance(String service) {
-        String sClass = DConfig.BUNDLE_ID + ".service." + service;
+        String sClass = DConfig.BUNDLE_ID + "." + DConfig.SERVICE_NAME + "." + service;
         Class c = null;
         SBase sBase;
         try {
@@ -202,7 +202,7 @@ public class DMobi {
     public static Event registerEvent(String key, Event.Action action) {
         Event event = eventHashTable.get(key);
         if (event != null) {
-            if(action != null){
+            if (action != null) {
                 event.addAction(action);
             }
             return event;

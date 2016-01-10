@@ -1,28 +1,23 @@
 package com.learn.mobile;
 
 import android.app.SearchManager;
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.MatrixCursor;
+import android.database.Cursor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,26 +25,23 @@ import android.widget.AutoCompleteTextView;
 
 import com.learn.mobile.activity.*;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
+import com.learn.mobile.adapter.GlobalSearchAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.service.SUser;
 
-import java.util.List;
-
-public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener {
+public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String QUERY_KEY = "QUERY_KEY";
-    private static final String[] SUGGESTIONS = {
-            "Hello", "Sao Paulo", "Japan",
-            "Bahia", "New york", "Thailand",
-            "Tocantins", "View Nam"
-    };
-    private SimpleCursorAdapter mAdapter;
+
+    private GlobalSearchAdapter globalSearchAdapter;
 
     private DrawerLayout drawerLayout;
 
@@ -297,9 +289,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
             });
         }
 
-        searchView.setSuggestionsAdapter(mAdapter);
-
+        searchView.setSuggestionsAdapter(globalSearchAdapter);
         searchView.setOnQueryTextListener(this);
+        searchView.setOnSuggestionListener(this);
+
         return true;
     }
 
@@ -312,24 +305,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         if (getIntent() != null) {
             handleIntent(getIntent());
         }
-        final String[] from = new String[]{"cityName"};
-        final int[] to = new int[]{android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(this,
-                R.layout.suggestion_search_simple,
-                null,
-                from,
-                to,
-                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-    }
 
-    // You must implements your logic to get data using OrmLite
-    private void populateAdapter(String query) {
-        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, "cityName"});
-        for (int i = 0; i < SUGGESTIONS.length; i++) {
-            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
-                c.addRow(new Object[]{i, SUGGESTIONS[i]});
-        }
-        mAdapter.changeCursor(c);
+        globalSearchAdapter = new GlobalSearchAdapter(this, R.layout.suggestion_search_simple, null);
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        globalSearchAdapter.setData(sUser.getData());
     }
 
     /**
@@ -422,7 +401,19 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        populateAdapter(newText);
+        globalSearchAdapter.search(newText);
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        DMobileModelBase item = globalSearchAdapter.getItemAtPosition(position);
+        item.showItemDetail(this);
         return false;
     }
 }

@@ -39,7 +39,9 @@ import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserInformationFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.User;
+import com.learn.mobile.service.SUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.henrytao.smoothappbarlayout.PagerAdapter;
@@ -111,6 +113,16 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         tabLayout.setupWithViewPager(viewPager);
 
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        sUser.get(new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    user = (User) o;
+                    updateView();
+                }
+            }
+        }, user.getId());
         updateView();
     }
 
@@ -167,7 +179,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
         if (imgAvatar != null && user.images != null) {
-            if(imgAvatar instanceof CircleImageView){
+            if (imgAvatar instanceof CircleImageView) {
                 CircleImageView circleImageView = (CircleImageView) imgAvatar;
                 circleImageView.setBorderWidth(1);
                 circleImageView.setBorderColor(ContextCompat.getColor(this, R.color.image_border_color));
