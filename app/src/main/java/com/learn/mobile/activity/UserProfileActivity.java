@@ -186,5 +186,8 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
             }
             ImageHelper.display(imgAvatar, user.images.getMedium().url);
         }
+
+        userInformationFragment.setUser(user);
+        userInformationFragment.updateView();
     }
 }

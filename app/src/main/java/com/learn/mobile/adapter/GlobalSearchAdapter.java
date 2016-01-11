@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
@@ -78,9 +79,9 @@ public class GlobalSearchAdapter extends ResourceCursorAdapter {
         return data;
     }
 
-    public void search(String query) {
+    public int search(String query) {
         final MatrixCursor c = new MatrixCursor(fields);
-        String image = null;
+        String image;
         for (int i = 0; i < data.size(); i++) {
             DMobileModelBase item = data.get(i);
             if (item.getTitle().toLowerCase().startsWith(query.toLowerCase())) {
@@ -98,7 +99,9 @@ public class GlobalSearchAdapter extends ResourceCursorAdapter {
                 break;
             }
         }
+        DMobi.log("search", c.getCount() + "");
         this.changeCursor(c);
+        return c.getCount();
     }
 
     public DMobileModelBase getItemAtPosition(int position) {

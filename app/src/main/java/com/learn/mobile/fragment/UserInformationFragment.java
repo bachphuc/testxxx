@@ -34,21 +34,11 @@ public class UserInformationFragment extends Fragment implements ObservableScrol
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
         frameLayout.removeAllViews();
         frameLayout.addView(LayoutInflater.from(getContext()).inflate(R.layout.item_header_spacing, null));
-
-        if(user != null){
-            TextView textView = (TextView) view.findViewById(R.id.tv_fullName);
-            textView.setText(user.fullName);
-
-            textView = (TextView) view.findViewById(R.id.tv_username);
-            textView.setText(user.userName);
-
-            textView = (TextView) view.findViewById(R.id.tv_email);
-            textView.setText(user.email);
-        }
+        updateView();
         return view;
     }
 
-    public void setUser(User u){
+    public void setUser(User u) {
         user = u;
     }
 
@@ -58,5 +48,22 @@ public class UserInformationFragment extends Fragment implements ObservableScrol
             return nestedScrollView;
         }
         return null;
+    }
+
+    public void updateView() {
+        if (user != null && view != null) {
+            TextView textView = (TextView) view.findViewById(R.id.tv_fullName);
+            if (textView != null) {
+                textView.setText(user.fullName);
+            }
+            textView = (TextView) view.findViewById(R.id.tv_username);
+            if (textView != null) {
+                textView.setText(user.userName);
+            }
+            textView = (TextView) view.findViewById(R.id.tv_email);
+            if (textView != null) {
+                textView.setText(user.email);
+            }
+        }
     }
 }

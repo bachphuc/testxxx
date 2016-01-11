@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
 import com.learn.mobile.activity.*;
@@ -29,6 +30,7 @@ import com.learn.mobile.adapter.GlobalSearchAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -48,6 +50,9 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     TabLayout tabLayout;
     ViewPager viewPager;
     AppViewPagerAdapter appViewPagerAdapter;
+
+    AutoCompleteTextView searchEditText;
+    SearchView searchView;
 
     public TabLayout getTabLayout() {
         return tabLayout;
@@ -251,7 +256,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         // show search icon if unlock this code
@@ -263,9 +268,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         int searchEditTextId = R.id.search_src_text; // for AppCompat
 
         // get AutoCompleteTextView from SearchView
-        final AutoCompleteTextView searchEditText = (AutoCompleteTextView) searchView.findViewById(searchEditTextId);
+        searchEditText = (AutoCompleteTextView) searchView.findViewById(searchEditTextId);
         final View dropDownAnchor = searchView.findViewById(searchEditText.getDropDownAnchor());
         if (dropDownAnchor != null) {
+            searchEditText.setThreshold(1);
             dropDownAnchor.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom,
@@ -296,16 +302,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         return true;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
     public void initSearch() {
-        if (getIntent() != null) {
-            handleIntent(getIntent());
-        }
-
         globalSearchAdapter = new GlobalSearchAdapter(this, R.layout.suggestion_search_simple, null);
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         globalSearchAdapter.setData(sUser.getData());
@@ -401,7 +398,13 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        globalSearchAdapter.search(newText);
+        DMobi.log(TAG, "onQueryTextChange: " + newText);
+        int result = globalSearchAdapter.search(newText);
+        if (result > 0 && DUtils.isEmpty(newText)) {
+            DMobi.log(TAG, "showDropDown");
+            searchEditText.showDropDown();
+            OpenSearchSuggestionsList(searchView);
+        }
         return false;
     }
 
@@ -415,5 +418,19 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         DMobileModelBase item = globalSearchAdapter.getItemAtPosition(position);
         item.showItemDetail(this);
         return false;
+    }
+
+    private void OpenSearchSuggestionsList(ViewGroup viewGroup) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+
+            if (child instanceof ViewGroup) {
+                OpenSearchSuggestionsList((ViewGroup) child);
+            } else if (child instanceof AutoCompleteTextView) {
+                // Found the right child - show dropdown
+                ((AutoCompleteTextView) child).showDropDown();
+                break; // We're done
+            }
+        }
     }
 }
