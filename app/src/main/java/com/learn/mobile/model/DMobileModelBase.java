@@ -25,24 +25,24 @@ import java.util.HashMap;
  * Created by 09520_000 on 5/17/2015.
  */
 public class DMobileModelBase {
+
+    @SerializedName("title")
     public String title;
+
+    @SerializedName("description")
     public String description;
-    public int id;
 
-    private HashMap<String, Object> _data = new HashMap<String, Object>();
-
-    public void addData(String key, Object value) {
-        _data.put(key, value);
-    }
-
-    public Object getData(String key) {
-        return _data.get(key);
-    }
-
+    @SerializedName("images")
     public ImageObject images;
 
     @SerializedName("item_type")
     public String itemType;
+
+    @SerializedName("id")
+    public int id;
+
+    @SerializedName("item_id")
+    public String itemId;
 
     @SerializedName("total_like")
     public int totalLike;
@@ -55,6 +55,16 @@ public class DMobileModelBase {
 
     @SerializedName("item_link")
     public String itemLink;
+
+    private HashMap<String, Object> _data = new HashMap<String, Object>();
+
+    public void addData(String key, Object value) {
+        _data.put(key, value);
+    }
+
+    public Object getData(String key) {
+        return _data.get(key);
+    }
 
     public int getTotalComment() {
         return totalComment;

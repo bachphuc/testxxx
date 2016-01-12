@@ -13,6 +13,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.fragment.FunnyFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
+import com.learn.mobile.fragment.SearchFragment;
 import com.learn.mobile.fragment.UserFragment;
 
 /**
@@ -43,6 +44,10 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                 FunnyFragment funnyFragment = new FunnyFragment();
                 funnyFragment.setFragmentIndex(position);
                 return funnyFragment;
+            case 4:
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setFragmentIndex(position);
+                return searchFragment;
             default:
                 return null;
         }
@@ -52,7 +57,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override

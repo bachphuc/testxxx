@@ -29,6 +29,7 @@ import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.adapter.GlobalSearchAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.fragment.NewFeedsFragment;
+import com.learn.mobile.fragment.SearchFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -349,6 +350,8 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
                 break;
             case R.id.drawer_funny:
                 viewPager.setCurrentItem(3);
+            case R.id.drawer_search:
+                viewPager.setCurrentItem(4);
                 break;
         }
     }
@@ -393,6 +396,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        viewPager.setCurrentItem(4);
+        SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getItem(4);
+        searchFragment.setParam(SearchFragment.SEARCH_KEY, query);
+        searchEditText.dismissDropDown();
         return false;
     }
 

@@ -65,8 +65,5 @@ public class DAbstractMusicSong extends DMobileModelBase{
     @SerializedName("module_id")
     public String moduleId ;
     
-    @SerializedName("item_id")
-    public int itemId = 0;
-    
 
 }

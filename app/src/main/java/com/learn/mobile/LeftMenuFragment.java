@@ -150,6 +150,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
             case R.id.drawer_member:
             case R.id.drawer_photo:
             case R.id.drawer_funny:
+            case R.id.drawer_search:
                 mListener.onLeftFragmentInteraction(item.getItemId());
                 return true;
         }

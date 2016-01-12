@@ -17,9 +17,6 @@ public class DAbstractLink extends DMobileModelBase{
     @SerializedName("module_id")
     public String moduleId ;
     
-    @SerializedName("item_id")
-    public int itemId = 0;
-    
     @SerializedName("parent_user_id")
     public int parentUserId = 0;
     

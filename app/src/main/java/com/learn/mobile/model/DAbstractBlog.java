@@ -44,9 +44,6 @@ public class DAbstractBlog extends DMobileModelBase{
     @SerializedName("module_id")
     public String moduleId = "blog";
     
-    @SerializedName("item_id")
-    public int itemId = 0;
-    
     @SerializedName("user")
     public User user ;
     

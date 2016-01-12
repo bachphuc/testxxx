@@ -14,5 +14,6 @@
         <item>Member</item>
         <item>Photo</item>
         <item>Funny</item>
+        <item>Search</item>
     </string-array>
 </resources>

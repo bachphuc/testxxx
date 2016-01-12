@@ -17,9 +17,6 @@ public class DAbstractComment extends DMobileModelBase{
     @SerializedName("type_id")
     public String typeId ;
     
-    @SerializedName("item_id")
-    public int itemId ;
-    
     @SerializedName("user_id")
     public int userId ;
     

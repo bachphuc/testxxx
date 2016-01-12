@@ -17,9 +17,6 @@ public class DAbstractItemObject {
     public String jsonData;
 
     public DMobileModelBase getItem() {
-        if(itemType == null || jsonData == null){
-            return null;
-        }
         Gson gson = new GsonBuilder().create();
         Type type;
         switch (itemType) {
@@ -93,6 +90,11 @@ public class DAbstractItemObject {
 			}.getType();
 			Funny objFunny = gson.fromJson(jsonData, type);
 			return objFunny;
+		case "Search":
+			type = new TypeToken<Search>() {
+			}.getType();
+			Search objSearch = gson.fromJson(jsonData, type);
+			return objSearch;
             default:
                 return new DMobileModelBase();
         }
@@ -155,6 +157,10 @@ public class DAbstractItemObject {
             return type;
         case "Funny":
             type = new TypeToken<Funny>() {
+            }.getType();
+            return type;
+        case "Search":
+            type = new TypeToken<Search>() {
             }.getType();
             return type;
             default:
@@ -221,6 +227,10 @@ public class DAbstractItemObject {
             type = new TypeToken<ListObjectResponse<Funny>>() {
             }.getType();
             return type;
+        case "Search":
+            type = new TypeToken<ListObjectResponse<Search>>() {
+            }.getType();
+            return type;
             default:
                 return null;
         }
@@ -283,6 +293,10 @@ public class DAbstractItemObject {
             return type;
         case "Funny":
             type = new TypeToken<SingleObjectResponse<Funny>>() {
+            }.getType();
+            return type;
+        case "Search":
+            type = new TypeToken<SingleObjectResponse<Search>>() {
             }.getType();
             return type;
             default:

@@ -30,7 +30,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
 
     @Override
     public String getTitle() {
-        return (fullName != null ? fullName : "");
+        return (fullName != null ? fullName : super.getTitle());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
 
     @Override
     public void onChange(View view, int backgroundColor, int textColor) {
-        if(view instanceof PaletteImageView){
+        if (view instanceof PaletteImageView) {
             PaletteImageView paletteImageView = (PaletteImageView) view;
             paletteImageView.removeOnPaletteListerner();
         }

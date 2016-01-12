@@ -29,9 +29,6 @@ public class DAbstractFeed extends DMobileModelBase{
     @SerializedName("parent_user_id")
     public int parentUserId = 0;
     
-    @SerializedName("item_id")
-    public int itemId ;
-    
     @SerializedName("time_stamp")
     public int timeStamp ;
     
