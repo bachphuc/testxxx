@@ -271,7 +271,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         searchEditText = (AutoCompleteTextView) searchView.findViewById(searchEditTextId);
         final View dropDownAnchor = searchView.findViewById(searchEditText.getDropDownAnchor());
         if (dropDownAnchor != null) {
-            searchEditText.setThreshold(1);
+            searchEditText.setThreshold(0);
             dropDownAnchor.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom,

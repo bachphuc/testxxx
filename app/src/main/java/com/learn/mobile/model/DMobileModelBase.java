@@ -19,8 +19,6 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SLike;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.HashMap;
 
 /**
@@ -54,6 +52,9 @@ public class DMobileModelBase {
 
     @SerializedName("total_comment")
     public int totalComment;
+
+    @SerializedName("item_link")
+    public String itemLink;
 
     public int getTotalComment() {
         return totalComment;
@@ -209,7 +210,7 @@ public class DMobileModelBase {
     }
 
     public String getItemLink() {
-        return DConfig.getBaseUrl();
+        return (DUtils.isEmpty(itemLink) ? DConfig.getBaseUrl() : itemLink);
     }
 
     public void share(Context context) {
@@ -225,7 +226,7 @@ public class DMobileModelBase {
     }
 
     public String getLink() {
-        return DConfig.getBaseUrl();
+        return (DUtils.isEmpty(itemLink) ? DConfig.getBaseUrl() : itemLink);
     }
 
     public static DMobileModelBase getModelByType(String itemType) {
