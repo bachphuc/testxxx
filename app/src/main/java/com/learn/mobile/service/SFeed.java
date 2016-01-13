@@ -7,21 +7,24 @@ import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.model.Feed;
 
+import java.util.Objects;
+
 /**
  * Created by 09520_000 on 8/22/2015.
  */
 public class SFeed extends SBase {
     private static final String TAG = SFeed.class.getSimpleName();
-    public SFeed(){
+
+    public SFeed() {
         itemClass = Feed.class;
     }
 
-    public void setProfileUser(int userId){
+    public void setProfileUser(int userId) {
         clearRequestParams();
-        setRequestParams(DRequest.createRequestParam("user_id", userId));
+        addRequestParam(USER_KEY, userId);
     }
 
-    public void delete(int feed_id){
+    public void delete(int feed_id) {
         DRequest dRequest = DMobi.createRequest();
         dRequest.setApi("feed.delete");
         dRequest.addParam("feed_id", feed_id);
@@ -32,7 +35,7 @@ public class SFeed extends SBase {
                 if (baseObjectResponse != null) {
                     if (baseObjectResponse.isSuccessfully()) {
                         String message = baseObjectResponse.getMessage();
-                        if (message == null || message == "") {
+                        if (message == null || Objects.equals(message, "")) {
                             message = "Action completed.";
                         }
                         DMobi.showToast(DMobi.translate(message));
@@ -51,8 +54,8 @@ public class SFeed extends SBase {
         });
     }
 
-    public void delete(Feed feed){
-        if(feed == null){
+    public void delete(Feed feed) {
+        if (feed == null) {
             DMobi.log(TAG, DMobi.translate("Can not delete this feed because it's null."));
             return;
         }

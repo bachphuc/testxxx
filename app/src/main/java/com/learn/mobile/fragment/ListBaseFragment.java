@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
-import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
@@ -217,9 +215,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         if (requestParams != null && requestParams.size() > 0) {
             service.clearRequestParams();
-            for (Map.Entry<String, Object> entry : requestParams.entrySet()) {
-                service.setRequestParams(new DRequest.RequestParam(entry.getKey(), entry.getValue()));
-            }
+            service.addRequestParams(requestParams);
         }
         adapter = new RecyclerViewBaseAdapter(service.getData());
 

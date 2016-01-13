@@ -11,7 +11,9 @@ import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -23,12 +25,13 @@ public class SBase {
 
     protected User user;
 
-    protected List<DMobileModelBase> data = new ArrayList<DMobileModelBase>();
-    protected List<DRequest.RequestParam> requestParams = new ArrayList<DRequest.RequestParam>();
+    protected List<DMobileModelBase> data = new ArrayList<>();
+    protected HashMap<String, Object> requestParams = new HashMap<>();
 
     public static final String LOADMORE_ACTION = "loadmore";
     public static final String LOADNEW_ACTION = "loadnew";
     public static final String ENTRY_ID = "id";
+    public static final String USER_KEY = "user_id";
 
     protected boolean getDataByPage = false;
 
@@ -104,8 +107,14 @@ public class SBase {
         return data;
     }
 
-    public void setRequestParams(DRequest.RequestParam params) {
-        requestParams.add(params);
+    public void addRequestParams(HashMap<String, Object> params) {
+        if (params != null && params.size() > 0) {
+            requestParams.putAll(params);
+        }
+    }
+
+    public void addRequestParam(String key, Object value) {
+        requestParams.put(key, value);
     }
 
     public void clearRequestParams() {
@@ -118,8 +127,7 @@ public class SBase {
             minId = 0;
             return;
         }
-        DMobileModelBase item;
-        item = data.get(itemHeaderCount);
+        DMobileModelBase item = data.get(itemHeaderCount);
         maxId = item.getId();
         item = data.get(data.size() - 1);
         minId = item.getId();
@@ -140,7 +148,7 @@ public class SBase {
         if (requestParams.size() > 0) {
             dRequest.addParams(requestParams);
         }
-        if (action == LOADMORE_ACTION) {
+        if (Objects.equals(action, LOADMORE_ACTION)) {
             if (getDataByPage) {
                 dRequest.addParam("page", this.page);
             }
@@ -158,7 +166,7 @@ public class SBase {
                 if (response != null) {
                     if (response.isSuccessfully()) {
                         if (response.hasData()) {
-                            if (action == LOADNEW_ACTION) {
+                            if (Objects.equals(action, LOADNEW_ACTION)) {
                                 prepends(response.data);
                             } else {
                                 appends(response.data);
@@ -179,7 +187,7 @@ public class SBase {
             }
         }, new DResponse.ErrorListener() {
             @Override
-            public void onErrorResponse(Object var1) {
+            public void onErrorResponse(Object error) {
                 if (complete != null) {
                     complete.onComplete(false, null);
                     DMobi.showToast("Network error!");
@@ -215,7 +223,6 @@ public class SBase {
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".get");
         dRequest.addParam(ENTRY_ID, itemId);
-        final SBase that = this;
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {

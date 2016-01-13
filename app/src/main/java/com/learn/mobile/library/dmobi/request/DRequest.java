@@ -13,9 +13,7 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,17 +23,17 @@ public class DRequest {
     private static final String TAG = DRequest.class.getSimpleName();
 
     public DRequest() {
-        requestParams = new ArrayList<RequestParam>();
-        postData = new HashMap<String, String>();
+        requestParams = new HashMap<>();
+        postData = new HashMap<>();
     }
 
     public DRequest(Context ct) {
         this.context = ct;
-        requestParams = new ArrayList<RequestParam>();
-        postData = new HashMap<String, String>();
+        requestParams = new HashMap<>();
+        postData = new HashMap<>();
     }
 
-    private List<RequestParam> requestParams;
+    private HashMap<String, Object> requestParams;
     private Map<String, String> postData;
     private String api = "";
     private Context context = null;
@@ -53,17 +51,12 @@ public class DRequest {
     }
 
     public void addParam(String key, Object value) {
-        RequestParam re = new RequestParam(key, value);
-        requestParams.add(re);
+        requestParams.put(key, value);
     }
 
     public void addPost(String key, String value) {
         value = DUtils.getString(value);
         postData.put(key, value);
-    }
-
-    public void addParams(List<RequestParam> params) {
-        requestParams.addAll(params);
     }
 
     public void addPosts(HashMap<String, Object> params) {
@@ -82,19 +75,14 @@ public class DRequest {
         }
     }
 
-    public static RequestParam createRequestParam(String key, Object value) {
-        return new RequestParam(key, value);
-    }
-
     public String getRequestUrl() {
         addParam("android", 1);
         if (requestParams.size() == 0) {
             return "";
         }
         String str = DConfig.getApiUrl() + "?api=" + this.api + "&token=" + DConfig.getToken() + "&";
-        for (int i = 0; i < requestParams.size(); i++) {
-            RequestParam rq = requestParams.get(i);
-            str += rq.key + "=" + rq.value.toString() + "&";
+        for (Map.Entry<String, Object> entry : requestParams.entrySet()) {
+            str += entry.getKey() + "=" + entry.getValue().toString() + "&";
         }
         str = DUtils.trimAll(str, ',');
         DMobi.log("Url Request", str);
@@ -153,7 +141,7 @@ public class DRequest {
                     er.onErrorResponse(volleyError);
                 }
                 if (cm != null) {
-                    cm.onComplete(false, volleyError.getMessage().toString());
+                    cm.onComplete(false, volleyError.getMessage());
                 }
             }
         }) {
@@ -168,7 +156,7 @@ public class DRequest {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 if (getMethod() == Method.POST) {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -207,19 +195,6 @@ public class DRequest {
         this.get();
     }
 
-    public static class RequestParam {
-        public RequestParam() {
-
-        }
-
-        public RequestParam(String key, Object object) {
-            this.key = key;
-            this.value = object;
-        }
-
-        public String key = null;
-        public Object value = null;
-    }
 
     public void upload() {
         UploadFileToServer uploadFileToServer = new UploadFileToServer();

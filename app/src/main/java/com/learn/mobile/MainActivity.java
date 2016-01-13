@@ -36,6 +36,8 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.service.SBase;
+import com.learn.mobile.service.SSearch;
 import com.learn.mobile.service.SUser;
 
 public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
@@ -398,7 +400,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     public boolean onQueryTextSubmit(String query) {
         viewPager.setCurrentItem(4);
         SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getItem(4);
-        searchFragment.setParam(SearchFragment.SEARCH_KEY, query);
+        searchFragment.search(query);
         searchEditText.dismissDropDown();
         return false;
     }
