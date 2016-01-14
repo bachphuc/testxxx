@@ -399,7 +399,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
     @Override
     public boolean onQueryTextSubmit(String query) {
         viewPager.setCurrentItem(4);
-        SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getItem(4);
+        SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getFragmentItem(4);
         searchFragment.search(query);
         searchEditText.dismissDropDown();
         return false;

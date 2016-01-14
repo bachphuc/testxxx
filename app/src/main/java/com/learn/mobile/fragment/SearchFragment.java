@@ -3,6 +3,7 @@ package com.learn.mobile.fragment;
 import android.view.View;
 
 import com.learn.mobile.adapter.ObservableScrollView;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.service.SBase;
 import com.learn.mobile.service.SSearch;
 
@@ -24,14 +25,17 @@ public class SearchFragment extends ListBaseFragment implements ObservableScroll
     }
 
     public void search(String query) {
+        DMobi.log(TAG, "search: " + query);
         if (service != null) {
+            DMobi.log(TAG, "search");
             service.clear();
             notifyDataSetChanged();
             service.addRequestParam(SSearch.SEARCH_QUERY, query);
-            if(dSwipeRefreshLayout != null){
+            if (dSwipeRefreshLayout != null) {
                 dSwipeRefreshLayout.startLoad();
             }
         } else {
+            DMobi.log(TAG, "setParam");
             setParam(SSearch.SEARCH_QUERY, query);
         }
     }

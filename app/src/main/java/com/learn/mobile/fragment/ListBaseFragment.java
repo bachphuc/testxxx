@@ -25,7 +25,6 @@ import com.learn.mobile.model.User;
 import com.learn.mobile.service.SBase;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
 import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
