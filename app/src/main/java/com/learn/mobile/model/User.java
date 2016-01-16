@@ -109,4 +109,9 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
             }
         }
     }
+
+    @Override
+    public int getId() {
+        return (userId != 0 ? userId : super.getId());
+    }
 }

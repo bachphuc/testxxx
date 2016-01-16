@@ -147,13 +147,13 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
         recyclerView.setItemAnimator(new SlideInUpAnimator());
 
         // TODO set user for service Feed
-        if (user != null && user.userId == DMobi.getUser().userId) {
-            sFeed = (SFeed) DMobi.getService(SFeed.class, "PROFILE-" + user.userId);
+        if (user != null && user.getId() == DMobi.getUser().getId()) {
+            sFeed = (SFeed) DMobi.getService(SFeed.class, "PROFILE-" + user.getId());
         } else {
             sFeed = (SFeed) DMobi.getInstance(SFeed.class);
         }
         if (user != null) {
-            sFeed.setProfileUser(user.userId);
+            sFeed.setProfileUser(user.getId());
         }
 
         feedAdapter = new FeedAdapter(sFeed.getData());
