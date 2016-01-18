@@ -29,19 +29,19 @@ public class Funny extends DAbstractFunny implements View.OnClickListener {
 
     @Override
     public void processViewHolder(final RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, final int position) {
-        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
+        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         if (textView != null) {
             textView.setText(user.getTitle());
         }
         ImageView imageView;
         if (user.images != null) {
-            imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_avatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.images.getAvatar().url);
             }
         }
 
-        imageView = (ImageView) itemBaseViewHolder.findView(R.id.main_image);
+        imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
         if (imageView != null) {
             ImageHelper.display(imageView, image);
             imageView.setOnClickListener(this);
@@ -66,7 +66,7 @@ public class Funny extends DAbstractFunny implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_image:
+            case R.id.img_main_image:
                 boolean showWithBrowser = false;
                 Context context = v.getContext();
                 if (showWithBrowser) {

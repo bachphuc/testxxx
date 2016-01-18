@@ -14,7 +14,7 @@
         android:src="@drawable/background_red" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/im_avatar"
+        android:id="@+id/img_avatar"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_margin="@dimen/spacing_large"

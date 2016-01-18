@@ -65,7 +65,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         final FeedAdapter adapter = (FeedAdapter) itemBaseViewHolder.getAdapter();
 
         DMobileModelBase item = getAttachment();
-        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tvTitle);
+        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         if (textView != null) {
             textView.setText(user.getTitle());
         }
@@ -102,7 +102,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         });
 
         if (user.images != null) {
-            imageView = (ImageView) itemBaseViewHolder.findView(R.id.imageViewAvatar);
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_avatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.images.getAvatar().url);
                 imageView.setOnClickListener(this);
@@ -220,7 +220,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 updateLikeView(v);
 
                 break;
-            case R.id.imageViewAvatar:
+            case R.id.img_avatar:
                 context = v.getContext();
                 intent = new Intent(context, UserProfileActivity.class);
                 User currentUser = (User) DMobi.getData(UserProfileActivity.USER_PROFILE);

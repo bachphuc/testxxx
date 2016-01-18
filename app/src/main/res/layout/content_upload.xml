@@ -14,7 +14,7 @@
     tools:showIn="@layout/activity_upload">
 
     <ImageView
-        android:id="@+id/photo_image_preview"
+        android:id="@+id/img_preview"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:layout_marginTop="15dp"

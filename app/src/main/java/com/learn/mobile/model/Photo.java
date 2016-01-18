@@ -35,7 +35,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         super.processFeedViewHolder(itemBaseViewHolder, position);
         final DFeedImageView imageView;
         if (images != null) {
-            imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.main_image);
+            imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.img_main_image);
             if (imageView != null) {
                 imageView.setOnClickListener(this);
                 float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
@@ -108,7 +108,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 Intent intent = new Intent(context, PhotoDetailActivity.class);
                 context.startActivity(intent);
                 break;
-            case R.id.main_image:
+            case R.id.img_main_image:
                 showItemDetail(v.getContext());
                 break;
         }

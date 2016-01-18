@@ -2,11 +2,8 @@ package com.learn.mobile.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,14 +16,12 @@ import com.alexvasilkov.gestures.Settings;
 import com.alexvasilkov.gestures.views.GestureImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.activity.CommentActivity;
-import com.learn.mobile.activity.PhotoDetailActivity;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.com.faradaj.blurbehind.BlurBehind;
 import com.learn.mobile.customview.com.faradaj.blurbehind.OnBlurCompleteListener;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.Photo;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -92,14 +87,14 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
             }
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.tvTitle);
+        TextView textView = (TextView) view.findViewById(R.id.tv_title);
         textView.setText(photo.user.getTitle());
 
         textView = (TextView) view.findViewById(R.id.tvDescription);
         textView.setText(photo.getDescription());
 
         if (photo.user.images != null) {
-            CircleImageView avatarImageView = (CircleImageView) view.findViewById(R.id.imageViewAvatar);
+            CircleImageView avatarImageView = (CircleImageView) view.findViewById(R.id.img_avatar);
             if (avatarImageView != null) {
                 ImageHelper.display(avatarImageView, photo.user.images.getAvatar().url);
             }

@@ -71,7 +71,7 @@ public class UploadActivity extends AppCompatActivity {
         txtPercentage = (TextView) findViewById(R.id.txtPercentage);
         btnUpload = (Button) findViewById(R.id.btnUpload);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        imgPreview = (ImageView) findViewById(R.id.photo_image_preview);
+        imgPreview = (ImageView) findViewById(R.id.img_preview);
         vidPreview = (VideoView) findViewById(R.id.videoPreview);
 
         // Receiving the data from previous activity

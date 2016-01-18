@@ -60,7 +60,7 @@ public class GlobalSearchAdapter extends ResourceCursorAdapter {
         if (textView != null) {
             textView.setText(cursor.getString(COL_TITLE));
         }
-        textView = (TextView) view.findViewById(R.id.tb_description);
+        textView = (TextView) view.findViewById(R.id.tv_description);
         if (textView != null) {
             textView.setText(cursor.getString(COL_DESCRIPTION));
         }

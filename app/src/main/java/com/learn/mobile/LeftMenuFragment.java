@@ -3,7 +3,6 @@ package com.learn.mobile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.activity.*;
-import com.learn.mobile.activity.LoginActivity;
 import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -99,7 +97,7 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
                 lbView.setText(user.fullName);
             }
 
-            ImageView imageView = (ImageView) headerView.findViewById(R.id.im_avatar);
+            ImageView imageView = (ImageView) headerView.findViewById(R.id.img_avatar);
             if (imageView != null) {
                 ImageHelper.display(imageView, user.getImages().getMedium().url);
             }

@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -122,7 +120,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
 
     private void initView() {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        imgPreview = (ImageView) findViewById(R.id.photo_image_preview);
+        imgPreview = (ImageView) findViewById(R.id.img_preview);
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.bt_capture_image);
         imageButton.setOnClickListener(this);
@@ -139,7 +137,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         imageButton = (ImageButton) findViewById(R.id.bt_share_link);
         imageButton.setOnClickListener(this);
 
-        tbDescription = (EditText) findViewById(R.id.tb_description);
+        tbDescription = (EditText) findViewById(R.id.tv_description);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
         progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
 
@@ -147,7 +145,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             TextView textView = (TextView) findViewById(R.id.tv_title);
             User user = (User) DMobi.getUser();
             textView.setText(user.getTitle());
-            ImageView avatarView = (ImageView) findViewById(R.id.im_avatar);
+            ImageView avatarView = (ImageView) findViewById(R.id.img_avatar);
             ImageHelper.display(avatarView, user.getImages().getAvatar());
         }
     }
@@ -225,7 +223,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         link = (Link) o;
         if (link.images != null) {
             if (link.images.full != null) {
-                imageView = (ImageView) findViewById(R.id.link_image_preview);
+                imageView = (ImageView) findViewById(R.id.img_link_preview);
                 ImageHelper.display(imageView, link.images.full.url);
             }
         }
@@ -233,11 +231,11 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         textView.setText(link.getTitle());
 
         if (link.siteUrl != null) {
-            textView = (TextView) findViewById(R.id.link_url);
+            textView = (TextView) findViewById(R.id.tv_link_url);
             textView.setText(link.siteUrl);
         }
 
-        textView = (TextView) findViewById(R.id.link_description);
+        textView = (TextView) findViewById(R.id.tv_link_description);
         textView.setText(link.getDescription());
     }
 

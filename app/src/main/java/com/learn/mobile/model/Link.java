@@ -24,7 +24,7 @@ public class Link extends DAbstractLink implements View.OnClickListener {
         super.processFeedViewHolder(itemBaseViewHolder, position);
         ImageView imageView;
         if (!DUtils.isEmpty(image)) {
-            imageView = (ImageView) itemBaseViewHolder.findView(R.id.main_image);
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
             if (imageView != null) {
                 Picasso.with(imageView.getContext()).load(image).into(imageView);
             }
@@ -35,7 +35,7 @@ public class Link extends DAbstractLink implements View.OnClickListener {
             textView.setText(getTitle());
         }
 
-        textView = (TextView) itemBaseViewHolder.findView(R.id.link_description);
+        textView = (TextView) itemBaseViewHolder.findView(R.id.tv_link_description);
         if (textView != null) {
             String des = getDescription();
             if (DUtils.isEmpty(des)) {

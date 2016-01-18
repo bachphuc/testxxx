@@ -53,7 +53,7 @@
                             android:padding="16dp">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/im_avatar"
+                                android:id="@+id/img_avatar"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:src="@drawable/ic_stub" />
@@ -93,7 +93,7 @@
                             android:padding="16dp">
 
                             <EditText
-                                android:id="@+id/tb_description"
+                                android:id="@+id/tv_description"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="top"
@@ -120,7 +120,7 @@
                                 android:visibility="gone">
 
                                 <ImageView
-                                    android:id="@+id/photo_image_preview"
+                                    android:id="@+id/img_preview"
                                     android:layout_width="match_parent"
                                     android:layout_height="240dp"
                                     android:layout_alignParentEnd="false"
@@ -151,7 +151,7 @@
                                         android:layout_height="100dp">
 
                                         <ImageView
-                                            android:id="@+id/link_image_preview"
+                                            android:id="@+id/img_link_preview"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:scaleType="centerCrop"
@@ -171,13 +171,13 @@
                                             android:text="Facebook.com" />
 
                                         <TextView
-                                            android:id="@+id/link_url"
+                                            android:id="@+id/tv_link_url"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="https://www.facebook.com" />
 
                                         <TextView
-                                            android:id="@+id/link_description"
+                                            android:id="@+id/tv_link_description"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Network social large in the world, connect another people" />
