@@ -420,8 +420,13 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             outRect.left = halfSpacing;
             outRect.right = halfSpacing;
 
+
             if (isTopEdge(childIndex, spanCount)) {
                 outRect.top = spacing;
+            }
+
+            if (isBottomEdge(childIndex, childCount, spanCount)) {
+                outRect.bottom = spacing;
             }
 
             if (isLeftEdge(spanIndex, spanCount)) {
@@ -430,10 +435,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
             if (isRightEdge(spanIndex, spanCount)) {
                 outRect.right = spacing;
-            }
-
-            if (isBottomEdge(childIndex, childCount, spanCount)) {
-                outRect.bottom = spacing;
             }
         }
 
@@ -453,7 +454,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
         protected boolean isBottomEdge(int childIndex, int childCount, int spanCount) {
             int row = childCount % spanCount;
-            return childIndex >= childCount - row;
+            int mod = (row > 0 ? row : spanCount);
+
+            boolean result = childIndex >= childCount - mod;
+            return result;
         }
 
         protected int getTotalSpan(View view, RecyclerView parent) {
