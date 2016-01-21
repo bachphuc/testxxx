@@ -47,7 +47,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     public int getFeedLayoutType() {
         DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
-            return (int) dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
+            return dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
         }
         return LayoutHelper.FEED_DEFAULT_LAYOUT;
     }
@@ -70,7 +70,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             textView.setText(user.getTitle());
         }
 
-        textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
+        textView = (TextView) itemBaseViewHolder.findView(R.id.tv_description);
 
         if (DUtils.isEmpty(content)) {
             LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
@@ -120,9 +120,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
         // TODO process comment button
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
-        if (imageView != null) {
-            imageView.setOnClickListener(this);
-        }
+        if (imageView != null) imageView.setOnClickListener(this);
         textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
         if (textView != null) {
             textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
@@ -146,10 +144,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     @Override
     public boolean isLike() {
         DMobileModelBase item = getAttachment();
-        if (item == null) {
-            return false;
-        }
-        return item.isLike();
+        return item != null && item.isLike();
     }
 
     @Override
@@ -184,7 +179,8 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     public void updateLikeView(View v) {
         ImageView imageView = (ImageView) v;
         if (imageView != null) {
-            View parent = (View) v.getParent();
+            View parent;
+            parent = (View) v.getParent();
             TextView textView = (TextView) parent.findViewById(R.id.tv_total_like);
             if (textView != null) {
                 textView.setText(getTotalLike() + " " + DMobi.translate(getTotalLike() > 1 ? "likes" : "like"));

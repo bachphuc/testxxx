@@ -63,7 +63,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     protected User user;
 
-    protected HashMap<String, Object> requestParams = new HashMap<String, Object>();
+    protected HashMap<String, Object> requestParams = new HashMap<>();
 
     protected boolean bHasAppBar = false;
 
@@ -209,6 +209,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         }
 
         if (user != null) {
+            assert service != null;
             service.setUser(user);
         }
 
@@ -378,7 +379,10 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int spacing;
 
+        private int[] points;
+
         private boolean bHasHeader = false;
+        private int totalSpan = 0;
 
         public void setHasHeader(boolean b) {
             bHasHeader = b;
@@ -397,7 +401,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
             int childIndex = parent.getChildAdapterPosition(view);
 
-            int spanCount = getTotalSpan(view, parent);
+            int spanCount = getTotalSpan(parent);
 
             if (bHasHeader && childIndex == 0) {
                 outRect.top = spacing;
@@ -429,12 +433,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                 outRect.bottom = spacing;
             }
 
-            if (isLeftEdge(spanIndex, spanCount)) {
-                outRect.left = spacing;
-            }
-
-            if (isRightEdge(spanIndex, spanCount)) {
-                outRect.right = spacing;
+            if (points != null && points.length > spanIndex * 2 + 1) {
+                outRect.left = points[spanIndex * 2];
+                outRect.right = points[spanIndex * 2 + 1];
             }
         }
 
@@ -456,20 +457,39 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             int row = childCount % spanCount;
             int mod = (row > 0 ? row : spanCount);
 
-            boolean result = childIndex >= childCount - mod;
-            return result;
+            return childIndex >= childCount - mod;
         }
 
-        protected int getTotalSpan(View view, RecyclerView parent) {
-
+        protected int getTotalSpan(RecyclerView parent) {
+            if (totalSpan != 0) {
+                return totalSpan;
+            }
             RecyclerView.LayoutManager mgr = parent.getLayoutManager();
             if (mgr instanceof GridLayoutManager) {
-                return ((GridLayoutManager) mgr).getSpanCount();
+                totalSpan = ((GridLayoutManager) mgr).getSpanCount();
             } else if (mgr instanceof StaggeredGridLayoutManager) {
-                return ((StaggeredGridLayoutManager) mgr).getSpanCount();
+                totalSpan = ((StaggeredGridLayoutManager) mgr).getSpanCount();
+            }
+            getPoints();
+            return totalSpan;
+        }
+
+        protected void getPoints() {
+            if (totalSpan == 0) {
+                return;
             }
 
-            return -1;
+            points = new int[totalSpan * 2];
+            points[0] = spacing;
+            int n = totalSpan, s = spacing, W = 300, w = (W - (n + 1) * s) / n, aw = W / n;
+            for (int i = 1; i < 2 * n; i++) {
+                int col = i % 2;
+                int val = s - points[i - 1];
+                if (col == 1) {
+                    val = aw - points[i - 1] - w;
+                }
+                points[i] = val;
+            }
         }
     }
 }

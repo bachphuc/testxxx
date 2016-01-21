@@ -90,7 +90,7 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
         TextView textView = (TextView) view.findViewById(R.id.tv_title);
         textView.setText(photo.user.getTitle());
 
-        textView = (TextView) view.findViewById(R.id.tvDescription);
+        textView = (TextView) view.findViewById(R.id.tv_description);
         textView.setText(photo.getDescription());
 
         if (photo.user.images != null) {

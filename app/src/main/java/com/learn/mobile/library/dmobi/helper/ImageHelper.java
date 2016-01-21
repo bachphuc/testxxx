@@ -54,7 +54,7 @@ public class ImageHelper {
     public static ImageAdapterBase getAdapter() {
         ImageAdapterBase adapterBase;
         String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
-        Class c = null;
+        Class c;
         try {
             c = Class.forName(sClass);
             try {
@@ -70,23 +70,29 @@ public class ImageHelper {
         return adapterBase;
     }
 
-    public static void display(Context context, ImageView imageView, String imageUrl, String thumbnailUrl) {
-        if (imageAdapterBase == null) {
-            String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
-            Class c = null;
-            try {
-                c = Class.forName(sClass);
-                try {
-                    imageAdapterBase = (ImageAdapterBase) c.newInstance();
-                } catch (InstantiationException e) {
-                    throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
-                } catch (IllegalAccessException e) {
-                    throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
-                }
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException("Can not find  " + DConfig.IMAGE_ADAPTER);
-            }
+    public static ImageAdapterBase getGlobalAdapter() {
+        if (imageAdapterBase != null) {
+            return imageAdapterBase;
         }
+        String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
+        Class c;
+        try {
+            c = Class.forName(sClass);
+            try {
+                imageAdapterBase = (ImageAdapterBase) c.newInstance();
+            } catch (InstantiationException e) {
+                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+            } catch (IllegalAccessException e) {
+                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Can not find  " + DConfig.IMAGE_ADAPTER);
+        }
+        return imageAdapterBase;
+    }
+
+    public static void display(Context context, ImageView imageView, String imageUrl, String thumbnailUrl) {
+        getGlobalAdapter();
         if (imageAdapterBase != null) {
             imageAdapterBase.display(context, imageUrl, imageView, thumbnailUrl);
         }
@@ -153,14 +159,10 @@ public class ImageHelper {
         BitmapFactory.decodeFile(filePath, options);
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        Size size = new Size(imageWidth, imageHeight);
-        return size;
+        return new Size(imageWidth, imageHeight);
     }
 
     public static class Size {
-        public Size() {
-
-        }
 
         public Size(int width, int height) {
             this.width = width;

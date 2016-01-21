@@ -40,7 +40,8 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 imageView.setOnClickListener(this);
                 float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
                 imageView.setScale(ratio);
-                ImageHelper.display(imageView, images.getExtraLarge().url);
+                // ImageHelper.display(imageView, images.getExtraLarge().url);
+                ImageHelper.getGlobalAdapter().loadFlickrThumb(images.getExtraLarge().url, images.getAvatar().url, imageView);
             }
         }
 
@@ -84,8 +85,8 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 }
             });
 
-            if(images.getLarge() != null){
-                ImageHelper.display(imageView, images.getLarge().url);
+            if (images.getLarge() != null) {
+                ImageHelper.getGlobalAdapter().loadFlickrThumb(images, imageView);
             }
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
@@ -93,7 +94,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
     }
 
     @Override
-    public void showItemDetail(Context context){
+    public void showItemDetail(Context context) {
         DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
         Intent intent = new Intent(context, PhotoDetailActivity.class);
         context.startActivity(intent);
@@ -121,13 +122,9 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                     int x = (int) event.getX();
                     int y = (int) event.getY();
 
-                    View animateView = v;
-
-                    int cx = x;
-                    int cy = y;
                     int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
-                    SupportAnimator animator = ViewAnimationUtils.createCircularReveal(animateView, cx, cy, 0, finalRadius);
+                    SupportAnimator animator = ViewAnimationUtils.createCircularReveal(v, x, y, 0, finalRadius);
                     animator.setInterpolator(new AccelerateDecelerateInterpolator());
                     animator.setDuration(1500);
                     animator.start();

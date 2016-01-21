@@ -2,7 +2,11 @@ package com.learn.mobile.library.dmobi.helper.ImageHelperLib;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
+
+import com.learn.mobile.model.ImageObject;
 
 /**
  * Created by 09520_000 on 10/31/2015.
@@ -105,7 +109,13 @@ public class ImageAdapterBase {
 
     }
 
+    public void loadFlickrThumb(@Nullable ImageObject photo, @NonNull final ImageView imageView) {
+    }
+
+    public void loadFlickrThumb(String url, String thumbnailUrl, @NonNull final ImageView imageView) {
+    }
+
     public interface ImageBitmapLoadedListener {
-        public void onCompleted(Bitmap bitmap);
+        void onCompleted(Bitmap bitmap);
     }
 }

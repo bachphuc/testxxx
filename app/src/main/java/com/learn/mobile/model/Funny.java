@@ -58,7 +58,7 @@ public class Funny extends DAbstractFunny implements View.OnClickListener {
         if (DUtils.isEmpty(getDescription())) {
             linearLayout.setVisibility(View.GONE);
         } else {
-            textView = (TextView) itemBaseViewHolder.findView(R.id.tvDescription);
+            textView = (TextView) itemBaseViewHolder.findView(R.id.tv_description);
             textView.setText(getDescription());
         }
     }
