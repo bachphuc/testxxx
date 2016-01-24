@@ -33,7 +33,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     }
 
     public DMobileModelBase getAttachment() {
-        if (item != null && bItemReady == true) {
+        if (item != null && bItemReady) {
             return item;
         }
         if (itemData != null) {
@@ -114,9 +114,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         imageView.setOnClickListener(this);
         updateLikeView(imageView);
 
-        if (item != null) {
-            item.processFeedViewHolder(itemBaseViewHolder, position);
-        }
+        if (item != null) item.processFeedViewHolder(itemBaseViewHolder, position);
 
         // TODO process comment button
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
@@ -205,11 +203,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 item.like(new DResponse.Complete() {
                     @Override
                     public void onComplete(Boolean status, Object o) {
-                        if (status) {
 
-                        } else {
-
-                        }
                     }
                 });
 
@@ -220,7 +214,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 context = v.getContext();
                 intent = new Intent(context, UserProfileActivity.class);
                 User currentUser = (User) DMobi.getData(UserProfileActivity.USER_PROFILE);
-                boolean canOpen = (currentUser == null ? true : (currentUser.getId() != user.getId() ? true : false));
+                boolean canOpen = (currentUser == null || (currentUser.getId() != user.getId() ? true : false));
                 if (canOpen) {
                     DMobi.pushData(UserProfileActivity.USER_PROFILE, user);
                     context.startActivity(intent);

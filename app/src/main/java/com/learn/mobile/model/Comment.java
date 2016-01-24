@@ -19,7 +19,7 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
  */
 public class Comment extends DAbstractComment implements View.OnClickListener {
     public Comment() {
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.comment_item_layout);
+
     }
 
     @Override

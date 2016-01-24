@@ -56,7 +56,7 @@ public class DMobileModelBase {
     @SerializedName("item_link")
     public String itemLink;
 
-    private HashMap<String, Object> _data = new HashMap<String, Object>();
+    private HashMap<String, Object> _data = new HashMap<>();
 
     public void addData(String key, Object value) {
         _data.put(key, value);
@@ -70,25 +70,16 @@ public class DMobileModelBase {
         return totalComment;
     }
 
-    public HashMap<String, Object> layouts = new HashMap<String, Object>();
-
     public DMobileModelBase() {
-        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_basic_layout);
-    }
 
-    public void registerLayout(String suffix, int layout) {
-        int id = LayoutHelper.registerLayout(this.getClass(), suffix, layout);
-        if (layouts.containsKey(id + "")) {
-            return;
-        }
-        layouts.put(suffix, id);
     }
 
     public int getLayoutType(String suffix) {
-        if (layouts.containsKey(suffix)) {
-            return (int) layouts.get(suffix);
+        int layoutType = LayoutHelper.getLayoutType(this.getClass(), suffix);
+        if (layoutType == 0) {
+            throw new IllegalArgumentException("Layout " + suffix + " not register yet.");
         }
-        throw new IllegalArgumentException("Layout " + suffix + " not register yet.");
+        return layoutType;
     }
 
     public String getTitle() {
@@ -168,8 +159,6 @@ public class DMobileModelBase {
                 if (status) {
                     totalLike = itemBase.totalLike;
                     isLike = itemBase.isLike;
-                } else {
-
                 }
                 updateLikeView(imageView, textView);
             }
@@ -232,7 +221,6 @@ public class DMobileModelBase {
     }
 
     public void showItemDetail(Context context) {
-        return;
     }
 
     public String getLink() {
@@ -243,7 +231,7 @@ public class DMobileModelBase {
         String type = itemType;
         type = DUtils.convertToClassName(type);
         String sClass = DConfig.BUNDLE_ID + "." + DConfig.MODEL_NAME + "." + type;
-        Class c = null;
+        Class c;
         DMobileModelBase dMobileModelBase;
         try {
             c = Class.forName(sClass);

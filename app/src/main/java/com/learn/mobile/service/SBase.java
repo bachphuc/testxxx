@@ -161,7 +161,7 @@ public class SBase {
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                DMobi.log("REQUEST", respondString);
+                // DMobi.log("REQUEST", respondString);
                 ListObjectResponse<DMobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {
@@ -226,7 +226,7 @@ public class SBase {
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                DMobi.log("REQUEST", respondString);
+                // DMobi.log("REQUEST", respondString);
                 SingleObjectResponse<DMobileModelBase> response = DbHelper.parseSingleObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {

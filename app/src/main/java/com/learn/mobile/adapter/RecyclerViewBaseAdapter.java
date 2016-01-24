@@ -16,6 +16,7 @@ import java.util.List;
  * Created by 09520_000 on 9/2/2015.
  */
 public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHolder> {
+    public static final String TAG = RecyclerViewBaseAdapter.class.getSimpleName();
     protected List<DMobileModelBase> data;
     public static final String RECYCLER_VIEW_NOTIFY_DATA_CHANGE = "RECYCLER_VIEW_NOTIFY_DATA_CHANGE";
 
@@ -28,7 +29,7 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
         eventId = DMobi.getIdentityId();
     }
 
-    public String getNotifyDataSetChangedEventKey(){
+    public String getNotifyDataSetChangedEventKey() {
         return (RECYCLER_VIEW_NOTIFY_DATA_CHANGE + eventId);
     }
 
@@ -57,22 +58,22 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
 
     @Override
     public int getItemCount() {
-        if(data == null){
+        if (data == null) {
             return 0;
         }
         return data.size();
     }
 
-    public List<DMobileModelBase> getData(){
+    public List<DMobileModelBase> getData() {
         return data;
     }
 
-    public void fireNotifyDataSetChanged(){
-        DMobi.fireEvent(getNotifyDataSetChangedEventKey(),getData());
+    public void fireNotifyDataSetChanged() {
+        DMobi.fireEvent(getNotifyDataSetChangedEventKey(), getData());
     }
 
-    public void remove(int position){
-        if(data != null && data.size() >= position - 1){
+    public void remove(int position) {
+        if (data != null && data.size() >= position - 1) {
             data.remove(position);
             notifyItemRemoved(position);
         }

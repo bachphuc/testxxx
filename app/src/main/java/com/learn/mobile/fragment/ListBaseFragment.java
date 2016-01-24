@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +57,13 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     protected boolean bGirdLayout = false;
     protected int spanSize = 2;
+    protected int spaceDivide = 8;
 
     protected boolean bAutoLoadData = false;
     protected boolean bRefreshList = false;
     protected LinearLayoutManager linearLayoutManager;
+    protected GridLayoutManager gridLayoutManager;
+    protected SpacesItemDecoration spacesItemDecoration;
 
     protected User user;
 
@@ -177,9 +181,9 @@ public class ListBaseFragment extends Fragment implements Event.Action {
         dSwipeRefreshLayout = (DSwipeRefreshLayout) view.findViewById(R.id.base_swipe_refresh_layout);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(8);
+        spacesItemDecoration = new SpacesItemDecoration(spaceDivide);
         if (bGirdLayout) {
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), spanSize);
+            gridLayoutManager = new GridLayoutManager(getContext(), spanSize);
             if (bHasAppBar) {
                 gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
@@ -379,10 +383,20 @@ public class ListBaseFragment extends Fragment implements Event.Action {
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int spacing;
 
-        private int[] points;
+        private float[] points;
 
         private boolean bHasHeader = false;
         private int totalSpan = 0;
+
+        public void reset() {
+            totalSpan = 0;
+            points = null;
+        }
+
+        public void setTotalSpan(int i) {
+            totalSpan = i;
+            getPoints();
+        }
 
         public void setHasHeader(boolean b) {
             bHasHeader = b;
@@ -402,7 +416,7 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             int childIndex = parent.getChildAdapterPosition(view);
 
             int spanCount = getTotalSpan(parent);
-
+            Log.i(TAG, "spanCount: " + spanCount);
             if (bHasHeader && childIndex == 0) {
                 outRect.top = spacing;
                 outRect.bottom = 0;
@@ -424,7 +438,6 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             outRect.left = halfSpacing;
             outRect.right = halfSpacing;
 
-
             if (isTopEdge(childIndex, spanCount)) {
                 outRect.top = spacing;
             }
@@ -434,8 +447,8 @@ public class ListBaseFragment extends Fragment implements Event.Action {
             }
 
             if (points != null && points.length > spanIndex * 2 + 1) {
-                outRect.left = points[spanIndex * 2];
-                outRect.right = points[spanIndex * 2 + 1];
+                outRect.left = Math.round(points[spanIndex * 2]);
+                outRect.right = Math.round(points[spanIndex * 2 + 1]);
             }
         }
 
@@ -479,12 +492,12 @@ public class ListBaseFragment extends Fragment implements Event.Action {
                 return;
             }
 
-            points = new int[totalSpan * 2];
+            points = new float[totalSpan * 2];
             points[0] = spacing;
-            int n = totalSpan, s = spacing, W = 300, w = (W - (n + 1) * s) / n, aw = W / n;
+            float n = totalSpan, s = spacing, W = 300, w = (W - (n + 1) * s) / n, aw = W / n;
             for (int i = 1; i < 2 * n; i++) {
                 int col = i % 2;
-                int val = s - points[i - 1];
+                float val = s - points[i - 1];
                 if (col == 1) {
                     val = aw - points[i - 1] - w;
                 }

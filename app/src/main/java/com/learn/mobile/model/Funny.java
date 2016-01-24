@@ -24,7 +24,7 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 public class Funny extends DAbstractFunny implements View.OnClickListener {
     public Funny() {
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.funny_item_layout);
+
     }
 
     @Override

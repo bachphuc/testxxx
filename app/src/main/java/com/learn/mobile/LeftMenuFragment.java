@@ -130,9 +130,6 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Context context;
-        Intent intent;
-
         switch (item.getItemId()) {
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);

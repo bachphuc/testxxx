@@ -19,15 +19,13 @@ import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
 public class Photo extends DAbstractPhoto implements View.OnClickListener {
     public Photo() {
-        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout);
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
+
     }
 
     @Override
@@ -40,8 +38,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 imageView.setOnClickListener(this);
                 float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
                 imageView.setScale(ratio);
-                // ImageHelper.display(imageView, images.getExtraLarge().url);
-                ImageHelper.getGlobalAdapter().loadFlickrThumb(images.getExtraLarge().url, images.getAvatar().url, imageView);
+                ImageHelper.display(imageView, images.getExtraLarge().url);
             }
         }
 

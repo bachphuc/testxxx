@@ -18,7 +18,7 @@ import com.learn.mobile.library.dmobi.helper.LayoutHelper;
  */
 public class Search extends DAbstractSearch {
     public Search() {
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.user_item_layout);
+
     }
 
     @Override

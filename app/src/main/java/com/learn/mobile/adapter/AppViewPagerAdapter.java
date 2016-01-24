@@ -1,24 +1,16 @@
 package com.learn.mobile.adapter;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.learn.mobile.R;
 import com.learn.mobile.fragment.FunnyFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.SearchFragment;
 import com.learn.mobile.fragment.UserFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by 09520_000 on 8/30/2015.

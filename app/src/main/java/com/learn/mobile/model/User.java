@@ -25,7 +25,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     public static final String PALETTE_AVATAR_COLOR = "PALETTE_AVATAR_COLOR";
 
     public User() {
-        registerLayout(LayoutHelper.LIST_LAYOUT, R.layout.user_item_custom_layout);
+
     }
 
     @Override

@@ -27,6 +27,7 @@
     <string name="make_your_avatar">Make your avatar</string>
     <string name="more">More</string>
     <string name="settings">Settings</string>
+    <string name="basic_recycler_view">Basic Recycler View</string>
     <string name="search_hint">Search something...</string>
     <string name="image_description_default">background</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 public class Link extends DAbstractLink implements View.OnClickListener {
     public Link() {
-        registerLayout(LayoutHelper.FEED_LAYOUT, R.layout.feed_link_layout);
+
     }
 
     @Override

@@ -352,6 +352,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
                 break;
             case R.id.drawer_funny:
                 viewPager.setCurrentItem(3);
+                break;
             case R.id.drawer_search:
                 viewPager.setCurrentItem(4);
                 break;
