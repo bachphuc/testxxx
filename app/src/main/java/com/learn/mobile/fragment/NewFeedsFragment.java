@@ -14,6 +14,7 @@ import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.adapter.ObservableScrollView;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.ResourceUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
@@ -23,7 +24,9 @@ import com.learn.mobile.service.SFeed;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
-import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
+import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
+import me.henrytao.smoothappbarlayout.base.ObservableFragment;
+import me.henrytao.smoothappbarlayout.base.Utils;
 
 
 /**
@@ -33,7 +36,7 @@ import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class NewFeedsFragment extends Fragment implements Event.Action, ObservableScrollView {
+public class NewFeedsFragment extends Fragment implements Event.Action, /* ObservableScrollView */ ObservableFragment {
     public static final String TAG = NewFeedsFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
 
@@ -46,12 +49,16 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
 
     DResponse.Complete completeResponse;
     User user;
+    public int _id;
 
     public NewFeedsFragment() {
+        _id = DMobi.getIdentityId();
+        DMobi.log(TAG, "NewFeedsFragment fragment id " + _id);
         // TODO Required empty public constructor
     }
 
     public void setUser(User user) {
+        DMobi.log(TAG, "setUser fragment id " + _id);
         this.user = user;
     }
 
@@ -137,6 +144,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
     }
 
     private void initRecycleView() {
+        DMobi.log(TAG, getActivity().getClass().getSimpleName() + " initRecycleView fragment id " + _id);
         dSwipeRefreshLayout = (DSwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.cardList);
@@ -152,6 +160,12 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
         } else {
             sFeed = (SFeed) DMobi.getInstance(SFeed.class);
         }
+        if(user != null){
+            DMobi.log(TAG, user.getId());
+        }
+        else {
+            DMobi.log(TAG, "user is null.");
+        }
         if (user != null) {
             sFeed.setProfileUser(user.getId());
         }
@@ -159,6 +173,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
         feedAdapter = new FeedAdapter(sFeed.getData());
 
         if (user != null) {
+            DMobi.log(TAG, "onCreateFooterViewHolder");
             RecyclerView.Adapter adapter = new SimpleRecyclerViewAdapter(feedAdapter) {
                 @Override
                 public RecyclerView.ViewHolder onCreateFooterViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
@@ -230,7 +245,7 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
         mListener = null;
     }
 
-    @Override
+    // @Override
     public View getScrollView() {
         if (isAdded()) {
             return recyclerView;
@@ -240,6 +255,19 @@ public class NewFeedsFragment extends Fragment implements Event.Action, Observab
 
     public void updateRecyclerView() {
         recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public View getScrollTarget() {
+        if (isAdded()) {
+            return recyclerView;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean onOffsetChanged(SmoothAppBarLayout smoothAppBarLayout, View target, int verticalOffset) {
+        return Utils.syncOffset(smoothAppBarLayout, target, verticalOffset, getScrollTarget());
     }
 
     /**

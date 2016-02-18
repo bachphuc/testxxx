@@ -18,6 +18,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.ResourceUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
@@ -28,7 +29,9 @@ import com.learn.mobile.service.SBase;
 import java.util.HashMap;
 
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
-import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
+import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
+import me.henrytao.smoothappbarlayout.base.ObservableFragment;
+import me.henrytao.smoothappbarlayout.base.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +40,7 @@ import me.henrytao.smoothappbarlayout.utils.ResourceUtils;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class ListBaseFragment extends Fragment implements Event.Action {
+public class ListBaseFragment extends Fragment implements Event.Action , ObservableFragment {
     public static final String TAG = ListBaseFragment.class.getSimpleName();
     protected DFragmentListener.OnFragmentInteractionListener mListener;
     protected int layout = 0;
@@ -378,6 +381,19 @@ public class ListBaseFragment extends Fragment implements Event.Action {
 
     public void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public View getScrollTarget() {
+        if (isAdded()) {
+            return recyclerView;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean onOffsetChanged(SmoothAppBarLayout smoothAppBarLayout, View target, int verticalOffset) {
+        return Utils.syncOffset(smoothAppBarLayout, target, verticalOffset, getScrollTarget());
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

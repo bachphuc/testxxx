@@ -63,6 +63,7 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DMobi.log(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

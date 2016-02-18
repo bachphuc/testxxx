@@ -14,7 +14,11 @@ import com.learn.mobile.R;
 import com.learn.mobile.adapter.ObservableScrollView;
 import com.learn.mobile.model.User;
 
-public class UserInformationFragment extends Fragment implements ObservableScrollView {
+import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
+import me.henrytao.smoothappbarlayout.base.ObservableFragment;
+import me.henrytao.smoothappbarlayout.base.Utils;
+
+public class UserInformationFragment extends Fragment implements ObservableFragment {
 
     User user;
     NestedScrollView nestedScrollView;
@@ -42,7 +46,7 @@ public class UserInformationFragment extends Fragment implements ObservableScrol
         user = u;
     }
 
-    @Override
+    // @Override
     public View getScrollView() {
         if (isAdded()) {
             return nestedScrollView;
@@ -65,5 +69,18 @@ public class UserInformationFragment extends Fragment implements ObservableScrol
                 textView.setText(user.email);
             }
         }
+    }
+
+    @Override
+    public View getScrollTarget() {
+        if (isAdded()) {
+            return nestedScrollView;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean onOffsetChanged(SmoothAppBarLayout smoothAppBarLayout, View target, int verticalOffset) {
+        return Utils.syncOffset(smoothAppBarLayout, target, verticalOffset, getScrollTarget());
     }
 }

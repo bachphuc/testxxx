@@ -16,7 +16,6 @@ package com.learn.mobile.activity;
  * limitations under the License.
  */
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
-import com.learn.mobile.adapter.ViewPagerRunnableAdapter;
+import com.learn.mobile.adapter.ViewPagerAdapter;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserInformationFragment;
@@ -44,10 +43,9 @@ import com.learn.mobile.model.User;
 import com.learn.mobile.service.SUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.henrytao.smoothappbarlayout.PagerAdapter;
 
 public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
-
+    public static final String TAG = UserProfileActivity.class.getSimpleName();
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
     PhotoFragment photoFragment;
@@ -58,13 +56,15 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     private TabLayout tabLayout;
     ViewPager viewPager;
 
+    ViewPagerAdapter adapter;
+
     String[] tabs = {"Wall", "Info", "Photo"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_detail);
-
+        DMobi.log(TAG, "onCreate");
         user = (User) DMobi.getData(USER_PROFILE);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,25 +90,47 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        ViewPagerRunnableAdapter adapter = new ViewPagerRunnableAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        DMobi.log(TAG, "before onRestoreInstanceState");
+        adapter.onRestoreInstanceState(savedInstanceState);
+        DMobi.log(TAG, "before create NewFeedsFragment");
+        if (savedInstanceState != null) {
+            profileFeedFragment = (NewFeedsFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + 0);
+            userInformationFragment = (UserInformationFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + 1);
+            photoFragment = (PhotoFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + 2);
+        } else {
+            profileFeedFragment = new NewFeedsFragment();
+            userInformationFragment = new UserInformationFragment();
+            photoFragment = new PhotoFragment();
+        }
 
-        profileFeedFragment = new NewFeedsFragment();
+        // profile feed fragment
+        if(profileFeedFragment ==  null){
+            profileFeedFragment = new NewFeedsFragment();
+        }
+        DMobi.log(TAG, "profileFeedFragment " + profileFeedFragment._id + " " + user.getId());
         profileFeedFragment.setUser(user);
-
         adapter.addFragment(profileFeedFragment, "Wall");
-        userInformationFragment = new UserInformationFragment();
+
+        // user information fragment
+        if(userInformationFragment ==  null){
+            userInformationFragment = new UserInformationFragment();
+        }
         userInformationFragment.setUser(user);
         adapter.addFragment(userInformationFragment, "Info");
 
-        photoFragment = new PhotoFragment();
+        // photo fragment
+        if(photoFragment ==  null){
+            photoFragment = new PhotoFragment();
+        }
         photoFragment.setUser(user);
         photoFragment.setHasAppBar(true);
         photoFragment.setRefreshList(true);
         adapter.addFragment(photoFragment, "Photo");
 
-        if (adapter instanceof PagerAdapter) {
-            viewPager.setAdapter(adapter);
-        }
+        // set viewpager adapter
+        viewPager.setAdapter(adapter);
+
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -124,6 +146,13 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
             }
         }, user.getId());
         updateView();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        adapter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
