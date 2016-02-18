@@ -572,6 +572,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     protected int bottomLoadMoreHeight = 140;
     protected boolean bInitLoadMoreLayoutChange = false;
     protected boolean bHasHeader = false;
+    protected boolean bShowPaddingWhenLoadMore = false;
 
     public void setHasHeader(boolean b) {
         bHasHeader = b;
@@ -612,7 +613,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
         mLoadMoreCircleView.bringToFront();
         int childCount = getListItemCount();
-        if (childCount != 0 && !(bHasHeader && childCount == 2)) {
+        if (bShowPaddingWhenLoadMore && childCount != 0 && !(bHasHeader && childCount == 2)) {
             mTarget.setPadding(0, 0, 0, bottomLoadMoreHeight);
         }
         updateLoadMorePosition(getMeasuredWidth(), getMeasuredHeight());
@@ -622,7 +623,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         ensureTarget();
         mLoadMoreProgress.stop();
         mLoadMoreCircleView.setVisibility(View.GONE);
-        mTarget.setPadding(0, 0, 0, 0);
+        if(bShowPaddingWhenLoadMore){
+            mTarget.setPadding(0, 0, 0, 0);
+        }
     }
 
     public void startLoad() {

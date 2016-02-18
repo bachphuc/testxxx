@@ -167,7 +167,6 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
     public void fireAction(String eventType, Object o) {
         if (o instanceof Event.ModelAction) {
             DMobi.log(TAG, "Update view...");
-            Event.ModelAction response = (Event.ModelAction) o;
             updateView();
         }
     }

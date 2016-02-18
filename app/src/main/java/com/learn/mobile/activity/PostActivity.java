@@ -345,6 +345,9 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             }
 
             String filePath = DUtils.getRealPathFromURI(this, fileUri);
+            if (filePath == null) {
+                filePath = DUtils.createNewImageFileFromUrl(this, fileUri);
+            }
             dRequest.setFilePath(filePath);
             dRequest.setUpdateProcess(new DResponse.UpdateProcess() {
                 @Override
@@ -394,7 +397,11 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         imgPreview.setVisibility(View.VISIBLE);
 
         String path = DUtils.getRealPathFromURI(this, fileUri);
-        ImageHelper.display(imgPreview, path);
+        if (path != null) {
+            ImageHelper.display(imgPreview, path);
+        } else {
+            imgPreview.setImageURI(fileUri);
+        }
 
         btRemoveImage.setVisibility(View.VISIBLE);
 

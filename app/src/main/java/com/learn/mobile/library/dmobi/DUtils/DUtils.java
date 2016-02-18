@@ -1,5 +1,6 @@
 package com.learn.mobile.library.dmobi.DUtils;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -7,14 +8,22 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.learn.mobile.R;
+import com.learn.mobile.library.dmobi.DMobi;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -171,4 +180,32 @@ public class DUtils {
         return str;
     }
 
+    public static String createNewImageFileFromUrl(Context context, Uri imgUri) {
+        final int chunkSize = 1024;  // We'll read in one kB at a time
+        byte[] imageData = new byte[chunkSize];
+
+        try {
+            ContentResolver cR = context.getContentResolver();
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            String extension = mime.getExtensionFromMimeType(cR.getType(imgUri));
+            InputStream in = cR.openInputStream(imgUri);
+            // I'm assuming you already have the File object for where you're writing to
+            String imageTempDir = context.getExternalCacheDir() + "/" + "share_image_temp." + extension;
+            File file = new File(imageTempDir);
+            OutputStream out = new FileOutputStream(file);
+
+            int bytesRead;
+            while ((bytesRead = in.read(imageData)) > 0) {
+                out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
+            }
+
+            in.close();
+            out.close();
+
+            return imageTempDir;
+        } catch (Exception ex) {
+            DMobi.log("Error", ex.getMessage());
+            return null;
+        }
+    }
 }
