@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -23,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.learn.mobile.activity.*;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
@@ -66,6 +69,8 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         DMobi.log(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initCustomView();
 
         // set global application context config
         DConfig.setContext(getApplicationContext());

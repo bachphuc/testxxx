@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
@@ -57,9 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_add_white_24dp"
             app:backgroundTint="@color/primary_color"
-            app:layout_behavior="com.learn.mobile.customview.ScrollingFABBehavior"
-            android:src="@drawable/ic_add_white_24dp" />
+            app:layout_behavior="com.learn.mobile.customview.ScrollingFABBehavior" />
+
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -73,5 +75,28 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:fitsSystemWindows="true" />
+
+    <FrameLayout
+        android:id="@+id/custom_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="40dp"
+        android:visibility="gone"
+        android:background="@color/red">
+
+        <ImageView
+            android:id="@+id/custom_image_viewer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/background_red"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/bt_close_custom_viewer"
+            android:text="Close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top" />
+    </FrameLayout>
 
 </android.support.v4.widget.DrawerLayout>

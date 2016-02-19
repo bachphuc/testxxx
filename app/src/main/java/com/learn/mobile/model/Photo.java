@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
+import com.learn.mobile.activity.DActivityBase;
 import com.learn.mobile.activity.PhotoDetailActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DFeedImageView;
@@ -79,6 +80,20 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                     } else {
                         context.startActivity(intent);
                     }
+                }
+            });
+
+            imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Context context = v.getContext();
+                    if(context instanceof DActivityBase){
+                        DMobi.log("Photo Model", "setOnLongClickListener");
+                        DActivityBase dActivityBase = (DActivityBase) context;
+                        dActivityBase.showImagePreview(getImages().getFull().url);
+                        return true;
+                    }
+                    return false;
                 }
             });
 
