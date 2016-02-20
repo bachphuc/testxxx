@@ -5,11 +5,13 @@
     android:background="#000000"
     tools:context="com.learn.mobile.fragment.PhotoViewFragment">
 
+    <!-- main gesture image view -->
     <com.alexvasilkov.gestures.views.GestureImageView
         android:id="@+id/im_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- panel information -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -142,4 +144,12 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <!-- image loader -->
+    <com.learn.mobile.customview.DSquareImageView
+        android:id="@+id/img_loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
 </FrameLayout>

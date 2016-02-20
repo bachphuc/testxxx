@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -51,7 +52,7 @@ import java.util.ArrayList;
  *
  * @hide
  */
-class DMaterialProgressDrawable extends Drawable implements Animatable {
+public class DMaterialProgressDrawable extends Drawable implements Animatable {
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     private static final Interpolator END_CURVE_INTERPOLATOR = new EndCurveInterpolator();
     private static final Interpolator START_CURVE_INTERPOLATOR = new StartCurveInterpolator();
@@ -151,6 +152,18 @@ class DMaterialProgressDrawable extends Drawable implements Animatable {
         ring.setColorIndex(0);
         ring.setArrowDimensions(arrowWidth * screenDensity, arrowHeight * screenDensity);
         ring.setInsets((int) mWidth, (int) mHeight);
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        if (mRing != null) {
+            mRing.setStrokeWidth(strokeWidth);
+        }
+    }
+
+    public void setHasBackground(boolean b) {
+        if (mRing != null) {
+            mRing.bHasBackground = b;
+        }
     }
 
     /**
@@ -440,6 +453,7 @@ class DMaterialProgressDrawable extends Drawable implements Animatable {
         private int mAlpha;
         private final Paint mCirclePaint = new Paint();
         private int mBackgroundColor;
+        public boolean bHasBackground = true;
 
         public Ring(Callback callback) {
             mCallback = callback;
@@ -483,12 +497,12 @@ class DMaterialProgressDrawable extends Drawable implements Animatable {
             c.drawArc(arcBounds, startAngle, sweepAngle, false, mPaint);
 
             drawTriangle(c, startAngle, sweepAngle, bounds);
+            // c.drawRect(arcBounds, mPaint);
 
-            if (mAlpha < 255) {
+            if (mAlpha < 255 && bHasBackground) {
                 mCirclePaint.setColor(mBackgroundColor);
                 mCirclePaint.setAlpha(255 - mAlpha);
-                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2,
-                        mCirclePaint);
+                c.drawCircle(bounds.exactCenterX(), bounds.exactCenterY(), bounds.width() / 2, mCirclePaint);
             }
         }
 

@@ -90,7 +90,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                     if(context instanceof DActivityBase){
                         DMobi.log("Photo Model", "setOnLongClickListener");
                         DActivityBase dActivityBase = (DActivityBase) context;
-                        dActivityBase.showImagePreview(getImages().getFull().url);
+                        dActivityBase.showImagePreview(getImages().getLarge().url);
                         return true;
                     }
                     return false;

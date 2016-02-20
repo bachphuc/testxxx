@@ -1,16 +1,21 @@
 package com.learn.mobile.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.DMaterialProgressDrawable;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -22,8 +27,11 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
     private static final String TAG = DActivityBase.class.getSimpleName();
     protected AppBarLayout appBarLayout;
     protected int appBarOffsetTop = 0;
-    protected FrameLayout customViewerLayout;
+    protected View customViewerLayout;
     protected ImageView customImageViewer;
+    protected View customViewerContent;
+    protected DMaterialProgressDrawable imageViewerLoading;
+    protected boolean bShowCustomViewer = false;
 
     public AppBarLayout getAppBarLayout() {
         return appBarLayout;
@@ -60,28 +68,66 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
             DMobi.log(TAG, "showImagePreview");
             customViewerLayout.setVisibility(View.VISIBLE);
             ImageHelper.display(customImageViewer, imageUrl);
+            customViewerLayout.setAlpha(0f);
             customViewerLayout.bringToFront();
+            customImageViewer.setImageDrawable(imageViewerLoading);
+            imageViewerLoading.start();
+            bShowCustomViewer = true;
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (customViewerContent.getAnimation() != null) {
+                        customViewerContent.getAnimation().start();
+                    } else {
+                        float scaleFrom = 0.2f, scaleTo = 1;
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(scaleFrom, scaleTo, scaleFrom, scaleTo, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f) {
+                            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                                super.applyTransformation(interpolatedTime, t);
+                                customViewerLayout.setAlpha(interpolatedTime);
+                            }
+                        };
+                        scaleAnimation.setDuration(200);
+
+                        customViewerContent.setAnimation(scaleAnimation);
+                        customViewerContent.startAnimation(scaleAnimation);
+                        findViewById(android.R.id.content).invalidate();
+                    }
+                }
+            });
         }
+    }
+
+    public boolean isShowCustomViewer(){
+        return bShowCustomViewer;
     }
 
     public void hideImagePreview() {
         if (customViewerLayout != null && customImageViewer != null) {
             customViewerLayout.setVisibility(View.GONE);
+            imageViewerLoading.stop();
+            bShowCustomViewer = false;
         }
     }
 
     public void initCustomView() {
-        customViewerLayout = (FrameLayout) findViewById(R.id.custom_viewer);
+        customViewerLayout = findViewById(R.id.custom_viewer);
         customViewerLayout.bringToFront();
 
         customImageViewer = (ImageView) findViewById(R.id.custom_image_viewer);
-
-        Button closeCustomViewer = (Button)findViewById(R.id.bt_close_custom_viewer);
+        imageViewerLoading = new DMaterialProgressDrawable(this, customImageViewer);
+        imageViewerLoading.setStrokeWidth(1);
+        imageViewerLoading.setBackgroundColor(0xFFFAFAFA);
+        imageViewerLoading.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
+        customImageViewer.setImageDrawable(imageViewerLoading);
+        View closeCustomViewer = findViewById(R.id.bt_close_custom_viewer);
         closeCustomViewer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideImagePreview();
             }
         });
+
+        customViewerContent = findViewById(R.id.custom_viewer_content);
     }
 }

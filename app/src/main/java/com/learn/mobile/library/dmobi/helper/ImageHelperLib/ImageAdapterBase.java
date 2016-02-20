@@ -105,7 +105,7 @@ public class ImageAdapterBase {
         display(context, url, imageView, thumbnailUrl, listener);
     }
 
-    public void onDisplay() {
+    protected void onDisplay() {
 
     }
 

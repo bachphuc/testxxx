@@ -2,6 +2,8 @@ package com.learn.mobile.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,11 +19,13 @@ import com.alexvasilkov.gestures.views.GestureImageView;
 import com.learn.mobile.R;
 import com.learn.mobile.activity.CommentActivity;
 import com.learn.mobile.customview.DFeedImageView;
+import com.learn.mobile.customview.DMaterialProgressDrawable;
 import com.learn.mobile.customview.com.faradaj.blurbehind.BlurBehind;
 import com.learn.mobile.customview.com.faradaj.blurbehind.OnBlurCompleteListener;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
 import com.learn.mobile.model.Photo;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,6 +61,16 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_photo_view_detail, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.im_imageView);
+
+        final ImageView imageLoader = (ImageView) view.findViewById(R.id.img_loader);
+        final DMaterialProgressDrawable imageViewerLoading = new DMaterialProgressDrawable(getContext(), imageLoader);
+        imageViewerLoading.setStrokeWidth(1);
+        imageViewerLoading.setBackgroundColor(0xFFFAFAFA);
+        imageViewerLoading.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
+        imageLoader.setImageDrawable(imageViewerLoading);
+        imageViewerLoading.setHasBackground(false);
+        imageViewerLoading.start();
+
         if (photo != null && imageView != null) {
             if (photo.images != null) {
                 if (imageView instanceof DFeedImageView) {
@@ -78,7 +92,18 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
                             .setFitMethod(Settings.Fit.INSIDE)
                             .setGravity(Gravity.CENTER);
 
-                    ImageHelper.display(gestureImageView, photo.images.getExtraLarge().url, photo.images.getLarge().url);
+                    ImageHelper.getAdapter()
+                            .with(getContext())
+                            .load(photo.images.getExtraLarge().url)
+                            .into(gestureImageView)
+                            .callback(new ImageAdapterBase.ImageBitmapLoadedListener() {
+                                @Override
+                                public void onCompleted(Bitmap bitmap) {
+                                    imageViewerLoading.stop();
+                                    imageLoader.setVisibility(View.GONE);
+                                }
+                            })
+                            .display();
 
                     if (viewPager != null) {
                         gestureImageView.getController().enableScrollInViewPager(viewPager);

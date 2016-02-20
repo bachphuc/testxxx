@@ -4,10 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -24,10 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
-import com.learn.mobile.activity.*;
+import com.learn.mobile.activity.DActivityBase;
+import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.adapter.GlobalSearchAdapter;
 import com.learn.mobile.fragment.DFragmentListener;
@@ -39,8 +36,6 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
-import com.learn.mobile.service.SBase;
-import com.learn.mobile.service.SSearch;
 import com.learn.mobile.service.SUser;
 
 public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
@@ -59,6 +54,8 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     AutoCompleteTextView searchEditText;
     SearchView searchView;
+    boolean bCloseDrawerLayout = false;
+    int viewPagerMoveIndex = -1;
 
     public TabLayout getTabLayout() {
         return tabLayout;
@@ -133,6 +130,31 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setFitsSystemWindows(true);
 
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if (viewPagerMoveIndex != -1) {
+                    viewPager.setCurrentItem(viewPagerMoveIndex);
+                    viewPagerMoveIndex = -1;
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.left_drawer, leftMenuFragment).commit();
     }
@@ -161,7 +183,9 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                /* if (state == ViewPager.SCROLL_STATE_IDLE && bCloseDrawerLayout) {
+                    closeDrawerLayout();
+                } */
             }
         });
     }
@@ -343,25 +367,34 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     }
 
+    public void closeDrawerLayout() {
+        drawerLayout.closeDrawers();
+        bCloseDrawerLayout = false;
+    }
+
     @Override
     public void onLeftFragmentInteraction(int id) {
         drawerLayout.closeDrawers();
+        viewPagerMoveIndex = -1;
         switch (id) {
             case R.id.drawer_home:
-                viewPager.setCurrentItem(0);
+                viewPagerMoveIndex = 0;
                 break;
             case R.id.drawer_member:
-                viewPager.setCurrentItem(1);
+                viewPagerMoveIndex = 1;
                 break;
             case R.id.drawer_photo:
-                viewPager.setCurrentItem(2);
+                viewPagerMoveIndex = 2;
                 break;
             case R.id.drawer_funny:
-                viewPager.setCurrentItem(3);
+                viewPagerMoveIndex = 3;
                 break;
             case R.id.drawer_search:
-                viewPager.setCurrentItem(4);
+                viewPagerMoveIndex = 4;
                 break;
+        }
+        if (viewPagerMoveIndex != -1) {
+            bCloseDrawerLayout = true;
         }
     }
 
@@ -395,6 +428,10 @@ public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLe
 
     @Override
     public void onBackPressed() {
+        if (isShowCustomViewer()) {
+            hideImagePreview();
+            return;
+        }
         if (viewPager.getCurrentItem() != 0) {
             // back go home fragment
             viewPager.setCurrentItem(0);
