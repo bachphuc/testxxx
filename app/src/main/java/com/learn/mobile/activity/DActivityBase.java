@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Interpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.widget.Button;
@@ -15,10 +16,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.BlurringView;
 import com.learn.mobile.customview.DMaterialProgressDrawable;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+
+import cimi.com.easeinterpolator.EaseBackInOutInterpolator;
+import cimi.com.easeinterpolator.EaseBackOutInterpolator;
 
 /**
  * Created by 09520_000 on 9/23/2015.
@@ -32,6 +37,7 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
     protected View customViewerContent;
     protected DMaterialProgressDrawable imageViewerLoading;
     protected boolean bShowCustomViewer = false;
+    protected BlurringView mBlurringView;
 
     public AppBarLayout getAppBarLayout() {
         return appBarLayout;
@@ -74,6 +80,8 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
             imageViewerLoading.start();
             bShowCustomViewer = true;
 
+            mBlurringView.invalidate();
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -87,6 +95,8 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
                                 customViewerLayout.setAlpha(interpolatedTime);
                             }
                         };
+                        Interpolator interpolator = new EaseBackOutInterpolator();
+                        scaleAnimation.setInterpolator(interpolator);
                         scaleAnimation.setDuration(200);
 
                         customViewerContent.setAnimation(scaleAnimation);
@@ -129,5 +139,11 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
         });
 
         customViewerContent = findViewById(R.id.custom_viewer_content);
+
+        mBlurringView = (BlurringView) findViewById(R.id.blurring_view);
+        View blurredView = findViewById(R.id.content);
+
+        // Give the blurring view a reference to the blurred view.
+        mBlurringView.setBlurredView(blurredView);
     }
 }
