@@ -40,7 +40,7 @@ import me.henrytao.smoothappbarlayout.base.Utils;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class ListBaseFragment extends Fragment implements Event.Action , ObservableFragment {
+public class ListBaseFragment extends Fragment implements Event.Action, ObservableFragment {
     public static final String TAG = ListBaseFragment.class.getSimpleName();
     protected DFragmentListener.OnFragmentInteractionListener mListener;
     protected int layout = 0;
@@ -432,7 +432,7 @@ public class ListBaseFragment extends Fragment implements Event.Action , Observa
             int childIndex = parent.getChildAdapterPosition(view);
 
             int spanCount = getTotalSpan(parent);
-            Log.i(TAG, "spanCount: " + spanCount);
+
             if (bHasHeader && childIndex == 0) {
                 outRect.top = spacing;
                 outRect.bottom = 0;

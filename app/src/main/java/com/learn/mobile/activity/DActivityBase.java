@@ -1,28 +1,25 @@
 package com.learn.mobile.activity;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.customview.BlurringView;
 import com.learn.mobile.customview.DMaterialProgressDrawable;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
 
-import cimi.com.easeinterpolator.EaseBackInOutInterpolator;
 import cimi.com.easeinterpolator.EaseBackOutInterpolator;
 
 /**
@@ -38,6 +35,7 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
     protected DMaterialProgressDrawable imageViewerLoading;
     protected boolean bShowCustomViewer = false;
     protected BlurringView mBlurringView;
+    protected ImageView customImageLoader;
 
     public AppBarLayout getAppBarLayout() {
         return appBarLayout;
@@ -69,18 +67,37 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
         return appBarLayout.getHeight();
     }
 
+    boolean bLoadingCompleted = false;
     public void showImagePreview(String imageUrl) {
         if (customViewerLayout != null && customImageViewer != null) {
             DMobi.log(TAG, "showImagePreview");
             customViewerLayout.setVisibility(View.VISIBLE);
-            ImageHelper.display(customImageViewer, imageUrl);
+
             customViewerLayout.setAlpha(0f);
             customViewerLayout.bringToFront();
-            customImageViewer.setImageDrawable(imageViewerLoading);
-            imageViewerLoading.start();
+
             bShowCustomViewer = true;
 
+            // imageViewerLoading.start();
+            // customImageLoader.setVisibility(View.VISIBLE);
+
             mBlurringView.invalidate();
+            bLoadingCompleted = false;
+
+            ImageHelper.display(customImageViewer, imageUrl);
+            ImageHelper.getAdapter()
+                    .with(this)
+                    .load(imageUrl)
+                    .into(customImageViewer)
+                    .callback(new ImageAdapterBase.ImageBitmapLoadedListener() {
+                        @Override
+                        public void onCompleted(Bitmap bitmap) {
+                            bLoadingCompleted = true;
+                            imageViewerLoading.stop();
+                            customImageLoader.setVisibility(View.GONE);
+                        }
+                    })
+                    .display();
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -95,6 +112,22 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
                                 customViewerLayout.setAlpha(interpolatedTime);
                             }
                         };
+                        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                DMobi.log(TAG, "onAnimationEnd");
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
                         Interpolator interpolator = new EaseBackOutInterpolator();
                         scaleAnimation.setInterpolator(interpolator);
                         scaleAnimation.setDuration(200);
@@ -108,7 +141,7 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
         }
     }
 
-    public boolean isShowCustomViewer(){
+    public boolean isShowCustomViewer() {
         return bShowCustomViewer;
     }
 
@@ -120,16 +153,29 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_UP && bShowCustomViewer) {
+            hideImagePreview();
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     public void initCustomView() {
         customViewerLayout = findViewById(R.id.custom_viewer);
         customViewerLayout.bringToFront();
 
         customImageViewer = (ImageView) findViewById(R.id.custom_image_viewer);
+
+
+        customImageLoader = (ImageView) findViewById(R.id.img_loader);
         imageViewerLoading = new DMaterialProgressDrawable(this, customImageViewer);
         imageViewerLoading.setStrokeWidth(1);
         imageViewerLoading.setBackgroundColor(0xFFFAFAFA);
         imageViewerLoading.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
-        customImageViewer.setImageDrawable(imageViewerLoading);
+        imageViewerLoading.setHasBackground(false);
+        customImageLoader.setImageDrawable(imageViewerLoading);
+
         View closeCustomViewer = findViewById(R.id.bt_close_custom_viewer);
         closeCustomViewer.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -93,6 +93,13 @@
                 android:layout_height="match_parent"
                 android:padding="16dp">
 
+                <com.learn.mobile.customview.DSquareImageView
+                    android:id="@+id/img_loader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop" />
+
                 <android.support.v7.widget.CardView
                     android:id="@+id/custom_viewer_content"
                     android:layout_width="match_parent"
