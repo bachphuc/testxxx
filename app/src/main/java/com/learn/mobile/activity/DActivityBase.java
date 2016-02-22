@@ -70,16 +70,12 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
     boolean bLoadingCompleted = false;
     public void showImagePreview(String imageUrl) {
         if (customViewerLayout != null && customImageViewer != null) {
-            DMobi.log(TAG, "showImagePreview");
             customViewerLayout.setVisibility(View.VISIBLE);
 
             customViewerLayout.setAlpha(0f);
             customViewerLayout.bringToFront();
 
             bShowCustomViewer = true;
-
-            // imageViewerLoading.start();
-            // customImageLoader.setVisibility(View.VISIBLE);
 
             mBlurringView.invalidate();
             bLoadingCompleted = false;
@@ -120,7 +116,10 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                DMobi.log(TAG, "onAnimationEnd");
+                                if(!bLoadingCompleted){
+                                    customImageLoader.setVisibility(View.VISIBLE);
+                                    imageViewerLoading.start();
+                                }
                             }
 
                             @Override
