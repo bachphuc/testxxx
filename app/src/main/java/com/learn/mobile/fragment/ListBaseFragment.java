@@ -29,6 +29,7 @@ import com.learn.mobile.service.SBase;
 import java.util.HashMap;
 
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
+import me.henrytao.recyclerview.holder.HeaderHolder;
 import me.henrytao.smoothappbarlayout.SmoothAppBarLayout;
 import me.henrytao.smoothappbarlayout.base.ObservableFragment;
 import me.henrytao.smoothappbarlayout.base.Utils;

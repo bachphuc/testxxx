@@ -7,7 +7,7 @@
     tools:context="com.learn.mobile.LoginActivity">
 
     <!-- Background -->
-    <com.learn.mobile.customview.BlurImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description_default"

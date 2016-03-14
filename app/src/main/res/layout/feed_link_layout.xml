@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="16dp">
 
     <LinearLayout
@@ -45,19 +46,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingRight="8dp">
 
                     <TextView
                         android:id="@+id/link_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:text="https://google.com.vn"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_link_description"

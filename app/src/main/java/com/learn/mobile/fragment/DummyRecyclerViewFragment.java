@@ -55,6 +55,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
+import me.henrytao.recyclerview.holder.HeaderHolder;
 
 
 public class DummyRecyclerViewFragment extends Fragment implements ObservableScrollView {

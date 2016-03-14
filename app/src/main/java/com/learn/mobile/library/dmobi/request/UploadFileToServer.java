@@ -96,7 +96,7 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
 
     @SuppressWarnings("deprecation")
     private String uploadFile() {
-        String responseString = null;
+        String responseString;
 
         httpclient = new DefaultHttpClient();
 
