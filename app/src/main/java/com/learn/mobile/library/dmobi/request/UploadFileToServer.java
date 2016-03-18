@@ -14,6 +14,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +33,7 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
     private DResponse.Complete complete = null;
     private DResponse.PreExecute preExecute = null;
     private DResponse.UpdateProcess updateProcess = null;
+    private List<String> files = new ArrayList<>();
 
     public UploadFileToServer() {
         entity = new DMultiPartEntity(
@@ -54,7 +57,7 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
     public void setParams(Map<String, String> params) {
         if (params != null) {
             try {
-                for(Map.Entry<String, String> entry : params.entrySet()){
+                for (Map.Entry<String, String> entry : params.entrySet()) {
                     entity.addPart(entry.getKey(), new StringBody(entry.getValue()));
                 }
             } catch (IOException e) {
@@ -65,6 +68,11 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+        this.addFile(filePath);
+    }
+
+    public void addFile(String filePath) {
+        this.files.add(filePath);
     }
 
     @Override
@@ -103,9 +111,10 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         HttpPost httppost = new HttpPost(url);
 
         try {
-            File sourceFile = new File(filePath);
-
-            entity.addPart("image", new FileBody(sourceFile));
+            for (int i = 0; i < this.files.size(); i++) {
+                File sourceFile = new File(this.files.get(i));
+                entity.addPart("image", new FileBody(sourceFile));
+            }
 
             totalSize = entity.getContentLength();
             httppost.setEntity(entity);
