@@ -13,7 +13,9 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,10 +46,14 @@ public class DRequest {
     private DResponse.PreExecute preExecute = null;
     private DResponse.UpdateProcess updateProcess = null;
 
-    String filePath;
+    protected List<String> filePaths = new ArrayList<>();
 
     public void setFilePath(String path) {
-        this.filePath = path;
+        this.addFile(path);
+    }
+
+    public void addFile(String path) {
+        filePaths.add(path);
     }
 
     public void addParam(String key, Object value) {
@@ -197,9 +203,15 @@ public class DRequest {
 
 
     public void upload() {
+        if (filePaths.size() == 0) {
+            return;
+        }
         UploadFileToServer uploadFileToServer = new UploadFileToServer();
         uploadFileToServer.setCallBack(preExecute, updateProcess, listener, errorListener, complete);
-        uploadFileToServer.setFilePath(filePath);
+        for (int i = 0; i < filePaths.size(); i++) {
+            uploadFileToServer.addFile(filePaths.get(i));
+        }
+
         uploadFileToServer.setUrl(this.getRequestUrl());
         if (postData.size() > 0) {
             uploadFileToServer.setParams(postData);
@@ -208,7 +220,7 @@ public class DRequest {
     }
 
     public void upload(String filePath) {
-        this.setFilePath(filePath);
+        this.addFile(filePath);
         this.upload();
     }
 

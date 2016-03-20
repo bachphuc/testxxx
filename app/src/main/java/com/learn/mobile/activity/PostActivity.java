@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -63,8 +64,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     private static final String TAG = PostActivity.class.getSimpleName();
     private ProgressBar progressBar;
     private ImageView imgPreview;
-
-    boolean bHasImage = false;
+    LinearLayout photoAttachmentPanel;
 
     ImageView btRemoveImage;
     boolean bPosting = false;
@@ -95,6 +95,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         setContentView(R.layout.activity_post_v1);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
+        photoAttachmentPanel = (LinearLayout) findViewById(R.id.panel_photo_attachment);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -167,10 +168,12 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
                 if (receivedType.startsWith("text/")) {
                     getLinkPreview(receivedText);
                 } else if (receivedType.startsWith("image/")) {
-                    fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
-                    if (fileUri != null) {
+                    //fileUri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    Uri uri = (Uri) receivedIntent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (uri != null) {
                         module = "photo";
-                        previewImage();
+                        // previewImage();
+                        addPhotoAttachment(uri);
                     }
                 }
             }
@@ -214,7 +217,6 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.panel_link_attachment_content);
         linearLayout.setVisibility(View.VISIBLE);
 
-
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);
         progressBar.setVisibility(View.GONE);
 
@@ -237,10 +239,6 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
 
         textView = (TextView) findViewById(R.id.tv_link_description);
         textView.setText(link.getDescription());
-    }
-
-    public boolean needUpload() {
-        return bHasImage;
     }
 
     @Override
@@ -309,7 +307,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             public void onPreExecute() {
                 bPosting = true;
                 progressDialog.show();
-                if (needUpload()) {
+                if (fileUris.size() > 0) {
                     progressBar.setVisibility(View.VISIBLE);
                     progressBar.setProgress(0);
                 }
@@ -321,7 +319,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             public void onComplete(Boolean status, Object o) {
                 String response = (String) o;
                 progressBar.setVisibility(View.GONE);
-                progressDialog.hide();
+                progressDialog.dismiss();
                 bPosting = false;
                 DMobi.log(TAG, response);
                 if (status) {
@@ -339,16 +337,20 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             }
         });
 
-        if (needUpload()) {
-            if (fileUri == null) {
+        if (fileUris.size() > 0) {
+            if (fileUris.size() == 0) {
                 return;
             }
 
-            String filePath = DUtils.getRealPathFromURI(this, fileUri);
-            if (filePath == null) {
-                filePath = DUtils.createNewImageFileFromUrl(this, fileUri);
+            for (int i = 0; i < fileUris.size(); i++) {
+                Uri uri = fileUris.get(i);
+                String filePath = DUtils.getRealPathFromURI(this, uri);
+                if (filePath == null) {
+                    filePath = DUtils.createNewImageFileFromUrl(this, uri);
+                }
+                dRequest.setFilePath(filePath);
             }
-            dRequest.setFilePath(filePath);
+
             dRequest.setUpdateProcess(new DResponse.UpdateProcess() {
                 @Override
                 public void onUpdateProcess(int percent) {
@@ -391,9 +393,61 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     }
 
     @Override
+    public void addPhotoAttachment(Uri uri) {
+        super.addPhotoAttachment(uri);
+        module = "photo";
+
+        photoAttachmentPanel.setVisibility(View.VISIBLE);
+        final RelativeLayout photoItemView = new RelativeLayout(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.bottomMargin = DUtils.dpToPx(this, 4);
+
+        photoItemView.setLayoutParams(layoutParams);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DUtils.dpToPx(this, 240)));
+        photoItemView.addView(imageView);
+
+        ImageView removeView = new ImageView(this);
+        removeView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_remove_circle_outline_white_24dp));
+        RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int margin = DUtils.dpToPx(this, 16);
+        closeLayoutParams.setMargins(margin, margin, margin, margin);
+
+        removeView.setLayoutParams(closeLayoutParams);
+        removeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewParent parent = v.getParent();
+                if (parent != null) {
+                    int position = photoAttachmentPanel.indexOfChild((View) parent);
+                    fileUris.remove(position);
+                    photoAttachmentPanel.removeView((View) parent);
+                }
+            }
+        });
+        photoItemView.addView(removeView);
+        photoItemView.requestLayout();
+
+        photoAttachmentPanel.addView(photoItemView);
+        String path = DUtils.getRealPathFromURI(this, uri);
+        if (path != null) {
+            ImageHelper.display(imageView, path);
+        } else {
+            imageView.setImageURI(uri);
+        }
+
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+        relativeLayout.setVisibility(View.GONE);
+
+        View removeButton = findViewById(R.id.bt_remove_attachment);
+        removeButton.setVisibility(View.GONE);
+    }
+
+    @Override
     public void previewImage() {
         module = "photo";
-        bHasImage = true;
         imgPreview.setVisibility(View.VISIBLE);
 
         String path = DUtils.getRealPathFromURI(this, fileUri);
@@ -412,7 +466,6 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     }
 
     private void removeImage() {
-        bHasImage = false;
         module = null;
         imgPreview.setVisibility(View.GONE);
         btRemoveImage.setVisibility(View.GONE);
@@ -512,8 +565,10 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
                         break;
                     default:
                         String imagePath = galleryAdapter.getItem(position);
-                        fileUri = Uri.fromFile(new File(imagePath));
-                        previewImage();
+                        // fileUri = Uri.fromFile(new File(imagePath));
+                        Uri uri = Uri.fromFile(new File(imagePath));
+                        addPhotoAttachment(uri);
+                        // previewImage();
                         break;
                 }
             }

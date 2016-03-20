@@ -112,7 +112,7 @@
                             android:layout_height="wrap_content">
 
                             <!-- TOTO Image capture preview -->
-                            <RelativeLayout
+                            <!--RelativeLayout
                                 android:id="@+id/panel_photo_attachment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -128,7 +128,14 @@
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/background_red" />
 
-                            </RelativeLayout>
+                            </RelativeLayout-->
+                            <LinearLayout
+                                android:id="@+id/panel_photo_attachment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            </LinearLayout>
 
                             <!-- TODO Link preview attachment -->
                             <RelativeLayout

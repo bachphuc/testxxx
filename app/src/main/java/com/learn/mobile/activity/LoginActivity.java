@@ -2,10 +2,8 @@ package com.learn.mobile.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -78,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
             switch (position) {
                 case 0:
                     LoginFragment loginFragment = new LoginFragment();
-                    loginFragment.setLister(context);
+                    loginFragment.setListener(context);
                     return loginFragment;
                 case 1:
                     RegisterFragment registerFragment = new RegisterFragment();

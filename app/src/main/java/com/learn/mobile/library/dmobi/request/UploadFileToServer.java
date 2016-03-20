@@ -116,8 +116,8 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
                 entity.addPart("image", new FileBody(sourceFile));
             }
 
-            totalSize = entity.getContentLength();
             httppost.setEntity(entity);
+            totalSize = entity.getContentLength();
 
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity r_entity = response.getEntity();

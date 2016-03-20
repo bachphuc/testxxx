@@ -87,7 +87,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 @Override
                 public boolean onLongClick(View v) {
                     Context context = v.getContext();
-                    if(context instanceof DActivityBase){
+                    if (context instanceof DActivityBase) {
                         DMobi.log("Photo Model", "setOnLongClickListener");
                         DActivityBase dActivityBase = (DActivityBase) context;
                         dActivityBase.showImagePreview(getImages().getLarge().url);
@@ -97,7 +97,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 }
             });
 
-            if (images.getLarge() != null) {
+            if (images != null && images.getLarge() != null) {
                 ImageHelper.getGlobalAdapter().loadFlickrThumb(images, imageView);
             }
         }

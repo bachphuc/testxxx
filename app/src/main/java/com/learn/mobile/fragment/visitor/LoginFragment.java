@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
@@ -56,16 +56,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_login, container, false);
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+        rootView = inflater.inflate(R.layout.activity_login, container, false);
 
-        Button button = (Button) view.findViewById(R.id.bt_signUp);
-        button.setOnClickListener(this);
+        View view = rootView.findViewById(R.id.bt_signUp);
+        view.setOnClickListener(this);
 
-        button = (Button) view.findViewById(R.id.bt_login);
-        button.setOnClickListener(this);
-        rootView = view;
-        return view;
+        view = rootView.findViewById(R.id.bt_login);
+        view.setOnClickListener(this);
+
+        view = rootView.findViewById(R.id.bt_setting_site);
+        view.setOnClickListener(this);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,7 +79,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setLister(Context context) {
+    public void setListener(Context context) {
         if (mListener == null) {
             mListener = (OnFragmentInteractionListener) context;
         }
@@ -110,6 +112,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.bt_login:
                 onLogin();
                 break;
+            case R.id.bt_setting_site:
+                SettingSiteDialog settingSite = new SettingSiteDialog();
+                settingSite.show(getFragmentManager(), "dialog");
+                break;
         }
     }
 
@@ -141,7 +147,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new DResponse.Complete() {
             @Override
             public void onComplete(Boolean status, Object o) {
-                progressDialog.hide();
+                progressDialog.dismiss();
                 if (o != null) {
                     DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
                     DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);

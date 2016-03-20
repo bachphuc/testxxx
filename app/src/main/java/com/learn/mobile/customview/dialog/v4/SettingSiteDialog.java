@@ -1,9 +1,13 @@
-package com.learn.mobile.customview.dialog;
+package com.learn.mobile.customview.dialog.v4;
+
+/**
+ * Created by BachPhuc on 3/18/2016.
+ */
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.learn.mobile.R;

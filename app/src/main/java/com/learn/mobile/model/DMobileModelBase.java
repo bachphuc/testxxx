@@ -77,7 +77,7 @@ public class DMobileModelBase {
     public int getLayoutType(String suffix) {
         int layoutType = LayoutHelper.getLayoutType(this.getClass(), suffix);
         if (layoutType == 0) {
-            throw new IllegalArgumentException("Layout " + suffix + " not register yet.");
+            return LayoutHelper.FEED_DEFAULT_LAYOUT;
         }
         return layoutType;
     }

@@ -38,6 +38,10 @@ public class DMobi {
 
     }
 
+    public static Context getApplicationContext() {
+        return DConfig.getContext();
+    }
+
     public static int getIdentityId() {
         identityId++;
         return identityId;
@@ -132,6 +136,12 @@ public class DMobi {
             return true;
         }
         return false;
+    }
+
+    public static void showToast(Context context, String message) {
+        message = DMobi.translate(message);
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public static void showToast(String message) {

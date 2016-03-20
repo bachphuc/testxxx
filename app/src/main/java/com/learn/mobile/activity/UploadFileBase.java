@@ -9,16 +9,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.learn.mobile.customview.activity.SwipeBackActivity;
+import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Locale;
 public class UploadFileBase extends SwipeBackActivity {
     public static final String TAG = UploadFileBase.class.getSimpleName();
     protected Uri fileUri;
+    protected List<Uri> fileUris = new ArrayList<>();
     protected static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     protected static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
     protected static final int GALLERY_IMAGE_REQUEST_CODE = 300;
@@ -35,14 +38,20 @@ public class UploadFileBase extends SwipeBackActivity {
     protected static final int MEDIA_TYPE_VIDEO = 2;
     protected static final String IMAGE_DIRECTORY_NAME = DConfig.APP_NAME;
 
+    private Uri tempUri;
+
     protected ImageView imgPreview;
 
     protected void captureImage() {
+        if (!isDeviceSupportCamera(this)) {
+            DMobi.showToast(this, "This device not support camera.");
+        }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        // fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        tempUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
 
         startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
     }
@@ -61,7 +70,9 @@ public class UploadFileBase extends SwipeBackActivity {
 
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                previewImage();
+                addPhotoAttachment(tempUri);
+                tempUri = null;
+                // previewImage();
             } else if (resultCode == Activity.RESULT_CANCELED) {
 
             } else {
@@ -78,12 +89,18 @@ public class UploadFileBase extends SwipeBackActivity {
             }
         } else if (requestCode == GALLERY_IMAGE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                fileUri = data.getData();
-                previewImage();
+                Uri resultUri = data.getData();
+                addPhotoAttachment(resultUri);
+                // fileUris.add(resultUri);
+                //  previewImage();
             }
         }
 
         onAfterActivityResult(requestCode, resultCode, data);
+    }
+
+    public void addPhotoAttachment(Uri uri) {
+        fileUris.add(uri);
     }
 
     public void previewImage() {

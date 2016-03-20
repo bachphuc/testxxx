@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.activity.*;
-import com.learn.mobile.customview.dialog.SettingSiteDialog;
+import com.learn.mobile.customview.dialog.v4.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
