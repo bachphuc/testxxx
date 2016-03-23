@@ -22,11 +22,19 @@ public class SettingSiteDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         options = getResources().getStringArray(R.array.siteHosts);
-
+        int selected = 0;
+        DMobi.log(TAG, DConfig.getSetting(DConfig.SITE_URL));
+        for (int i = 0; i < options.length; i++) {
+            DMobi.log(TAG, options[i]);
+            if (DConfig.getSetting(DConfig.SITE_URL).equals(options[i])) {
+                selected = i;
+                break;
+            }
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the dialog title
         builder.setTitle("Setting Site")
-                .setSingleChoiceItems(options, 0, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         selectedOption = which;
