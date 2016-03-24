@@ -29,6 +29,12 @@ public class DAbstractFunny extends DMobileModelBase{
     @SerializedName("time_stamp")
     public int timeStamp ;
     
+    @SerializedName("height")
+    public int height = 0;
+    
+    @SerializedName("width")
+    public int width = 0;
+    
     @SerializedName("user")
     public User user ;
     

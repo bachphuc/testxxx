@@ -17,9 +17,6 @@ public class DAbstractItemObject {
     public String jsonData;
 
     public DMobileModelBase getItem() {
-        if(itemType == null || jsonData == null){
-            return null;
-        }
         Gson gson = new GsonBuilder().create();
         Type type;
         switch (itemType) {
