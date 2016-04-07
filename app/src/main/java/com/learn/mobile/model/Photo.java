@@ -47,7 +47,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
 
     protected void displayPhotoAttachmentItem(ItemBaseViewHolder itemBaseViewHolder, DAttachment dAttachment, int position, int layout) {
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(layout);
-        DMobileModelBase attachmentItem = dAttachment.getItem(0);
+        DMobileModelBase attachmentItem = dAttachment.getItem(position);
         ImageHelper.display(imageView, attachmentItem.getImages().getLarge().url);
     }
 
