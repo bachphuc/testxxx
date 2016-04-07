@@ -15,4 +15,21 @@ public class DAttachment extends DMobileModelBase {
     public DAttachment() {
 
     }
+
+    public int getAttachmentCount() {
+        if (attachments == null) {
+            return 0;
+        }
+        return attachments.size();
+    }
+
+    public DMobileModelBase getItem(int position) {
+        if (attachments == null) {
+            return null;
+        }
+        if (position > getAttachmentCount() - 1) {
+            return null;
+        }
+        return attachments.get(position);
+    }
 }

@@ -16,8 +16,6 @@ package com.learn.mobile.library.dmobi.helper;
  * limitations under the License.
  */
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -207,7 +205,6 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
             public R read(JsonReader in) throws IOException {
                 JsonElement jsonElement = Streams.parse(in);
                 JsonElement labelJsonElement = jsonElement.getAsJsonObject().remove(typeFieldName);
-                Log.i(TAG, "typeFieldName " + typeFieldName);
                 if (labelJsonElement == null) {
                     throw new JsonParseException("cannot deserialize " + baseType
                             + " because it does not define a field named " + typeFieldName);

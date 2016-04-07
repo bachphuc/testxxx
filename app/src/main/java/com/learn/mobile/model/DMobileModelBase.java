@@ -75,7 +75,11 @@ public class DMobileModelBase {
     }
 
     public int getLayoutType(String suffix) {
-        int layoutType = LayoutHelper.getLayoutType(this.getClass(), suffix);
+        return getLayoutType(suffix, "");
+    }
+
+    public int getLayoutType(String suffix, String type) {
+        int layoutType = LayoutHelper.getLayoutType(this.getClass(), suffix, type);
         if (layoutType == 0) {
             return LayoutHelper.FEED_DEFAULT_LAYOUT;
         }
@@ -103,6 +107,9 @@ public class DMobileModelBase {
     }
 
     public void processFeedViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position) {
+    }
+
+    public void processFeedAttachmentsViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position, DAttachment dAttachment) {
     }
 
     public void processViewHolder(RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, int position) {

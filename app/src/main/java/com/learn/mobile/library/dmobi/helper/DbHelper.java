@@ -68,19 +68,19 @@ public class DbHelper {
     public static ListObjectResponse<DMobileModelBase> parseListObjectResponse(String jsonData, Class sClass) {
         DAbstractItemObject dAbstractItemObject = new DAbstractItemObject();
         dAbstractItemObject.itemType = sClass.getSimpleName();
-        DMobi.log(TAG, "ListObjectResponse createGsonBuilderInstance");
+
         // Gson gson = new GsonBuilder().create();
         Gson gson = createGsonBuilderInstance();
         Type type = dAbstractItemObject.getListType();
 
         ListObjectResponse<DMobileModelBase> response;
-        //try {
-        response = gson.fromJson(jsonData, type);
-        /*} catch (JsonParseException e) {
+        try {
+            response = gson.fromJson(jsonData, type);
+        } catch (JsonParseException e) {
             response = new ListObjectResponse();
             DMobi.log(TAG, e.getMessage());
             response.setErrorRequest(e.getMessage());
-        }*/
+        }
 
         return response;
     }

@@ -45,6 +45,38 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
 
     }
 
+    protected void displayPhotoAttachmentItem(ItemBaseViewHolder itemBaseViewHolder, DAttachment dAttachment, int position, int layout) {
+        ImageView imageView = (ImageView) itemBaseViewHolder.findView(layout);
+        DMobileModelBase attachmentItem = dAttachment.getItem(0);
+        ImageHelper.display(imageView, attachmentItem.getImages().getLarge().url);
+    }
+
+    @Override
+    public void processFeedAttachmentsViewHolder(ItemBaseViewHolder itemBaseViewHolder, int position, DAttachment dAttachment) {
+        super.processFeedAttachmentsViewHolder(itemBaseViewHolder, position, dAttachment);
+        if (dAttachment == null) {
+            return;
+        }
+        if (dAttachment.getAttachmentCount() == 0) {
+            return;
+        }
+
+        int count = dAttachment.getAttachmentCount();
+
+        if (count >= 2) {
+            displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 0, R.id.img_photo_1);
+            displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 1, R.id.img_photo_2);
+        }
+
+        if (count >= 3) {
+            displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 2, R.id.img_photo_3);
+        }
+
+        if (count >= 4) {
+            displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 3, R.id.img_photo_4);
+        }
+    }
+
     @Override
     public void processViewHolder(final RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, final int position) {
         super.processViewHolder(adapter, itemBaseViewHolder, position);

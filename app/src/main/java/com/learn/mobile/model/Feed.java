@@ -20,6 +20,7 @@ import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
@@ -39,10 +40,18 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         return item;
     }
 
+    public DAttachment getAttachments() {
+        return attachments;
+    }
+
     public int getFeedLayoutType() {
         DMobileModelBase dmobileModelBase = getAttachment();
         if (dmobileModelBase != null) {
-            return dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT);
+            String type = "";
+            if (attachments != null && attachments.getAttachmentCount() > 1) {
+                type = "" + (attachments.getAttachmentCount() > DConfig.MAX_ATTACHMENTS_SHOW ? DConfig.MAX_ATTACHMENTS_SHOW : attachments.getAttachmentCount());
+            }
+            return dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT, type);
         }
         return LayoutHelper.FEED_DEFAULT_LAYOUT;
     }
@@ -109,7 +118,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         imageView.setOnClickListener(this);
         updateLikeView(imageView);
 
-        if (item != null) item.processFeedViewHolder(itemBaseViewHolder, position);
+        if (item != null) {
+            if (getAttachments() != null && getAttachments().getAttachmentCount() > 1) {
+                item.processFeedAttachmentsViewHolder(itemBaseViewHolder, position, getAttachments());
+            } else {
+                item.processFeedViewHolder(itemBaseViewHolder, position);
+            }
+        }
 
         // TODO process comment button
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
