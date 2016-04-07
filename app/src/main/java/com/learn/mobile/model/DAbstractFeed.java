@@ -62,9 +62,6 @@ public class DAbstractFeed extends DMobileModelBase{
     @SerializedName("content")
     public String content ;
     
-    @SerializedName("itemData")
-    public DAbstractItemObject itemData ;
-    
     @SerializedName("attachments")
     public DAttachment attachments ;
     

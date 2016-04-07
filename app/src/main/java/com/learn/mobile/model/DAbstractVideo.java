@@ -66,7 +66,7 @@ public class DAbstractVideo extends DMobileModelBase{
     public int totalDislike = 0;
     
     @SerializedName("total_score")
-    public int totalScore = 0;
+    public float totalScore ;
     
     @SerializedName("total_rating")
     public int totalRating = 0;

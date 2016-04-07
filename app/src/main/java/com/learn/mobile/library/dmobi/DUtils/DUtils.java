@@ -180,6 +180,17 @@ public class DUtils {
         return str;
     }
 
+    public static String convertClassNameToNormal(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                "_"
+        );
+    }
+
     public static String createNewImageFileFromUrl(Context context, Uri imgUri) {
         final int chunkSize = 1024;  // We'll read in one kB at a time
         byte[] imageData = new byte[chunkSize];

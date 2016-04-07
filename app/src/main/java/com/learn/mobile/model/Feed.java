@@ -26,20 +26,15 @@ import com.learn.mobile.library.dmobi.request.DResponse;
 
 public class Feed extends DAbstractFeed implements View.OnClickListener {
     private static final String TAG = Feed.class.getSimpleName();
-    private boolean bItemReady = false;
 
     public Feed() {
 
     }
 
     public DMobileModelBase getAttachment() {
-        if (item != null && bItemReady) {
+        if (item != null) {
             return item;
         }
-        if (itemData != null) {
-            item = itemData.getItem();
-        }
-        bItemReady = true;
 
         return item;
     }

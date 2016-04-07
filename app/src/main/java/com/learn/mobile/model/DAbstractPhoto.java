@@ -60,7 +60,7 @@ public class DAbstractPhoto extends DMobileModelBase{
     public int totalDownload = 0;
     
     @SerializedName("total_rating")
-    public int totalRating = 0;
+    public float totalRating ;
     
     @SerializedName("total_vote")
     public int totalVote = 0;

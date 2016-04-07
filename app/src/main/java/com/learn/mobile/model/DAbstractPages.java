@@ -54,10 +54,10 @@ public class DAbstractPages extends DMobileModelBase{
     public String coverPhotoPosition ;
     
     @SerializedName("location_latitude")
-    public int locationLatitude ;
+    public float locationLatitude ;
     
     @SerializedName("location_longitude")
-    public int locationLongitude ;
+    public float locationLongitude ;
     
     @SerializedName("location_name")
     public String locationName ;
