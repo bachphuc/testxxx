@@ -13,20 +13,21 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
+import com.learn.mobile.DMobiApplication;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.BlurringView;
 import com.learn.mobile.customview.DMaterialProgressDrawable;
-import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
+import com.squareup.leakcanary.RefWatcher;
 
 import cimi.com.easeinterpolator.EaseBackOutInterpolator;
 
 /**
  * Created by 09520_000 on 9/23/2015.
  */
-public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
-    private static final String TAG = DActivityBase.class.getSimpleName();
+public class DActivityBasic extends DActivityBase implements AppBarLayout.OnOffsetChangedListener {
+    private static final String TAG = DActivityBasic.class.getSimpleName();
     protected AppBarLayout appBarLayout;
     protected int appBarOffsetTop = 0;
     protected View customViewerLayout;
@@ -68,6 +69,7 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
     }
 
     boolean bLoadingCompleted = false;
+
     public void showImagePreview(String imageUrl) {
         if (customViewerLayout != null && customImageViewer != null) {
             customViewerLayout.setVisibility(View.VISIBLE);
@@ -116,7 +118,7 @@ public class DActivityBase extends AppCompatActivity implements AppBarLayout.OnO
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                if(!bLoadingCompleted){
+                                if (!bLoadingCompleted) {
                                     customImageLoader.setVisibility(View.VISIBLE);
                                     imageViewerLoading.start();
                                 }
