@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.FeedAdapter;
-import com.learn.mobile.adapter.ObservableScrollView;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.ResourceUtils;
@@ -37,7 +36,7 @@ import me.henrytao.smoothappbarlayout.base.Utils;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class NewFeedsFragment extends Fragment implements Event.Action, /* ObservableScrollView */ ObservableFragment {
+public class NewFeedsFragment extends DFragmentBase implements Event.Action, ObservableFragment {
     public static final String TAG = NewFeedsFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
 
@@ -106,13 +105,24 @@ public class NewFeedsFragment extends Fragment implements Event.Action, /* Obser
         // TODO Initialize events
         DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, this);
         DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this);
-
         DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
 
         // TODO Remove data when logout
         DMobi.registerEvent(Event.EVENT_LOGOUT_SUCCESS, this);
-
         DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+        DMobi.destroyEvent(Event.EVENT_LOADMORE_FEED);
+        DMobi.destroyEvent(Event.EVENT_REFRESH_FEED);
+        DMobi.destroyEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
+        DMobi.destroyEvent(Event.EVENT_LOGOUT_SUCCESS);
+        DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
+
+        dSwipeRefreshLayout.setOnRefreshListener(null);
+        dSwipeRefreshLayout.setOnLoadMoreListener(null);
     }
 
     @Override
@@ -161,10 +171,9 @@ public class NewFeedsFragment extends Fragment implements Event.Action, /* Obser
         } else {
             sFeed = (SFeed) DMobi.getInstance(SFeed.class);
         }
-        if(user != null){
+        if (user != null) {
             DMobi.log(TAG, user.getId());
-        }
-        else {
+        } else {
             DMobi.log(TAG, "user is null.");
         }
         if (user != null) {
@@ -285,5 +294,4 @@ public class NewFeedsFragment extends Fragment implements Event.Action, /* Obser
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 }

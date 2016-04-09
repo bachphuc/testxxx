@@ -44,7 +44,7 @@ import com.learn.mobile.service.SUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserProfileActivity extends DActivityBase implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+public class UserProfileActivity extends DActivityBasic implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
     public static final String TAG = UserProfileActivity.class.getSimpleName();
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
@@ -57,8 +57,6 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
     ViewPager viewPager;
 
     ViewPagerAdapter adapter;
-
-    String[] tabs = {"Wall", "Info", "Photo"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +103,7 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         }
 
         // profile feed fragment
-        if(profileFeedFragment ==  null){
+        if (profileFeedFragment == null) {
             profileFeedFragment = new NewFeedsFragment();
         }
         DMobi.log(TAG, "profileFeedFragment " + profileFeedFragment._id + " " + user.getId());
@@ -113,14 +111,14 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
         adapter.addFragment(profileFeedFragment, "Wall");
 
         // user information fragment
-        if(userInformationFragment ==  null){
+        if (userInformationFragment == null) {
             userInformationFragment = new UserInformationFragment();
         }
         userInformationFragment.setUser(user);
         adapter.addFragment(userInformationFragment, "Info");
 
         // photo fragment
-        if(photoFragment ==  null){
+        if (photoFragment == null) {
             photoFragment = new PhotoFragment();
         }
         photoFragment.setUser(user);
@@ -133,7 +131,9 @@ public class UserProfileActivity extends DActivityBase implements NewFeedsFragme
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
 
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         sUser.get(new DResponse.Complete() {

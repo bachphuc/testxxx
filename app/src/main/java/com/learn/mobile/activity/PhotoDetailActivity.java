@@ -1,11 +1,9 @@
 package com.learn.mobile.activity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,7 +65,7 @@ public class PhotoDetailActivity extends SwipeBackActivity {
                 Photo photo = (Photo) object;
                 photos = new ArrayList<>();
                 photos.add(photo);
-            } else {
+            } else if (object instanceof List) {
                 photos = (List<Photo>) object;
             }
         }
@@ -78,6 +76,12 @@ public class PhotoDetailActivity extends SwipeBackActivity {
         if (photos != null) {
             viewPager.setCurrentItem(position);
         }
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+        DMobi.registerEvent(eventNotifyDataSetChangedKey);
     }
 
     @Override

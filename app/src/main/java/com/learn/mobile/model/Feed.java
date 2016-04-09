@@ -25,6 +25,8 @@ import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
 
+import java.util.List;
+
 public class Feed extends DAbstractFeed implements View.OnClickListener {
     private static final String TAG = Feed.class.getSimpleName();
 
@@ -42,6 +44,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
     public DAttachment getAttachments() {
         return attachments;
+    }
+
+    public List<DMobileModelBase> getAttachmentItems() {
+        if (attachments == null) {
+            return null;
+        }
+        return attachments.attachments;
     }
 
     public int getFeedLayoutType() {
@@ -72,6 +81,14 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         if (textView != null) {
             textView.setText(user.getTitle());
+        }
+
+        // todo set text view header
+        if (!DUtils.isEmpty(header)) {
+            textView = (TextView) itemBaseViewHolder.findView(R.id.tv_sub_header);
+            if (textView != null) {
+                textView.setText(header);
+            }
         }
 
         textView = (TextView) itemBaseViewHolder.findView(R.id.tv_description);
@@ -118,11 +135,23 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         imageView.setOnClickListener(this);
         updateLikeView(imageView);
 
+        // todo process attachment
         if (item != null) {
+            // todo save parent for attachment item
+            // item.saveParent(this);
             if (getAttachments() != null && getAttachments().getAttachmentCount() > 1) {
-                item.processFeedAttachmentsViewHolder(itemBaseViewHolder, position, getAttachments());
+                DAttachment dAttachment = getAttachments();
+                // todo save parent for all attachment items
+                dAttachment.saveParent(this);
+                item.processFeedAttachmentsViewHolder(itemBaseViewHolder, position, dAttachment);
             } else {
                 item.processFeedViewHolder(itemBaseViewHolder, position);
+            }
+        } else if (images != null) {
+            // todo show image if feed has image
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
+            if (imageView != null) {
+                ImageHelper.display(imageView, images.getLarge());
             }
         }
 

@@ -111,9 +111,14 @@ public class UploadFileToServer extends AsyncTask<Void, Integer, String> {
         HttpPost httppost = new HttpPost(url);
 
         try {
-            for (int i = 0; i < this.files.size(); i++) {
-                File sourceFile = new File(this.files.get(i));
-                entity.addPart("image" + i, new FileBody(sourceFile));
+            if (this.files.size() == 1) {
+                File sourceFile = new File(this.files.get(0));
+                entity.addPart("image", new FileBody(sourceFile));
+            } else {
+                for (int i = 0; i < this.files.size(); i++) {
+                    File sourceFile = new File(this.files.get(i));
+                    entity.addPart("image" + i, new FileBody(sourceFile));
+                }
             }
 
             httppost.setEntity(entity);

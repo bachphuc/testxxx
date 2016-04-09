@@ -83,6 +83,9 @@ public class ImageAdapterBase {
         callback(listener);
         thumbnail(thumbnailUrl);
         onDisplay();
+
+        this.context = null;
+        this.imageView = null;
     }
 
     public void display(Context context, String url, ImageView imageView, String thumbnailUrl) {

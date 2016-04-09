@@ -23,7 +23,7 @@ import com.learn.mobile.service.SPhoto;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class PhotoFragment extends ListBaseFragment /* implements ObservableScrollView */{
+public class PhotoFragment extends ListBaseFragment {
     protected int itemMaxWidth = 240;
 
     public PhotoFragment() {

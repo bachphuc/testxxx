@@ -38,7 +38,7 @@
                     android:id="@+id/img_photo_2"
                     android:layout_width="0dp"
                     android:layout_height="240dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="@dimen/attachment_spacing"
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
@@ -48,7 +48,7 @@
             <com.learn.mobile.customview.DRatioLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/attachment_spacing"
                 android:orientation="horizontal"
                 app:linear_ratio="2">
 

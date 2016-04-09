@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.activity.*;
 import com.learn.mobile.customview.dialog.v4.SettingSiteDialog;
+import com.learn.mobile.fragment.DFragmentBase;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -31,7 +32,7 @@ import com.learn.mobile.service.SUser;
  * Activities containing this fragment MUST implement the {@link OnLeftFragmentInteractionListener}
  * interface.
  */
-public class LeftMenuFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Event.Action {
+public class LeftMenuFragment extends DFragmentBase implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, Event.Action {
     private static final String TAG = LeftMenuFragment.class.getSimpleName();
 
     private View view;
@@ -66,13 +67,20 @@ public class LeftMenuFragment extends Fragment implements NavigationView.OnNavig
         imageView.setOnClickListener(this);
 
         DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
-
         DMobi.registerEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, this);
 
-        // display user information  if user has already login
+        // todo display user information  if user has already login
         setUser();
 
         return view;
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+
+        DMobi.destroyEvent(Event.EVENT_UPDATE_PROFILE);
+        DMobi.destroyEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED);
     }
 
     public void setUser() {

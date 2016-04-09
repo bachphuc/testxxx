@@ -17,7 +17,6 @@ import com.learn.mobile.customview.DCirclePaletteImageView;
 import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 
 public class User extends DAbstractUser implements View.OnClickListener, PaletteImageView.PaletteListener.OnPaletteListener {
     public static final String TAG = User.class.getSimpleName();
@@ -96,7 +95,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
         }
 
         int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
-        addData(PALETTE_AVATAR_COLOR, bgColor);
+        setData(PALETTE_AVATAR_COLOR, bgColor);
         View parentView = (View) view.getParent().getParent();
         if (parentView.getId() == R.id.panel_user_item) {
             String hexColor = String.format("#%06X", (0xFFFFFF & bgColor));

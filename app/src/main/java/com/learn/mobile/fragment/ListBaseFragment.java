@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ import me.henrytao.smoothappbarlayout.base.Utils;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class ListBaseFragment extends Fragment implements Event.Action, ObservableFragment {
+public class ListBaseFragment extends DFragmentBase implements Event.Action, ObservableFragment {
     public static final String TAG = ListBaseFragment.class.getSimpleName();
     protected DFragmentListener.OnFragmentInteractionListener mListener;
     protected int layout = 0;

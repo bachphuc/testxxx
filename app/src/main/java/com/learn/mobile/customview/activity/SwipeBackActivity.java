@@ -6,7 +6,6 @@ package com.learn.mobile.customview.activity;
 
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,8 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.learn.mobile.R;
+import com.learn.mobile.activity.DActivityBase;
 
-public class SwipeBackActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
+public class SwipeBackActivity extends DActivityBase implements SwipeBackLayout.SwipeBackListener {
 
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;

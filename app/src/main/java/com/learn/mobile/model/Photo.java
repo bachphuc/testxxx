@@ -13,18 +13,24 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
-import com.learn.mobile.activity.DActivityBase;
+import com.learn.mobile.activity.DActivityBasic;
 import com.learn.mobile.activity.PhotoDetailActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+
+import java.util.List;
+import java.util.Random;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
 public class Photo extends DAbstractPhoto implements View.OnClickListener {
+    protected int feedLayout;
+
     public Photo() {
 
     }
@@ -36,7 +42,7 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         if (images != null) {
             imageView = (DFeedImageView) itemBaseViewHolder.findView(R.id.img_main_image);
             if (imageView != null) {
-                imageView.setOnClickListener(this);
+                processClickFeedAttachment(imageView);
                 float ratio = (float) images.getExtraLarge().height / (float) images.getExtraLarge().width;
                 imageView.setScale(ratio);
                 ImageHelper.display(imageView, images.getExtraLarge().url);
@@ -45,9 +51,17 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
 
     }
 
+    public void processClickFeedAttachment(View view) {
+        if (view == null) {
+            return;
+        }
+        view.setOnClickListener(this);
+    }
+
     protected void displayPhotoAttachmentItem(ItemBaseViewHolder itemBaseViewHolder, DAttachment dAttachment, int position, int layout) {
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(layout);
-        DMobileModelBase attachmentItem = dAttachment.getItem(position);
+        Photo attachmentItem = (Photo) dAttachment.getItem(position);
+        attachmentItem.processClickFeedAttachment(imageView);
         ImageHelper.display(imageView, attachmentItem.getImages().getLarge().url);
     }
 
@@ -74,6 +88,10 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
 
         if (count >= 4) {
             displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 3, R.id.img_photo_4);
+        }
+
+        if (count >= 5) {
+            displayPhotoAttachmentItem(itemBaseViewHolder, dAttachment, 4, R.id.img_photo_5);
         }
     }
 
@@ -119,10 +137,10 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 @Override
                 public boolean onLongClick(View v) {
                     Context context = v.getContext();
-                    if (context instanceof DActivityBase) {
+                    if (context instanceof DActivityBasic) {
                         DMobi.log("Photo Model", "setOnLongClickListener");
-                        DActivityBase dActivityBase = (DActivityBase) context;
-                        dActivityBase.showImagePreview(getImages().getLarge().url);
+                        DActivityBasic dActivityBasic = (DActivityBasic) context;
+                        dActivityBasic.showImagePreview(getImages().getLarge().url);
                         return true;
                     }
                     return false;
@@ -147,14 +165,29 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_photo:
-                Context context = v.getContext();
-                DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
-                Intent intent = new Intent(context, PhotoDetailActivity.class);
-                context.startActivity(intent);
-                break;
             case R.id.img_main_image:
                 showItemDetail(v.getContext());
+                break;
+            case R.id.img_photo:
+            default:
+                Context context = v.getContext();
+                Intent intent = new Intent(context, PhotoDetailActivity.class);
+                Object parentObj = this.getData(PARENT_KEY);
+                if (parentObj != null && parentObj instanceof Feed) {
+                    Feed parentFeed = (Feed) parentObj;
+                    if (parentFeed.getAttachments() != null && parentFeed.getAttachments().getAttachmentCount() > 1) {
+                        List<DMobileModelBase> listData = parentFeed.getAttachmentItems();
+                        DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, listData);
+                        int index = listData.indexOf(this);
+                        intent.putExtra(PhotoDetailActivity.PHOTO_POSITION, index);
+                    } else {
+                        DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
+                    }
+                } else {
+                    DMobi.pushData(PhotoDetailActivity.PHOTO_SLIDER_DATA, this);
+                }
+
+                context.startActivity(intent);
                 break;
         }
     }
@@ -176,5 +209,27 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 }
         }
         return false;
+    }
+
+    @Override
+    public int getLayoutType(String suffix, String type) {
+        if (!suffix.equals(LayoutHelper.FEED_LAYOUT)) {
+            return super.getLayoutType(suffix, type);
+        }
+        if (feedLayout != 0) {
+            return feedLayout;
+        }
+        if (type.equals("5")) {
+            Random rand = new Random();
+            int randomLayout = rand.nextInt(2) + 1;
+            type = type + "_" + randomLayout;
+        }
+        feedLayout = super.getLayoutType(suffix, type);
+        return feedLayout;
+    }
+
+    @Override
+    public void saveParent(DMobileModelBase item) {
+        this.setData(PARENT_KEY, item);
     }
 }

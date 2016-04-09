@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
-import com.learn.mobile.activity.DActivityBase;
+import com.learn.mobile.activity.DActivityBasic;
 import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
 import com.learn.mobile.adapter.GlobalSearchAdapter;
@@ -38,7 +38,7 @@ import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.service.SUser;
 
-public class MainActivity extends DActivityBase implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
+public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 

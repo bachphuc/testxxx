@@ -21,7 +21,7 @@ import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Feed;
 import com.learn.mobile.service.SComment;
 
-public class FeedDetailActivity extends DActivityBase implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener, Event.Action {
+public class FeedDetailActivity extends DActivityBasic implements DFragmentListener.OnFragmentInteractionListener, View.OnClickListener, Event.Action {
     public static final String FEED_DETAIL = "FEED_DETAIL";
     EditText commentEditText;
     Feed feed;
@@ -67,6 +67,12 @@ public class FeedDetailActivity extends DActivityBase implements DFragmentListen
         commentEditText = (EditText) findViewById(R.id.tb_comment);
 
         DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+        DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
     }
 
     private SComment getCommentService() {

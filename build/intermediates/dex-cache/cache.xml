@@ -68,7 +68,7 @@
         jar="D:\Android Project\testxxx\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="cd32fafdd93e8052bf30ce0ba0667581fb36ff9c">
+        sha1="68fbd4035daca5ee177bad68169260a3dc292ff1">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_39f75e31a89c14c1b4f8cf533c0619ec66725d6e\classes.dex" />
     </item>
     <item
@@ -77,6 +77,13 @@
         revision="23.0.1"
         sha1="118ae1bc7f3aeeddfe564f0edfd79c11d09d17d1">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\httpmime-4.2.3_d06ca4f967795228c06e77a7811df55b9f784f1e\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.4-beta2\449777cd466ac0a16f7e8d0dc508e70e2cdd13a9\leakcanary-analyzer-1.4-beta2.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="449777cd466ac0a16f7e8d0dc508e70e2cdd13a9">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-analyzer-1.4-beta2_f8def8f65692c010663a5c38cf9e89e4245d5fb7\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\libs\com.alexvasilkovgesture-views2.0.5.jar"
@@ -105,6 +112,13 @@
         revision="23.0.1"
         sha1="2eaa1f95d8e7813c06f2967d7cfe503a17fca761">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.henrytao-mdcore-1.9.0_9e1dfcd1ea180fd8f1abf70e2462acf3db5ea3ae\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-watcher\1.4-beta2\6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92\leakcanary-watcher-1.4-beta2.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-watcher-1.4-beta2_505357635539112adfc09cd3d89cb20cd9e77821\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\2.0.0\jars\classes.jar"
@@ -138,7 +152,7 @@
         jar="D:\Android Project\testxxx\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="4840b326247f1e0dfacec6164a54e1b0f3a08f4c">
+        sha1="ba797f89d8f81261a82cdd9eb003568c453e4644">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_11af2f9fb1fedc5e7aed456796ed464b7409047b\classes.dex" />
     </item>
     <item
@@ -196,6 +210,13 @@
         revision="23.0.1"
         sha1="cb86970df0f0f25f766d320b279c7858c1ca0003">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.2.1_448769bac4191cc95503f87fd7b8d33498cf8b95\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.4-beta2\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="9c8472f8e10502af60d0f63ea11eed68bdf690c2">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.squareup.leakcanary-leakcanary-android-1.4-beta2_67bbec35df0a9413d367ffee279291886e277bd7\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.malinskiy\superrecyclerview\1.1.0\jars\classes.jar"
@@ -308,6 +329,13 @@
         revision="23.0.1"
         sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
         <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_6bc0f544f68e1898ec42c2917eff5d080acd4ee1\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\2.0.2\fd65b84d12d6adc77ec0e4fcaca623fc391d8679\haha-2.0.2.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="fd65b84d12d6adc77ec0e4fcaca623fc391d8679">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\haha-2.0.2_4fa7dfbf8af3cf63faf854cee69cfedfec51e336\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\customtabs\23.2.1\jars\classes.jar"

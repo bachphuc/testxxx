@@ -25,7 +25,7 @@ import java.util.HashMap;
  * Created by 09520_000 on 5/17/2015.
  */
 public class DMobileModelBase {
-
+    public static final String PARENT_KEY = "parent";
     @SerializedName("title")
     public String title;
 
@@ -58,7 +58,7 @@ public class DMobileModelBase {
 
     private HashMap<String, Object> _data = new HashMap<>();
 
-    public void addData(String key, Object value) {
+    public void setData(String key, Object value) {
         _data.put(key, value);
     }
 
@@ -255,4 +255,6 @@ public class DMobileModelBase {
             return null;
         }
     }
+
+    public void saveParent(DMobileModelBase item) {}
 }

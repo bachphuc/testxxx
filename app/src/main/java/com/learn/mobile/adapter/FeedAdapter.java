@@ -1,5 +1,6 @@
 package com.learn.mobile.adapter;
 
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,16 @@ public class FeedAdapter extends RecyclerViewBaseAdapter {
     public ItemBaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView;
         int layout = LayoutHelper.getLayout(viewType);
-        itemView = LayoutInflater.from(viewGroup.getContext()).
-                inflate(layout, viewGroup, false);
+        try {
+            DMobi.log(TAG, "LayoutInflater " + layout + ", viewType: " + viewType);
+            itemView = LayoutInflater.from(viewGroup.getContext()).
+                    inflate(layout, viewGroup, false);
+        } catch (InflateException e) {
+            DMobi.log(TAG, "catch layout: " + layout + ", viewType: " + viewType + ", error: " + e.getMessage());
+            layout = LayoutHelper.getLayout(LayoutHelper.FEED_DEFAULT_LAYOUT);
+            itemView = LayoutInflater.from(viewGroup.getContext()).
+                    inflate(layout, viewGroup, false);
+        }
 
         ItemBaseViewHolder itemBaseViewHolder = new ItemBaseViewHolder(itemView);
         itemBaseViewHolder.attachAdapter(this);

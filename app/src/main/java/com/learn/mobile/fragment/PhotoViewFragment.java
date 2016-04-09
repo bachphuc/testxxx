@@ -36,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class PhotoViewFragment extends Fragment implements View.OnClickListener, Event.Action {
+public class PhotoViewFragment extends DFragmentBase implements View.OnClickListener, Event.Action {
     public static final String TAG = PhotoViewFragment.class.getSimpleName();
     protected Photo photo;
     protected View view;
@@ -155,6 +155,12 @@ public class PhotoViewFragment extends Fragment implements View.OnClickListener,
 
     public void initEvent() {
         DMobi.registerEvent(photo.getEventType(), this);
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+        DMobi.destroyEvent(photo.getEventType());
     }
 
     public void setPhoto(Photo photo) {

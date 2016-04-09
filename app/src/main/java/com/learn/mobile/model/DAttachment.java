@@ -1,6 +1,7 @@
 package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.learn.mobile.library.dmobi.DMobi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class DAttachment extends DMobileModelBase {
     @SerializedName("attachments")
     public List<DMobileModelBase> attachments;
+    private boolean bSaveParent = false;
 
     public DAttachment() {
 
@@ -31,5 +33,20 @@ public class DAttachment extends DMobileModelBase {
             return null;
         }
         return attachments.get(position);
+    }
+
+    @Override
+    public void saveParent(DMobileModelBase item) {
+        if (bSaveParent) {
+            return;
+        }
+        if (attachments == null) {
+            return;
+        }
+        bSaveParent = true;
+        for (int i = 0; i < attachments.size(); i++) {
+            DMobileModelBase attachment = attachments.get(i);
+            attachment.saveParent(item);
+        }
     }
 }

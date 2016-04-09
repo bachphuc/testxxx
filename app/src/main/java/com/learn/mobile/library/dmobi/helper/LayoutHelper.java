@@ -34,6 +34,8 @@ public class LayoutHelper {
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_2, "2");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_3, "3");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_4, "4");
+        registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_1, "5_1");
+        registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_2, "5_2");
         registerLayout(Photo.class, LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
 
         registerLayout(User.class, LayoutHelper.LIST_LAYOUT, R.layout.user_item_custom_layout);
@@ -51,7 +53,6 @@ public class LayoutHelper {
     }
 
     public static int registerLayout(Class c, String suffix, int layout, String type) {
-        Log.i(TAG, c.getSimpleName());
         String layoutType = c.getSimpleName() + "_" + suffix;
         if (!type.equals("")) {
             layoutType += "_" + type;
@@ -60,9 +61,12 @@ public class LayoutHelper {
             int id = DMobi.getIdentityId();
             layoutTypes.put(id + "", layout);
             layoutMaps.put(layoutType, id);
+            Log.i(TAG, c.getSimpleName() + ", suffix: " + suffix + ", layout: " + layout + ", type: " + type + ", id: " + id);
             return id;
         }
-        return (int) layoutMaps.get(layoutType);
+        int typeId = (int) layoutMaps.get(layoutType);
+        Log.i(TAG, c.getSimpleName() + ", suffix: " + suffix + ", layout: " + layout + ", type: " + type + ", id: " + typeId);
+        return typeId;
     }
 
     public static int getLayout(int id) {

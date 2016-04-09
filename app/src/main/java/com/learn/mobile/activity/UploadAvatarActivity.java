@@ -79,7 +79,8 @@ public class UploadAvatarActivity extends UploadFileBase {
             @Override
             public void onComplete(Boolean status, Object o) {
                 if (status) {
-                    progressDialog.hide();
+                    progressDialog.dismiss();
+                    finish();
                     DMobi.showToast(DMobi.translate("Update profile avatar successfully."));
                 }
             }

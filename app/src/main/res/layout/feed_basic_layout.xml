@@ -13,6 +13,21 @@
         <!-- Top Header -->
         <include layout="@layout/feed_item_header" />
 
+        <!-- TODO Main Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.learn.mobile.customview.DFeedImageView
+                android:id="@+id/img_main_image"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:contentDescription="@string/feed_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_red" />
+        </LinearLayout>
+
         <!-- Footer Bar -->
         <include layout="@layout/feed_item_description" />
 

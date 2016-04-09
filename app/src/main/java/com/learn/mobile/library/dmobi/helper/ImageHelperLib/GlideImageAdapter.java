@@ -21,7 +21,13 @@ import com.learn.mobile.model.ImageObject;
 public class GlideImageAdapter extends ImageAdapterBase {
     @Override
     public void onDisplay() {
-        Context ctx = (context != null ? context : (imageView != null ? imageView.getContext() : null));
+        // Context ctx = (context != null ? context : (imageView != null ? imageView.getContext() : null));
+        Context ctx;
+        if (imageView != null) {
+            ctx = imageView.getContext();
+        } else {
+            ctx = context;
+        }
         if (ctx == null) {
             return;
         }

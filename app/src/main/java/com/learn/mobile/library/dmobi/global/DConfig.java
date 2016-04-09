@@ -23,7 +23,7 @@ public class DConfig {
     public static final String DATABASE_OFFLINE = APP_NAME + ".db";
     public static final String MODEL_NAME = "model";
     public static final String SERVICE_NAME = "service";
-    public static final int MAX_ATTACHMENTS_SHOW = 4;
+    public static final int MAX_ATTACHMENTS_SHOW = 5;
 
     public static final int MAX_SUGGESTION_LIMIT = 10;
 

@@ -45,8 +45,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.learn.mobile.activity.DActivityBase;
-import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.activity.DActivityBasic;
 
 /**
  * The SwipeRefreshLayout should be used whenever the user can refresh the
@@ -669,9 +668,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         if (context == null) {
             return true;
         }
-        if (context instanceof DActivityBase) {
-            DActivityBase dActivityBase = (DActivityBase) context;
-            int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
+        if (context instanceof DActivityBasic) {
+            DActivityBasic dActivityBasic = (DActivityBasic) context;
+            int offsetAppBarLayout = dActivityBasic.getAppBarOffsetTop();
             return (offsetAppBarLayout == 0);
         } else {
             return true;
@@ -689,18 +688,18 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
             Context context = getContext();
             int tempOffset = 0;
             if (context != null) {
-                if (context instanceof DActivityBase) {
-                    DActivityBase dActivityBase = (DActivityBase) context;
+                if (context instanceof DActivityBasic) {
+                    DActivityBasic dActivityBasic = (DActivityBasic) context;
                     if (!bInitLoadMoreLayoutChange) {
                         bInitLoadMoreLayoutChange = true;
-                        AppBarLayout appBarLayout = dActivityBase.getAppBarLayout();
+                        AppBarLayout appBarLayout = dActivityBasic.getAppBarLayout();
                         if (appBarLayout != null) {
                             appBarLayout.addOnOffsetChangedListener(this);
                         }
                     }
 
-                    int offsetAppBarLayout = dActivityBase.getAppBarOffsetTop();
-                    int appBarLayoutHeight = dActivityBase.getAppBarHeight();
+                    int offsetAppBarLayout = dActivityBasic.getAppBarOffsetTop();
+                    int appBarLayoutHeight = dActivityBasic.getAppBarHeight();
                     tempOffset = appBarLayoutHeight + offsetAppBarLayout;
                 }
             }
