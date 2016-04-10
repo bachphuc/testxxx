@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="16dp">
 
     <LinearLayout
@@ -34,7 +35,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_red" />
+                    tools:src="@drawable/bg_red" />
 
                 <ImageView
                     android:id="@+id/img_photo_2"
@@ -44,7 +45,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_red" />
+                    tools:src="@drawable/bg_red" />
             </LinearLayout>
 
             <LinearLayout
@@ -61,7 +62,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_red" />
+                    tools:src="@drawable/bg_red" />
 
                 <com.learn.mobile.customview.DFeedImageView
                     android:id="@+id/img_photo_4"
@@ -71,7 +72,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_red" />
+                    tools:src="@drawable/bg_red" />
 
                 <com.learn.mobile.customview.DFeedImageView
                     android:id="@+id/img_photo_5"
@@ -81,7 +82,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/feed_image"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_red" />
+                    tools:src="@drawable/bg_red" />
             </LinearLayout>
         </com.learn.mobile.customview.DRatioLinearLayout>
 

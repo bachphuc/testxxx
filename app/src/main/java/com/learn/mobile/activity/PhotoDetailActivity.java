@@ -80,8 +80,8 @@ public class PhotoDetailActivity extends SwipeBackActivity {
 
     @Override
     public void onDestroyEvent() {
+        DMobi.destroyEvent(eventNotifyDataSetChangedKey);
         super.onDestroyEvent();
-        DMobi.registerEvent(eventNotifyDataSetChangedKey);
     }
 
     @Override

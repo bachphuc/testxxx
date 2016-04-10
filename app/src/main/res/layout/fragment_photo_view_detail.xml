@@ -34,7 +34,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:elevation="4dp"
-                    android:src="@drawable/ic_stub" />
+                    tools:src="@drawable/ic_stub" />
             </LinearLayout>
 
             <LinearLayout

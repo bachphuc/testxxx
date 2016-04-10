@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_red" />
+        tools:src="@drawable/background_red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:elevation="4dp"
-                    android:src="@drawable/ic_stub" />
+                    tools:src="@drawable/ic_stub" />
             </LinearLayout>
 
             <LinearLayout
@@ -77,8 +77,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center">
 
                 <ImageView
@@ -103,9 +103,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/bt_comment"
@@ -129,9 +129,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/bt_share"

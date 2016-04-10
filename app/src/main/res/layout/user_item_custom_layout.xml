@@ -4,6 +4,7 @@
     xmlns:custom="com.learn.mobile.customview.DRatioImageView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:cardCornerRadius="0dp">
 
@@ -34,7 +35,7 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="false"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/background_red"
+                    tools:src="@drawable/background_red"
                     custom:ratio="2f" />
             </RelativeLayout>
 

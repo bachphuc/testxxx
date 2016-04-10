@@ -242,6 +242,9 @@ public class DMobi {
     }
 
     public static boolean destroyEvent(String key) {
+        if (key == null) {
+            return false;
+        }
         Event event = eventHashTable.get(key);
         if (event == null) {
             return false;
