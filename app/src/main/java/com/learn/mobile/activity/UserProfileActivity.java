@@ -219,4 +219,10 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
         userInformationFragment.setUser(user);
         userInformationFragment.updateView();
     }
+
+    @Override
+    protected void onDestroy() {
+        DMobi.removeData(USER_PROFILE);
+        super.onDestroy();
+    }
 }

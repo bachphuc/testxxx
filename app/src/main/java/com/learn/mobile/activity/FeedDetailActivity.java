@@ -5,16 +5,21 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.fragment.CommentFragment;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.DMobileModelBase;
@@ -28,6 +33,7 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
     SComment sComment;
     CommentFragment commentFragment;
     DMobileModelBase item;
+    boolean isCommentProcessing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +71,56 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
         button.setOnClickListener(this);
 
         commentEditText = (EditText) findViewById(R.id.tb_comment);
+        commentEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                DMobi.log("FeedDetailActivity", "onEditorAction action edit text " + actionId);
+                return false;
+            }
+        });
+
+        commentEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                DMobi.log("FeedDetailActivity", "setOnKeyListener action edit text " + keyCode);
+                return false;
+            }
+        });
+
+        commentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0 && s.charAt(s.length() - 1) == '\n') {
+                    s.delete(s.length() - 1, s.length());
+                    DMobi.log("FeedDetailActivity", "afterTextChanged Enter was pressed");
+                    onComment();
+                }
+            }
+        });
 
         DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
     }
 
     @Override
     public void onDestroyEvent() {
-        super.onDestroyEvent();
         DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
+        super.onDestroyEvent();
+    }
+
+    @Override
+    protected void onDestroy() {
+        DMobi.removeData(FEED_DETAIL);
+        super.onDestroy();
     }
 
     private SComment getCommentService() {
@@ -92,20 +140,36 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
         commentEditText.setText("");
     }
 
+    public void onComment() {
+        if (isCommentProcessing) {
+            DMobi.showToast(this, "Please wait a moment.");
+            return;
+        }
+
+        SComment s = getCommentService();
+        String content = commentEditText.getText().toString();
+        content = content.trim();
+        if (DUtils.isEmpty(content)) {
+            DMobi.showToast(this, "Add some text to comment.");
+            return;
+        }
+        isCommentProcessing = true;
+        s.comment(item, content, new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                isCommentProcessing = false;
+                resetComment();
+                commentFragment.scrollToBottom(true);
+                DMobi.fireEvent(Event.EVENT_FEED_UPDATE_VIEW, null);
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_comment:
-                SComment s = getCommentService();
-                String content = commentEditText.getText().toString();
-                s.comment(item, content, new DResponse.Complete() {
-                    @Override
-                    public void onComplete(Boolean status, Object o) {
-                        resetComment();
-                        commentFragment.scrollToBottom(true);
-                        DMobi.fireEvent(Event.EVENT_FEED_UPDATE_VIEW, null);
-                    }
-                });
+                onComment();
                 break;
         }
     }

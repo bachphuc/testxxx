@@ -256,5 +256,30 @@ public class DMobileModelBase {
         }
     }
 
-    public void saveParent(DMobileModelBase item) {}
+    public void saveParent(DMobileModelBase item) {
+    }
+
+    public boolean canComment() {
+        return true;
+    }
+
+    public boolean canLike() {
+        return true;
+    }
+
+    public boolean canShare() {
+        return true;
+    }
+
+    public boolean canDisplayComment() {
+        return true;
+    }
+
+    public boolean canDisplayLike() {
+        return true;
+    }
+
+    public boolean canDisplayShare() {
+        return true;
+    }
 }

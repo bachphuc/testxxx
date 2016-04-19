@@ -26,6 +26,7 @@ import com.learn.mobile.model.User;
 import com.learn.mobile.service.SBase;
 
 import java.util.HashMap;
+import java.util.List;
 
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
 import me.henrytao.recyclerview.holder.HeaderHolder;
@@ -64,9 +65,20 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
 
     protected boolean bAutoLoadData = false;
     protected boolean bRefreshList = false;
+    protected List<DMobileModelBase> data;
+
+    public void setData(List<DMobileModelBase> list) {
+        data = list;
+    }
+
     protected LinearLayoutManager linearLayoutManager;
     protected GridLayoutManager gridLayoutManager;
     protected SpacesItemDecoration spacesItemDecoration;
+
+    // allow pull to refresh list
+    protected boolean bAllowPullToRefresh = true;
+    // allow load more list when scroll to bottom
+    protected boolean bAllowLoadMoreList = true;
 
     protected User user;
 
@@ -224,9 +236,19 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
             service.clearRequestParams();
             service.addRequestParams(requestParams);
         }
-        adapter = new RecyclerViewBaseAdapter(service.getData());
+        if (data == null) {
+            adapter = new RecyclerViewBaseAdapter(service.getData());
+        } else {
+            adapter = new RecyclerViewBaseAdapter(data);
+        }
 
         if (bHasAppBar) {
+            int layoutHeader = R.layout.item_header_main_spacing;
+            if (user != null) {
+                layoutHeader = R.layout.item_header_spacing;
+            }
+
+            final int finalLayoutHeader = layoutHeader;
             RecyclerView.Adapter recyclerAdapter = new SimpleRecyclerViewAdapter(adapter) {
                 @Override
                 public RecyclerView.ViewHolder onCreateFooterViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
@@ -235,7 +257,7 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
 
                 @Override
                 public RecyclerView.ViewHolder onCreateHeaderViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-                    return new HeaderHolder(layoutInflater, viewGroup, R.layout.item_header_spacing);
+                    return new HeaderHolder(layoutInflater, viewGroup, finalLayoutHeader);
                 }
             };
             recyclerView.setAdapter(recyclerAdapter);
@@ -249,62 +271,70 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
         } else {
             recyclerView.setAdapter(adapter);
         }
-
-        refreshCompleteResponse = new DResponse.Complete() {
-            @Override
-            public void onComplete(Boolean status, Object o) {
-                dSwipeRefreshLayout.setRefreshing(false);
-                dSwipeRefreshLayout.stopLoadMore();
-                if (o != null) {
-                    ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
-                    if (response.isSuccessfully() && response.hasData()) {
-                        adapter.notifyDataSetChanged();
-                        adapter.fireNotifyDataSetChanged();
-                    }
-                    if (response.isSuccessfully() && !response.hasData()) {
-                        dSwipeRefreshLayout.loadMoreFinish();
-                    }
-                }
-            }
-        };
-
-        loadMoreCompleteResponse = new DResponse.Complete() {
-            @Override
-            public void onComplete(Boolean status, Object o) {
-                dSwipeRefreshLayout.setRefreshing(false);
-                dSwipeRefreshLayout.stopLoadMore();
-                if (o != null) {
-                    ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
-                    if (response.isSuccessfully() && response.hasData()) {
-                        adapter.notifyDataSetChanged();
-                        adapter.fireNotifyDataSetChanged();
-                        if (bScrollBottomTopWhenLoadMoreFinish) {
-                            scrollToBottom(bScrollBottomAnimate);
-                        }
-                    }
-                    if (response.isSuccessfully() && !response.hasData()) {
-                        dSwipeRefreshLayout.loadMoreFinish();
-                    }
-                }
-            }
-        };
-
-        dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onRefreshData();
-            }
-        });
-
-        dSwipeRefreshLayout.setOnLoadMoreListener(new DSwipeRefreshLayout.LoadMoreListener() {
-            @Override
-            public void loadMore() {
-                onLoadMoreData();
-            }
-        });
     }
 
     public void initializeEvent() {
+        if (bAllowPullToRefresh) {
+            refreshCompleteResponse = new DResponse.Complete() {
+                @Override
+                public void onComplete(Boolean status, Object o) {
+                    dSwipeRefreshLayout.setRefreshing(false);
+                    dSwipeRefreshLayout.stopLoadMore();
+                    if (o != null) {
+                        ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
+                        if (response.isSuccessfully() && response.hasData()) {
+                            adapter.notifyDataSetChanged();
+                            adapter.fireNotifyDataSetChanged();
+                        }
+                        if (response.isSuccessfully() && !response.hasData()) {
+                            dSwipeRefreshLayout.loadMoreFinish();
+                        }
+                    }
+                }
+            };
+
+            dSwipeRefreshLayout.setOnRefreshListener(new DSwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    onRefreshData();
+                }
+            });
+        } else {
+            dSwipeRefreshLayout.setEnabled(false);
+        }
+
+        if (bAllowLoadMoreList) {
+            loadMoreCompleteResponse = new DResponse.Complete() {
+                @Override
+                public void onComplete(Boolean status, Object o) {
+                    dSwipeRefreshLayout.setRefreshing(false);
+                    dSwipeRefreshLayout.stopLoadMore();
+                    if (o != null) {
+                        ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
+                        if (response.isSuccessfully() && response.hasData()) {
+                            adapter.notifyDataSetChanged();
+                            adapter.fireNotifyDataSetChanged();
+                            if (bScrollBottomTopWhenLoadMoreFinish) {
+                                scrollToBottom(bScrollBottomAnimate);
+                            }
+                        }
+                        if (response.isSuccessfully() && !response.hasData()) {
+                            dSwipeRefreshLayout.loadMoreFinish();
+                        }
+                    }
+                }
+            };
+
+            dSwipeRefreshLayout.setOnLoadMoreListener(new DSwipeRefreshLayout.LoadMoreListener() {
+                @Override
+                public void loadMore() {
+                    onLoadMoreData();
+                }
+            });
+        } else {
+            dSwipeRefreshLayout.setEnableLoadMore(false);
+        }
+
         DMobi.registerEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex, new Event.Action() {
             @Override
             public void fireAction(String eventType, Object o) {
@@ -314,6 +344,17 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
         });
 
         DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        if (dSwipeRefreshLayout != null) {
+            dSwipeRefreshLayout.setOnRefreshListener(null);
+            dSwipeRefreshLayout.setOnLoadMoreListener(null);
+        }
+        DMobi.destroyEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex);
+        DMobi.destroyEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
+        super.onDestroyEvent();
     }
 
     @Override

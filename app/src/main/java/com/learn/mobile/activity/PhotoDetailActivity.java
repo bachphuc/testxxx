@@ -85,6 +85,12 @@ public class PhotoDetailActivity extends SwipeBackActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        DMobi.removeData(PHOTO_SLIDER_DATA);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_photo_detail, menu);

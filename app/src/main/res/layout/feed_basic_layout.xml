@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp">
@@ -23,12 +24,20 @@
                 android:id="@+id/img_main_image"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/feed_image"
-                android:scaleType="centerCrop" />
-        </LinearLayout>
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
-        <!-- Footer Bar -->
-        <include layout="@layout/feed_item_description" />
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                tools:text="hello do you hear me" />
+        </LinearLayout>
 
         <!-- Feed Action Bar -->
         <include layout="@layout/feed_action_bar" />

@@ -46,6 +46,11 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
     SFeed sFeed;
 
     View rootView;
+    boolean bHasAppBar = true;
+
+    public void setHasAppBar(boolean b) {
+        bHasAppBar = b;
+    }
 
     DResponse.Complete completeResponse;
     User user;
@@ -114,15 +119,14 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
 
     @Override
     public void onDestroyEvent() {
-        super.onDestroyEvent();
         DMobi.destroyEvent(Event.EVENT_LOADMORE_FEED);
         DMobi.destroyEvent(Event.EVENT_REFRESH_FEED);
         DMobi.destroyEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
         DMobi.destroyEvent(Event.EVENT_LOGOUT_SUCCESS);
         DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
-
         dSwipeRefreshLayout.setOnRefreshListener(null);
         dSwipeRefreshLayout.setOnLoadMoreListener(null);
+        super.onDestroyEvent();
     }
 
     @Override
@@ -181,9 +185,13 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
         }
 
         feedAdapter = new FeedAdapter(sFeed.getData());
+        if (bHasAppBar) {
+            int layoutHeader = R.layout.item_header_main_spacing;
+            if (user != null) {
+                layoutHeader = R.layout.item_header_spacing;
+            }
 
-        if (user != null) {
-            DMobi.log(TAG, "onCreateFooterViewHolder");
+            final int finalLayoutHeader = layoutHeader;
             RecyclerView.Adapter adapter = new SimpleRecyclerViewAdapter(feedAdapter) {
                 @Override
                 public RecyclerView.ViewHolder onCreateFooterViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
@@ -192,7 +200,7 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
 
                 @Override
                 public RecyclerView.ViewHolder onCreateHeaderViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-                    return new HeaderHolder(layoutInflater, viewGroup, R.layout.item_header_spacing);
+                    return new HeaderHolder(layoutInflater, viewGroup, finalLayoutHeader);
                 }
             };
             recyclerView.setAdapter(adapter);
@@ -235,6 +243,7 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
             @Override
             public void loadMore() {
                 loadMoreFeed();
+                DMobi.log(TAG, "setOnLoadMoreListener , load more 237");
             }
         });
         if (DMobi.isUser()) {

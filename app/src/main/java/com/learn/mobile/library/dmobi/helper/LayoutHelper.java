@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.model.Blog;
+import com.learn.mobile.model.ChatMessage;
+import com.learn.mobile.model.ChatUser;
 import com.learn.mobile.model.Comment;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Funny;
@@ -30,10 +33,12 @@ public class LayoutHelper {
         layoutTypes.put(FEED_DEFAULT_LAYOUT + "", R.layout.feed_basic_layout);
         registerLayout(DMobileModelBase.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_basic_layout);
 
+        // todo register feed layout
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout);
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_2, "2");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_3, "3");
-        registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_4, "4");
+        registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_4_1, "4_1");
+        registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_4_2, "4_2");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_1, "5_1");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_2, "5_2");
         registerLayout(Photo.class, LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
@@ -46,6 +51,12 @@ public class LayoutHelper {
         registerLayout(Comment.class, LayoutHelper.LIST_LAYOUT, R.layout.comment_item_layout);
 
         registerLayout(Search.class, LayoutHelper.LIST_LAYOUT, R.layout.user_item_layout);
+
+        registerLayout(Blog.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_blog_layout);
+
+        // todo register chat layout
+        registerLayout(ChatUser.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_user_item_layout);
+        registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout);
     }
 
     public static int registerLayout(Class c, String suffix, int layout) {

@@ -13,6 +13,8 @@ import com.learn.mobile.service.SComment;
  * Created by 09520_000 on 10/4/2015.
  */
 public class CommentFragment extends ListBaseFragment {
+    SwipeAbleRecyclerViewTouchListener swipeTouchListener;
+
     public CommentFragment() {
         setServiceClass(SComment.class);
         setAutoLoadData(true);
@@ -23,7 +25,7 @@ public class CommentFragment extends ListBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        SwipeAbleRecyclerViewTouchListener swipeTouchListener =
+        swipeTouchListener =
                 new SwipeAbleRecyclerViewTouchListener(recyclerView,
                         new SwipeAbleRecyclerViewTouchListener.SwipeListener() {
                             @Override
@@ -50,5 +52,13 @@ public class CommentFragment extends ListBaseFragment {
 
         recyclerView.addOnItemTouchListener(swipeTouchListener);
         return view;
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        if (recyclerView != null && swipeTouchListener != null) {
+            recyclerView.removeOnItemTouchListener(swipeTouchListener);
+        }
+        super.onDestroyEvent();
     }
 }

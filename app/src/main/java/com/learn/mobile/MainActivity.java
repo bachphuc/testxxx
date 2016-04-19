@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.learn.mobile.activity.DActivityBasic;
 import com.learn.mobile.activity.PostActivity;
 import com.learn.mobile.adapter.AppViewPagerAdapter;
@@ -36,7 +38,10 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.service.SChat;
 import com.learn.mobile.service.SUser;
+
+import java.net.URISyntaxException;
 
 public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
@@ -83,6 +88,9 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
         }
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        // AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        // layoutParams.setScrollFlags(0);
+        // toolbar.setLayoutParams(layoutParams);
         appBarLayout.addOnOffsetChangedListener(this);
 
         // TODO init search service
@@ -104,6 +112,14 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                 showPostActivity();
             }
         });
+
+        // todo init socket chat
+        initSocketChat();
+    }
+
+    public void initSocketChat() {
+        // SChat chatService = (SChat) DMobi.getService(SChat.class);
+        // chatService.init();
     }
 
     // TODO Show post activity
@@ -177,6 +193,7 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                         tabLayout.getTabAt(position).select();
                     }
                 }
+                appBarLayout.setExpanded(true);
                 DMobi.fireEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, position);
                 DMobi.fireEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
             }

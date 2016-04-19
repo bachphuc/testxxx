@@ -269,6 +269,10 @@ public class DMobi {
         return globalDatas.get(key);
     }
 
+    public static Object removeData(String key) {
+        return globalDatas.remove(key);
+    }
+
     public static void clearData() {
         globalDatas.clear();
     }

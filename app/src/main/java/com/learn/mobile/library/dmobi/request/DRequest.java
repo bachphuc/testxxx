@@ -124,6 +124,7 @@ public class DRequest {
     }
 
     public void execute(final int method) {
+        DMobi.log(TAG, "execute 127");
         final DResponse.Listener ls = this.listener;
         final DResponse.ErrorListener er = this.errorListener;
         final DResponse.Complete cm = this.complete;
@@ -133,6 +134,7 @@ public class DRequest {
         StringRequest stringRequest = new StringRequest(method, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                DMobi.log(TAG, "Result request: " + s);
                 if (ls != null) {
                     ls.onResponse(s);
                 }
@@ -172,7 +174,9 @@ public class DRequest {
         if (preExecute != null) {
             preExecute.onPreExecute();
         }
+        DMobi.log(TAG, "execute requestQueue 176");
         requestQueue.add(stringRequest);
+        DMobi.log(TAG, "execute requestQueue 179");
         this.resetParam();
     }
 

@@ -567,6 +567,12 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     // True if we are still waiting for the last set of data to load.
     protected boolean bLoadMoreProcessing = false;
     protected boolean canLoadMore = true;
+    protected boolean bEnableLoadMore = true;
+
+    public void setEnableLoadMore(boolean b) {
+        bEnableLoadMore = b;
+    }
+
     protected LoadMoreListener loadMoreListener;
     protected int bottomLoadMoreHeight = 140;
     protected boolean bInitLoadMoreLayoutChange = false;
@@ -607,6 +613,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     }
 
     public void showLoadMoreProcess() {
+        if (!bEnableLoadMore) {
+            return;
+        }
         ensureTarget();
         mLoadMoreProgress.start();
         mLoadMoreCircleView.setVisibility(View.VISIBLE);
@@ -622,7 +631,7 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         ensureTarget();
         mLoadMoreProgress.stop();
         mLoadMoreCircleView.setVisibility(View.GONE);
-        if(bShowPaddingWhenLoadMore){
+        if (bShowPaddingWhenLoadMore) {
             mTarget.setPadding(0, 0, 0, 0);
         }
     }
@@ -640,6 +649,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
     }
 
     private void onAppBarOffsetChange() {
+        if (!bEnableLoadMore) {
+            return;
+        }
         if (!bLoadMoreProcessing) {
             return;
         }
@@ -656,9 +668,12 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
         if (mTarget instanceof ListView) {
             ListView listView = (ListView) mTarget;
             childCount = listView.getCount();
-        } else if (mTarget instanceof RecyclerView) {
+        } else if (mTarget != null && mTarget instanceof RecyclerView) {
             RecyclerView recyclerView = (RecyclerView) mTarget;
-            childCount = recyclerView.getAdapter().getItemCount();
+            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            if (adapter != null) {
+                childCount = recyclerView.getAdapter().getItemCount();
+            }
         }
         return childCount;
     }
@@ -704,10 +719,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
                 }
             }
             int newTop;
-            if(bHasHeader){
+            if (bHasHeader) {
                 newTop = tempOffset + (height - tempOffset - circleLoadMoreHeight) / 2;
-            }
-            else{
+            } else {
                 newTop = (height / 2 - circleLoadMoreHeight / 2 - tempOffset / 2);
             }
 
@@ -733,6 +747,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
+                    if (!bEnableLoadMore) {
+                        return;
+                    }
                     if (dy < 0) {
                         return;
                     }
@@ -761,6 +778,9 @@ public class DSwipeRefreshLayout extends ViewGroup implements AppBarLayout.OnOff
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (!bEnableLoadMore) {
+                        return;
+                    }
                     if (bLoadMoreProcessing == true) {
                         return;
                     }

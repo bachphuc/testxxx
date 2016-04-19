@@ -32,6 +32,9 @@ public class DConfig {
     // Can use GlideImageAdapter OR PicassoImageAdapter
     public static final String IMAGE_ADAPTER = "GlideImageAdapter";
 
+    // socket chat setting
+    public static final String SOCKET_URL = "http://192.168.1.5:3000";
+
     public static void setContext(Context ctx) {
         if (context != null) {
             return;

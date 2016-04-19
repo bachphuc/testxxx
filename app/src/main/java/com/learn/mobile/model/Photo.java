@@ -219,8 +219,13 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         if (feedLayout != 0) {
             return feedLayout;
         }
+        Random rand;
         if (type.equals("5")) {
-            Random rand = new Random();
+            rand = new Random();
+            int randomLayout = rand.nextInt(2) + 1;
+            type = type + "_" + randomLayout;
+        } else if (type.equals("4")) {
+            rand = new Random();
             int randomLayout = rand.nextInt(2) + 1;
             type = type + "_" + randomLayout;
         }

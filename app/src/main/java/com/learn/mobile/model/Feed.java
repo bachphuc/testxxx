@@ -95,7 +95,9 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
 
         if (DUtils.isEmpty(content)) {
             LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
-            linearLayout.setVisibility(View.GONE);
+            if (linearLayout != null) {
+                linearLayout.setVisibility(View.GONE);
+            }
         } else {
             textView.setText(content);
         }
@@ -130,11 +132,6 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             }
         }
 
-        // TODO Check if liked
-        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_like);
-        imageView.setOnClickListener(this);
-        updateLikeView(imageView);
-
         // todo process attachment
         if (item != null) {
             // todo save parent for attachment item
@@ -151,21 +148,34 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             // todo show image if feed has image
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
             if (imageView != null) {
+                imageView.setVisibility(View.VISIBLE);
                 ImageHelper.display(imageView, images.getLarge());
             }
         }
 
-        // TODO process comment button
-        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
-        if (imageView != null) imageView.setOnClickListener(this);
-        textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
-        if (textView != null) {
-            textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
+        // TODO Check if liked
+        if (this.canDisplayLike()) {
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_like);
+            imageView.setOnClickListener(this);
+            updateLikeView(imageView);
         }
 
-        imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_share);
-        if (imageView != null) {
-            imageView.setOnClickListener(this);
+        // TODO process comment button
+        if (this.canDisplayComment()) {
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_comment);
+            if (imageView != null) imageView.setOnClickListener(this);
+            textView = (TextView) itemBaseViewHolder.findView(R.id.tb_total_comment);
+            if (textView != null) {
+                textView.setText(getTotalComment() + " " + DMobi.translate(getTotalComment() > 1 ? "comments" : "comment"));
+            }
+        }
+
+        // todo process shape button
+        if (this.canDisplayShare()) {
+            imageView = (ImageView) itemBaseViewHolder.findView(R.id.bt_share);
+            if (imageView != null) {
+                imageView.setOnClickListener(this);
+            }
         }
     }
 
@@ -237,18 +247,6 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         Intent intent;
         Context context;
         switch (v.getId()) {
-            case R.id.bt_like:
-                DMobileModelBase item = getAttachment();
-                item.like(new DResponse.Complete() {
-                    @Override
-                    public void onComplete(Boolean status, Object o) {
-
-                    }
-                });
-
-                updateLikeView(v);
-
-                break;
             case R.id.img_avatar:
                 context = v.getContext();
                 intent = new Intent(context, UserProfileActivity.class);
@@ -259,7 +257,26 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                     context.startActivity(intent);
                 }
                 break;
+            // todo process like action
+            case R.id.bt_like:
+                if (!this.canLike()) {
+                    return;
+                }
+                DMobileModelBase item = getAttachment();
+                item.like(new DResponse.Complete() {
+                    @Override
+                    public void onComplete(Boolean status, Object o) {
+
+                    }
+                });
+
+                updateLikeView(v);
+                break;
+            // todo process comment action
             case R.id.bt_comment:
+                if (!this.canComment()) {
+                    return;
+                }
                 context = v.getContext();
                 if (context instanceof FeedDetailActivity) {
                     return;
@@ -268,7 +285,11 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 DMobi.pushData(FeedDetailActivity.FEED_DETAIL, this);
                 context.startActivity(intent);
                 break;
+            // todo process shape action
             case R.id.bt_share:
+                if (!this.canShare()) {
+                    return;
+                }
                 share(v.getContext());
                 break;
         }
@@ -277,5 +298,14 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
     @Override
     public void processViewHolder(RecyclerViewBaseAdapter adapter, ItemBaseViewHolder itemBaseViewHolder, int position) {
         processFeedViewHolder(itemBaseViewHolder, position);
+    }
+
+    @Override
+    public boolean canComment() {
+        DMobi.log(TAG, this.getItemType());
+        if (this.typeId.equals("user_photo")) {
+            return false;
+        }
+        return super.canComment();
     }
 }

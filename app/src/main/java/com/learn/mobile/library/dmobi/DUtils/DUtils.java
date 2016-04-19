@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -24,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 09520_000 on 8/22/2015.
@@ -218,5 +221,39 @@ public class DUtils {
             DMobi.log("Error", ex.getMessage());
             return null;
         }
+    }
+
+    // todo setTimeout, setInterval
+    public interface TaskHandle {
+        void invalidate();
+    }
+
+    public static TaskHandle setTimeout(final Runnable r, long delay) {
+        final Handler h = new Handler();
+        h.postDelayed(r, delay);
+        return new TaskHandle() {
+            @Override
+            public void invalidate() {
+                h.removeCallbacks(r);
+            }
+        };
+    }
+
+    public static TaskHandle setInterval(final Runnable r, long interval) {
+        final Timer t = new Timer();
+        final Handler h = new Handler();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                h.post(r);
+            }
+        }, interval, interval);  // Unlike JavaScript, in Java the initial call is immediate, so we put interval instead.
+        return new TaskHandle() {
+            @Override
+            public void invalidate() {
+                t.cancel();
+                t.purge();
+            }
+        };
     }
 }

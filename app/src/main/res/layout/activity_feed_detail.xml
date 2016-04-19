@@ -17,10 +17,9 @@
         <FrameLayout
             android:id="@+id/feed_detail_comment_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent" />
 
-        <android.support.design.widget.AppBarLayout
+        <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +41,7 @@
                 android:background="@android:color/transparent"
                 android:visibility="invisible" />
 
-        </android.support.design.widget.AppBarLayout>
+        </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
@@ -61,7 +60,9 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="#00000000"
-            android:hint="@string/add_comment" />
+            android:hint="@string/add_comment"
+            android:imeActionId="@+id/bt_comment"
+            android:textSize="14dp" />
 
         <ImageView
             android:id="@+id/bt_comment"
