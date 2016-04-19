@@ -56,7 +56,8 @@ public class LayoutHelper {
 
         // todo register chat layout
         registerLayout(ChatUser.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_user_item_layout);
-        registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout);
+        registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout_left, "left");
+        registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout_right, "right");
     }
 
     public static int registerLayout(Class c, String suffix, int layout) {

@@ -138,6 +138,9 @@ public class SBase {
     }
 
     public void gets(final DResponse.Complete complete, final String action) {
+        if(!DMobi.isUser()){
+            return;
+        }
         DRequest dRequest = DMobi.createRequest();
 
         dRequest.setApi(itemClass.getSimpleName().toLowerCase() + ".gets");
