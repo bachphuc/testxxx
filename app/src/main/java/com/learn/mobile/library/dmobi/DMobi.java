@@ -29,9 +29,9 @@ public class DMobi {
     private static int identityId = 100;
 
     static {
-        bases = new Hashtable<String, SBase>();
-        eventHashTable = new Hashtable<String, Event>();
-        globalDatas = new Hashtable<String, Object>();
+        bases = new Hashtable<>();
+        eventHashTable = new Hashtable<>();
+        globalDatas = new Hashtable<>();
     }
 
     public static void getLib(String lib) {

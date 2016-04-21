@@ -34,4 +34,9 @@
     <color name="image_border_color">#ffffff</color>
     <color name="primary_background_dark_color">#cccccc</color>
     <color name="primary_background_darker_color">#999999</color>
+
+    <color name="chat_message_left_background">#efefef</color>
+    <color name="chat_message_right_background">@color/primary_color</color>
+    <color name="chat_message_right_color">#eeeeee</color>
+
 </resources>

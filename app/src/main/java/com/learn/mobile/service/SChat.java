@@ -5,9 +5,16 @@ import android.content.Context;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.request.DRequest;
+import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.ChatMessage;
 import com.learn.mobile.model.ChatUser;
 import com.learn.mobile.model.DMobileModelBase;
@@ -16,6 +23,7 @@ import com.learn.mobile.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +35,15 @@ import java.util.List;
  */
 public class SChat extends SBase {
     public static final String TAG = SChat.class.getSimpleName();
+    private long _id;
+
+    {
+        _id = System.currentTimeMillis();
+    }
+
+    public long getIdentity() {
+        return _id++;
+    }
 
     public SChat() {
         itemClass = ChatUser.class;
@@ -143,16 +160,26 @@ public class SChat extends SBase {
         processRemoveCallback(talkCallbacks, callback);
     }
 
-    List<SocketChatEventListener> userleftCallbacks = new ArrayList<>();
+    List<SocketChatEventListener> userLeftCallbacks = new ArrayList<>();
 
     public void addUserLeftCallback(SocketChatEventListener callback) {
-        processAddCallback(userleftCallbacks, callback);
+        processAddCallback(userLeftCallbacks, callback);
     }
 
     List<SocketChatEventListener> listenUserOnlineCallbacks = new ArrayList<>();
 
     public void addListenUserOnlineCallback(SocketChatEventListener callback) {
         processAddCallback(listenUserOnlineCallbacks, callback);
+    }
+
+    List<SocketChatEventListener> updateMessageCallbacks = new ArrayList<>();
+
+    public void onUpdateMessage(SocketChatEventListener callback) {
+        processAddCallback(updateMessageCallbacks, callback);
+    }
+
+    public void removeOnUpdateMessageListener(SocketChatEventListener callback) {
+        processRemoveCallback(updateMessageCallbacks, callback);
     }
 
     List<SocketChatEventListener> readyCallbacks = new ArrayList<>();
@@ -364,7 +391,7 @@ public class SChat extends SBase {
             DMobi.log(TAG, e.getMessage());
             return;
         }
-        processCallback(userleftCallbacks, data);
+        processCallback(userLeftCallbacks, data);
     }
 
     public ChatUser addUser(String username, String image) {
@@ -414,13 +441,40 @@ public class SChat extends SBase {
     }
 
     public void addMessage(String username, ChatMessage data) {
+        if (DUtils.isEmpty(username) || data == null) {
+            DMobi.log(TAG, "addMessage: username or data is null");
+            return;
+        }
+        ChatUser user = this.getUser(username);
+
+        if (data.is_update) {
+            DMobi.log(TAG, "addMessage: check is_update message: " + data.getSenderKey());
+            ChatMessage message = user.getProcessingMessage(data.getSenderKey());
+            if (message != null) {
+                DMobi.log(TAG, "addMessage: update message");
+                // todo update message and remove processing message
+                // todo merge two  data to message
+                message.merge(data);
+                user.removeProcessingMessage(data.getSenderKey());
+                DMobi.log(TAG, "update message");
+                if (message.is_processing) {
+                    message.is_processing = false;
+                }
+                processCallback(updateMessageCallbacks, message);
+                return;
+            }
+        }
         if (users.containsKey(username)) {
             users.get(username).messages.add(data);
         } else {
-            ChatUser user = addUser(username, data.image);
+            user = addUser(username, data.senderImage);
             if (user != null) {
                 user.messages.add(data);
             }
+        }
+        if (data.is_processing) {
+            DMobi.log(TAG, "addMessage: check is processing message sender key: " + data.getSenderKey());
+            user.addProcessingMessage(data);
         }
         processCallback(talkCallbacks, data);
     }
@@ -428,19 +482,24 @@ public class SChat extends SBase {
     public void talk(Object... args) {
         JSONObject data = (JSONObject) args[0];
         try {
-            String tmUsername = data.getString("username");
-            String tmMessage = data.getString("message");
-            String tmImage = data.getString("image");
-            if (tmUsername == null || tmMessage == null) {
+            String tmUsername = (data.has("username") ? data.getString("username") : null);
+            String tmImage = (data.has("image") ? data.getString("image") : null);
+            if (tmUsername == null) {
                 return;
             }
 
-            DMobi.log(TAG, "this talk: chatMessage: " + tmMessage + ", username:" + tmUsername);
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.username = tmUsername;
-            chatMessage.message = tmMessage;
-            chatMessage.image = tmImage;
+            chatMessage.cloneFromJSONObject(data);
+            chatMessage.senderUsername = tmUsername;
+            chatMessage.receiveUsername = getUsername();
+            chatMessage.key = getIdentity();
+            if (data.has("key")) {
+                chatMessage.senderKey = data.getLong("key");
+            }
+            chatMessage.senderImage = tmImage;
             chatMessage.bMine = false;
+            DMobi.log(TAG, "this talk: chatMessage: " + chatMessage.message + ", senderUsername:" + tmUsername);
+
             addMessage(tmUsername, chatMessage);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -460,17 +519,80 @@ public class SChat extends SBase {
     }
 
     public void sendMessage(ChatMessage data) {
-        if (data == null) {
-            return;
+        sendMessage(data, null);
+    }
+
+    public ChatMessage sendMessage(ChatMessage message, JSONObject params) {
+        if (message == null) {
+            return null;
         }
         DMobi.log(TAG, "sendMessage");
-        ChatMessage message = new ChatMessage();
-        message.username = getUsername();
-        message.message = data.message;
-        message.image = getImage();
+        long key = getIdentity();
+        message.senderImage = getImage();
+        message.senderUsername = getUsername();
         message.bMine = true;
-        addMessage(data.username, message);
-        socket.emit("talk to user", data.username, data.message);
+        message.key = key;
+        String tmMessage = message.message;
+        if (!message.is_processing) {
+            message.is_complete = true;
+        }
+        addMessage(message.receiveUsername, message);
+        try {
+            JSONObject sendData = new JSONObject();
+            sendData.put("username", message.getReceiveUsername());
+            sendData.put("message", tmMessage);
+            sendData.put("key", key);
+            if (params != null) {
+                Iterator<String> keys = params.keys();
+                while (keys.hasNext()) {
+                    String jsonKey = keys.next();
+                    Object value = params.get(jsonKey);
+                    sendData.put(jsonKey, value);
+                }
+            }
+
+            socket.emit("talk to user", sendData);
+
+            return message;
+        } catch (JSONException e) {
+            DMobi.log(TAG, "fail to send message");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateMessage(ChatMessage message, JSONObject params) {
+        DMobi.log(TAG, "update message");
+        if (message == null) {
+            return;
+        }
+        if (message.key == 0) {
+            return;
+        }
+        try {
+            JSONObject sendData = new JSONObject();
+            sendData.put("username", message.getReceiveUsername());
+            sendData.put("message", message.message);
+            sendData.put("key", message.key);
+            sendData.put("is_complete", message.is_complete);
+            if (message.photo != null) {
+                sendData.put("photo", message.photo);
+            }
+            sendData.put("is_update", true);
+            if (params != null) {
+                Iterator<String> keys = params.keys();
+                while (keys.hasNext()) {
+                    String jsonKey = keys.next();
+                    Object value = params.get(jsonKey);
+                    sendData.put(jsonKey, value);
+                }
+            }
+            DMobi.log(TAG, "update message key " + message.getKey() + ", username: " + message.getReceiveUsername());
+            socket.emit("talk to user", sendData);
+        } catch (JSONException e) {
+            DMobi.log(TAG, "fail to send message");
+            e.printStackTrace();
+        }
     }
 
     public void listenUserOnline(Object... args) {
@@ -503,6 +625,44 @@ public class SChat extends SBase {
     public void getUserOnlineFromServer() {
         DMobi.log(TAG, "getUserOnlineFromServer");
         socket.emit("get user online");
+    }
+
+    public void uploadPhoto(String path, final DResponse.Complete complete) {
+        DRequest dRequest = DMobi.createRequest();
+        dRequest.setApi("dchat.upload");
+        dRequest.addFile(path);
+        dRequest.setComplete(new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    String respondString = (String) o;
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<SingleObjectResponse<ChatUploadResponseData>>() {
+                    }.getType();
+                    try {
+                        DMobi.log(TAG, "update photo chat success");
+                        SingleObjectResponse<ChatUploadResponseData> response = gson.fromJson(respondString, type);
+                        if (response.isSuccessfully()) {
+                            DMobi.log(TAG, respondString);
+                            String[] images = response.data.images;
+                            complete.onComplete(true, images);
+                        } else {
+                            responseError(response, complete);
+                        }
+                    } catch (JsonParseException e) {
+                        DMobi.log("upload photo chat", respondString);
+                        networkError(complete);
+                    }
+                } else {
+                    networkError(complete);
+                }
+            }
+        });
+        dRequest.upload();
+    }
+
+    public static class ChatUploadResponseData {
+        String[] images;
     }
 }
 

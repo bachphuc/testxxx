@@ -15,17 +15,46 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by BachPhuc on 4/18/2016.
  */
 public class ChatUser extends DMobileModelBase implements View.OnClickListener {
+    public static final String TAG = ChatUser.class.getSimpleName();
     public double online_time;
     public boolean online;
     public String username;
     public String image;
+
+    public String getImage() {
+        return image;
+    }
+
     public List<DMobileModelBase> messages = new ArrayList<>();
+    protected HashMap<String, ChatMessage> processingMessages = new HashMap<>();
+
+    public void addProcessingMessage(ChatMessage message) {
+        DMobi.log(TAG, "addProcessingMessage to user " + username);
+        long key = message.bMine ? message.getKey() : message.getSenderKey();
+        processingMessages.put("" + key, message);
+    }
+
+    public void removeProcessingMessage(long key) {
+        if (processingMessages.containsKey(key)) {
+            processingMessages.remove("" + key);
+        }
+    }
+
+    public ChatMessage getProcessingMessage(long key) {
+        DMobi.log(TAG, "getProcessingMessage from user " + username);
+        if (!processingMessages.containsKey("" + key)) {
+            DMobi.log(TAG, "getProcessingMessage: no message processing");
+            return null;
+        }
+        return processingMessages.get("" + key);
+    }
 
     public List<DMobileModelBase> getMessages() {
         return messages;

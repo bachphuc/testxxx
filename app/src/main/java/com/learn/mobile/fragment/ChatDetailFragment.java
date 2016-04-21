@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.model.ChatMessage;
 import com.learn.mobile.model.ChatUser;
 import com.learn.mobile.service.SChat;
@@ -20,8 +19,9 @@ public class ChatDetailFragment extends ListBaseFragment {
 
     private ChatUser chatUser;
     private SChat socketService;
-    SChat.SocketChatEventListener newMessageListener;
-    SChat.SocketChatEventListener readyListener;
+    SChat.SocketChatEventListener onNewMessageListener;
+    SChat.SocketChatEventListener onReadyListener;
+    SChat.SocketChatEventListener onUpdateMessageListener;
 
     public void setChatUser(ChatUser chatUser) {
         this.chatUser = chatUser;
@@ -47,7 +47,7 @@ public class ChatDetailFragment extends ListBaseFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         // todo process chat socket service listener
         socketService = (SChat) service;
-        newMessageListener = new SChat.SocketChatEventListener() {
+        onNewMessageListener = new SChat.SocketChatEventListener() {
             @Override
             public void onListener(final Object data) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -68,9 +68,9 @@ public class ChatDetailFragment extends ListBaseFragment {
                 });
             }
         };
-        socketService.onNewMessageListener(newMessageListener);
+        socketService.onNewMessageListener(onNewMessageListener);
 
-        readyListener = new SChat.SocketChatEventListener() {
+        onReadyListener = new SChat.SocketChatEventListener() {
             @Override
             public void onListener(Object data) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -82,7 +82,21 @@ public class ChatDetailFragment extends ListBaseFragment {
                 });
             }
         };
-        socketService.onReady(readyListener);
+        socketService.onReady(onReadyListener);
+
+        onUpdateMessageListener = new SChat.SocketChatEventListener() {
+            @Override
+            public void onListener(Object data) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DMobi.log(TAG, "update message listener");
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        };
+        socketService.onUpdateMessage(onUpdateMessageListener);
 
         socketService.init();
         return view;
@@ -90,10 +104,13 @@ public class ChatDetailFragment extends ListBaseFragment {
 
     @Override
     public void onDestroyEvent() {
-        socketService.removeOnNewMessageListener(newMessageListener);
-        socketService.removeOnReadyListener(readyListener);
-        readyListener = null;
-        newMessageListener = null;
+        socketService.removeOnNewMessageListener(onNewMessageListener);
+        socketService.removeOnReadyListener(onReadyListener);
+        socketService.removeOnUpdateMessageListener(onUpdateMessageListener);
+
+        onUpdateMessageListener = null;
+        onReadyListener = null;
+        onNewMessageListener = null;
         socketService = null;
         super.onDestroyEvent();
     }

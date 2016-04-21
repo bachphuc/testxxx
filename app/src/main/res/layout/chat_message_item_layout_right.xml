@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
-    app:cardCornerRadius="0dp">
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/panel_message_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="56dp"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp">
+        android:paddingRight="16dp"
+        android:paddingTop="4dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -25,45 +26,63 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Nguyen Loc"
-                android:textColor="@color/primary_dark_text_color" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="5 hours ago" />
-
-            <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/chat_message_right"
                 android:maxWidth="220dp"
-                android:padding="8dp"
-                android:text="@string/sample" />
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/sample"
+                android:textColor="@color/chat_message_right_color" />
+
+            <ImageView
+                android:id="@+id/img_chat_photo"
+                android:layout_width="256dp"
+                android:layout_height="160dp"
+                android:layout_gravity="right"
+                android:background="@drawable/chat_message_right"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="32dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp">
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_photo"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/ic_stub" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/img_chat_photo_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/primary_color"
+                android:visibility="gone"
+                tools:src="@drawable/ic_radio_button_unchecked_black_24dp" />
         </LinearLayout>
 
+
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>

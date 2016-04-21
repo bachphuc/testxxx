@@ -256,4 +256,20 @@ public class DUtils {
             }
         };
     }
+
+    public static boolean getBoolean(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o instanceof Boolean) {
+            return (boolean) o;
+        } else if (o instanceof Integer) {
+            int i = (int) o;
+            return (i == 0 ? false : true);
+        } else if (o instanceof String) {
+            String s = (String) o;
+            return (s.equals("") ? false : true);
+        }
+        return true;
+    }
 }
