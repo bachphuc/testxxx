@@ -54,7 +54,7 @@ public class ChatDetailActivity extends UploadFileBase implements View.OnClickLi
         }
 
         TextView textView = (TextView) findViewById(R.id.tv_chat_title);
-        textView.setText(chatUser.getTitle());
+        textView.setText(chatUser.fullname);
 
         chatDetailFragment = new ChatDetailFragment();
         chatDetailFragment.setData(chatUser.getMessages());
@@ -118,7 +118,7 @@ public class ChatDetailActivity extends UploadFileBase implements View.OnClickLi
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.photo = filePath;
         chatMessage.is_processing = true;
-        chatMessage.receiveUsername = chatUser.getTitle();
+        chatMessage.receiveUsername = chatUser.getUsername();
         chatMessage.attachment_type = "photo";
 
         JSONObject params = new JSONObject();
@@ -177,7 +177,7 @@ public class ChatDetailActivity extends UploadFileBase implements View.OnClickLi
         }
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.message = text;
-        chatMessage.receiveUsername = chatUser.getTitle();
+        chatMessage.receiveUsername = chatUser.getUsername();
         chatService.sendMessage(chatMessage);
         tbComment.setText("");
     }

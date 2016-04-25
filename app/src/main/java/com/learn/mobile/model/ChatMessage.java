@@ -32,6 +32,8 @@ public class ChatMessage extends DMobileModelBase {
     }
 
     public String message;
+    public ChatUser sender;
+    public ChatUser receiver;
     public String senderUsername;
     public boolean is_complete = false;
     public boolean is_update = false;
@@ -106,7 +108,7 @@ public class ChatMessage extends DMobileModelBase {
 
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
         if (textView != null) {
-            textView.setText(getSenderUsername());
+            textView.setText(sender.title);
         }
 
         textView = (TextView) itemBaseViewHolder.findView(R.id.tv_content);

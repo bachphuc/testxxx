@@ -203,19 +203,41 @@ public class SChat extends SBase {
         socket.emit(event, message);
     }
 
+    public String createUsername(User user) {
+        return "user" + user.getId();
+    }
+
     public void socketLogin() {
         DMobi.log(TAG, "try to login socket...");
         if (viewer != null) {
-            username = viewer.getTitle();
+            username = createUsername(viewer);
+
             image = viewer.getImages().getNormal().url;
             mine = new ChatUser();
             mine.username = username;
+            mine.fullname = viewer.getTitle();
+            mine.id = viewer.getId();
             mine.image = image;
-            DMobi.log(TAG, "add user " + viewer.getTitle());
-            socket.emit("add user", viewer.getTitle(), image);
+            DMobi.log(TAG, "socketLogin: full name: " + viewer.getTitle() + ", username: " + username);
+
+            JSONObject sendData = new JSONObject();
+            try {
+                sendData.put("username", username);
+                sendData.put("image", image);
+                sendData.put("user_id", viewer.getId());
+                sendData.put("fullname", viewer.getTitle());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            socket.emit("user login", sendData);
         } else {
-            DMobi.log(TAG, "user is not login, please login to continue...");
-            // socketLogin();
+            DMobi.log(TAG, "user is not login, try login...");
+            DUtils.setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    socketLogin();
+                }
+            }, 2000);
         }
     }
 
@@ -227,7 +249,7 @@ public class SChat extends SBase {
         DMobi.log(TAG, message);
         JSONObject data = (JSONObject) args[0];
         try {
-            JSONObject userJsonObject = (JSONObject) data.getJSONObject("users");
+            JSONObject userJsonObject = data.getJSONObject("users");
             listenUserOnline(userJsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -301,13 +323,18 @@ public class SChat extends SBase {
                 if (args.length < 2) {
                     return;
                 }
-                String room = (String) args[0];
-                String tmUsername = (String) args[1];
-                String tmImage = (String) args[2];
-                DMobi.log(TAG, tmUsername + " request chat with you in room " + room);
-                addUser(tmUsername, tmImage);
-                socket.emit("join room", room);
+                try {
+                    String room = (String) args[0];
+                    JSONObject user = (JSONObject) args[1];
 
+                    String tmUsername = user.getString("username");
+                    DMobi.log(TAG, tmUsername + " request chat with you in room " + room);
+
+                    addUser(tmUsername, user);
+                    socket.emit("join room", room);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         socket.on("get user online", new Emitter.Listener() {
@@ -394,7 +421,7 @@ public class SChat extends SBase {
         processCallback(userLeftCallbacks, data);
     }
 
-    public ChatUser addUser(String username, String image) {
+    public ChatUser addUser(String username, JSONObject userData) {
         if (DUtils.isEmpty(username)) {
             return null;
         }
@@ -405,9 +432,13 @@ public class SChat extends SBase {
 
         if (users.containsKey(username)) {
             user = users.get(username);
+            if (user.is_processing) {
+                user.cloneFromJSONObject(userData);
+            }
             user.online = true;
         } else {
             user = new ChatUser();
+            user.cloneFromJSONObject(userData);
             user.username = username;
             user.online = true;
             if (image != null) {
@@ -430,9 +461,8 @@ public class SChat extends SBase {
 
         try {
             String tmUsername = data.getString("username");
-            String tmImage = data.getString("image");
             if (tmUsername != null) {
-                addUser(tmUsername, tmImage);
+                addUser(tmUsername, data);
             }
             totalUser = data.getInt("numUsers");
         } catch (JSONException e) {
@@ -465,12 +495,26 @@ public class SChat extends SBase {
             }
         }
         if (users.containsKey(username)) {
-            users.get(username).messages.add(data);
+            user = users.get(username);
         } else {
-            user = addUser(username, data.senderImage);
-            if (user != null) {
-                user.messages.add(data);
+            JSONObject userData = new JSONObject();
+            try {
+                userData.put("image", data.senderImage);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            user = addUser(username, userData);
+        }
+        // todo add user
+        if (data.bMine) {
+            data.sender = this.getMine();
+            data.receiver = user;
+        } else {
+            data.receiver = this.getMine();
+            data.sender = user;
+        }
+        if (user != null) {
+            user.messages.add(data);
         }
         if (data.is_processing) {
             DMobi.log(TAG, "addMessage: check is processing message sender key: " + data.getSenderKey());
@@ -608,12 +652,8 @@ public class SChat extends SBase {
             try {
                 JSONObject value = (JSONObject) data.get(key);
                 String tmUsername = value.getString("username");
-                Double tmOnline = value.getDouble("online_time");
-                String tmImage = value.getString("image");
-                ChatUser newUser = addUser(tmUsername, tmImage);
-                if (newUser != null) {
-                    newUser.online_time = tmOnline;
-                }
+
+                addUser(tmUsername, value);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

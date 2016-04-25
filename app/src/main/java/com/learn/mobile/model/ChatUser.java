@@ -12,7 +12,11 @@ import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.activity.ChatDetailActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +31,36 @@ public class ChatUser extends DMobileModelBase implements View.OnClickListener {
     public boolean online;
     public String username;
     public String image;
+    public String fullname;
+    public boolean is_processing = false;
 
     public String getImage() {
         return image;
+    }
+
+    public void cloneFromJSONObject(JSONObject data) {
+        try {
+            if (data.has("fullname")) {
+                this.fullname = data.getString("fullname");
+            }
+            if (data.has("image")) {
+                this.image = data.getString("image");
+            }
+            if (data.has("username")) {
+                this.username = data.getString("username");
+            }
+            if (data.has("is_processing")) {
+                this.is_processing = DUtils.getBoolean(data.get("is_processing"));
+            }
+            if (data.has("online")) {
+                this.online = DUtils.getBoolean(data.get("online"));
+            }
+            if (data.has("online_time")) {
+                this.online_time = data.getDouble("online_time");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<DMobileModelBase> messages = new ArrayList<>();
@@ -60,12 +91,13 @@ public class ChatUser extends DMobileModelBase implements View.OnClickListener {
         return messages;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public String getTitle() {
-        if (username != null) {
-            return username;
-        }
-        return super.getTitle();
+        return fullname;
     }
 
     @Override
