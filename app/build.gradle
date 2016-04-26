@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.learn.turtorial1"
+        applicationId "com.dsoft.foxmobi"
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 2

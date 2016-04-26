@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DMobi</string>
+    <string name="app_name">MobiFox</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -22,6 +22,7 @@
     <string name="photo">Photo</string>
     <string name="funny">Funny</string>
     <string name="search">Search</string>
+    <string name="message">Message</string>
     <string name="favourite">Favourite</string>
     <string name="download">Download</string>
     <string name="make_your_avatar">Make your avatar</string>

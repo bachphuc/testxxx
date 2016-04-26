@@ -283,7 +283,8 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
                     if (o != null) {
                         ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
                         if (response.isSuccessfully() && response.hasData()) {
-                            adapter.notifyDataSetChanged();
+                            // adapter.notifyDataSetChanged();
+                            adapter.notifyItemRangeInserted(0, response.data.size());
                             adapter.fireNotifyDataSetChanged();
                         }
                         if (response.isSuccessfully() && !response.hasData()) {
@@ -312,7 +313,8 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
                     if (o != null) {
                         ListObjectResponse<DMobileModelBase> response = (ListObjectResponse<DMobileModelBase>) o;
                         if (response.isSuccessfully() && response.hasData()) {
-                            adapter.notifyDataSetChanged();
+                            adapter.notifyItemRangeInserted(adapter.getItemCount() - response.data.size() - 1, response.data.size());
+                            // adapter.notifyDataSetChanged();
                             adapter.fireNotifyDataSetChanged();
                             if (bScrollBottomTopWhenLoadMoreFinish) {
                                 scrollToBottom(bScrollBottomAnimate);

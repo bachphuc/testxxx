@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -48,6 +49,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String QUERY_KEY = "QUERY_KEY";
+    private String appBarTitle;
+    ActionBar actionBar;
 
     private GlobalSearchAdapter globalSearchAdapter;
 
@@ -80,9 +83,10 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
-
+        actionBar = getSupportActionBar();
+        appBarTitle = getResources().getString(R.string.home);
         if (actionBar != null) {
+            actionBar.setTitle(appBarTitle);
             actionBar.setHomeAsUpIndicator(ImageHelper.getIconDrawable(R.drawable.ic_menu_black_24dp));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -146,7 +150,7 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setFitsSystemWindows(true);
 
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
 
@@ -160,7 +164,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
             @Override
             public void onDrawerClosed(View drawerView) {
                 if (viewPagerMoveIndex != -1) {
-                    viewPager.setCurrentItem(viewPagerMoveIndex);
+                    // viewPager.setCurrentItem(viewPagerMoveIndex);
+                    viewPager.setCurrentItem(viewPagerMoveIndex, false);
                     viewPagerMoveIndex = -1;
                 }
             }
@@ -194,6 +199,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                     }
                 }
                 appBarLayout.setExpanded(true);
+                actionBar.setTitle(appBarTitle);
+
                 DMobi.fireEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, position);
                 DMobi.fireEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
             }
@@ -390,8 +397,9 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
     }
 
     @Override
-    public void onLeftFragmentInteraction(int id) {
+    public void onLeftFragmentInteraction(int id, String title) {
         drawerLayout.closeDrawers();
+        appBarTitle = title;
         viewPagerMoveIndex = -1;
         switch (id) {
             case R.id.drawer_home:
@@ -408,6 +416,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                 break;
             case R.id.drawer_search:
                 viewPagerMoveIndex = 4;
+            case R.id.drawer_chat:
+                viewPagerMoveIndex = 5;
                 break;
         }
         if (viewPagerMoveIndex != -1) {

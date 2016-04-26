@@ -149,7 +149,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
             if (imageView != null) {
                 imageView.setVisibility(View.VISIBLE);
-                ImageHelper.display(imageView, images.getLarge());
+                ImageHelper.display(imageView, images.getFull());
             }
         }
 

@@ -15,14 +15,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
+            <com.learn.mobile.customview.viewpager.NonSwipeViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"></com.learn.mobile.customview.viewpager.NonSwipeViewPager>
 
-            </android.support.v4.view.ViewPager>
-
-            <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
+            <android.support.design.widget.AppBarLayout
                 android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
                     android:background="@android:color/transparent"
                     android:visibility="invisible" />
 
-            </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
+            </android.support.design.widget.AppBarLayout>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/bt_show_post_activity"

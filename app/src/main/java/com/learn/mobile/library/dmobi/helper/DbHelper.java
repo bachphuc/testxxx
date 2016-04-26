@@ -72,7 +72,10 @@ public class DbHelper {
         // Gson gson = new GsonBuilder().create();
         Gson gson = createGsonBuilderInstance();
         Type type = dAbstractItemObject.getListType();
-
+        if (type == null) {
+            type = new TypeToken<ListObjectResponse<DMobileModelBase>>() {
+            }.getType();
+        }
         ListObjectResponse<DMobileModelBase> response;
         try {
             response = gson.fromJson(jsonData, type);

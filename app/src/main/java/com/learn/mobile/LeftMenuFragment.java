@@ -154,7 +154,8 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
             case R.id.drawer_photo:
             case R.id.drawer_funny:
             case R.id.drawer_search:
-                mListener.onLeftFragmentInteraction(item.getItemId());
+            case R.id.drawer_chat:
+                mListener.onLeftFragmentInteraction(item.getItemId(), item.getTitle().toString());
                 return true;
         }
 
@@ -202,7 +203,7 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
      */
     public interface OnLeftFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onLeftFragmentInteraction(int id);
+        public void onLeftFragmentInteraction(int id, String title);
     }
 
     // TODO: Show dialog setting site

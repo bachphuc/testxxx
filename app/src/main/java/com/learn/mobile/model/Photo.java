@@ -100,21 +100,6 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
         super.processViewHolder(adapter, itemBaseViewHolder, position);
         ImageView imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_photo);
         if (imageView != null) {
-            boolean usePallet = false;
-            if (imageView instanceof PaletteImageView && usePallet) {
-                PaletteImageView paletteImageView = (PaletteImageView) imageView;
-                paletteImageView.setOnPaletteListener(new PaletteImageView.PaletteListener.OnPaletteListener() {
-                    @Override
-                    public void onChange(View view, int backgroundColor, int textColor) {
-                        View parentView = (View) view.getParent();
-                        TextView tv = (TextView) parentView.findViewById(R.id.tv_title);
-                        int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
-                        tv.setBackgroundColor(bgColor);
-                        tv.setTextColor(textColor);
-                    }
-                });
-            }
-
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -151,8 +136,6 @@ public class Photo extends DAbstractPhoto implements View.OnClickListener {
                 ImageHelper.getGlobalAdapter().loadFlickrThumb(images, imageView);
             }
         }
-        TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
-        textView.setText(getTitle());
     }
 
     @Override

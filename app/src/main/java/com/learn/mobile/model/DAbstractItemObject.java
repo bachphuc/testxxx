@@ -95,6 +95,36 @@ public class DAbstractItemObject {
 			}.getType();
 			Search objSearch = gson.fromJson(jsonData, type);
 			return objSearch;
+		case "Dchat":
+			type = new TypeToken<Dchat>() {
+			}.getType();
+			Dchat objDchat = gson.fromJson(jsonData, type);
+			return objDchat;
+		case "DchatMessage":
+			type = new TypeToken<DchatMessage>() {
+			}.getType();
+			DchatMessage objDchatMessage = gson.fromJson(jsonData, type);
+			return objDchatMessage;
+		case "DchatRoom":
+			type = new TypeToken<DchatRoom>() {
+			}.getType();
+			DchatRoom objDchatRoom = gson.fromJson(jsonData, type);
+			return objDchatRoom;
+		case "DchatMember":
+			type = new TypeToken<DchatMember>() {
+			}.getType();
+			DchatMember objDchatMember = gson.fromJson(jsonData, type);
+			return objDchatMember;
+		case "DchatPhoto":
+			type = new TypeToken<DchatPhoto>() {
+			}.getType();
+			DchatPhoto objDchatPhoto = gson.fromJson(jsonData, type);
+			return objDchatPhoto;
+		case "DchatRequest":
+			type = new TypeToken<DchatRequest>() {
+			}.getType();
+			DchatRequest objDchatRequest = gson.fromJson(jsonData, type);
+			return objDchatRequest;
             default:
                 return new DMobileModelBase();
         }
@@ -161,6 +191,30 @@ public class DAbstractItemObject {
             return type;
         case "Search":
             type = new TypeToken<Search>() {
+            }.getType();
+            return type;
+        case "Dchat":
+            type = new TypeToken<Dchat>() {
+            }.getType();
+            return type;
+        case "DchatMessage":
+            type = new TypeToken<DchatMessage>() {
+            }.getType();
+            return type;
+        case "DchatRoom":
+            type = new TypeToken<DchatRoom>() {
+            }.getType();
+            return type;
+        case "DchatMember":
+            type = new TypeToken<DchatMember>() {
+            }.getType();
+            return type;
+        case "DchatPhoto":
+            type = new TypeToken<DchatPhoto>() {
+            }.getType();
+            return type;
+        case "DchatRequest":
+            type = new TypeToken<DchatRequest>() {
             }.getType();
             return type;
             default:
@@ -231,6 +285,30 @@ public class DAbstractItemObject {
             type = new TypeToken<ListObjectResponse<Search>>() {
             }.getType();
             return type;
+        case "Dchat":
+            type = new TypeToken<ListObjectResponse<Dchat>>() {
+            }.getType();
+            return type;
+        case "DchatMessage":
+            type = new TypeToken<ListObjectResponse<DchatMessage>>() {
+            }.getType();
+            return type;
+        case "DchatRoom":
+            type = new TypeToken<ListObjectResponse<DchatRoom>>() {
+            }.getType();
+            return type;
+        case "DchatMember":
+            type = new TypeToken<ListObjectResponse<DchatMember>>() {
+            }.getType();
+            return type;
+        case "DchatPhoto":
+            type = new TypeToken<ListObjectResponse<DchatPhoto>>() {
+            }.getType();
+            return type;
+        case "DchatRequest":
+            type = new TypeToken<ListObjectResponse<DchatRequest>>() {
+            }.getType();
+            return type;
             default:
                 return null;
         }
@@ -297,6 +375,30 @@ public class DAbstractItemObject {
             return type;
         case "Search":
             type = new TypeToken<SingleObjectResponse<Search>>() {
+            }.getType();
+            return type;
+        case "Dchat":
+            type = new TypeToken<SingleObjectResponse<Dchat>>() {
+            }.getType();
+            return type;
+        case "DchatMessage":
+            type = new TypeToken<SingleObjectResponse<DchatMessage>>() {
+            }.getType();
+            return type;
+        case "DchatRoom":
+            type = new TypeToken<SingleObjectResponse<DchatRoom>>() {
+            }.getType();
+            return type;
+        case "DchatMember":
+            type = new TypeToken<SingleObjectResponse<DchatMember>>() {
+            }.getType();
+            return type;
+        case "DchatPhoto":
+            type = new TypeToken<SingleObjectResponse<DchatPhoto>>() {
+            }.getType();
+            return type;
+        case "DchatRequest":
+            type = new TypeToken<SingleObjectResponse<DchatRequest>>() {
             }.getType();
             return type;
             default:

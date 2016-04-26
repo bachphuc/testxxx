@@ -41,7 +41,7 @@ public class LayoutHelper {
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_4_2, "4_2");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_1, "5_1");
         registerLayout(Photo.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_photo_layout_5_2, "5_2");
-        registerLayout(Photo.class, LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout);
+        registerLayout(Photo.class, LayoutHelper.LIST_LAYOUT, R.layout.photo_item_layout_1);
 
         registerLayout(User.class, LayoutHelper.LIST_LAYOUT, R.layout.user_item_custom_layout);
         registerLayout(Link.class, LayoutHelper.FEED_LAYOUT, R.layout.feed_link_layout);
