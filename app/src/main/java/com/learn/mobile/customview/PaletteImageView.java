@@ -27,8 +27,8 @@ public class PaletteImageView extends ImageView {
         this.onPaletteListener = onPaletteListener;
     }
 
-    public void removeOnPaletteListerner(){
-        if(onPaletteListener != null){
+    public void removeOnPaletteListerner() {
+        if (onPaletteListener != null) {
             onPaletteListener = null;
         }
     }
@@ -88,7 +88,7 @@ public class PaletteImageView extends ImageView {
                         Palette.Swatch vibrant =
                                 palette.getVibrantSwatch();
                         if (vibrant != null) {
-                            onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor());
+                            onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor(), palette);
                         }
                     }
                 });
@@ -104,22 +104,22 @@ public class PaletteImageView extends ImageView {
                     Palette.Swatch vibrant =
                             palette.getVibrantSwatch();
                     if (vibrant != null) {
-                        onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor());
+                        onPaletteListenerChange(vibrant.getRgb(), vibrant.getTitleTextColor(), palette);
                     }
                 }
             });
         }
     }
 
-    private void onPaletteListenerChange(int backgroundColor, int textColor) {
+    private void onPaletteListenerChange(int backgroundColor, int textColor, Palette palette) {
         if (onPaletteListener != null) {
-            onPaletteListener.onChange(this, backgroundColor, textColor);
+            onPaletteListener.onChange(this, backgroundColor, textColor, palette);
         }
     }
 
     public static class PaletteListener {
         public interface OnPaletteListener {
-            void onChange(View view, int backgroundColor, int textColor);
+            void onChange(View view, int backgroundColor, int textColor, Palette palette);
         }
     }
 }

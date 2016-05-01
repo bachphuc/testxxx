@@ -33,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="false"
+                    android:background="#6fc1ff"
                     android:scaleType="centerCrop"
                     app:ratio="2"
                     tools:src="@drawable/background_red" />

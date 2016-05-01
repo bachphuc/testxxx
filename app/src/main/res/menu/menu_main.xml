@@ -31,16 +31,6 @@
             android:title="@string/search" />
 
         <item
-            android:id="@+id/drawer_chat"
-            android:icon="@drawable/ic_chat_bubble_outline_black_24dp"
-            android:title="@string/message" />
-
-        <item
-            android:id="@+id/drawer_settings_site"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="@string/settings" />
-
-        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_vpn_key_black_24dp"
             android:title="Logout" />

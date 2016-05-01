@@ -1,11 +1,13 @@
 package com.learn.mobile.fragment.visitor;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.learn.mobile.R;
+import com.learn.mobile.customview.dialog.TutsPlusBottomSheetDialogFragment;
 import com.learn.mobile.fragment.UploadFileBase;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
@@ -34,6 +37,7 @@ public class UploadAvatarFragment extends UploadFileBase implements View.OnClick
     private View rootView;
 
     private ImageView imgPreview;
+    TutsPlusBottomSheetDialogFragment bottomSheetDialogFragment;
 
     public UploadAvatarFragment() {
         // Required empty public constructor
@@ -63,20 +67,41 @@ public class UploadAvatarFragment extends UploadFileBase implements View.OnClick
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_upload_avatar, container, false);
 
-        Button button = (Button) rootView.findViewById(R.id.bt_open_library);
+        Button button = (Button) rootView.findViewById(R.id.bt_signup_process);
         button.setOnClickListener(this);
 
-        button = (Button) rootView.findViewById(R.id.bt_open_camera);
-        button.setOnClickListener(this);
-
-        button = (Button) rootView.findViewById(R.id.bt_open_library);
-        button.setOnClickListener(this);
-
-        button = (Button) rootView.findViewById(R.id.bt_signup_process);
-        button.setOnClickListener(this);
+        ImageView backButton = (ImageView) rootView.findViewById(R.id.bt_back);
+        backButton.setOnClickListener(this);
 
         imgPreview = (ImageView) rootView.findViewById(R.id.im_preview);
+        imgPreview.setOnClickListener(this);
+
+        bottomSheetDialogFragment = new TutsPlusBottomSheetDialogFragment();
+        bottomSheetDialogFragment.setMenuResId(R.menu.menu_choose_photo);
+        bottomSheetDialogFragment.setMenuTitle(DMobi.translate("Choose your Avatar"));
+        bottomSheetDialogFragment.setOnMenuBottomSheetListener(new TutsPlusBottomSheetDialogFragment.OnMenuBottomSheetInteractionListener() {
+            @Override
+            public void onMenuBottomSheetInteraction(int id, String title) {
+                switch (id) {
+                    case R.id.menu_take_a_photo:
+                        captureImage();
+                        break;
+                    case R.id.menu_open_gallery:
+                        openGallery();
+                        break;
+                }
+            }
+        });
+
         return rootView;
+    }
+
+    public void showBottomMenu() {
+        Activity activity = getActivity();
+        if (activity instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+            bottomSheetDialogFragment.show(appCompatActivity.getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -120,6 +145,12 @@ public class UploadAvatarFragment extends UploadFileBase implements View.OnClick
                 break;
             case R.id.bt_signup_process:
                 onSignup();
+                break;
+            case R.id.im_preview:
+                showBottomMenu();
+                break;
+            case R.id.bt_back:
+                onButtonPressed(v);
                 break;
         }
     }

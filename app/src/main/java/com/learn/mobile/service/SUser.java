@@ -129,6 +129,7 @@ public class SUser extends SBase {
         DResponse.Listener listener = new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
+                DMobi.log(SIGNUP_TAG, respondString);
                 Gson gson = new GsonBuilder().create();
                 Type type = new TypeToken<SingleObjectResponse<LoginObjectResponseData>>() {
                 }.getType();

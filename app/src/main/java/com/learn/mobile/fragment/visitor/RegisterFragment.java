@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
-import com.learn.mobile.dummy.DummyContent;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
@@ -256,11 +254,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
         registerData.put("gender", gender);
 
-        CheckBox checkBox = (CheckBox) rootView.findViewById(R.id.cb_team_and_service);
+        /* CheckBox checkBox = (CheckBox) rootView.findViewById(R.id.cb_team_and_service);
         if (!checkBox.isChecked()) {
             DMobi.alert(getActivity(), "You must accept with our team and service.");
             return;
-        }
+        } */
 
         sUser.setRegisterData(registerData);
 

@@ -71,14 +71,14 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                     searchFragment.setHasAppBar(true);
                 }
                 return searchFragment;
-            case 5:
+            /* case 5:
                 DChatListFragment chatFragment = new DChatListFragment();
                 chatFragment.setFragmentIndex(position);
                 fragmentList.put(position + "", chatFragment);
                 if (bSmoothScroll) {
                     chatFragment.setHasAppBar(true);
                 }
-                return chatFragment;
+                return chatFragment; */
             default:
                 return null;
         }
@@ -90,7 +90,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 5;
     }
 
     @Override

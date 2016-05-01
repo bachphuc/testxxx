@@ -12,15 +12,13 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description_default"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_red" />
+        android:src="@drawable/background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +54,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/app_title"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textSize="48dp" />
+                        android:textIsSelectable="false"
+                        android:textSize="32dp" />
                 </LinearLayout>
 
 
@@ -66,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp">
                 <!-- Full name field -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,16 +83,17 @@
                         android:background="#00000000"
                         android:ems="10"
                         android:hint="Full name"
+                        android:singleLine="true"
                         android:textColor="@color/primary_transparent_icon_color"
                         android:textColorHint="@color/primary_transparent_icon_color"
-                        android:singleLine="true" />
+                        android:textSize="@dimen/signup_field_font_size" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Email field -->
                 <LinearLayout
@@ -112,14 +113,15 @@
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textColorHint="@color/primary_transparent_icon_color" />
+                        android:textColorHint="@color/primary_transparent_icon_color"
+                        android:textSize="@dimen/signup_field_font_size" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Password field -->
                 <LinearLayout
@@ -139,7 +141,8 @@
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textColorHint="@color/primary_transparent_icon_color" />
+                        android:textColorHint="@color/primary_transparent_icon_color"
+                        android:textSize="@dimen/signup_field_font_size" />
 
                 </LinearLayout>
 
@@ -147,7 +150,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Password confirm field -->
                 <LinearLayout
@@ -167,7 +170,8 @@
                         android:hint="Confirm Password"
                         android:inputType="textPassword"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textColorHint="@color/primary_transparent_icon_color" />
+                        android:textColorHint="@color/primary_transparent_icon_color"
+                        android:textSize="@dimen/signup_field_font_size" />
 
                 </LinearLayout>
 
@@ -175,7 +179,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Birthday field -->
                 <LinearLayout
@@ -192,7 +196,7 @@
                         android:layout_weight="1"
                         android:text="Birthday"
                         android:textColor="@color/primary_transparent_icon_color"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/signup_field_font_size" />
 
                 </LinearLayout>
 
@@ -200,7 +204,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Gender -->
                 <LinearLayout
@@ -215,6 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@null"
                         android:textColor="@color/primary_transparent_icon_color"></Spinner>
 
                 </LinearLayout>
@@ -223,7 +228,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6dp"
-                    android:background="@color/primary_transparent_icon_color" />
+                    android:background="@color/primary_transparent_border_color" />
 
                 <!-- Term and service -->
                 <LinearLayout
@@ -231,7 +236,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:visibility="gone">
 
                     <CheckBox
                         android:id="@+id/cb_team_and_service"
@@ -241,8 +247,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primary_transparent_icon_color"
-                        android:text="@string/term_and_service" />
+                        android:text="@string/term_and_service"
+                        android:textColor="@color/primary_transparent_icon_color" />
 
                 </LinearLayout>
 
@@ -275,8 +281,8 @@
                         android:id="@+id/bt_show_login"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
-                        android:background="#00ffffff"
                         android:layout_gravity="center"
+                        android:background="#00ffffff"
                         android:elevation="4px"
                         android:minWidth="100dp"
                         android:text="Login"

@@ -1,9 +1,11 @@
 package com.learn.mobile.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import com.learn.mobile.activity.FeedDetailActivity;
 import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
+import com.learn.mobile.customview.dialog.TutsPlusBottomSheetDialogFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
@@ -91,14 +94,19 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             }
         }
 
+        // TODO: 5/1/2016 display description
         textView = (TextView) itemBaseViewHolder.findView(R.id.tv_description);
-
+        LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
         if (DUtils.isEmpty(content)) {
-            LinearLayout linearLayout = (LinearLayout) itemBaseViewHolder.findView(R.id.feed_content);
+            textView.setVisibility(View.GONE);
             if (linearLayout != null) {
                 linearLayout.setVisibility(View.GONE);
             }
         } else {
+            textView.setVisibility(View.VISIBLE);
+            if (linearLayout != null) {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
             textView.setText(content);
         }
 
@@ -106,7 +114,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PopupMenu popup = new PopupMenu(v.getContext(), v);
+                /* final PopupMenu popup = new PopupMenu(v.getContext(), v);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.menu_feed_action, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -120,7 +128,24 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                         return false;
                     }
                 });
-                popup.show();
+                popup.show(); */
+
+                // TODO: 5/1/2016 use menu bottom sheet
+                TutsPlusBottomSheetDialogFragment bottomSheetDialogFragment = new TutsPlusBottomSheetDialogFragment();
+                bottomSheetDialogFragment.setMenuResId(R.menu.menu_feed_action);
+                bottomSheetDialogFragment.setMenuTitle(DMobi.translate("Choose your action"));
+                bottomSheetDialogFragment.setOnMenuBottomSheetListener(new TutsPlusBottomSheetDialogFragment.OnMenuBottomSheetInteractionListener() {
+                    @Override
+                    public void onMenuBottomSheetInteraction(int id, String title) {
+                        switch (id) {
+                            case R.id.mn_delete_feed:
+                                adapter.delete(itemBaseViewHolder.getAdapterPosition());
+                                break;
+                        }
+                    }
+                });
+
+                showBottomMenu(v.getContext(), bottomSheetDialogFragment);
             }
         });
 
@@ -131,7 +156,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
                 imageView.setOnClickListener(this);
             }
         }
-
+        ImageView mainImageView = (ImageView) itemBaseViewHolder.findView(R.id.img_feed_default_image);
+        if (mainImageView != null) {
+            mainImageView.setVisibility(View.GONE);
+        }
         // todo process attachment
         if (item != null) {
             // todo save parent for attachment item
@@ -146,10 +174,10 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             }
         } else if (images != null) {
             // todo show image if feed has image
-            imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_main_image);
-            if (imageView != null) {
-                imageView.setVisibility(View.VISIBLE);
-                ImageHelper.display(imageView, images.getFull());
+            if (mainImageView != null) {
+                DMobi.log(TAG, "set main image for feed " + images.getFull().url);
+                mainImageView.setVisibility(View.VISIBLE);
+                ImageHelper.display(mainImageView, images.getFull());
             }
         }
 
@@ -176,6 +204,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             if (imageView != null) {
                 imageView.setOnClickListener(this);
             }
+        }
+    }
+
+    public void showBottomMenu(Context context, TutsPlusBottomSheetDialogFragment bottomSheetDialogFragment) {
+        if (context instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) context;
+            bottomSheetDialogFragment.show(appCompatActivity.getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
         }
     }
 
@@ -307,5 +342,13 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
             return false;
         }
         return super.canComment();
+    }
+
+    @Override
+    public boolean canLike() {
+        if (this.typeId.equals("user_photo")) {
+            return false;
+        }
+        return super.canLike();
     }
 }

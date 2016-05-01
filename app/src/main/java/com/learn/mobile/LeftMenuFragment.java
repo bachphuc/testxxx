@@ -146,15 +146,15 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.showLoginActivity();
                 break;
-            case R.id.drawer_settings_site:
+            /* case R.id.drawer_settings_site:
                 showDialogSettingSite();
-                break;
+                break; */
             case R.id.drawer_home:
             case R.id.drawer_member:
             case R.id.drawer_photo:
             case R.id.drawer_funny:
             case R.id.drawer_search:
-            case R.id.drawer_chat:
+            // case R.id.drawer_chat:
                 mListener.onLeftFragmentInteraction(item.getItemId(), item.getTitle().toString());
                 return true;
         }

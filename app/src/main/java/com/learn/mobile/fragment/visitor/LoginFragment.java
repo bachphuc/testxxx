@@ -1,6 +1,5 @@
 package com.learn.mobile.fragment.visitor;
 
-
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
@@ -137,14 +137,24 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void onLogin() {
         SUser sUser = (SUser) DMobi.getService(SUser.class);
         EditText emailInput = (EditText) rootView.findViewById(R.id.tb_email);
+        String email = emailInput.getText().toString();
+        if (DUtils.isEmpty(email)) {
+            DMobi.alert(getActivity(), "Email can not be null.");
+            return;
+        }
         EditText passwordInput = (EditText) rootView.findViewById(R.id.tb_password);
+        String password = passwordInput.getText().toString();
+        if (DUtils.isEmpty(password)) {
+            DMobi.alert(getActivity(), "Password can not be null.");
+            return;
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Login....");
         progressDialog.setMessage("Wait some minute...");
         progressDialog.show();
 
-        sUser.login(emailInput.getText().toString(), passwordInput.getText().toString(), new DResponse.Complete() {
+        sUser.login(email, password, new DResponse.Complete() {
             @Override
             public void onComplete(Boolean status, Object o) {
                 progressDialog.dismiss();

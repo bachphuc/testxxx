@@ -35,13 +35,16 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     public void onFragmentInteraction(View view) {
         switch (view.getId()) {
             case R.id.bt_signUp:
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1, false);
                 break;
             case R.id.bt_show_login:
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(0, false);
                 break;
             case R.id.bt_end_step_info:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2, false);
+                break;
+            case R.id.bt_back:
+                viewPager.setCurrentItem(1);
                 break;
         }
     }

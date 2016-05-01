@@ -416,9 +416,9 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                 break;
             case R.id.drawer_search:
                 viewPagerMoveIndex = 4;
-            case R.id.drawer_chat:
+            /* case R.id.drawer_chat:
                 viewPagerMoveIndex = 5;
-                break;
+                break; */
         }
         if (viewPagerMoveIndex != -1) {
             bCloseDrawerLayout = true;

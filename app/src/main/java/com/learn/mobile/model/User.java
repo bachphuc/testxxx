@@ -3,6 +3,7 @@ package com.learn.mobile.model;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     public static final String TAG = User.class.getSimpleName();
 
     public static final String PALETTE_AVATAR_COLOR = "PALETTE_AVATAR_COLOR";
+    public static final String PALETTE_COVER_COLOR = "PALETTE_COVER_COLOR";
 
     public User() {
 
@@ -60,9 +62,16 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
         }
         imageView = (ImageView) itemBaseViewHolder.findView(R.id.img_cover);
         if (imageView != null) {
+            imageView.setOnClickListener(this);
             if (coverPhoto != null) {
-                imageView.setOnClickListener(this);
                 ImageHelper.display(imageView, coverPhoto.getLarge().url);
+            } else {
+                imageView.setImageDrawable(null);
+                Object coverColor = getData(PALETTE_COVER_COLOR);
+                if (coverColor != null) {
+                    DMobi.log(TAG, "cover color " + coverColor.toString());
+                    imageView.setBackgroundColor((int) coverColor);
+                }
             }
         }
         TextView textView = (TextView) itemBaseViewHolder.findView(R.id.tv_title);
@@ -88,7 +97,7 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
     }
 
     @Override
-    public void onChange(View view, int backgroundColor, int textColor) {
+    public void onChange(View view, int backgroundColor, int textColor, Palette palette) {
         if (view instanceof PaletteImageView) {
             PaletteImageView paletteImageView = (PaletteImageView) view;
             paletteImageView.removeOnPaletteListerner();
@@ -96,11 +105,24 @@ public class User extends DAbstractUser implements View.OnClickListener, Palette
 
         int bgColor = ImageHelper.makeColorDarker(backgroundColor, 30);
         setData(PALETTE_AVATAR_COLOR, bgColor);
+
+        Palette.Swatch vibrant =
+                palette.getMutedSwatch();
+        int coverColor = 0;
+        if (vibrant != null) {
+            coverColor = vibrant.getRgb();
+            setData(PALETTE_COVER_COLOR, coverColor);
+        }
+
         View parentView = (View) view.getParent().getParent();
         if (parentView.getId() == R.id.panel_user_item) {
             String hexColor = String.format("#%06X", (0xFFFFFF & bgColor));
             Log.i(TAG, "Item: " + getId() + " ,Color: " + hexColor);
             parentView.setBackgroundColor(bgColor);
+            ImageView imageView = (ImageView) parentView.findViewById(R.id.img_cover);
+            if (imageView != null && coverColor != 0) {
+                imageView.setBackgroundColor(coverColor);
+            }
         } else {
             LinearLayout linearLayout = (LinearLayout) parentView.findViewById(R.id.user_panel_info);
             if (linearLayout != null) {
