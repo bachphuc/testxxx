@@ -1,9 +1,17 @@
 package com.learn.mobile.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -12,6 +20,8 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.DFeedImageView;
 import com.learn.mobile.customview.LargeRecyclerImageView;
+import com.learn.mobile.customview.chromecustomtab.CustomTabActivityHelper;
+import com.learn.mobile.customview.chromecustomtab.WebviewFallback;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.DecodeRunnable;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -38,6 +48,14 @@ public class FunnyViewer extends AppCompatActivity implements DecodeRunnable.Dec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_funny_viewer);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         textView = (TextView) findViewById(R.id.tv_funny_title);
         dFeedImageView = (DFeedImageView) findViewById(R.id.img_funny);
@@ -83,6 +101,35 @@ public class FunnyViewer extends AppCompatActivity implements DecodeRunnable.Dec
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_funny_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar photo clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.mn_open_in_browser:
+                Uri uriUrl = Uri.parse(funny.getLink());
+                CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder().build();
+                CustomTabActivityHelper.openCustomTab(
+                        this, customTabsIntent, uriUrl, new WebviewFallback());
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBitmapResourceReady(final Bitmap bitmap) {

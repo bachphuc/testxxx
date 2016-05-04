@@ -112,23 +112,6 @@
                             android:layout_height="wrap_content">
 
                             <!-- TOTO Image capture preview -->
-                            <!--RelativeLayout
-                                android:id="@+id/panel_photo_attachment"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="16dp"
-                                android:visibility="gone">
-
-                                <ImageView
-                                    android:id="@+id/img_preview"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="240dp"
-                                    android:layout_alignParentEnd="false"
-                                    android:layout_alignParentStart="false"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/background_red" />
-
-                            </RelativeLayout-->
                             <LinearLayout
                                 android:id="@+id/panel_photo_attachment"
                                 android:layout_width="match_parent"

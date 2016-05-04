@@ -95,7 +95,10 @@
             android:name=".activity.UploadAvatarActivity"
             android:theme="@style/Translucent" />
         <activity android:name=".activity.FunnyViewer" />
-        <activity android:name=".activity.ChatDetailActivity"></activity>
+        <activity android:name=".activity.ChatDetailActivity" />
+        <activity android:name=".activity.BlogDetailActivity"></activity>
+
+        <activity android:name=".customview.chromecustomtab.WebviewActivity"></activity>
     </application>
 
 </manifest>

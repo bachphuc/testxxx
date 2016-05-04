@@ -188,9 +188,9 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
             module = "link";
             strLink = url;
             sLink = (SLink) DMobi.getService(SLink.class);
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_photo_attachment);
+            View relativeLayout = findViewById(R.id.panel_photo_attachment);
             relativeLayout.setVisibility(View.GONE);
-            relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+            relativeLayout = findViewById(R.id.panel_link_attachment);
             relativeLayout.setVisibility(View.VISIBLE);
 
             sLink.preview(url, new DResponse.Complete() {
@@ -209,12 +209,12 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
     }
 
     private void getLinkPreviewFail() {
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.panel_link_attachment);
+        View relativeLayout = findViewById(R.id.panel_link_attachment);
         relativeLayout.setVisibility(View.GONE);
     }
 
     private void previewLinkComplete(Object o) {
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.panel_link_attachment_content);
+        View linearLayout = findViewById(R.id.panel_link_attachment_content);
         linearLayout.setVisibility(View.VISIBLE);
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.link_preview_loader);

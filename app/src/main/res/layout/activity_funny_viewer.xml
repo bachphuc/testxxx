@@ -1,61 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.learn.mobile.activity.FunnyViewer">
+    android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/funny_viewer_singer"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_color"
+        android:theme="@style/ThemeOverlay.MyApp.WhiteActionBar"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <LinearLayout
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.learn.mobile.activity.FunnyViewer">
+
+
+        <ScrollView
+            android:id="@+id/funny_viewer_singer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_funny_title"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primary_text_color"
-                    android:textStyle="bold" />
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_funny_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_text_color"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.learn.mobile.customview.DFeedImageView
+                    android:id="@+id/img_funny"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY" />
             </LinearLayout>
+        </ScrollView>
 
-            <com.learn.mobile.customview.DFeedImageView
-                android:id="@+id/img_funny"
-                android:layout_width="match_parent"
+        <com.learn.mobile.customview.LargeRecyclerImageView
+            android:id="@+id/funny_viewer_multi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/funny_loader"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY" />
+                android:indeterminateTint="@color/primary_color"
+                android:indeterminateTintMode="src_in" />
+
         </LinearLayout>
-    </ScrollView>
-
-    <com.learn.mobile.customview.LargeRecyclerImageView
-        android:id="@+id/funny_viewer_multi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="vertical">
-
-        <ProgressBar
-            android:id="@+id/funny_loader"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/primary_color"
-            android:indeterminateTintMode="src_in" />
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
