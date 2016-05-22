@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "237745993579",
+    "project_id": "dmobifox"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237745993579:android:1e9b0dd7371709ce",
+        "android_client_info": {
+          "package_name": "com.dsoft.foxmobi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBELt65R91BGvFZpdMEDTYKQ_1L1mX-2es"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

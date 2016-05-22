@@ -13,10 +13,14 @@ public class DConfig {
     private static String token = null;
 
     public static final String TOKEN_KEY = "TOKEN_KEY";
+    public static final String DEVICE_TOKEN = "DEVICE_TOKEN";
     public static final String APP_NAME = "dmobi";
     public static final String USER_DATA = "USER_DATA";
     public static final String SITE_URL = "SITE_URL";
+
     public static String DEFAULT_HOST = "http://serepokj.com/dmobi";
+    // public static String DEFAULT_HOST = "http://192.168.1.11/dmobile";
+
     public static final String BUNDLE_ID = "com.learn.mobile";
     public static final String preference_file_key = BUNDLE_ID + ".PREFERENCE_FILE_KEY";
     public static final int DEBUG_MODE = 1;
@@ -130,5 +134,9 @@ public class DConfig {
     public static String getSetting(String key, String defaultValue) {
         SharedPreferences sharedPref = context.getSharedPreferences(DConfig.preference_file_key, Context.MODE_PRIVATE);
         return sharedPref.getString(key, defaultValue);
+    }
+
+    public static String getDeviceToken() {
+        return DConfig.getSetting(DEVICE_TOKEN);
     }
 }

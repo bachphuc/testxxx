@@ -79,11 +79,15 @@ public class SUser extends SBase {
         dRequest.setApi("user.login");
         dRequest.addParam("login", email);
         dRequest.addParam("password", password);
+        String deviceToken = DConfig.getDeviceToken();
+        if (!DUtils.isEmpty(deviceToken)) {
+            dRequest.addPost("device_token", deviceToken);
+        }
 
-        final SUser that = this;
-        dRequest.get(new DResponse.Listener() {
+        dRequest.post(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
+                DMobi.log("LOGIN response", respondString);
                 Gson gson = new GsonBuilder().create();
                 Type type = new TypeToken<SingleObjectResponse<LoginObjectResponseData>>() {
                 }.getType();
@@ -123,6 +127,11 @@ public class SUser extends SBase {
     public void register(final DResponse.Complete complete) {
         DRequest dRequest = DMobi.createRequest();
         dRequest.addPosts(registerData);
+
+        String deviceToken = DConfig.getDeviceToken();
+        if (!DUtils.isEmpty(deviceToken)) {
+            dRequest.addPost("device_token", deviceToken);
+        }
 
         dRequest.setApi("user.signup");
 
@@ -201,7 +210,36 @@ public class SUser extends SBase {
                     if (responseObject.isSuccessfully()) {
                         User u = (User) responseObject.data;
                         updateUser(u);
-                        complete.onComplete(true, o);
+                        complete.onComplete(true, u);
+                    } else {
+                        responseError(responseObject, complete);
+                    }
+                } else {
+                    networkError(complete);
+                }
+            }
+        });
+        dRequest.upload();
+    }
+
+    public void updateCover(String filePath, final DResponse.Complete complete) {
+        if (filePath == null) {
+            return;
+        }
+        DRequest dRequest = DMobi.createRequest();
+        dRequest.setApi("user.updateCover");
+        dRequest.setFilePath(filePath);
+        dRequest.setComplete(new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    String response = (String) o;
+                    DMobi.log("Update cover", response);
+                    SingleObjectResponse<DMobileModelBase> responseObject = DbHelper.parseSingleObjectResponse(response, User.class);
+                    if (responseObject.isSuccessfully()) {
+                        User u = (User) responseObject.data;
+                        updateUser(u);
+                        complete.onComplete(true, u);
                     } else {
                         responseError(responseObject, complete);
                     }

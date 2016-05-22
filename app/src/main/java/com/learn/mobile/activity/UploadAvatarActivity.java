@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -126,6 +127,12 @@ public class UploadAvatarActivity extends UploadFileBase {
                 return super.onOptionsItemSelected(item);
         }
         return false;
+    }
+
+    @Override
+    public void addPhotoAttachment(Uri uri) {
+        final String filePath = DUtils.getRealPathFromURI(this, uri);
+        ImageHelper.display(gestureImageView, filePath);
     }
 
     class ProcessImageToUpload extends AsyncTask<Bitmap, Void, String> {

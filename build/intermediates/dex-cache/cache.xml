@@ -2,333 +2,396 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\okio-1.6.0_597155293747deb7d18731dbf81f63b330d30f7c.jar" />
-    </item>
-    <item
         jar="D:\Android Project\testxxx\app\libs\volley.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="787028fe4fba6c31745e22bb998cafb08db05a5a">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\volley_6855f65817a768743d0ef32bcc51426c2ae7ef69.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\2\volley_6855f65817a768743d0ef32bcc51426c2ae7ef69\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.github.citux\datetimepicker\0.1.2\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="817ea7c569301beb1c81f6ac9c440664b7b92827">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.github.citux-datetimepicker-0.1.2_eafe3652c258f1366a46b4c237b2c7fefaee5f9c.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.4.1\f5aa318bda4c6c8d688c9d00b90681dcd82ce636\httpcore-4.4.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f5aa318bda4c6c8d688c9d00b90681dcd82ce636">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\httpcore-4.4.1_cee7b8e424d2aeb8bae5a6e2145f9d06fd1d1c46.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\library-2.4.0_2181ea6136fa4be50c2d816c6ba1f69b5dff2e61.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\2.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4a70cdeeea9b109cfc5cbf5afef1203d350fb9df">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\jp.wasabeef-recyclerview-animators-2.0.0_7ab5b37d1cf6a67b6dcb1f7acf51810d597a9cf7.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android-no-op\1.4-beta2\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="560bca701ac165c2081e0b7196556a968c84893e">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.squareup.leakcanary-leakcanary-android-no-op-1.4-beta2_578aba66d064b1a071673a739257de580210f7ff.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\butterknife-7.0.1_c4a790d7920b4dc0e81a81214ef8483f81ab772f.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="673d77a5bbddd766037f088e775df525c46407f0">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-support-vector-drawable-23.2.1_b77c68fa9dd3e56560f428c4eb60ae5ec76539e6.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.davemorrissey.labs\subsampling-scale-image-view\3.4.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="36cea48a105ddeef047b645ab0f86f72993e8676">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.davemorrissey.labs-subsampling-scale-image-view-3.4.1_d67f81cf71e3a41add4a6c78ae6b618ec58aeff8.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.malinskiy\superrecyclerview\1.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4649d32a5916687ff5d8e430aacb9a4e4eb10724">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.malinskiy-superrecyclerview-1.1.0_bee5eab1a21d1aa7c4b893d60212717cfba8ef39.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\picasso-2.5.2_d171a822d4468da85ffee00cc0ce4c4bec1ddd0a.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.sothree.slidinguppanel\library\3.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="56a3c0844f23679eabae25d462ceb5260b01e424">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.sothree.slidinguppanel-library-3.2.1_c76cfc2f5ba308695c5926154d32e74920e2e308.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\internal_impl-23.2.1_be3a639e4e4f47e6a03a2d41f0b4f07251cb2d47.jar" />
-    </item>
-    <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\support-annotations-23.2.1_efd358856f7349d1a9ffd2b176d6d830be5c44c9.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.citux-datetimepicker-0.1.2_eafe3652c258f1366a46b4c237b2c7fefaee5f9c\classes.dex" />
     </item>
     <item
         jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\commons-digester\commons-digester\1.8\dc6a73fdbd1fa3f0944e8497c6c872fa21dca37e\commons-digester-1.8.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="dc6a73fdbd1fa3f0944e8497c6c872fa21dca37e">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\commons-digester-1.8_51e544c6292e7d9dab3852ba79bf5d1edbef29cd.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\commons-digester-1.8_51e544c6292e7d9dab3852ba79bf5d1edbef29cd\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.github.ozodrukh\CircularReveal\1.1.1\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="e3a3d62fab67ccb83f386a4c092bfb5747ea15a7">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.github.ozodrukh-CircularReveal-1.1.1_4df50aed5e9971094f3af64025ed77cfb2a79ac5.jar" />
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.2.1_b77c68fa9dd3e56560f428c4eb60ae5ec76539e6\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.zhanghai.android.materialprogressbar\library\1.1.4\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.davemorrissey.labs\subsampling-scale-image-view\3.4.1\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="2a24cba08e1d865a79e61335f5a1bd64d520106d">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\me.zhanghai.android.materialprogressbar-library-1.1.4_dbbcbecb602c8681d45e7a4e6b1a702cf00bfb2e.jar" />
+        sha1="36cea48a105ddeef047b645ab0f86f72993e8676">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.davemorrissey.labs-subsampling-scale-image-view-3.4.1_d67f81cf71e3a41add4a6c78ae6b618ec58aeff8\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.3.0\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-appcompat-v7-23.2.1_70f9bdd4f74d971a235c350f318c911e0b843c4f.jar" />
+        sha1="01a90bbb9495a8bbf6f3cfdf12f1b35caaa9524b">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.3.0_a7b353bfd0d74fffb8b5875faa9f93a0127d4ca7\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.3.0\jars\classes.jar"
-        jumboMode="false"
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\de.hdodenhof-circleimageview-1.3.0_614a925a1628ac6bf3433e8524926eb0c27ee953.jar" />
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_d171a822d4468da85ffee00cc0ce4c4bec1ddd0a\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="cb86970df0f0f25f766d320b279c7858c1ca0003">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-cardview-v7-23.2.1_448769bac4191cc95503f87fd7b8d33498cf8b95.jar" />
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_efd358856f7349d1a9ffd2b176d6d830be5c44c9\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\libs\ease-interpolator-1.1.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.sothree.slidinguppanel\library\3.2.1\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="7db37c264daef4d35fe33bb5dbe9a3919f2cde0e">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\ease-interpolator-1.1_c39051682c9596e8e3a110eb9e403cb93e85e16e.jar" />
+        sha1="56a3c0844f23679eabae25d462ceb5260b01e424">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.sothree.slidinguppanel-library-3.2.1_c76cfc2f5ba308695c5926154d32e74920e2e308\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\palette-v7\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.3.0\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="bcee2598dbb74f6d043225a0d7e178b0c7ea4006">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-palette-v7-23.2.1_1a667813b3d3c107b3789371ee1365edfe8e40cf.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-animated-vector-drawable-23.2.1_bbded6f8341ae70de695d1eb23de6e8e0d4fe5d3.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\commons-validator\commons-validator\1.4.0\42fa1046955ade59f5354a1876cfc523cea33815\commons-validator-1.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="42fa1046955ade59f5354a1876cfc523cea33815">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\commons-validator-1.4.0_e099a5e503f9ba48c0ef947ecd3053f3e05093ca.jar" />
+        sha1="71eda10e33212e44245524b5087366ff8d805825">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-gcm-8.3.0_e1930f662bd95d5a4d70885e9779a9d63bf59008\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="72961d8b453b46e277702f18de9d210bc019e36e">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-design-23.2.1_3c423e9d95dc3be20affdbad349dfc9ae33e0240.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_3c423e9d95dc3be20affdbad349dfc9ae33e0240\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.henrytao\smooth-app-bar-layout\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jar="D:\Android Project\testxxx\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="41f29fd6308a22433ee25e9078168ca1f3797e69">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\me.henrytao-smooth-app-bar-layout-23.2.1_14ce13389fa3761014762d94246c25ab3b69dae8.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.5.0\4de2b4ed3445c37ec1720a7d214712e845a24636\okhttp-2.5.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\okhttp-2.5.0_aabc7a3c66a81d53284578c7321a6771d0c0565b.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.nkzawa\engine.io-client\0.3.1\3ca9d0d53a27ecb88538ed874be417cfa827db5d\engine.io-client-0.3.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3ca9d0d53a27ecb88538ed874be417cfa827db5d">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\engine.io-client-0.3.1_8d273e347de29c70dc056fc087494743db1a8157.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v13\21.0.0\jars\libs\internal_impl-21.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="5a8e01742aee890c56fe638ea7c921b91a3fdc62">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\internal_impl-21.0.0_1270bec18916a89e47764dac63e056c5c94b3c6d.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\2.0.2\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="b945f88f2ae85cf22563e9f512fc34dd3d5652e4">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.wdullaer-materialdatetimepicker-2.0.2_5c3980da9c72e1da062a9c3173f9f69a9cf385c2.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.nkzawa\socket.io-client\0.3.0\8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9\socket.io-client-0.3.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\socket.io-client-0.3.0_ed136c4b0a3e11f3589b95fc1d4861e6f9f0c21a.jar" />
-    </item>
-    <item
-        jar="D:\Android\sdk\build-tools\23.0.1\renderscript\lib\renderscript-v8.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="762016371811e15a66e97cf27f3e852bf287aaf3">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\renderscript-v8_0046b3e99cf4ae0e251daf6ecba21c22b97448c0.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-support-v4-23.2.1_c09e60366d3dc2f1f4b483f41f9b6906f5d233cd.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.1\86b122e640af09b0723e1fa44083c354ba6d9089\glide-3.6.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\glide-3.6.1_29356162c9f42589e4799adca9d1fa825e4b8b59.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\libs\gson-2.3.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\gson-2.3.1_6873303d0cf13b87de1382d12fcc0493d4f39a76.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\libs\universal-image-loader-1.9.3.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\universal-image-loader-1.9.3_4042d5bbda9e59c00c55f0d03a34c595f049a222.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v13\21.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="0c0c19759e5868604a3b4c2c0074ee9404d73c76">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-support-v13-21.0.0_484a1136ec3a607a5ba067e63e223c4afd301c8e.jar" />
-    </item>
-    <item
-        jar="D:\Android Project\testxxx\app\libs\com.alexvasilkovgesture-views2.0.5.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f62ed30c027f646f965b4120ff06262807359c13">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.alexvasilkovgesture-views2.0.5_6e84e0e5779616ee6dac9645590b7bb8a53303fc.jar" />
-    </item>
-    <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\org.java-websocket\Java-WebSocket\1.3.0\db2658f013fb163de4a99274c2eb9e17efe535d2\Java-WebSocket-1.3.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="db2658f013fb163de4a99274c2eb9e17efe535d2">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\Java-WebSocket-1.3.0_3de3c4cec7b8ca2e9b5b919693eb9fe454f4602d.jar" />
+        sha1="39f53c2d261fe3e33acb04e3292cb64e5afbcdb2">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_39f75e31a89c14c1b4f8cf533c0619ec66725d6e\classes.dex" />
     </item>
     <item
         jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpmime\4.2.3\118ae1bc7f3aeeddfe564f0edfd79c11d09d17d1\httpmime-4.2.3.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="118ae1bc7f3aeeddfe564f0edfd79c11d09d17d1">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\httpmime-4.2.3_d06ca4f967795228c06e77a7811df55b9f784f1e.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\httpmime-4.2.3_d06ca4f967795228c06e77a7811df55b9f784f1e\classes.dex" />
     </item>
     <item
-        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\commons-beanutils\commons-beanutils\1.8.3\686ef3410bcf4ab8ce7fd0b899e832aaba5facf7\commons-beanutils-1.8.3.jar"
-        jumboMode="false"
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-analyzer\1.4-beta2\449777cd466ac0a16f7e8d0dc508e70e2cdd13a9\leakcanary-analyzer-1.4-beta2.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="686ef3410bcf4ab8ce7fd0b899e832aaba5facf7">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\commons-beanutils-1.8.3_60dcdaa65a326dc03ee4de49a2e42ab01442bfcd.jar" />
+        sha1="449777cd466ac0a16f7e8d0dc508e70e2cdd13a9">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-analyzer-1.4-beta2_f8def8f65692c010663a5c38cf9e89e4245d5fb7\classes.dex" />
     </item>
     <item
-        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.nkzawa\engine.io-client\0.3.1\3ca9d0d53a27ecb88538ed874be417cfa827db5d\engine.io-client-0.3.1.jar"
+        jumboMode="true"
         revision="23.0.1"
-        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-recyclerview-v7-23.2.1_6bc0f544f68e1898ec42c2917eff5d080acd4ee1.jar" />
+        sha1="3ca9d0d53a27ecb88538ed874be417cfa827db5d">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\engine.io-client-0.3.1_8d273e347de29c70dc056fc087494743db1a8157\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\libs\com.alexvasilkovgesture-views2.0.5.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="f62ed30c027f646f965b4120ff06262807359c13">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\2\com.alexvasilkovgesture-views2.0.5_6e84e0e5779616ee6dac9645590b7bb8a53303fc\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.1\86b122e640af09b0723e1fa44083c354ba6d9089\glide-3.6.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.6.1_29356162c9f42589e4799adca9d1fa825e4b8b59\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.github.nkzawa\socket.io-client\0.3.0\8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9\socket.io-client-0.3.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="8dfd7cf8d1124acb027b3ffd53eafcc518af3ba9">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\socket.io-client-0.3.0_ed136c4b0a3e11f3589b95fc1d4861e6f9f0c21a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.5.0\4de2b4ed3445c37ec1720a7d214712e845a24636\okhttp-2.5.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-2.5.0_aabc7a3c66a81d53284578c7321a6771d0c0565b\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.henrytao\mdcore\1.9.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="2eaa1f95d8e7813c06f2967d7cfe503a17fca761">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\me.henrytao-mdcore-1.9.0_9e1dfcd1ea180fd8f1abf70e2462acf3db5ea3ae.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.henrytao-mdcore-1.9.0_9e1dfcd1ea180fd8f1abf70e2462acf3db5ea3ae\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.leakcanary\leakcanary-watcher\1.4-beta2\6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92\leakcanary-watcher-1.4-beta2.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="6a920fb0d14e5e3b36e37cf33b1eeef2bcce4c92">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\leakcanary-watcher-1.4-beta2_505357635539112adfc09cd3d89cb20cd9e77821\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="345a1b5cf5b144ce18ba6962bc66a7e2f26c1c1b">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.3.0_f3a80b23b5a558e5c99ec6a21811f511bbb24092\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\2.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="4a70cdeeea9b109cfc5cbf5afef1203d350fb9df">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\jp.wasabeef-recyclerview-animators-2.0.0_7ab5b37d1cf6a67b6dcb1f7acf51810d597a9cf7\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_2181ea6136fa4be50c2d816c6ba1f69b5dff2e61\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.4.1\f5aa318bda4c6c8d688c9d00b90681dcd82ce636\httpcore-4.4.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="f5aa318bda4c6c8d688c9d00b90681dcd82ce636">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\httpcore-4.4.1_cee7b8e424d2aeb8bae5a6e2145f9d06fd1d1c46\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.6.0_597155293747deb7d18731dbf81f63b330d30f7c\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="201bba494ac456e2e778c976370432255eb029cd">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_11af2f9fb1fedc5e7aed456796ed464b7409047b\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-7.0.1_c4a790d7920b4dc0e81a81214ef8483f81ab772f\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.zhanghai.android.materialprogressbar\library\1.1.4\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="2a24cba08e1d865a79e61335f5a1bd64d520106d">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.zhanghai.android.materialprogressbar-library-1.1.4_dbbcbecb602c8681d45e7a4e6b1a702cf00bfb2e\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="b000ecceb9877fefcdc7ab1959ff03df91551656">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-measurement-8.3.0_561b1440913e5ec36d8ef00cf1b81dfd21bd8643\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.github.ozodrukh\CircularReveal\1.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="e3a3d62fab67ccb83f386a4c092bfb5747ea15a7">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.ozodrukh-CircularReveal-1.1.1_4df50aed5e9971094f3af64025ed77cfb2a79ac5\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.2.1_be3a639e4e4f47e6a03a2d41f0b4f07251cb2d47\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\org.java-websocket\Java-WebSocket\1.3.0\db2658f013fb163de4a99274c2eb9e17efe535d2\Java-WebSocket-1.3.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="db2658f013fb163de4a99274c2eb9e17efe535d2">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\Java-WebSocket-1.3.0_3de3c4cec7b8ca2e9b5b919693eb9fe454f4602d\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\libs\universal-image-loader-1.9.3.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.9.3_4042d5bbda9e59c00c55f0d03a34c595f049a222\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.2.1_70f9bdd4f74d971a235c350f318c911e0b843c4f\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\de.hdodenhof-circleimageview-1.3.0_614a925a1628ac6bf3433e8524926eb0c27ee953\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="cb86970df0f0f25f766d320b279c7858c1ca0003">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.2.1_448769bac4191cc95503f87fd7b8d33498cf8b95\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.4-beta2\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="9c8472f8e10502af60d0f63ea11eed68bdf690c2">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.squareup.leakcanary-leakcanary-android-1.4-beta2_67bbec35df0a9413d367ffee279291886e277bd7\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.malinskiy\superrecyclerview\1.1.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="4649d32a5916687ff5d8e430aacb9a4e4eb10724">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.malinskiy-superrecyclerview-1.1.0_bee5eab1a21d1aa7c4b893d60212717cfba8ef39\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\palette-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="bcee2598dbb74f6d043225a0d7e178b0c7ea4006">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-palette-v7-23.2.1_1a667813b3d3c107b3789371ee1365edfe8e40cf\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.2.1_bbded6f8341ae70de695d1eb23de6e8e0d4fe5d3\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.henrytao\smooth-app-bar-layout\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="41f29fd6308a22433ee25e9078168ca1f3797e69">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.henrytao-smooth-app-bar-layout-23.2.1_14ce13389fa3761014762d94246c25ab3b69dae8\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\libs\ease-interpolator-1.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="7db37c264daef4d35fe33bb5dbe9a3919f2cde0e">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\2\ease-interpolator-1.1_c39051682c9596e8e3a110eb9e403cb93e85e16e\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\commons-validator\commons-validator\1.4.0\42fa1046955ade59f5354a1876cfc523cea33815\commons-validator-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="42fa1046955ade59f5354a1876cfc523cea33815">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\commons-validator-1.4.0_e099a5e503f9ba48c0ef947ecd3053f3e05093ca\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v13\21.0.0\jars\libs\internal_impl-21.0.0.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="5a8e01742aee890c56fe638ea7c921b91a3fdc62">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-21.0.0_1270bec18916a89e47764dac63e056c5c94b3c6d\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android\sdk\build-tools\23.0.1\renderscript\lib\renderscript-v8.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="762016371811e15a66e97cf27f3e852bf287aaf3">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\renderscript-v8_0046b3e99cf4ae0e251daf6ecba21c22b97448c0\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\2.0.2\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="b945f88f2ae85cf22563e9f512fc34dd3d5652e4">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.wdullaer-materialdatetimepicker-2.0.2_5c3980da9c72e1da062a9c3173f9f69a9cf385c2\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.2.1_c09e60366d3dc2f1f4b483f41f9b6906f5d233cd\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\commons-beanutils\commons-beanutils\1.8.3\686ef3410bcf4ab8ce7fd0b899e832aaba5facf7\commons-beanutils-1.8.3.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="686ef3410bcf4ab8ce7fd0b899e832aaba5facf7">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\commons-beanutils-1.8.3_60dcdaa65a326dc03ee4de49a2e42ab01442bfcd\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\libs\gson-2.3.1.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\2\gson-2.3.1_6873303d0cf13b87de1382d12fcc0493d4f39a76\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\support-v13\21.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="0c0c19759e5868604a3b4c2c0074ee9404d73c76">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-21.0.0_484a1136ec3a607a5ba067e63e223c4afd301c8e\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\me.henrytao\recyclerview\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="aac7c9d38066cde0ed629a4cb7a5f2ed6fa5e479">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\me.henrytao-recyclerview-23.2.1_b3acd4ac968374cf2d906ea29b68112012131e32.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\me.henrytao-recyclerview-23.2.1_b3acd4ac968374cf2d906ea29b68112012131e32\classes.dex" />
     </item>
     <item
         jar="C:\Program Files\Android\Android Studio\gradle\m2repository\org\apache\commons\commons-lang3\3.3.2\commons-lang3-3.3.2.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="90a3822c38ec8c996e84c16a3477ef632cbc87a3">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\commons-lang3-3.3.2_4314d5c387d123a62f2e97084dd070725c126438.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\commons-lang3-3.3.2_4314d5c387d123a62f2e97084dd070725c126438\classes.dex" />
+    </item>
+    <item
+        jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_6bc0f544f68e1898ec42c2917eff5d080acd4ee1\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\BACHPHUC\.gradle\caches\modules-2\files-2.1\com.squareup.haha\haha\2.0.2\fd65b84d12d6adc77ec0e4fcaca623fc391d8679\haha-2.0.2.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="fd65b84d12d6adc77ec0e4fcaca623fc391d8679">
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\haha-2.0.2_4fa7dfbf8af3cf63faf854cee69cfedfec51e336\classes.dex" />
     </item>
     <item
         jar="D:\Android Project\testxxx\app\build\intermediates\exploded-aar\com.android.support\customtabs\23.2.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.1"
         sha1="0e5a66a941515d873a34065fe44fbba6ef422a1b">
-        <dex dex="D:\Android Project\testxxx\app\build\intermediates\pre-dexed\release\com.android.support-customtabs-23.2.1_4783987eb01fa21a1a5c6d8cbcbe7000a83d955f.jar" />
+        <dex dex="D:\Android Project\testxxx\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-customtabs-23.2.1_4783987eb01fa21a1a5c6d8cbcbe7000a83d955f\classes.dex" />
     </item>
 
 </items>

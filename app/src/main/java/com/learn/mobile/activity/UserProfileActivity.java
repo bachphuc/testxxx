@@ -16,6 +16,7 @@ package com.learn.mobile.activity;
  * limitations under the License.
  */
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,15 +29,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.ViewPagerAdapter;
+import com.learn.mobile.customview.dialog.TutsPlusBottomSheetDialogFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserInformationFragment;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.User;
@@ -44,7 +49,7 @@ import com.learn.mobile.service.SUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserProfileActivity extends DActivityBasic implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener {
+public class UserProfileActivity extends DActivityBasic implements NewFeedsFragment.OnFragmentInteractionListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener, TutsPlusBottomSheetDialogFragment.OnMenuBottomSheetInteractionListener, Event.Action {
     public static final String TAG = UserProfileActivity.class.getSimpleName();
     public static final String USER_PROFILE = "USER_PROFILE";
     private NewFeedsFragment profileFeedFragment;
@@ -57,6 +62,11 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     ViewPager viewPager;
 
     ViewPagerAdapter adapter;
+
+    TutsPlusBottomSheetDialogFragment bottomSheetDialogFragment;
+    ProgressDialog progressDialog;
+
+    ImageView imgAvatar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,6 +156,30 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
             }
         }, user.getId());
         updateView();
+
+        bottomSheetDialogFragment = new TutsPlusBottomSheetDialogFragment();
+        bottomSheetDialogFragment.setMenuResId(R.menu.menu_choose_photo);
+        bottomSheetDialogFragment.setMenuTitle(DMobi.translate("Choose your cover"));
+        bottomSheetDialogFragment.setOnMenuBottomSheetListener(this);
+
+        imgAvatar = (ImageView) findViewById(R.id.img_avatar);
+        User currentUser = DMobi.getUser();
+        View view = findViewById(R.id.bt_cover);
+        if (currentUser.getId() == user.getId()) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+
+        // TODO: 5/9/2016 init event
+        initClickEvent();
+    }
+
+    private void initClickEvent() {
+        View view = findViewById(R.id.img_cover);
+        view.setOnClickListener(this);
+
+        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
     }
 
 
@@ -196,6 +230,7 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     }
 
     public void updateView() {
+        DMobi.log(TAG, "updateView");
         if (user == null) {
             return;
         }
@@ -206,7 +241,7 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
             ImageHelper.display(imageView, user.coverPhoto.getFull().url);
         }
 
-        ImageView imgAvatar = (ImageView) findViewById(R.id.img_avatar);
+        imgAvatar = (ImageView) findViewById(R.id.img_avatar);
         if (imgAvatar != null && user.images != null) {
             if (imgAvatar instanceof CircleImageView) {
                 CircleImageView circleImageView = (CircleImageView) imgAvatar;
@@ -224,5 +259,79 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     protected void onDestroy() {
         DMobi.removeData(USER_PROFILE);
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_cover:
+                showBottomMenu();
+                break;
+        }
+    }
+
+    public void showBottomMenu() {
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+    }
+
+    @Override
+    public void onMenuBottomSheetInteraction(int id, String title) {
+        switch (id) {
+            case R.id.menu_take_a_photo:
+                captureImage();
+                break;
+            case R.id.menu_open_gallery:
+                openGallery();
+                break;
+        }
+    }
+
+    @Override
+    public void addPhotoAttachment(Uri uri) {
+        onUpdateCover(uri);
+    }
+
+    public void onUpdateCover(final Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        progressDialog = DMobi.showLoading(this, "", "Upload cover...");
+        progressDialog.show();
+
+        SUser sUser = (SUser) DMobi.getService(SUser.class);
+        final String filePath = DUtils.getRealPathFromURI(this, uri);
+        sUser.updateCover(filePath, new DResponse.Complete() {
+            @Override
+            public void onComplete(Boolean status, Object o) {
+                if (status) {
+                    progressDialog.dismiss();
+                    DMobi.showToast(DMobi.translate("Update cover image successfully."));
+                    ImageView imageView = (ImageView) findViewById(R.id.img_cover);
+                    ImageHelper.display(imageView, filePath);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void fireAction(String eventType, Object o) {
+        DMobi.log(TAG, eventType);
+        switch (eventType) {
+            case Event.EVENT_UPDATE_PROFILE:
+                if (o instanceof User) {
+                    User newUser = (User) o;
+                    DMobi.log(TAG, newUser.images.getMedium().url);
+                    user.images = newUser.images;
+                    ImageHelper.display(imgAvatar, newUser.images.getMedium().url);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroyEvent() {
+        super.onDestroyEvent();
+
+        DMobi.destroyEvent(Event.EVENT_UPDATE_PROFILE);
     }
 }
