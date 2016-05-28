@@ -26,5 +26,8 @@ public class DAbstractProjectTask extends DMobileModelBase{
     @SerializedName("time_stamp")
     public int timeStamp ;
     
+    @SerializedName("estimate_time_display")
+    public String estimateTimeDisplay ;
+    
 
 }

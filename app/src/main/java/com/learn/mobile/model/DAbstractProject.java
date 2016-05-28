@@ -15,13 +15,28 @@ public class DAbstractProject extends DMobileModelBase{
     public int userId ;
     
     @SerializedName("status")
-    public int status = 0;
+    public String status = "PENDING";
     
     @SerializedName("complete_percent")
     public int completePercent = 0;
     
     @SerializedName("time_stamp")
     public int timeStamp ;
+    
+    @SerializedName("priority")
+    public int priority = 0;
+    
+    @SerializedName("estimate_time")
+    public int estimateTime = 0;
+    
+    @SerializedName("image_path")
+    public String imagePath ;
+    
+    @SerializedName("budget")
+    public int budget = 0;
+    
+    @SerializedName("estimate_time_display")
+    public String estimateTimeDisplay ;
     
 
 }
