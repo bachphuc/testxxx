@@ -1,6 +1,8 @@
 package com.learn.mobile.model;
 
-public class Pages extends DAbstractPages{
+import com.learn.mobile.model.DAbstract.DAbstractPages;
+
+public class Pages extends DAbstractPages {
     
 
 }

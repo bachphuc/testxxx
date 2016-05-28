@@ -9,7 +9,7 @@ import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.Blog;
-import com.learn.mobile.model.DAbstractItemObject;
+import com.learn.mobile.model.DAbstract.DAbstractItemObject;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Feed;
 import com.learn.mobile.model.Funny;

@@ -1,18 +1,19 @@
-package com.learn.mobile.model;
+package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
+import com.learn.mobile.model.DMobileModelBase;
 
-public class DAbstractDchatRoom extends DMobileModelBase{
+public class DAbstractDchatMember extends DMobileModelBase {
     
     
-    public String _primaryKey = "room_id";
+    public String _primaryKey = "member_id";
     
 
+    @SerializedName("member_id")
+    public int memberId ;
+    
     @SerializedName("room_id")
     public int roomId ;
-    
-    @SerializedName("room_name")
-    public String roomName ;
     
     @SerializedName("user_id")
     public int userId ;

@@ -2,14 +2,13 @@ package com.learn.mobile.model;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.squareup.picasso.Picasso;
+import com.learn.mobile.model.DAbstract.DAbstractBlog;
 
 public class Blog extends DAbstractBlog {
 

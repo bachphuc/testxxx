@@ -1,10 +1,34 @@
-package com.learn.mobile.model;
+package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
+import com.learn.mobile.model.Blog;
+import com.learn.mobile.model.Comment;
+import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.Dchat;
+import com.learn.mobile.model.DchatMember;
+import com.learn.mobile.model.DchatMessage;
+import com.learn.mobile.model.DchatPhoto;
+import com.learn.mobile.model.DchatRequest;
+import com.learn.mobile.model.DchatRoom;
+import com.learn.mobile.model.Feed;
+import com.learn.mobile.model.Funny;
+import com.learn.mobile.model.Link;
+import com.learn.mobile.model.MusicSong;
+import com.learn.mobile.model.Notification;
+import com.learn.mobile.model.Pages;
+import com.learn.mobile.model.PagesCategory;
+import com.learn.mobile.model.Photo;
+import com.learn.mobile.model.Project;
+import com.learn.mobile.model.ProjectAttachment;
+import com.learn.mobile.model.ProjectTask;
+import com.learn.mobile.model.Search;
+import com.learn.mobile.model.User;
+import com.learn.mobile.model.UserStatus;
+import com.learn.mobile.model.Video;
 
 import java.lang.reflect.Type;
 

@@ -1,8 +1,9 @@
-package com.learn.mobile.model;
+package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
+import com.learn.mobile.model.DMobileModelBase;
 
-public class DAbstractUserStatus extends DMobileModelBase{
+public class DAbstractUserStatus extends DMobileModelBase {
     
     
     public String _primaryKey = "status_id";

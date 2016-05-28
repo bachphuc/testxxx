@@ -1,6 +1,8 @@
 package com.learn.mobile.model;
 
-public class UserStatus extends DAbstractUserStatus{
+import com.learn.mobile.model.DAbstract.DAbstractUserStatus;
+
+public class UserStatus extends DAbstractUserStatus {
     
 
 }

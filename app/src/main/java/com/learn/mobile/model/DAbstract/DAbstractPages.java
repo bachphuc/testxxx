@@ -1,8 +1,11 @@
-package com.learn.mobile.model;
+package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
+import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.PagesCategory;
+import com.learn.mobile.model.User;
 
-public class DAbstractPages extends DMobileModelBase{
+public class DAbstractPages extends DMobileModelBase {
     
     
     public String _primaryKey = "page_id";

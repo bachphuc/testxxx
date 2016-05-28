@@ -1,17 +1,13 @@
 package com.learn.mobile.model;
 
-import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
-import com.learn.mobile.customview.DCirclePaletteImageView;
-import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.model.DAbstract.DAbstractSearch;
 
 /**
  * Created by phuclb on 1/12/2016.

@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
@@ -17,10 +16,10 @@ import com.learn.mobile.activity.DActivityBasic;
 import com.learn.mobile.activity.PhotoDetailActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DFeedImageView;
-import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.model.DAbstract.DAbstractPhoto;
 
 import java.util.List;
 import java.util.Random;

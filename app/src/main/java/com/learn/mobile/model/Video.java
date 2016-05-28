@@ -1,6 +1,8 @@
 package com.learn.mobile.model;
 
-public class Video extends DAbstractVideo{
+import com.learn.mobile.model.DAbstract.DAbstractVideo;
+
+public class Video extends DAbstractVideo {
     
 
 }

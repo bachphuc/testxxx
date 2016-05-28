@@ -12,7 +12,7 @@ import com.learn.mobile.activity.UserProfileActivity;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.model.DAbstract.DAbstractComment;
 
 /**
  * Created by 09520_000 on 8/9/2015.

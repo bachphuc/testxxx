@@ -18,6 +18,7 @@ import com.learn.mobile.customview.DCirclePaletteImageView;
 import com.learn.mobile.customview.PaletteImageView;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
+import com.learn.mobile.model.DAbstract.DAbstractUser;
 
 public class User extends DAbstractUser implements View.OnClickListener, PaletteImageView.PaletteListener.OnPaletteListener {
     public static final String TAG = User.class.getSimpleName();

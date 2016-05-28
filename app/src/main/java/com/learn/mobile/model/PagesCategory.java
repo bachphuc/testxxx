@@ -1,6 +1,8 @@
 package com.learn.mobile.model;
 
-public class PagesCategory extends DAbstractPagesCategory{
+import com.learn.mobile.model.DAbstract.DAbstractPagesCategory;
+
+public class PagesCategory extends DAbstractPagesCategory {
     
 
 }

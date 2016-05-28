@@ -20,7 +20,7 @@ import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.model.DAbstract.DAbstractFunny;
 
 public class Funny extends DAbstractFunny implements View.OnClickListener {
     public Funny() {

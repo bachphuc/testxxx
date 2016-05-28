@@ -12,12 +12,10 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
-import com.learn.mobile.activity.FunnyViewer;
 import com.learn.mobile.customview.chromecustomtab.CustomTabActivityHelper;
 import com.learn.mobile.customview.chromecustomtab.WebviewFallback;
-import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.helper.LayoutHelper;
+import com.learn.mobile.model.DAbstract.DAbstractLink;
 import com.squareup.picasso.Picasso;
 
 public class Link extends DAbstractLink implements View.OnClickListener {

@@ -1,8 +1,9 @@
-package com.learn.mobile.model;
+package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
+import com.learn.mobile.model.DMobileModelBase;
 
-public class DAbstractLink extends DMobileModelBase{
+public class DAbstractLink extends DMobileModelBase {
     
     
     public String _primaryKey = "link_id";

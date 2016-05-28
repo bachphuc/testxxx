@@ -1,14 +1,10 @@
 package com.learn.mobile.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +23,7 @@ import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
+import com.learn.mobile.model.DAbstract.DAbstractFeed;
 
 import java.util.List;
 
