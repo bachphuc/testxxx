@@ -62,4 +62,5 @@
     <string name="social_network">Social Network</string>
     <string name="report_this_feed">Report this Feed</string>
     <string name="open_in_browser">Open in browser</string>
+    <string name="block_this_user">Block this user</string>
 </resources>

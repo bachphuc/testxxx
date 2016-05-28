@@ -222,6 +222,13 @@ public class DMobi {
         return event;
     }
 
+    public static Event registerEvent(String key, Event.Action action, boolean reset) {
+        if (reset) {
+            resetEvent(key);
+        }
+        return registerEvent(key, action);
+    }
+
     public boolean isRegisterEvent(String key) {
         Event event = eventHashTable.get(key);
         return (event != null ? true : false);
@@ -249,7 +256,6 @@ public class DMobi {
         if (event == null) {
             return false;
         }
-        event = null;
         eventHashTable.remove(key);
         return true;
     }

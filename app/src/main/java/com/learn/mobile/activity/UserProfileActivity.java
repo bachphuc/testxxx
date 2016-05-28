@@ -176,8 +176,10 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     }
 
     private void initClickEvent() {
-        View view = findViewById(R.id.img_cover);
-        view.setOnClickListener(this);
+        if (DMobi.getUser().getId() == user.getId()) {
+            View view = findViewById(R.id.img_cover);
+            view.setOnClickListener(this);
+        }
 
         DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
     }
@@ -192,7 +194,11 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_profile, menu);
+        if (DMobi.getUser().getId() == user.getId()) {
+            getMenuInflater().inflate(R.menu.menu_user_profile_owner, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_user_profile_viewer, menu);
+        }
 
         return true;
     }
@@ -257,7 +263,7 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
 
     @Override
     protected void onDestroy() {
-        DMobi.removeData(USER_PROFILE);
+        // DMobi.removeData(USER_PROFILE);
         super.onDestroy();
     }
 

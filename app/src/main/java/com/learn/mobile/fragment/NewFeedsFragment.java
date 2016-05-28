@@ -107,10 +107,11 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
     }
 
     private void initEvents() {
+        DMobi.log(TAG, "initEvents");
         // TODO Initialize events
-        DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, this);
-        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this);
-        DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
+        DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, this, true);
+        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this, true);
+        DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this, true);
 
         // TODO Remove data when logout
         DMobi.registerEvent(Event.EVENT_LOGOUT_SUCCESS, this);

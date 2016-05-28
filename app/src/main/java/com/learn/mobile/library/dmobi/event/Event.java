@@ -22,7 +22,7 @@ public class Event {
     public static final String EVENT_FEED_UPDATE_VIEW = "EVENT_FEED_UPDATE_VIEW";
     public static final String EVENT_UPDATE_LEFT_MENU_SELECTED = "EVENT_UPDATE_LEFT_MENU_SELECTED";
 
-    private ArrayList<Action> actions = new ArrayList<Action>();
+    private ArrayList<Action> actions = new ArrayList<>();
     private String eventType;
 
     public Event() {
@@ -34,6 +34,9 @@ public class Event {
     }
 
     public Event(Action _action, String _actionType) {
+        if (actions.indexOf(_action) != -1) {
+            return;
+        }
         actions.add(_action);
         eventType = _actionType;
     }
