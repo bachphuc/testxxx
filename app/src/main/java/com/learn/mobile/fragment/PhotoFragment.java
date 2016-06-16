@@ -31,6 +31,7 @@ public class PhotoFragment extends ListBaseFragment {
         setGirdLayout(true);
         setSpanSize(3);
         setRefreshList(true);
+        spaceDivide = 4;
     }
 
     @Override

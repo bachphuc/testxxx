@@ -9,6 +9,7 @@ import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.service.SBase;
 
 import java.util.List;
 
@@ -18,6 +19,16 @@ import java.util.List;
 public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHolder> {
     public static final String TAG = RecyclerViewBaseAdapter.class.getSimpleName();
     protected List<DMobileModelBase> data;
+    protected SBase service;
+
+    public void setService(SBase sBase) {
+        service = sBase;
+    }
+
+    public SBase getService() {
+        return service;
+    }
+
     public static final String RECYCLER_VIEW_NOTIFY_DATA_CHANGE = "RECYCLER_VIEW_NOTIFY_DATA_CHANGE";
 
     protected int eventId;
@@ -77,5 +88,12 @@ public class RecyclerViewBaseAdapter extends RecyclerView.Adapter<ItemBaseViewHo
             data.remove(position);
             notifyItemRemoved(position);
         }
+    }
+
+    public DMobileModelBase getItem(int position) {
+        if (data == null || data.size() == 0) {
+            return null;
+        }
+        return data.get(position);
     }
 }

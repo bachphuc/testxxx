@@ -111,22 +111,6 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* final PopupMenu popup = new PopupMenu(v.getContext(), v);
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.menu_feed_action, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.mn_delete_feed:
-                                adapter.delete(itemBaseViewHolder.getAdapterPosition());
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                popup.show(); */
-
                 // TODO: 5/1/2016 use menu bottom sheet
                 TutsPlusBottomSheetDialogFragment bottomSheetDialogFragment = new TutsPlusBottomSheetDialogFragment();
                 bottomSheetDialogFragment.setMenuResId(R.menu.menu_feed_action);

@@ -1,8 +1,5 @@
 package com.learn.mobile.service;
 
-import android.view.View;
-
-import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
@@ -14,14 +11,12 @@ import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
-import com.learn.mobile.library.dmobi.request.response.BasicObjectResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.User;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by 09520_000 on 8/22/2015.

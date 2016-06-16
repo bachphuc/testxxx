@@ -196,7 +196,9 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
         dSwipeRefreshLayout = (DSwipeRefreshLayout) view.findViewById(R.id.base_swipe_refresh_layout);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.base_recycler_view);
-        spacesItemDecoration = new SpacesItemDecoration(spaceDivide);
+        if (spacesItemDecoration == null) {
+            spacesItemDecoration = new SpacesItemDecoration(spaceDivide);
+        }
         if (bGirdLayout) {
             gridLayoutManager = new GridLayoutManager(getContext(), spanSize);
             if (bHasAppBar) {
@@ -241,7 +243,7 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
         } else {
             adapter = new RecyclerViewBaseAdapter(data);
         }
-
+        adapter.setService(service);
         if (bHasAppBar) {
             int layoutHeader = R.layout.item_header_main_spacing;
             if (user != null) {
@@ -440,12 +442,12 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int spacing;
+        protected int spacing;
 
-        private float[] points;
+        protected float[] points;
 
-        private boolean bHasHeader = false;
-        private int totalSpan = 0;
+        protected boolean bHasHeader = false;
+        protected int totalSpan = 0;
 
         public void reset() {
             totalSpan = 0;
@@ -475,7 +477,12 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
             int childIndex = parent.getChildAdapterPosition(view);
 
             int spanCount = getTotalSpan(parent);
+            int spanIndex = childIndex % spanCount;
 
+            processOffset(childCount, childIndex, outRect, spanCount, spanIndex, halfSpacing);
+        }
+
+        protected void processOffset(int childCount, int childIndex, Rect outRect, int spanCount, int spanIndex, int halfSpacing) {
             if (bHasHeader && childIndex == 0) {
                 outRect.top = spacing;
                 outRect.bottom = 0;
@@ -488,7 +495,6 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
                 childCount = childCount - 1;
                 childIndex = childIndex - 1;
             }
-            int spanIndex = childIndex % spanCount;
 
             if (spanCount < 1) return;
 

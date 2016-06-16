@@ -65,6 +65,10 @@ public class DRequest {
         postData.put(key, value);
     }
 
+    public void addPost(String key, int value) {
+        addPost(key, value + "");
+    }
+
     public void addPosts(HashMap<String, Object> params) {
         if (params != null && params.size() > 0) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {

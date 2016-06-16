@@ -6,11 +6,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.learn.mobile.fragment.ChatFragment;
 import com.learn.mobile.fragment.DChatListFragment;
+import com.learn.mobile.fragment.DFragmentBase;
 import com.learn.mobile.fragment.FunnyFragment;
 import com.learn.mobile.fragment.NewFeedsFragment;
+import com.learn.mobile.fragment.NotificationFragment;
 import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.SearchFragment;
 import com.learn.mobile.fragment.UserFragment;
+import com.learn.mobile.model.Notification;
 
 import java.util.HashMap;
 
@@ -18,7 +21,7 @@ import java.util.HashMap;
  * Created by 09520_000 on 8/30/2015.
  */
 public class AppViewPagerAdapter extends FragmentPagerAdapter {
-    private HashMap<String, Fragment> fragmentList = new HashMap<>();
+    private HashMap<String, DFragmentBase> fragmentList = new HashMap<>();
     public boolean bSmoothScroll = false;
 
     public AppViewPagerAdapter(FragmentManager fragmentManager) {
@@ -48,6 +51,14 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
 
                 return userFragment;
             case 2:
+                NotificationFragment notificationFragment = new NotificationFragment();
+                notificationFragment.setFragmentIndex(position);
+                fragmentList.put(position + "", notificationFragment);
+                if (bSmoothScroll) {
+                    notificationFragment.setHasAppBar(true);
+                }
+                return notificationFragment;
+            case 3:
                 PhotoFragment frag = new PhotoFragment();
                 frag.setFragmentIndex(position);
                 fragmentList.put(position + "", frag);
@@ -55,7 +66,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                     frag.setHasAppBar(true);
                 }
                 return frag;
-            case 3:
+            case 4:
                 FunnyFragment funnyFragment = new FunnyFragment();
                 funnyFragment.setFragmentIndex(position);
                 fragmentList.put(position + "", funnyFragment);
@@ -63,7 +74,7 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
                     funnyFragment.setHasAppBar(true);
                 }
                 return funnyFragment;
-            case 4:
+            case 5:
                 SearchFragment searchFragment = new SearchFragment();
                 searchFragment.setFragmentIndex(position);
                 fragmentList.put(position + "", searchFragment);
@@ -90,11 +101,15 @@ public class AppViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Section " + (position + 1);
+        DFragmentBase dFragmentBase = (DFragmentBase) getFragmentItem(position);
+        if (dFragmentBase != null) {
+            return dFragmentBase.getFragmentTitle();
+        }
+        return null;
     }
 }

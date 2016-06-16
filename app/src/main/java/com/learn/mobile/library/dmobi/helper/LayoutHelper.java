@@ -11,6 +11,7 @@ import com.learn.mobile.model.Comment;
 import com.learn.mobile.model.DMobileModelBase;
 import com.learn.mobile.model.Funny;
 import com.learn.mobile.model.Link;
+import com.learn.mobile.model.Notification;
 import com.learn.mobile.model.Photo;
 import com.learn.mobile.model.Search;
 import com.learn.mobile.model.User;
@@ -58,6 +59,9 @@ public class LayoutHelper {
         registerLayout(ChatUser.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_user_item_layout);
         registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout_left, "left");
         registerLayout(ChatMessage.class, LayoutHelper.LIST_LAYOUT, R.layout.chat_message_item_layout_right, "right");
+
+        // TODO: 5/28/2016 register notification layout
+        registerLayout(Notification.class, LayoutHelper.LIST_LAYOUT, R.layout.notification_item_layout);
     }
 
     public static int registerLayout(Class c, String suffix, int layout) {

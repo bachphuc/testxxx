@@ -11,6 +11,12 @@ import com.squareup.leakcanary.RefWatcher;
  * Created by BachPhuc on 4/10/2016.
  */
 public class DFragmentBase extends Fragment {
+    protected String fragmentTitle;
+
+    public String getFragmentTitle() {
+        return fragmentTitle;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

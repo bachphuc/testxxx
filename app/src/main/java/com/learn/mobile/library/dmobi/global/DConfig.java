@@ -19,7 +19,7 @@ public class DConfig {
     public static final String SITE_URL = "SITE_URL";
 
     public static String DEFAULT_HOST = "http://serepokj.com/dmobi";
-    // public static String DEFAULT_HOST = "http://192.168.1.11/dmobile";
+    // public static String DEFAULT_HOST = "http://192.168.1.6/dmobile";
 
     public static final String BUNDLE_ID = "com.learn.mobile";
     public static final String preference_file_key = BUNDLE_ID + ".PREFERENCE_FILE_KEY";

@@ -1,9 +1,7 @@
 package com.learn.mobile.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learn.mobile.library.dmobi.DMobi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

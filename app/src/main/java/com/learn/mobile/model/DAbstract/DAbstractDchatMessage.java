@@ -1,11 +1,9 @@
 package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
-import com.learn.mobile.model.DMobileModelBase;
-import com.learn.mobile.model.DchatRoom;
-import com.learn.mobile.model.User;
+import com.learn.mobile.model.*;
 
-public class DAbstractDchatMessage extends DMobileModelBase {
+public class DAbstractDchatMessage extends DMobileModelBase{
     
     
     public String _primaryKey = "message_id";

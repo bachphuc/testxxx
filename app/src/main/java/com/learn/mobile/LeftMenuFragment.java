@@ -154,7 +154,8 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
             case R.id.drawer_photo:
             case R.id.drawer_funny:
             case R.id.drawer_search:
-            // case R.id.drawer_chat:
+            case R.id.drawer_notification:
+                // case R.id.drawer_chat:
                 mListener.onLeftFragmentInteraction(item.getItemId(), item.getTitle().toString());
                 return true;
         }

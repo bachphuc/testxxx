@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -25,8 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.learn.mobile.activity.DActivityBasic;
@@ -42,10 +39,7 @@ import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
-import com.learn.mobile.service.SChat;
 import com.learn.mobile.service.SUser;
-
-import java.net.URISyntaxException;
 
 public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnLeftFragmentInteractionListener, NewFeedsFragment.OnFragmentInteractionListener, DFragmentListener.OnFragmentInteractionListener, SearchView.OnQueryTextListener, SearchView.OnSuggestionListener {
 
@@ -279,51 +273,6 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
         });
     }
 
-    public void initTabBarLayout() {
-        tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
-        TabLayout.Tab tab;
-
-        Drawable mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_web_black_24dp);
-        tab = tabLayout.newTab();
-        tab.setIcon(mDrawable);
-        tabLayout.addTab(tab);
-
-        mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_insert_photo_white_24dp);
-        tab = tabLayout.newTab();
-        tab.setIcon(mDrawable);
-        tabLayout.addTab(tab);
-
-        mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_supervisor_account_black_24dp);
-        tab = tabLayout.newTab();
-        tab.setIcon(mDrawable);
-        tabLayout.addTab(tab);
-
-        mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_chat_bubble_outline_black_24dp);
-        tab = tabLayout.newTab();
-        tab.setIcon(mDrawable);
-        tabLayout.addTab(tab);
-
-        mDrawable = ImageHelper.getIconDrawable(R.drawable.ic_notifications_none_black_24dp);
-        tab = tabLayout.newTab();
-        tab.setIcon(mDrawable);
-        tabLayout.addTab(tab);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-    }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -440,14 +389,20 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
             case R.id.drawer_member:
                 viewPagerMoveIndex = 1;
                 break;
-            case R.id.drawer_photo:
+            case R.id.drawer_notification:
                 viewPagerMoveIndex = 2;
                 break;
-            case R.id.drawer_funny:
+
+            case R.id.drawer_photo:
                 viewPagerMoveIndex = 3;
                 break;
-            case R.id.drawer_search:
+            case R.id.drawer_funny:
                 viewPagerMoveIndex = 4;
+                break;
+            case R.id.drawer_search:
+                viewPagerMoveIndex = 5;
+                break;
+
             /* case R.id.drawer_chat:
                 viewPagerMoveIndex = 5;
                 break; */

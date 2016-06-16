@@ -1,10 +1,9 @@
 package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
-import com.learn.mobile.model.DMobileModelBase;
-import com.learn.mobile.model.ImageObject;
+import com.learn.mobile.model.*;
 
-public class DAbstractUser extends DMobileModelBase {
+public class DAbstractUser extends DMobileModelBase{
     
     
     public String _primaryKey = "user_id";

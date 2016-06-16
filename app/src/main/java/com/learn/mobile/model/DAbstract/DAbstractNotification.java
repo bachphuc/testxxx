@@ -1,9 +1,9 @@
 package com.learn.mobile.model.DAbstract;
 
 import com.google.gson.annotations.SerializedName;
-import com.learn.mobile.model.DMobileModelBase;
+import com.learn.mobile.model.*;
 
-public class DAbstractNotification extends DMobileModelBase {
+public class DAbstractNotification extends DMobileModelBase{
     
     
     public String _primaryKey = "notification_id";
@@ -31,7 +31,7 @@ public class DAbstractNotification extends DMobileModelBase {
     public String time ;
     
     @SerializedName("user")
-    public String user ;
+    public User user ;
     
     @SerializedName("content")
     public String content ;

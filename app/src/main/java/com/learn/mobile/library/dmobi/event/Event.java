@@ -1,6 +1,5 @@
 package com.learn.mobile.library.dmobi.event;
 
-import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.model.DMobileModelBase;
 
 import java.util.ArrayList;
