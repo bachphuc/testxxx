@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
 
@@ -71,8 +71,8 @@ public class LoginActivity extends Activity implements Button.OnClickListener {
             public void onComplete(Boolean status, Object o) {
                 progressDialog.hide();
                 if (o != null) {
-                    DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
-                    DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
+                    DMobi.fireEvent(DEventType.EVENT_UPDATE_PROFILE, o);
+                    DMobi.fireEvent(DEventType.EVENT_LOADMORE_FEED, o);
                     DMobi.showToast("Login successfully.");
                     finish();
                 }

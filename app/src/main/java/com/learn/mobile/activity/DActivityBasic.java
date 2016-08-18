@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,16 +19,13 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
-import com.learn.mobile.DMobiApplication;
 import com.learn.mobile.R;
 import com.learn.mobile.customview.BlurringView;
 import com.learn.mobile.customview.DMaterialProgressDrawable;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -67,7 +62,7 @@ public class DActivityBasic extends DActivityBase implements AppBarLayout.OnOffs
 
     protected static final int MEDIA_TYPE_IMAGE = 1;
     protected static final int MEDIA_TYPE_VIDEO = 2;
-    protected static final String IMAGE_DIRECTORY_NAME = DConfig.APP_NAME;
+    protected static final String IMAGE_DIRECTORY_NAME = Constant.APP_NAME;
     private Uri tempUri;
     protected ImageView imgPreview;
 

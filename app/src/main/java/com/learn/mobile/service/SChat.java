@@ -11,7 +11,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.SingleObjectResponse;
@@ -355,7 +355,7 @@ public class SChat extends SBase {
             isLoginProcessing = true;
             if (socket == null) {
                 try {
-                    socket = IO.socket(DConfig.SOCKET_URL);
+                    socket = IO.socket(Constant.SOCKET_URL);
                     socket.connect();
                     listenEvents();
                     socketLogin();

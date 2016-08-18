@@ -64,4 +64,5 @@
     <string name="open_in_browser">Open in browser</string>
     <string name="block_this_user">Block this user</string>
     <string name="notification">Notification</string>
+    <string name="can_not_create_folder_to_save_download_image">Can not create folder to save download image</string>
 </resources>

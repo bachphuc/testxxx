@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.request.DRequest;
 import com.learn.mobile.model.User;
@@ -53,7 +54,7 @@ public class DMobi {
         if (sBase != null) {
             return sBase;
         }
-        String sClass = DConfig.BUNDLE_ID + ".service." + service;
+        String sClass = Constant.BUNDLE_ID + ".service." + service;
         Class c = null;
         try {
             c = Class.forName(sClass);
@@ -84,7 +85,7 @@ public class DMobi {
     }
 
     public static SBase getInstance(String service) {
-        String sClass = DConfig.BUNDLE_ID + "." + DConfig.SERVICE_NAME + "." + service;
+        String sClass = Constant.BUNDLE_ID + "." + Constant.SERVICE_NAME + "." + service;
         Class c = null;
         SBase sBase;
         try {
@@ -103,7 +104,7 @@ public class DMobi {
     }
 
     public static SBase getInstance(Class service) {
-        String sClass = DConfig.BUNDLE_ID + ".service." + service.getSimpleName();
+        String sClass = Constant.BUNDLE_ID + ".service." + service.getSimpleName();
         Class c = null;
         SBase sBase;
         try {
@@ -151,7 +152,7 @@ public class DMobi {
     }
 
     public static void showToast(String message, boolean isError) {
-        if (isError && DConfig.DEBUG_MODE == 1) {
+        if (isError && Constant.DEBUG_MODE == 1) {
             showToast(message);
         } else {
             DMobi.log(TAG, message);
@@ -193,7 +194,7 @@ public class DMobi {
 
     // TODO display log to debug when EBUG_MODE enable
     public static void log(String key, Object o) {
-        if (DConfig.DEBUG_MODE != 0) {
+        if (Constant.DEBUG_MODE != 0) {
             Log.i(key, o.toString());
         }
     }

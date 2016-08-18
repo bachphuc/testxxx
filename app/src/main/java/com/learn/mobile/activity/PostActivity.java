@@ -40,7 +40,7 @@ import com.learn.mobile.customview.ItemClickSupport;
 import com.learn.mobile.customview.PromptTextDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
@@ -326,7 +326,7 @@ public class PostActivity extends UploadFileBase implements View.OnClickListener
                     BasicObjectResponse responseObject = DbHelper.parseResponse(response);
                     if (responseObject.isSuccessfully()) {
                         DMobi.showToast("Post successfully.");
-                        DMobi.fireEvent(Event.EVENT_REFRESH_FEED, null);
+                        DMobi.fireEvent(DEventType.EVENT_REFRESH_FEED, null);
                         finish();
                     } else {
                         DMobi.alert(that, responseObject.getErrors());

@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -28,7 +28,7 @@ public class UploadFileBase extends Fragment {
 
     protected static final int MEDIA_TYPE_IMAGE = 1;
     protected static final int MEDIA_TYPE_VIDEO = 2;
-    protected static final String IMAGE_DIRECTORY_NAME = DConfig.APP_NAME;
+    protected static final String IMAGE_DIRECTORY_NAME = Constant.APP_NAME;
 
     protected void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

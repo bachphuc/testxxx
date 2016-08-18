@@ -41,6 +41,7 @@ import com.learn.mobile.fragment.PhotoFragment;
 import com.learn.mobile.fragment.UserInformationFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
@@ -181,7 +182,7 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
             view.setOnClickListener(this);
         }
 
-        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
+        DMobi.registerEvent(DEventType.EVENT_UPDATE_PROFILE, this);
     }
 
 
@@ -323,7 +324,7 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     public void fireAction(String eventType, Object o) {
         DMobi.log(TAG, eventType);
         switch (eventType) {
-            case Event.EVENT_UPDATE_PROFILE:
+            case DEventType.EVENT_UPDATE_PROFILE:
                 if (o instanceof User) {
                     User newUser = (User) o;
                     DMobi.log(TAG, newUser.images.getMedium().url);
@@ -338,6 +339,6 @@ public class UserProfileActivity extends DActivityBasic implements NewFeedsFragm
     public void onDestroyEvent() {
         super.onDestroyEvent();
 
-        DMobi.destroyEvent(Event.EVENT_UPDATE_PROFILE);
+        DMobi.destroyEvent(DEventType.EVENT_UPDATE_PROFILE);
     }
 }

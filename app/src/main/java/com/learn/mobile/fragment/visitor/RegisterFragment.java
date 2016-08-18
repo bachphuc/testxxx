@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -274,9 +274,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                 public void onComplete(Boolean status, Object o) {
                     progressDialog.hide();
                     if (o != null) {
-                        DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
-                        DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
-                        DMobi.fireEvent(Event.EVENT_LOGIN_SUCCESS, o);
+                        DMobi.fireEvent(DEventType.EVENT_UPDATE_PROFILE, o);
+                        DMobi.fireEvent(DEventType.EVENT_LOADMORE_FEED, o);
+                        DMobi.fireEvent(DEventType.EVENT_LOGIN_SUCCESS, o);
                         DMobi.showToast("Register successfully.");
                         getActivity().finish();
                     }

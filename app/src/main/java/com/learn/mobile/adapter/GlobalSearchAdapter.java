@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
 
@@ -95,7 +95,7 @@ public class GlobalSearchAdapter extends ResourceCursorAdapter {
                         image
                 });
             }
-            if (i >= DConfig.MAX_SUGGESTION_LIMIT) {
+            if (i >= Constant.MAX_SUGGESTION_LIMIT) {
                 break;
             }
         }

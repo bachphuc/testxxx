@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelperLib.ImageAdapterBase;
 import com.learn.mobile.model.ImageItem;
@@ -53,19 +54,19 @@ public class ImageHelper {
 
     public static ImageAdapterBase getAdapter() {
         ImageAdapterBase adapterBase;
-        String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
+        String sClass = Constant.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + Constant.IMAGE_ADAPTER;
         Class c;
         try {
             c = Class.forName(sClass);
             try {
                 adapterBase = (ImageAdapterBase) c.newInstance();
             } catch (InstantiationException e) {
-                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+                throw new IllegalArgumentException("Can not create instance of " + Constant.IMAGE_ADAPTER);
             } catch (IllegalAccessException e) {
-                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+                throw new IllegalArgumentException("Can not create instance of " + Constant.IMAGE_ADAPTER);
             }
         } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Can not find  " + DConfig.IMAGE_ADAPTER);
+            throw new IllegalArgumentException("Can not find  " + Constant.IMAGE_ADAPTER);
         }
         return adapterBase;
     }
@@ -74,19 +75,19 @@ public class ImageHelper {
         if (imageAdapterBase != null) {
             return imageAdapterBase;
         }
-        String sClass = DConfig.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + DConfig.IMAGE_ADAPTER;
+        String sClass = Constant.BUNDLE_ID + ".library.dmobi.helper.ImageHelperLib." + Constant.IMAGE_ADAPTER;
         Class c;
         try {
             c = Class.forName(sClass);
             try {
                 imageAdapterBase = (ImageAdapterBase) c.newInstance();
             } catch (InstantiationException e) {
-                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+                throw new IllegalArgumentException("Can not create instance of " + Constant.IMAGE_ADAPTER);
             } catch (IllegalAccessException e) {
-                throw new IllegalArgumentException("Can not create instance of " + DConfig.IMAGE_ADAPTER);
+                throw new IllegalArgumentException("Can not create instance of " + Constant.IMAGE_ADAPTER);
             }
         } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Can not find  " + DConfig.IMAGE_ADAPTER);
+            throw new IllegalArgumentException("Can not find  " + Constant.IMAGE_ADAPTER);
         }
         return imageAdapterBase;
     }

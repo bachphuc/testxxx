@@ -14,6 +14,7 @@ import com.learn.mobile.adapter.FeedAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.ResourceUtils;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
@@ -109,22 +110,22 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
     private void initEvents() {
         DMobi.log(TAG, "initEvents");
         // TODO Initialize events
-        DMobi.registerEvent(Event.EVENT_LOADMORE_FEED, this, true);
-        DMobi.registerEvent(Event.EVENT_REFRESH_FEED, this, true);
-        DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this, true);
+        DMobi.registerEvent(DEventType.EVENT_LOADMORE_FEED, this, true);
+        DMobi.registerEvent(DEventType.EVENT_REFRESH_FEED, this, true);
+        DMobi.registerEvent(DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this, true);
 
         // TODO Remove data when logout
-        DMobi.registerEvent(Event.EVENT_LOGOUT_SUCCESS, this);
-        DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
+        DMobi.registerEvent(DEventType.EVENT_LOGOUT_SUCCESS, this);
+        DMobi.registerEvent(DEventType.EVENT_FEED_UPDATE_VIEW, this);
     }
 
     @Override
     public void onDestroyEvent() {
-        DMobi.destroyEvent(Event.EVENT_LOADMORE_FEED);
-        DMobi.destroyEvent(Event.EVENT_REFRESH_FEED);
-        DMobi.destroyEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
-        DMobi.destroyEvent(Event.EVENT_LOGOUT_SUCCESS);
-        DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
+        DMobi.destroyEvent(DEventType.EVENT_LOADMORE_FEED);
+        DMobi.destroyEvent(DEventType.EVENT_REFRESH_FEED);
+        DMobi.destroyEvent(DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
+        DMobi.destroyEvent(DEventType.EVENT_LOGOUT_SUCCESS);
+        DMobi.destroyEvent(DEventType.EVENT_FEED_UPDATE_VIEW);
         dSwipeRefreshLayout.setOnRefreshListener(null);
         dSwipeRefreshLayout.setOnLoadMoreListener(null);
         super.onDestroyEvent();
@@ -134,21 +135,21 @@ public class NewFeedsFragment extends DFragmentBase implements Event.Action, Obs
     public void fireAction(String eventType, Object o) {
         // TODO Process events
         switch (eventType) {
-            case Event.EVENT_LOADMORE_FEED:
+            case DEventType.EVENT_LOADMORE_FEED:
                 dSwipeRefreshLayout.startLoad();
                 break;
-            case Event.EVENT_REFRESH_FEED:
+            case DEventType.EVENT_REFRESH_FEED:
                 refreshFeed();
                 break;
-            case Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
+            case DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
                 boolean canRefresh = (boolean) o;
                 setEnableRefresh(canRefresh);
                 break;
-            case Event.EVENT_LOGOUT_SUCCESS:
+            case DEventType.EVENT_LOGOUT_SUCCESS:
                 sFeed.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
                 break;
-            case Event.EVENT_FEED_UPDATE_VIEW:
+            case DEventType.EVENT_FEED_UPDATE_VIEW:
                 updateRecyclerView();
                 break;
         }

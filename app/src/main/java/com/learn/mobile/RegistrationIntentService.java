@@ -57,7 +57,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class RegistrationIntentService extends IntentService {
 
             // TODO: Implement this method to send any registration to your app's servers.
             sendRegistrationToServer(token);
-            DConfig.setSetting(DConfig.DEVICE_TOKEN, token);
+            DConfig.setSetting(Constant.DEVICE_TOKEN, token);
 
             // Subscribe to topic channels
             subscribeTopics(token);

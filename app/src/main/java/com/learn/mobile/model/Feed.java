@@ -19,7 +19,7 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.dialog.TutsPlusBottomSheetDialogFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
@@ -58,7 +58,7 @@ public class Feed extends DAbstractFeed implements View.OnClickListener {
         if (dmobileModelBase != null) {
             String type = "";
             if (attachments != null && attachments.getAttachmentCount() > 1) {
-                type = "" + (attachments.getAttachmentCount() > DConfig.MAX_ATTACHMENTS_SHOW ? DConfig.MAX_ATTACHMENTS_SHOW : attachments.getAttachmentCount());
+                type = "" + (attachments.getAttachmentCount() > Constant.MAX_ATTACHMENTS_SHOW ? Constant.MAX_ATTACHMENTS_SHOW : attachments.getAttachmentCount());
             }
             return dmobileModelBase.getLayoutType(LayoutHelper.FEED_LAYOUT, type);
         }

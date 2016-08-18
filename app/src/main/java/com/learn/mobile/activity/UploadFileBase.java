@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.learn.mobile.customview.activity.SwipeBackActivity;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -36,7 +36,7 @@ public class UploadFileBase extends SwipeBackActivity {
 
     protected static final int MEDIA_TYPE_IMAGE = 1;
     protected static final int MEDIA_TYPE_VIDEO = 2;
-    protected static final String IMAGE_DIRECTORY_NAME = DConfig.APP_NAME;
+    protected static final String IMAGE_DIRECTORY_NAME = Constant.APP_NAME;
 
     private Uri tempUri;
 

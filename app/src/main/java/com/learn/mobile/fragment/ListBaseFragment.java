@@ -18,6 +18,7 @@ import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.DSwipeRefreshLayout;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.ResourceUtils;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.library.dmobi.request.response.ListObjectResponse;
@@ -339,7 +340,7 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
             dSwipeRefreshLayout.setEnableLoadMore(false);
         }
 
-        DMobi.registerEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex, new Event.Action() {
+        DMobi.registerEvent(DEventType.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex, new Event.Action() {
             @Override
             public void fireAction(String eventType, Object o) {
                 adapter.notifyDataSetChanged();
@@ -347,7 +348,7 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
             }
         });
 
-        DMobi.registerEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
+        DMobi.registerEvent(DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW, this);
     }
 
     @Override
@@ -356,8 +357,8 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
             dSwipeRefreshLayout.setOnRefreshListener(null);
             dSwipeRefreshLayout.setOnLoadMoreListener(null);
         }
-        DMobi.destroyEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex);
-        DMobi.destroyEvent(Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
+        DMobi.destroyEvent(DEventType.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + fragmentIndex);
+        DMobi.destroyEvent(DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW);
         super.onDestroyEvent();
     }
 
@@ -365,7 +366,7 @@ public class ListBaseFragment extends DFragmentBase implements Event.Action, Obs
     public void fireAction(String eventType, Object o) {
         // TODO Process events
         switch (eventType) {
-            case Event.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
+            case DEventType.EVENT_LOCK_REFRESH_RECYCLER_VIEW:
                 boolean canRefresh = (boolean) o;
                 setEnableRefresh(canRefresh);
                 break;

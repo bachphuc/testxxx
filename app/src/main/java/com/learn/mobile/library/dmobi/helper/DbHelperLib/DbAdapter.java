@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.learn.mobile.library.dmobi.global.DConfig;
+import com.learn.mobile.library.dmobi.global.Constant;
 
 /**
  * Created by 09520_000 on 1/10/2016.
@@ -12,7 +12,7 @@ import com.learn.mobile.library.dmobi.global.DConfig;
 public class DbAdapter extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = DConfig.DATABASE_OFFLINE;
+    public static final String DATABASE_NAME = Constant.DATABASE_OFFLINE;
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String INT_TYPE = " INTEGER";

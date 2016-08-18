@@ -20,6 +20,7 @@ import com.learn.mobile.fragment.CommentFragment;
 import com.learn.mobile.fragment.DFragmentListener;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.model.DMobileModelBase;
@@ -108,12 +109,12 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
             }
         });
 
-        DMobi.registerEvent(Event.EVENT_FEED_UPDATE_VIEW, this);
+        DMobi.registerEvent(DEventType.EVENT_FEED_UPDATE_VIEW, this);
     }
 
     @Override
     public void onDestroyEvent() {
-        DMobi.destroyEvent(Event.EVENT_FEED_UPDATE_VIEW);
+        DMobi.destroyEvent(DEventType.EVENT_FEED_UPDATE_VIEW);
         super.onDestroyEvent();
     }
 
@@ -160,7 +161,7 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
                 isCommentProcessing = false;
                 resetComment();
                 commentFragment.scrollToBottom(true);
-                DMobi.fireEvent(Event.EVENT_FEED_UPDATE_VIEW, null);
+                DMobi.fireEvent(DEventType.EVENT_FEED_UPDATE_VIEW, null);
             }
         });
     }
@@ -200,7 +201,7 @@ public class FeedDetailActivity extends DActivityBasic implements DFragmentListe
     @Override
     public void fireAction(String eventType, Object o) {
         switch (eventType) {
-            case Event.EVENT_FEED_UPDATE_VIEW:
+            case DEventType.EVENT_FEED_UPDATE_VIEW:
                 commentFragment.notifyDataSetChanged();
                 break;
         }

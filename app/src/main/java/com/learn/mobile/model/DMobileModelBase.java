@@ -13,7 +13,9 @@ import com.learn.mobile.ViewHolder.ItemBaseViewHolder;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.LayoutHelper;
 import com.learn.mobile.library.dmobi.request.DResponse;
@@ -208,7 +210,7 @@ public class DMobileModelBase {
             return null;
         }
 
-        return (Event.EVENT_OBJECT_UPDATE + "_" + sType + "_" + iId);
+        return (DEventType.EVENT_OBJECT_UPDATE + "_" + sType + "_" + iId);
     }
 
     public Event.ModelAction getEventData() {
@@ -237,7 +239,7 @@ public class DMobileModelBase {
     public static DMobileModelBase getModelByType(String itemType) {
         String type = itemType;
         type = DUtils.convertToClassName(type);
-        String sClass = DConfig.BUNDLE_ID + "." + DConfig.MODEL_NAME + "." + type;
+        String sClass = Constant.BUNDLE_ID + "." + Constant.MODEL_NAME + "." + type;
         Class c;
         DMobileModelBase dMobileModelBase;
         try {

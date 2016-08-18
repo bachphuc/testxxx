@@ -35,7 +35,8 @@ import com.learn.mobile.fragment.NewFeedsFragment;
 import com.learn.mobile.fragment.SearchFragment;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.DMobileModelBase;
@@ -227,8 +228,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
                 appBarLayout.setExpanded(true);
                 actionBar.setTitle(appBarTitle);
 
-                DMobi.fireEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, position);
-                DMobi.fireEvent(Event.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
+                DMobi.fireEvent(DEventType.EVENT_UPDATE_LEFT_MENU_SELECTED, position);
+                DMobi.fireEvent(DEventType.EVENT_LIST_BASE_FRAGMENT_LOADED + "_" + position, position);
             }
 
             @Override
@@ -242,7 +243,7 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
 
     public void initTabBarLayoutWithTitle() {
         tabLayout = (TabLayout) findViewById(R.id.main_tab_bar);
-        if (DConfig.HIDE_TAB_BAR) {
+        if (Constant.HIDE_TAB_BAR) {
             tabLayout.setVisibility(View.GONE);
             return;
         }
@@ -456,8 +457,8 @@ public class MainActivity extends DActivityBasic implements LeftMenuFragment.OnL
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        viewPager.setCurrentItem(4);
-        SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getFragmentItem(4);
+        viewPager.setCurrentItem(AppViewPagerAdapter.SEARCH_FRAGMENT_INDEX);
+        SearchFragment searchFragment = (SearchFragment) appViewPagerAdapter.getFragmentItem(AppViewPagerAdapter.SEARCH_FRAGMENT_INDEX);
         searchFragment.search(query);
         searchEditText.dismissDropDown();
         return false;

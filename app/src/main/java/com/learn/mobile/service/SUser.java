@@ -6,7 +6,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.global.DConfig;
 import com.learn.mobile.library.dmobi.helper.DbHelper;
 import com.learn.mobile.library.dmobi.request.DRequest;
@@ -185,7 +185,7 @@ public class SUser extends SBase {
     public void updateUser(User user) {
         this.user = user;
         DConfig.saveUserData(getUserJsonData());
-        DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, user);
+        DMobi.fireEvent(DEventType.EVENT_UPDATE_PROFILE, user);
     }
 
     public void updateAvatar(String filePath, final DResponse.Complete complete) {

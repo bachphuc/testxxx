@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.learn.mobile.R;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.library.dmobi.global.DConfig;
 
 /**
@@ -29,10 +30,10 @@ public class SettingSiteDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         int selected = 0;
-        DMobi.log(TAG, DConfig.getSetting(DConfig.SITE_URL));
+        DMobi.log(TAG, DConfig.getSetting(Constant.SITE_URL));
         for (int i = 0; i < options.length; i++) {
             DMobi.log(TAG, options[i]);
-            if (DConfig.getSetting(DConfig.SITE_URL).equals(options[i])) {
+            if (DConfig.getSetting(Constant.SITE_URL).equals(options[i])) {
                 selected = i;
                 break;
             }
@@ -51,7 +52,7 @@ public class SettingSiteDialog extends DialogFragment {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
                         DMobi.log(TAG, "Update site host " + options[selectedOption]);
-                        DConfig.setSetting(DConfig.SITE_URL, options[selectedOption]);
+                        DConfig.setSetting(Constant.SITE_URL, options[selectedOption]);
                         DConfig.resetHostConfig();
                     }
                 })

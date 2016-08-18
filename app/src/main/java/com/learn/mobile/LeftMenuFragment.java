@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +17,7 @@ import com.learn.mobile.activity.*;
 import com.learn.mobile.customview.dialog.v4.SettingSiteDialog;
 import com.learn.mobile.fragment.DFragmentBase;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
 import com.learn.mobile.library.dmobi.helper.ImageHelper;
 import com.learn.mobile.model.User;
@@ -66,8 +66,8 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
         ImageView imageView = (ImageView) headerView.findViewById(R.id.img_cover);
         imageView.setOnClickListener(this);
 
-        DMobi.registerEvent(Event.EVENT_UPDATE_PROFILE, this);
-        DMobi.registerEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED, this);
+        DMobi.registerEvent(DEventType.EVENT_UPDATE_PROFILE, this);
+        DMobi.registerEvent(DEventType.EVENT_UPDATE_LEFT_MENU_SELECTED, this);
 
         // todo display user information  if user has already login
         setUser();
@@ -79,8 +79,8 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
     public void onDestroyEvent() {
         super.onDestroyEvent();
 
-        DMobi.destroyEvent(Event.EVENT_UPDATE_PROFILE);
-        DMobi.destroyEvent(Event.EVENT_UPDATE_LEFT_MENU_SELECTED);
+        DMobi.destroyEvent(DEventType.EVENT_UPDATE_PROFILE);
+        DMobi.destroyEvent(DEventType.EVENT_UPDATE_LEFT_MENU_SELECTED);
     }
 
     public void setUser() {
@@ -142,7 +142,7 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
             case R.id.logout:
                 SUser sUser = (SUser) DMobi.getService(SUser.class);
                 sUser.logout();
-                DMobi.fireEvent(Event.EVENT_LOGOUT_SUCCESS, null);
+                DMobi.fireEvent(DEventType.EVENT_LOGOUT_SUCCESS, null);
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.showLoginActivity();
                 break;
@@ -182,11 +182,11 @@ public class LeftMenuFragment extends DFragmentBase implements NavigationView.On
     @Override
     public void fireAction(String eventType, Object o) {
         switch (eventType) {
-            case Event.EVENT_UPDATE_LEFT_MENU_SELECTED:
+            case DEventType.EVENT_UPDATE_LEFT_MENU_SELECTED:
                 DMobi.log(TAG, "Select menu " + (int) o);
                 navigationView.getMenu().getItem((int) o).setChecked(true);
                 break;
-            case Event.EVENT_UPDATE_PROFILE:
+            case DEventType.EVENT_UPDATE_PROFILE:
                 updateProfile(o);
                 break;
         }

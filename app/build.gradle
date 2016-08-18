@@ -10,7 +10,7 @@ android {
         applicationId "com.dsoft.foxmobi"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 11
+        versionCode 13
         versionName "1.0"
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true

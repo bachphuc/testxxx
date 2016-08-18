@@ -1,21 +1,37 @@
 package com.learn.mobile.activity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.learn.mobile.R;
 import com.learn.mobile.adapter.PhotoSliderViewPagerAdapter;
 import com.learn.mobile.adapter.RecyclerViewBaseAdapter;
 import com.learn.mobile.customview.activity.SwipeBackActivity;
+import com.learn.mobile.fragment.PhotoViewFragment;
 import com.learn.mobile.library.dmobi.DMobi;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.global.Constant;
 import com.learn.mobile.model.Photo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +125,7 @@ public class PhotoDetailActivity extends SwipeBackActivity {
                 finish();
                 return true;
             case R.id.drawer_download:
+                downloadImage();
                 break;
             case R.id.drawer_make_your_avatar:
                 makeAvatar();
@@ -126,5 +143,14 @@ public class PhotoDetailActivity extends SwipeBackActivity {
             intent.putExtra(UploadAvatarActivity.USER_AVATAR, photo.images.getFull().url);
             startActivity(intent);
         }
+    }
+
+    public void downloadImage() {
+        int current = viewPager.getCurrentItem();
+        Photo photo = adapter.getPhotoItem(current);
+        if (photo == null) {
+            return;
+        }
+        DMobi.fireEvent(DEventType.EVENT_PHOTO_VIEWER + "_" + photo.getId(), PhotoViewFragment.DOWNLOAD_IMAGE);
     }
 }

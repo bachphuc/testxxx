@@ -13,7 +13,7 @@ import com.learn.mobile.R;
 import com.learn.mobile.customview.dialog.SettingSiteDialog;
 import com.learn.mobile.library.dmobi.DMobi;
 import com.learn.mobile.library.dmobi.DUtils.DUtils;
-import com.learn.mobile.library.dmobi.event.Event;
+import com.learn.mobile.library.dmobi.event.DEventType;
 import com.learn.mobile.library.dmobi.request.DResponse;
 import com.learn.mobile.service.SUser;
 
@@ -159,9 +159,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             public void onComplete(Boolean status, Object o) {
                 progressDialog.dismiss();
                 if (o != null) {
-                    DMobi.fireEvent(Event.EVENT_UPDATE_PROFILE, o);
-                    DMobi.fireEvent(Event.EVENT_LOADMORE_FEED, o);
-                    DMobi.fireEvent(Event.EVENT_LOGIN_SUCCESS, o);
+                    DMobi.fireEvent(DEventType.EVENT_UPDATE_PROFILE, o);
+                    DMobi.fireEvent(DEventType.EVENT_LOADMORE_FEED, o);
+                    DMobi.fireEvent(DEventType.EVENT_LOGIN_SUCCESS, o);
                     DMobi.showToast("Login successfully.");
                     getActivity().finish();
                 }

@@ -28,8 +28,8 @@ public class SBase {
     protected List<DMobileModelBase> data = new ArrayList<>();
     protected HashMap<String, Object> requestParams = new HashMap<>();
 
-    public static final String LOADMORE_ACTION = "loadmore";
-    public static final String LOADNEW_ACTION = "loadnew";
+    public static final String LOAD_MORE_ACTION = "loadmore";
+    public static final String LOAD_NEW_ACTION = "loadnew";
     public static final String ENTRY_ID = "id";
     public static final String USER_KEY = "user_id";
 
@@ -138,7 +138,7 @@ public class SBase {
     }
 
     public void gets(final DResponse.Complete complete, final String action) {
-        if(!DMobi.isUser()){
+        if (!DMobi.isUser()) {
             return;
         }
         DRequest dRequest = DMobi.createRequest();
@@ -151,7 +151,7 @@ public class SBase {
         if (requestParams.size() > 0) {
             dRequest.addParams(requestParams);
         }
-        if (Objects.equals(action, LOADMORE_ACTION)) {
+        if (Objects.equals(action, LOAD_MORE_ACTION)) {
             if (getDataByPage) {
                 dRequest.addParam("page", this.page);
             }
@@ -164,12 +164,11 @@ public class SBase {
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                // DMobi.log("REQUEST", respondString);
                 ListObjectResponse<DMobileModelBase> response = DbHelper.parseListObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {
                         if (response.hasData()) {
-                            if (Objects.equals(action, LOADNEW_ACTION)) {
+                            if (Objects.equals(action, LOAD_NEW_ACTION)) {
                                 prepends(response.data);
                             } else {
                                 appends(response.data);
@@ -200,11 +199,11 @@ public class SBase {
     }
 
     public void getNews(final DResponse.Complete complete) {
-        this.gets(complete, LOADNEW_ACTION);
+        this.gets(complete, LOAD_NEW_ACTION);
     }
 
     public void getMores(final DResponse.Complete complete) {
-        this.gets(complete, LOADMORE_ACTION);
+        this.gets(complete, LOAD_MORE_ACTION);
     }
 
     public void networkError(DResponse.Complete complete) {
@@ -229,7 +228,6 @@ public class SBase {
         dRequest.get(new DResponse.Listener() {
             @Override
             public void onResponse(String respondString) {
-                // DMobi.log("REQUEST", respondString);
                 SingleObjectResponse<DMobileModelBase> response = DbHelper.parseSingleObjectResponse(respondString, itemClass);
                 if (response != null) {
                     if (response.isSuccessfully()) {
